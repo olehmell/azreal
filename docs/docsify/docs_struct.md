@@ -1,3 +1,3 @@
 !> **У РОЗРОБЦІ**
 
-![У РОЗРОБЦІ](../img/under_construction.svg ':size=300')
+![У РОЗРОБЦІ](../_img/under_construction.svg ':size=300')
