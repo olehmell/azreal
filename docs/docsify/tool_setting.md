@@ -36,12 +36,13 @@
 
 Що хотілось би ще підключити:
 
-- метематичні формули типу katex
-- пошук по сайту
-- додаткова навігація
-  - pagination
-  - previous/next
-  - to bottom/to top
-  - navigation bar
-- дві або більше мов (з можливістю перемикатися на відповідну сторінку в іншою мовою)
-- коментарі типу Disqus
+- [x] [математичні формули типу katex](https://github.com/upupming/docsify-katex)
+- [x] [пошук по сайту](https://docsify.js.org/#/plugins?id=full-text-search)
+- [ ] додаткова навігація
+  - [ ] pagination
+  - [x] [previous/next](https://github.com/imyelo/docsify-pagination)
+  - [ ] to bottom/to top
+  - [ ] navigation bar
+- [ ] дві або більше мов (з можливістю перемикатися на відповідну сторінку в іншою мовою)
+- [x] [поширення сторінок](https://coroo.github.io/docsify-share/)
+- [ ] коментарі типу Disqus
