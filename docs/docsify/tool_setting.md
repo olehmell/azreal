@@ -36,10 +36,12 @@
 
 Що хотілось би ще підключити:
 
-- katex
-- search over site
-- pagination
-- previous/next
-- to bottom/to top
-- navigation bar
-- two languages (switch to corresponding page)
+- метематичні формули типу katex
+- пошук по сайту
+- додаткова навігація
+  - pagination
+  - previous/next
+  - to bottom/to top
+  - navigation bar
+- дві або більше мов (з можливістю перемикатися на відповідну сторінку в іншою мовою)
+- коментарі типу Disqus
