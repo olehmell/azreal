@@ -32,6 +32,8 @@
 - `loadSidebar: true` - дозволяє використання файлів опису вмісту бічної панелі `_sidebar.md` у кожному фолдері;
 - `externalLinkTarget: '_blank'` - зовнішні посилання відкриватимуться у новій вкладці.
 
+У індексному файлі з'являтимуться ще підключення і налаштування інших вбудованих функціональних можливостей і плагінів. Їх вже можна переглянути беспосередньо у [тексті індексного файлу на github репозитарії](https://github.com/protw/azreal/blob/main/docs/index.html) або прямо перебуваючи в бравзері переглянте код сторінки (в бравзері *Chrome* натисніть `Ctrl+U`).
+
 ## TODO list
 
 Що хотілось би ще підключити:
@@ -39,9 +41,8 @@
 - [x] [математичні формули типу katex](https://github.com/upupming/docsify-katex)
 - [x] [пошук по сайту](https://docsify.js.org/#/plugins?id=full-text-search)
 - [ ] додаткова навігація
-  - [ ] pagination
   - [x] [previous/next](https://github.com/imyelo/docsify-pagination)
-  - [ ] to bottom/to top
+  - [x] [scroll to top](https://www.npmjs.com/package/docsify-scroll-to-top)
   - [ ] navigation bar
 - [ ] дві або більше мов (з можливістю перемикатися на відповідну сторінку в іншою мовою)
 - [x] [поширення сторінок](https://coroo.github.io/docsify-share/)
