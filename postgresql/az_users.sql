@@ -2,7 +2,7 @@ CREATE SCHEMA IF NOT EXISTS "az_users";
 
 CREATE TABLE IF NOT EXISTS "az_users"."Organisation"
 (
-    "registryNo"       integer NOT NULL,
+    "organisationId"       integer NOT NULL,
     "fullName"         text    NOT NULL,
     "shortName"        text,
     "country"          varchar(56),
@@ -10,35 +10,35 @@ CREATE TABLE IF NOT EXISTS "az_users"."Organisation"
     "registryLink"     text,
     "organisationRole" text,
     "actLink"          text,
-    PRIMARY KEY ("registryNo"),
-    UNIQUE ("registryNo"),
+    PRIMARY KEY ("organisationId"),
+    UNIQUE ("organisationId"),
     UNIQUE ("rntrc")
 );
 
 CREATE TABLE IF NOT EXISTS "az_users"."Users"
 (
-    "registryNo"    integer NOT NULL,
+    "userId"    integer NOT NULL,
     "fullName"      text    NOT NULL,
     "email"         text,
     "phoneNumber"   text,
-    "orgRegistryNo" integer,
+    "organisationId" integer,
     "userRole"      text,
     "actLink"       text,
-    PRIMARY KEY ("registryNo"),
-    FOREIGN KEY ("orgRegistryNo")
-        REFERENCES "az_users"."Organisation" ("registryNo") MATCH SIMPLE
+    PRIMARY KEY ("userId"),
+    FOREIGN KEY ("organisationId")
+        REFERENCES "az_users"."Organisation" ("organisationId") MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS "az_users"."UsageLog"
 (
-    "userRegistryNo" integer,
+    "userId" integer,
     "timestamp"      timestamp NOT NULL,
     "query"          text      NOT NULL,
     "queryType"      char(6)   NOT NULL,
-    FOREIGN KEY ("userRegistryNo")
-        REFERENCES "az_users"."Users" ("registryNo") MATCH SIMPLE
+    FOREIGN KEY ("userId")
+        REFERENCES "az_users"."Users" ("userId") MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE SET NULL
 );

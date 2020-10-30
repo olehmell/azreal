@@ -7,9 +7,9 @@ CREATE TABLE "az_measurements"."Measurements"
     "timestamp"  "timestamp"                        NOT NULL,
     "values"     "az_sensors"."measurement_value"[] NOT NULL,
     FOREIGN KEY ("locationId")
-        REFERENCES "az_sensors"."Locations" ("locationId") MATCH SIMPLE
+        REFERENCES "az_sensors"."Locations" ("locationId") MATCH FULL
         ON UPDATE CASCADE,
     FOREIGN KEY ("sensorId")
-        REFERENCES "az_sensors"."Sensors" ("sensorId") MATCH SIMPLE
+        REFERENCES "az_sensors"."Sensors" ("sensorId") MATCH FULL
         ON UPDATE CASCADE
 );

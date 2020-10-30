@@ -12,16 +12,16 @@ $$;
 
 CREATE TABLE IF NOT EXISTS "az_docs"."Documents"
 (
-    "docNo"        integer NOT NULL,
+    "documentId"        integer NOT NULL,
     "documentBody" text,
-    PRIMARY KEY ("docNo"),
-    UNIQUE ("docNo")
+    PRIMARY KEY ("documentId"),
+    UNIQUE ("documentId")
 );
 
 CREATE TABLE IF NOT EXISTS "az_docs"."Photo"
 (
-    "registryNo"  integer NOT NULL,
+    "photoId"  integer NOT NULL,
     "photoSeries" bytea[] NOT NULL,
-    PRIMARY KEY ("registryNo"),
-    UNIQUE ("registryNo")
+    PRIMARY KEY ("photoId"),
+    UNIQUE ("photoId")
 );

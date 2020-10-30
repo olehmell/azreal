@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS "az_sensors"."Sensors"
     UNIQUE ("sensorId", "locationId"),
     UNIQUE ("sensorId"),
     FOREIGN KEY ("locationId")
-        REFERENCES "az_sensors"."Locations" ("locationId") MATCH SIMPLE
+        REFERENCES "az_sensors"."Locations" ("locationId") MATCH FULL
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
