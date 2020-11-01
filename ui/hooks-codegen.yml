@@ -1,0 +1,17 @@
+schema: 'src/graphql/schema.graphql'
+generates:
+  './src/graphql/query/sensors/add/index.ts':
+    preset: import-types
+    presetConfig: 
+      typesPath: './types'
+    documents: 'src/graphql/query/sensors/add/add-sensors.graphql'
+    plugins:
+      - typescript-react-apollo
+
+  './src/graphql/query/sensors/get/index.ts':
+    preset: import-types
+    presetConfig: 
+      typesPath: './types'
+    documents: 'src/graphql/query/sensors/get/get-sensors.graphql'
+    plugins:
+      - typescript-react-apollo
