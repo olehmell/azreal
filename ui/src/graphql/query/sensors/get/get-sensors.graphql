@@ -1,0 +1,17 @@
+  query getSensors {
+    az_sensors_Sensors {
+      locationId
+      manufacturer
+      model
+      sensorId
+      Location {
+        actLink
+        address
+        airlyLink
+        elevation
+        locationId
+        locationPoint
+        mapsLink
+      }
+    }
+  }

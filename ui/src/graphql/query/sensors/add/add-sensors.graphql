@@ -1,0 +1,37 @@
+  mutation AddSensors (
+    $locationId: Int,
+    $manufacturer: String,
+    $model: String,
+    $sensorId: Int,
+    $locationPoint: point,
+    $mapsLink: String,
+    $elevation: float8,
+    $airlyLink: String,
+    $actLink: String,
+    $address: String) {
+      insert_az_sensors_Sensors(objects:
+        {
+           Location: {
+            data: 
+            {
+              locationId: $locationId
+              actLink: $actLink,
+              address: $address,
+              airlyLink: $airlyLink,
+              elevation: $elevation,
+              locationPoint: $locationPoint,
+              mapsLink: $mapsLink
+            }
+          }
+          manufacturer: $manufacturer,
+          model: $model,
+          sensorId: $sensorId,
+          locationId: $locationId, 
+         
+        }
+      ) {
+        returning {
+          locationId
+        }
+      }
+    }
