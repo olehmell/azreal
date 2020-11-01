@@ -7,3 +7,5 @@
   - [Сірчистий ангідрид SO2](so2.md);
   - [Діоксид азоту NO2](no2.md);
   - [Озон O3](o3.md).
+
+Матеріали цього розділу запозичені з джерела: [Управління з охорони довкілля США (US Environmental Protection Agency)](https://www.epa.gov/so2-pollution/sulfur-dioxide-basics#what%20is%20so2).
