@@ -1,0 +1,90 @@
+enum az_docs_service_type {
+  Planned,
+  Unscheduled,
+  Replacement
+}
+
+enum az_sensors_measurement_unit {
+  "µg/m³",
+  "°C",
+  "%",
+  "hPa",
+  "km/h",
+  "°"
+}
+
+type az_sensors_measurement_value {
+  name: String!
+  value: Float!
+}
+
+type az_sensors_PollutionFactors {
+  factorId: Int!
+  name: String!
+  label: String!
+  unit: String! #az_sensors_measurement_unit
+  maxValues: az_sensors_measurement_value
+}
+
+type az_sensors_Locations {
+  locationId: Int!
+  locationPoint: Int!
+  elevation: Float!
+  address: String!
+  airlyLink: String
+  mapsLink: String
+  actLink: String
+}
+
+type az_sensors_Sensors {
+  sensorId: Int!
+  locationId: Int!
+  manufacturer: String!
+  model: String!
+  factors: [Int]!
+}
+
+type az_users_Organisation {
+  organisationId: Int!
+  fullName: String!
+  shortName: String
+  country: String
+  rntrc: String!
+  registryLink: String
+  organisationRole: String
+  actLink: String
+}
+
+type az_users_Users {
+  userId: Int!
+  fullName: String!
+  email: String
+  phoneNumber: String
+  organisationId: Int
+  userRole: String
+  actLink: String
+}
+
+type az_users_Usagelog {
+  userId: Int
+  timestamp: String!
+  query: String!
+  queryType: String!
+}
+
+type az_measurements_Measurements {
+  locationId: Int!
+  sensorId: Int!
+  timestamp: String!
+  values: [az_sensors_measurement_value]!
+}
+
+type az_docs_Documents {
+  documentId: Int!
+  documentBody: String
+}
+
+type az_docs_Photo {
+  photoId: Int!
+  photoSeries: [String]!
+}

@@ -14,8 +14,6 @@ import {
   EuiShowFor,
 } from '@elastic/eui';
 
-import { buildTopLinks } from '../navigation_links/top_links';
-import { buildSolutionLinks } from '../navigation_links/solution_links';
 import { buildExploreLinks } from '../navigation_links/explore_links';
 import { buildAdminLinks } from '../navigation_links/admin_links';
 
@@ -40,12 +38,12 @@ const MenuTrigger: FunctionComponent<{ onClick: () => void }> = ({
   </EuiHeaderSectionItemButton>
 );
 
+const Chrome: FunctionComponent = ({ children }) => {
 /**
  * Renders the UI that surrounds the page content.
  */
-const Chrome: FunctionComponent = ({ children }) => {
   // This is an EuiNavDrawer, which isn't a TypeScript module yet
-  const navDrawerRef = useRef<EuiNavDrawer>(null);
+  const navDrawerRef = useRef<EuiNavDrawer>(null)
 
   const router = useRouter();
 
@@ -54,7 +52,7 @@ const Chrome: FunctionComponent = ({ children }) => {
   // Next.js router doesn't infer the catch-all, we have to link to it
   // explicitly.
   const buildOnClick = (path: string) => () =>
-    router.push('/my-app/[slug]', path);
+    router.push(path, path)
 
   return (
     <>
@@ -84,13 +82,7 @@ const Chrome: FunctionComponent = ({ children }) => {
         </EuiHeaderSection>
       </EuiHeader>
       <EuiNavDrawer ref={navDrawerRef}>
-        <EuiNavDrawerGroup listItems={buildTopLinks(buildOnClick)} />
-        <EuiHorizontalRule margin='none' />
-
         <EuiNavDrawerGroup listItems={buildExploreLinks(buildOnClick)} />
-        <EuiHorizontalRule margin='none' />
-
-        <EuiNavDrawerGroup listItems={buildSolutionLinks(buildOnClick)} />
         <EuiHorizontalRule margin='none' />
 
         <EuiNavDrawerGroup listItems={buildAdminLinks(buildOnClick)} />

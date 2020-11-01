@@ -1,46 +1,36 @@
 import { EuiNavDrawerGroupProps } from '@elastic/eui';
-import { pinExtraAction } from './pin_extra_action';
 
 export const buildExploreLinks = (
   makeAction: (path: string) => () => void
 ): EuiNavDrawerGroupProps['listItems'] => [
   {
-    label: 'Canvas',
-    onClick: makeAction('/my-app/canvas'),
-    iconType: 'canvasApp',
-    isActive: true,
-    extraAction: {
-      ...pinExtraAction,
-      alwaysShow: true,
-    },
-  },
-  {
-    label: 'Discover',
-    onClick: makeAction('/my-app/discover'),
+    label: 'Користувачі та організації',
+    onClick: makeAction('/users'),
     iconType: 'discoverApp',
-    extraAction: pinExtraAction,
   },
   {
-    label: 'Visualize',
-    onClick: makeAction('/my-app/visualize'),
+    label: 'Візуалізація',
+    onClick: makeAction('/visualize'),
     iconType: 'visualizeApp',
-    extraAction: pinExtraAction,
   },
   {
-    label: 'Dashboard',
-    onClick: makeAction('/my-app/dashboard'),
+    label: 'Документи',
+    onClick: makeAction('/documents'),
     iconType: 'dashboardApp',
-    extraAction: pinExtraAction,
   },
   {
-    label: 'Machine learning',
-    onClick: makeAction('/my-app/machine-learning'),
-    iconType: 'machineLearningApp',
-    extraAction: pinExtraAction,
+    label: 'Карта',
+    onClick: makeAction('/maps'),
+    iconType: 'gisApp',
   },
   {
-    label: 'Custom Plugin (no icon)',
-    onClick: makeAction('/my-app/custom-plugin'),
-    extraAction: pinExtraAction,
+    label: 'Датчики',
+    onClick: makeAction('/sensors'),
+    iconType: 'metricsApp',
+  },
+  {
+    label: 'Журнал',
+    onClick: makeAction('/logs'),
+    iconType: 'logsApp',
   },
 ];
