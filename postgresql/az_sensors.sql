@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS "az_sensors"."Locations"
     "locationId"    integer          NOT NULL,
     "locationPoint" point            NOT NULL,
     "elevation"     double precision NOT NULL,
-    "address"       text             NOT NULL,
+    "address"       text,
     "airlyLink"     text,
     "mapsLink"      text,
     "actLink"       text,
@@ -46,14 +46,14 @@ CREATE TABLE IF NOT EXISTS "az_sensors"."Locations"
     UNIQUE ("locationId")
 );
 
+---
 
 CREATE TABLE IF NOT EXISTS "az_sensors"."Sensors"
 (
     "sensorId"     integer NOT NULL,
-    "locationId"   integer NOT NULL,
-    "manufacturer" text    NOT NULL,
-    "model"        text    NOT NULL,
-    "factors"      integer[], -- TODO: resolve referencing problem
+    "locationId"   integer,
+    "manufacturer" text,
+    "model"        text,
     PRIMARY KEY ("sensorId"),
     UNIQUE ("sensorId", "locationId"),
     UNIQUE ("sensorId"),
@@ -61,4 +61,47 @@ CREATE TABLE IF NOT EXISTS "az_sensors"."Sensors"
         REFERENCES "az_sensors"."Locations" ("locationId") MATCH FULL
         ON UPDATE CASCADE
         ON DELETE RESTRICT
+);
+
+---
+
+CREATE TABLE IF NOT EXISTS "az_sensors"."SensorFactors"
+(
+    "sensorId" integer NOT NULL,
+    "factorId" integer,
+    UNIQUE ("sensorId", "factorId"),
+    FOREIGN KEY ("sensorId")
+        REFERENCES "az_sensors"."Sensors" ("sensorId") MATCH FULL
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY ("factorId")
+        REFERENCES "az_sensors"."PollutionFactors" ("factorId") MATCH FULL
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "az_sensors"."ServiceLog"
+(
+    "timestamp"   "timestamp" DEFAULT now() NOT NULL,
+    "serviceType" "az_docs"."service_type"  NOT NULL,
+    "sensorId"    integer                   NOT NULL,
+    FOREIGN KEY ("sensorId")
+        REFERENCES "az_sensors"."Sensors" ("sensorId") MATCH FULL
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    "locationId"  integer,
+    FOREIGN KEY ("locationId")
+        REFERENCES "az_sensors"."Locations" ("locationId") MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    "documentId"  integer,
+    FOREIGN KEY ("documentId")
+        REFERENCES "az_docs"."Documents" ("documentId") MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    "photoId"     integer,
+    FOREIGN KEY ("photoId")
+        REFERENCES "az_docs"."Photo" ("photoId") MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
 );
