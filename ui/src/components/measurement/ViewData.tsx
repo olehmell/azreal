@@ -1,8 +1,6 @@
 import { EuiDataGrid, EuiLink, EuiPage, EuiPageBody, EuiPageContent, EuiPageContentBody, EuiPageHeader, EuiPageHeaderSection, EuiTitle } from '@elastic/eui';
 import React, { Fragment, useCallback, useMemo, useState } from 'react';
 import { fake } from 'faker';
-import { Sensors } from '../../types';
-import { useSensors } from '../../graphql/hooks';
 
 const columns = [
   {
@@ -57,9 +55,6 @@ for (let i = 1; i < 100; i++) {
 export default () => {
   // ** Pagination config
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
-  const { data, loading } = useSensors()
-
-  console.log('DATA', data, loading)
 
   const onChangeItemsPerPage = useCallback(
     (pageSize) =>

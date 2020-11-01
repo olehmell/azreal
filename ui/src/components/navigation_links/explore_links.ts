@@ -19,7 +19,7 @@ export const buildExploreLinks = (
     iconType: 'dashboardApp',
   },
   {
-    label: 'Карта',
+    label: 'Локації',
     onClick: makeAction('/maps'),
     iconType: 'gisApp',
   },
