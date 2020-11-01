@@ -1,22 +1,8 @@
 ## Що там всередині
 
 Тут ви знайдете стислий огляд файлів та фолдерів верхнього рівня з цього проекту.
-```
-    .
-    ├── .eslintrc.js
-    ├── .gitignore
-    ├── .next/
-    ├── .prettierrc
-    ├── LICENSE
-    ├── README.md
-    ├── next.config.js
-    ├── node_modules/
-    ├── package.json
-    ├── public/
-    ├── src/
-    ├── tsconfig.json
-    └── yarn.lock
-```
+
+![UI file structure](img/ui_file_struct.png)
 
 ## .eslintrc.js
 
