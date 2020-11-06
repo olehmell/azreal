@@ -20,12 +20,12 @@ export const buildExploreLinks = (
   },
   {
     label: 'Локації',
-    onClick: makeAction('/maps'),
+    onClick: makeAction('/locations'),
     iconType: 'gisApp',
   },
   {
-    label: 'Датчики',
-    onClick: makeAction('/sensors'),
+    label: 'Вимірювальні фактори',
+    onClick: makeAction('/factors'),
     iconType: 'metricsApp',
   },
   {
