@@ -7,21 +7,25 @@ $$
             CREATE TYPE "az_docs"."service_type" AS ENUM
                 ('Planned', 'Unscheduled', 'Replacement');
         END IF;
+
+        IF NOT EXISTS(SELECT 1 FROM "pg_type" WHERE "typname" = 'document_type') THEN
+            CREATE TYPE "az_docs"."document_type" AS ENUM
+                ('User', 'Organisation', 'Sensor', 'Location', 'Service');
+        END IF;
     END
 $$;
 
 CREATE TABLE IF NOT EXISTS "az_docs"."Documents"
 (
-    "documentId"        integer NOT NULL,
+    "documentId"   serial PRIMARY KEY,
+    "documentType" "az_docs"."document_type" NOT NULL,
     "documentBody" text,
-    PRIMARY KEY ("documentId"),
     UNIQUE ("documentId")
 );
 
 CREATE TABLE IF NOT EXISTS "az_docs"."Photo"
 (
-    "photoId"  integer NOT NULL,
+    "photoId"     serial PRIMARY KEY,
     "photoSeries" bytea[] NOT NULL,
-    PRIMARY KEY ("photoId"),
     UNIQUE ("photoId")
 );
