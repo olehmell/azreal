@@ -15,6 +15,13 @@ const GET_SENSOR_BY_ID = gql`
         locationId
         elevation
       }
+      SensorFactors {
+        PollutionFactor {
+          unit
+          label
+          maxValues
+        }
+      }
     }
   }`
 
