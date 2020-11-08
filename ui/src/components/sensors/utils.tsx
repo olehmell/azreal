@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Az_Sensors_Locations } from '../../graphql/types'
+import { GetLocations_az_sensors_Locations_aggregate_nodes as Location } from 'src/graphql/query/locations/types/GetLocations'
 
 const SENSORT_DATA_URL = 'https://airapi.airly.eu/v2/installations'
 
@@ -9,7 +9,8 @@ const apikey = process.env.AIRLY_API_KEY
 const getLocationDataBySensorIdUrl = (id: number) => `${SENSORT_DATA_URL}/${id}`
 
 type SensorsData = {
-  location: Az_Sensors_Locations
+  location: Location,
+  error?: string
 }
 
 const emptyData: SensorsData = { 
@@ -21,43 +22,30 @@ type HookData<T> = {
   loading: boolean
 } 
 
-export const useAirlyLocationBySensorId = (id?: number): HookData<SensorsData> => {
-  const [ data, setData ] = useState(emptyData)
-  const [ loading, setLoading ] = useState(false)
-  const loadUrl = getLocationDataBySensorIdUrl(id)
+export const loadLocationDataBySensorId = async (id: number) => {
+  try {
+    const loadUrl = getLocationDataBySensorIdUrl(id)
+    const res = await axios.get(loadUrl, { headers: { apikey }})
 
-  useEffect(() => {
-    if (!id) return
+    const { 
+      locationId,
+      location: { latitude, longitude },
+      elevation,
+      address: { street, city, country },
+    } = res.data
   
-    const loadLocationData = async () => {
-      setLoading(true)
-      const res = await axios.get(loadUrl, { headers: { apikey }})
+    const location = {
+      locationId,
+      locationPoint: `${latitude}, ${longitude}`,
+      elevation,
+      address: `${street}, ${city}, ${country}`,
+      airlyLink: `https://airly.org/map/en/#${latitude},${longitude},i${locationId}`
+    } as Location
+  
+    return { location }
+  } catch (error) {
+    console.error(error)
+    return { location, error }
+  }
 
-      if (res.status !== 200) return console.error(`Respons end with status ${res.status} and text: ${res.statusText}: ${res.data}`)
-
-      const { 
-        locationId,
-        location: { latitude, longitude },
-        elevation,
-        address: { street, city, country },
-      } = res.data
-
-      const location = {
-        locationId,
-        locationPoint: `${latitude}, ${longitude}`,
-        elevation,
-        address: `${street}, ${city}, ${country}`,
-        airlyLink: `https://airly.org/map/en/#${latitude},${longitude},i${locationId}`
-      } as Az_Sensors_Locations
-
-      setData({
-        location
-      })
-      setLoading(false)
-    }
-
-    loadLocationData()
-  }, [ id || 0 ])
-
-  return { data, loading }
 }

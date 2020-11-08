@@ -1,4 +1,4 @@
 import dynamic from 'next/dynamic'
-const Measurement = dynamic(import('../components/measurement/ViewData'), { ssr: false })
+const Sensors = dynamic(import('../components/sensors'), { ssr: false })
 
-export default Measurement
+export default Sensors

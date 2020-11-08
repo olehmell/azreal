@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup'
 
 import {
   EuiButton,
@@ -7,104 +10,108 @@ import {
   EuiFormRow,
   EuiSpacer,
   EuiFieldNumber,
+  EuiLoadingSpinner,
+  EuiFormErrorText,
+  EuiCallOut,
 } from '@elastic/eui';
 
-import { useAirlyLocationBySensorId } from './utils';
-import { useAddSensorsMutation } from '../../graphql/query/sensors/add';
+import { loadLocationDataBySensorId } from './utils';
+import { useAddSensor } from 'src/graphql/query/sensors/addSensors';
+import { useRouter } from 'next/router';
+
+const schema = yup.object().shape({
+  sensorId: yup.number().required(),
+  manufacturer: yup.string(),
+  model: yup.string()
+});
 
 export default () => {
-  const [ sensorId, setSensorId ] = useState<number>()
-  const { data, loading } = useAirlyLocationBySensorId(sensorId)
-  const [ addSensors, { data: res } ] = useAddSensorsMutation()
-  console.log('LOCATION', data, loading)
-  console.log('HOOKS RES', res)
+  const [ addSensors, { data: res } ] = useAddSensor()
+  const [ loading, setLoading ] = useState(false)
+  const [ error, setError ] = useState('')
+  const router = useRouter()
 
-  const isSensorId = !!sensorId
+  const { register, handleSubmit, watch, errors } = useForm({
+    resolver: yupResolver(schema),
+    reValidateMode: 'onBlur'
+  })
+
+  const resSensorId = res?.insert_az_sensors_Sensors.returning[0].sensorId
+
+  const onSubmit = useCallback(async sensorData => {
+    setLoading(true)
+    try {
+      const { location, error } = await loadLocationDataBySensorId(sensorData.sensorId)
+
+      if (error) {
+        throw error
+      } else if (location) {
+        console.log(sensorData, location)
+        await addSensors({ variables: {
+          ...location,
+          ...sensorData
+        }})
+        setLoading(false)
+      }
+    } catch (error) {
+      console.error(error)
+      setError(error.toString())
+      setLoading(false)
+    }
+  }, [])
+
+  const SubmitButton = useCallback(() => loading
+    ? <EuiLoadingSpinner size='m' />
+    : <EuiButton type="submit" fill>
+        Додати датчик
+      </EuiButton>
+    , [ loading, resSensorId ])
+
+  const AddedAlert = useCallback(() => (error && !resSensorId)
+    ? <EuiCallOut title="Датчик не додано, сталась помилка:" color='danger'>{error}</EuiCallOut>
+    : <EuiCallOut title="Датчик успішно додано, найближчим часом вас перенаправить на його сторінку" color='success'>
+        <EuiButton
+          color="secondary"
+          size="s"
+          onClick={() => router.push('/sensors/[sensorId]', `/sensors/${resSensorId}`)}
+        >
+          Перейти на сторінку датчика
+        </EuiButton>
+    </EuiCallOut>
+  , [ error, resSensorId || 0 ])
+
+  const SubmitPanel = useCallback(() => (error || resSensorId)
+    ? <AddedAlert />
+    : <SubmitButton />
+  , [ error, resSensorId])
 
   return (
-    <EuiForm component="form" onSubmit={(e) => {
-        console.log('DATA', e)
-      }}>
+    <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
       <EuiFormRow label="ID сенсора"fullWidth>
         <EuiFieldNumber
-          name='locationId'
+          name='sensorId'
           placeholder="ID сенсора з Airly"
-          onBlur={e => setSensorId(parseInt(e.currentTarget.value))}
+          inputRef={register}
           fullWidth
           required
         />
       </EuiFormRow>
+      <EuiFormErrorText title={errors.sensorId} />
 
       <EuiFormRow label="Виробник" fullWidth>
-        <EuiFieldText name="manufacturer" fullWidth />
+        <EuiFieldText name="manufacturer" inputRef={register} fullWidth />
       </EuiFormRow>
+      <EuiFormErrorText title={errors.manufacturer} />
+
 
       <EuiFormRow label="Модель" fullWidth>
-        <EuiFieldText name="model" fullWidth />
+        <EuiFieldText name="model" inputRef={register} fullWidth />
       </EuiFormRow>
-  
-      {isSensorId && data && <>
-        <EuiFormRow label="ID локації" fullWidth>
-          <EuiFieldNumber
-            name='locationId'
-            placeholder="ID локації з Airly"
-            value={data.location?.locationId}
-            fullWidth
-            required
-          />
-        </EuiFormRow>
-
-        <EuiFormRow label="Координати точки" fullWidth>
-          <EuiFieldText
-            name="locationPoint"
-            value={`${data.location?.locationPoint}`}
-            fullWidth />
-        </EuiFormRow>
-
-        <EuiFormRow label="Адреса" fullWidth>
-          <EuiFieldText
-            name="address"
-            value={data.location?.address}
-            fullWidth />
-        </EuiFormRow>
-
-        <EuiFormRow label="Висота над рівнем моря" fullWidth>
-          <EuiFieldNumber
-            name='elevation'
-            placeholder="ID локації з Airly"
-            value={data.location?.elevation}
-            fullWidth
-            required
-          />
-        </EuiFormRow>
-
-        <EuiFormRow label="Посилання на Airly" fullWidth>
-          <EuiFieldText
-            name="airlyLink"
-            fullWidth
-            value={data.location?.airlyLink}
-            type='url'
-          />
-        </EuiFormRow>
-
-        <EuiFormRow label="Посилання на карту" fullWidth>
-          <EuiFieldText name="mapsLink" fullWidth />
-        </EuiFormRow>
-
-        <EuiFormRow label="Посилання на акт" fullWidth>
-          <EuiFieldText name="actLink" fullWidth />
-        </EuiFormRow>
-      </>}
+      <EuiFormErrorText title={errors.model} />
 
       <EuiSpacer />
+      <SubmitPanel />
 
-      <EuiButton type="submit" fill>
-        Додати датчик
-      </EuiButton>
-
-      <EuiButton onClick={() => addSensors({ variables: { ...data?.location, sensorId } })} fill>
-        Відправити
-      </EuiButton>
     </EuiForm>
   );
 };
