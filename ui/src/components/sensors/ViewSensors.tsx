@@ -1,4 +1,5 @@
 import { EuiDataGridColumn, EuiFlexGrid, EuiFlexItem } from "@elastic/eui"
+import Link from "next/link"
 import React from "react"
 import { useGetSensors } from "src/graphql/query/sensors/getSensors"
 import { GetSensors, GetSensors_az_sensors_Sensors as SensorsType } from "src/graphql/query/sensors/types/GetSensors"
@@ -30,7 +31,7 @@ const ViewSensors = ({ sensors }: ViewSensorsProps) => {
   }]
 
   const data = sensors.map(({ Location: { address, airlyLink }, sensorId, manufacturer, model }) => ({
-    sensorId,
+    sensorId: <Link href='/sensors/[sensorId]' as={`/sensors/${sensorId}`}><a>{sensorId}</a></Link>,
     manufacturer,
     model,
     address: <a href={airlyLink}>{address}</a>,
