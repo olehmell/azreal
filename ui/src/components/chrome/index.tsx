@@ -15,7 +15,6 @@ import {
 } from '@elastic/eui';
 
 import { buildExploreLinks } from '../navigation_links/explore_links';
-import { buildAdminLinks } from '../navigation_links/admin_links';
 
 import { Breadcrumbs } from './breadcrumbs';
 import SwitchTheme from './switch_theme';
@@ -83,9 +82,6 @@ const Chrome: FunctionComponent = ({ children }) => {
       </EuiHeader>
       <EuiNavDrawer ref={navDrawerRef}>
         <EuiNavDrawerGroup listItems={buildExploreLinks(buildOnClick)} />
-        <EuiHorizontalRule margin='none' />
-
-        <EuiNavDrawerGroup listItems={buildAdminLinks(buildOnClick)} />
       </EuiNavDrawer>
       <div className={styles.chrWrap}>{children}</div>
     </>
