@@ -3,22 +3,23 @@ import { gql } from "apollo-boost";
 import { GetSensors } from "./types/GetSensors";
 
 export const GET_SENSOR_QUERY = gql`
-    query GetSensors {
-  az_sensors_Sensors {
-    locationId
-    manufacturer
-    model
-    sensorId
-    Location {
-      actLink
-      address
-      airlyLink
-      elevation
+  query GetSensors {
+    az_sensors_Sensors {
       locationId
-      locationPoint
-      mapsLink
+      manufacturer
+      model
+      sensorId
+      Location {
+        actLink
+        address
+        airlyLink
+        elevation
+        locationId
+        locationPoint
+        mapsLink
+      }
     }
   }
-}`
+`
 
 export const useGetSensors = () => useQuery<GetSensors>(GET_SENSOR_QUERY)

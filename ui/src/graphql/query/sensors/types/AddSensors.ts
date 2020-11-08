@@ -9,7 +9,7 @@
 
 export interface AddSensors_insert_az_sensors_Sensors_returning {
   __typename: "az_sensors_Sensors";
-  sensorId: number | null;
+  sensorId: number;
 }
 
 export interface AddSensors_insert_az_sensors_Sensors {
