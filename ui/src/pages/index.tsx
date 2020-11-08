@@ -5,7 +5,6 @@ import {
   EuiPageBody,
   EuiPageHeader,
   EuiPageHeaderSection,
-  EuiTitle,
 } from '@elastic/eui';
 
 const Index: FunctionComponent = () => (
@@ -13,9 +12,6 @@ const Index: FunctionComponent = () => (
     <EuiPageBody>
       <EuiPageHeader>
         <EuiPageHeaderSection>
-          <EuiTitle size='l'>
-            <h1>Airzoom UI</h1>
-          </EuiTitle>
         </EuiPageHeaderSection>
         <EuiPageHeaderSection>
           <EuiButton

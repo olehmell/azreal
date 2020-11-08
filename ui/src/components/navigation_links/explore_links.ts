@@ -1,46 +1,75 @@
 import { EuiNavDrawerGroupProps } from '@elastic/eui';
-import { pinExtraAction } from './pin_extra_action';
 
 export const buildExploreLinks = (
   makeAction: (path: string) => () => void
 ): EuiNavDrawerGroupProps['listItems'] => [
   {
-    label: 'Canvas',
-    onClick: makeAction('/my-app/canvas'),
-    iconType: 'canvasApp',
-    isActive: true,
-    extraAction: {
-      ...pinExtraAction,
-      alwaysShow: true,
+    label: 'Користувачі та організації',
+    iconType: 'users',
+    flyoutMenu: {
+      title: 'Користувачі та організації',
+      listItems: [
+        {
+          label: 'Організації',
+          onClick: makeAction('/organizations'),
+          iconType: 'graphApp'
+        },
+        {
+          label: 'Додати користувача',
+          onClick: makeAction('/users/new'),
+          iconType: 'createSingleMetricJob'
+        },
+        {
+          label: 'Створити організацію',
+          onClick: makeAction('/organizations/new'),
+          iconType: 'usersRolesApp'
+        }
+      ],
     },
   },
   {
-    label: 'Discover',
-    onClick: makeAction('/my-app/discover'),
-    iconType: 'discoverApp',
-    extraAction: pinExtraAction,
+    label: 'Датчики',
+    onClick: makeAction('/sensors'),
+    iconType: 'watchesApp',
+    flyoutMenu: {
+      title: 'Датчики',
+      listItems: [
+        {
+          label: 'Усі датчики',
+          onClick: makeAction('/sensors'),
+          iconType: 'outlierDetectionJob'
+        },
+        {
+          label: 'Додатий датчик',
+          onClick: makeAction('/sensors/new'),
+          iconType: 'createAdvancedJob'
+        }
+      ],
+    },
   },
   {
-    label: 'Visualize',
-    onClick: makeAction('/my-app/visualize'),
+    label: 'Візуалізація',
+    onClick: makeAction('/measurement'),
     iconType: 'visualizeApp',
-    extraAction: pinExtraAction,
   },
   {
-    label: 'Dashboard',
-    onClick: makeAction('/my-app/dashboard'),
+    label: 'Локації',
+    onClick: makeAction('/locations'),
+    iconType: 'gisApp',
+  },
+  {
+    label: 'Вимірювальні фактори',
+    onClick: makeAction('/factors'),
+    iconType: 'metricsApp',
+  },
+  {
+    label: 'Документи',
+    onClick: makeAction('/documents'),
     iconType: 'dashboardApp',
-    extraAction: pinExtraAction,
   },
   {
-    label: 'Machine learning',
-    onClick: makeAction('/my-app/machine-learning'),
-    iconType: 'machineLearningApp',
-    extraAction: pinExtraAction,
-  },
-  {
-    label: 'Custom Plugin (no icon)',
-    onClick: makeAction('/my-app/custom-plugin'),
-    extraAction: pinExtraAction,
+    label: 'Журнал',
+    onClick: makeAction('/logs'),
+    iconType: 'logsApp',
   },
 ];

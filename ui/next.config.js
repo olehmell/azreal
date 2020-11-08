@@ -11,6 +11,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { NormalModuleReplacementPlugin } = require('webpack');
 
+const Dotenv = require('dotenv-webpack')
+
+// Required by Docker
+require('dotenv').config()
 /**
  * If you are deploying your site under a directory other than `/` e.g.
  * GitHub pages, then you have to tell Next where the files will be served.
@@ -61,6 +65,19 @@ const nextConfig = {
     // EUI uses some libraries and features that don't work outside of a
     // browser by default. We need to configure the build so that these
     // features are either ignored or replaced with stub implementations.
+
+    config.plugins = config.plugins || []
+
+    config.plugins = [
+      ...config.plugins,
+
+      // Read the .env file
+      new Dotenv({
+        path: path.join(__dirname, '.env'),
+        systemvars: true // Required by Docker
+      })
+    ]
+    
     if (isServer) {
       config.externals = config.externals.map(eachExternal => {
         if (typeof eachExternal !== 'function') {
@@ -95,6 +112,10 @@ const nextConfig = {
         ...config.plugins[definePluginId].definitions,
         HTMLElement: function () {},
       };
+    } else {
+      config.node = {
+        fs: 'empty'
+      }
     }
 
     // Copy theme CSS files into `public`
@@ -127,40 +148,40 @@ const nextConfig = {
    * @see https://nextjs.org/docs/routing/introduction
    * @see https://nextjs.org/docs/advanced-features/static-html-export
    */
-  exportPathMap: async function (defaultPathMap) {
-    const dynamicPaths = [
-      '/my-dashboard',
-      '/workpad',
-      '/my-logs',
-      '/my-workpad',
-      '/my-logs',
-      '/apm',
-      '/metrics',
-      '/logs',
-      '/uptime',
-      '/maps',
-      '/siem',
-      '/canvas',
-      '/discover',
-      '/visualize',
-      '/dashboard',
-      '/machine-learning',
-      '/custom-plugin',
-      '/dev-tools',
-      '/stack-monitoring',
-      '/stack-management',
-    ];
+  // exportPathMap: async function (defaultPathMap) {
+  //   const dynamicPaths = [
+  //     '/my-dashboard',
+  //     '/workpad',
+  //     '/my-logs',
+  //     '/my-workpad',
+  //     '/my-logs',
+  //     '/apm',
+  //     '/metrics',
+  //     '/logs',
+  //     '/uptime',
+  //     '/maps',
+  //     '/siem',
+  //     '/canvas',
+  //     '/discover',
+  //     '/visualize',
+  //     '/dashboard',
+  //     '/machine-learning',
+  //     '/custom-plugin',
+  //     '/dev-tools',
+  //     '/stack-monitoring',
+  //     '/stack-management',
+  //   ];
 
-    const pathMap = {
-      ...defaultPathMap,
-    };
+  //   const pathMap = {
+  //     ...defaultPathMap,
+  //   };
 
-    for (const path of dynamicPaths) {
-      pathMap[`/my-app${path}`] = { page: '/my-app/[slug]' };
-    }
+  //   for (const path of dynamicPaths) {
+  //     pathMap[`/my-app${path}`] = { page: '/my-app/[slug]' };
+  //   }
 
-    return pathMap;
-  },
+  //   return pathMap;
+  // },
 };
 
 /**
