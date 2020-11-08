@@ -10,13 +10,8 @@ export const buildExploreLinks = (
   },
   {
     label: 'Візуалізація',
-    onClick: makeAction('/visualize'),
+    onClick: makeAction('/measurement'),
     iconType: 'visualizeApp',
-  },
-  {
-    label: 'Документи',
-    onClick: makeAction('/documents'),
-    iconType: 'dashboardApp',
   },
   {
     label: 'Локації',
@@ -27,6 +22,11 @@ export const buildExploreLinks = (
     label: 'Вимірювальні фактори',
     onClick: makeAction('/factors'),
     iconType: 'metricsApp',
+  },
+  {
+    label: 'Документи',
+    onClick: makeAction('/documents'),
+    iconType: 'dashboardApp',
   },
   {
     label: 'Журнал',
