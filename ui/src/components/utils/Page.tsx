@@ -11,7 +11,7 @@ export const Page = ({ title, children, width }: PageProps) => (
   <EuiPage restrictWidth={width || true}>
       <EuiPageBody>
         <EuiPageHeader>
-          <EuiPageHeaderSection>
+          <EuiPageHeaderSection style={{ width: '100%' }}>
             <EuiTitle size='l'>
               <h1>{title}</h1>
             </EuiTitle>

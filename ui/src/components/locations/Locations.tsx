@@ -1,27 +1,19 @@
-import { EuiButton, EuiDataGridColumn, EuiDescriptionList, EuiFlexGrid, EuiFlexGroup, EuiFlexItem, EuiSpacer } from "@elastic/eui"
+import { EuiButton, EuiDataGridColumn, EuiDescriptionList, EuiFlexGrid, EuiFlexItem, EuiSpacer } from "@elastic/eui"
 import { LatLngTuple } from "leaflet"
 import Link from "next/link"
 import React from "react"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 import { useGetLocations } from "src/graphql/query/locations/getLocations"
 import { GetLocations_az_sensors_Locations_aggregate_nodes as LocationType } from "src/graphql/query/locations/types/GetLocations"
+import { createDescItem } from "../utils"
 import { DataGrid } from "../utils/DataGrid"
 import { Loading } from "../utils/loading"
+import { KYIV_COORDINATES, parseLatLngTuple, titleLayer } from "../utils/Map"
 import { Page } from "../utils/Page"
-
-const KYIV_COORDINATES: LatLngTuple = [ 50.4387102, 30.4908161 ]
 
 type LocationsProps = {
   locations: LocationType[]
 }
-
-const parseLatLngTuple = (pointStr: string) => pointStr.match(/\((.*?)\)/)[1].split(',').map(x => parseFloat(x)) as LatLngTuple
-const createDescItem = (title: string, description?: string | number) => description
-  ? { 
-    title,
-    description
-  }
-  : undefined
 
 type LocationProps = {
   location: LocationType
@@ -70,11 +62,8 @@ const LocationMarker = ({
   </Marker>
 
 const LocationsMaps = ({ locations }: LocationsProps) => {
-  return <MapContainer center={KYIV_COORDINATES} zoom={11} scrollWheelZoom={false} style={{ height: '600px' }}>
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+  return <MapContainer center={KYIV_COORDINATES} zoom={12} style={{ height: '600px' }}>
+      {titleLayer}
       {locations.map(x => <LocationMarker location={x} />)}
     </MapContainer>
 }
