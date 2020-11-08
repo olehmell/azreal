@@ -18,6 +18,7 @@ import {
 import { loadLocationDataBySensorId } from './utils';
 import { useAddSensor } from 'src/graphql/query/sensors/addSensors';
 import { useRouter } from 'next/router';
+import { Page } from '../utils/Page';
 
 const schema = yup.object().shape({
   sensorId: yup.number().required(),
@@ -25,7 +26,7 @@ const schema = yup.object().shape({
   model: yup.string()
 });
 
-export default () => {
+export const NewSensor = () => {
   const [ addSensors, { data: res } ] = useAddSensor()
   const [ loading, setLoading ] = useState(false)
   const [ error, setError ] = useState('')
@@ -115,3 +116,9 @@ export default () => {
     </EuiForm>
   );
 };
+
+export default () => {
+  return <Page title='Додати датчик'>
+    <NewSensor />
+  </Page>
+}
