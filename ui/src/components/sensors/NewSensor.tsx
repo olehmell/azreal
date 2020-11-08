@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup'
 
 import {
   EuiButton,
@@ -15,16 +14,12 @@ import {
   EuiCallOut,
 } from '@elastic/eui';
 
-import { loadLocationDataBySensorId } from './utils';
+import { loadLocationDataBySensorId, sensorSchema } from './utils';
 import { useAddSensor } from 'src/graphql/query/sensors/addSensors';
 import { useRouter } from 'next/router';
 import { Page } from '../utils/Page';
 
-const schema = yup.object().shape({
-  sensorId: yup.number().required(),
-  manufacturer: yup.string(),
-  model: yup.string()
-});
+
 
 export const NewSensor = () => {
   const [ addSensors, { data: res } ] = useAddSensor()
@@ -32,8 +27,8 @@ export const NewSensor = () => {
   const [ error, setError ] = useState('')
   const router = useRouter()
 
-  const { register, handleSubmit, watch, errors } = useForm({
-    resolver: yupResolver(schema),
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(sensorSchema),
     reValidateMode: 'onBlur'
   })
 
@@ -87,6 +82,7 @@ export const NewSensor = () => {
   , [ error, resSensorId])
 
   return (
+    <Page title='Редагувати датчик'>
     <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
       <EuiFormRow label="ID сенсора"fullWidth>
         <EuiFieldNumber
@@ -114,11 +110,9 @@ export const NewSensor = () => {
       <SubmitPanel />
 
     </EuiForm>
+  </Page>
+
   );
 };
 
-export default () => {
-  return <Page title='Додати датчик'>
-    <NewSensor />
-  </Page>
-}
+export default NewSensor

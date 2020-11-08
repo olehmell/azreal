@@ -1,6 +1,11 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import React from 'react'
 import { GetLocations_az_sensors_Locations_aggregate_nodes as Location } from 'src/graphql/query/locations/types/GetLocations'
+import { useGetSensorById } from 'src/graphql/query/sensors/getSensorById'
+import { GetSensorById_az_sensors_Sensors as SensorType } from "src/graphql/query/sensors/types/GetSensorById"
+import { Loading } from '../utils/loading'
+import * as yup from 'yup'
 
 const SENSORT_DATA_URL = 'https://airapi.airly.eu/v2/installations'
 
@@ -48,4 +53,31 @@ export const loadLocationDataBySensorId = async (id: number) => {
     return { location, error }
   }
 
+}
+
+export const sensorSchema = yup.object().shape({
+  sensorId: yup.number().required(),
+  manufacturer: yup.string(),
+  model: yup.string()
+});
+
+export type SensorProps = {
+  sensor: SensorType
+}
+
+export const withLoadSensorFormUrl = (Component: React.ComponentType<SensorProps>) => {
+  return () => {
+    const { query: { sensorId }} = useRouter()
+    const { data, loading, error } = useGetSensorById(parseInt(sensorId as string))
+
+    console.log('DAuseGetSensorByIdTA', data)
+  
+    if (error) return null;
+  
+    if (loading) return <Loading />
+  
+    const sensor = data.az_sensors_Sensors.pop()
+
+    return <Component sensor={sensor} />
+  }
 }
