@@ -8,7 +8,7 @@ export const ADD_SENSORS_QUERY = gql`
     objects: {manufacturer: $manufacturer, model: $model, sensorId: $sensorId, Location: {data: {locationId: $locationId, actLink: $actLink, address: $address, airlyLink: $airlyLink, elevation: $elevation, locationPoint: $locationPoint, mapsLink: $mapsLink}}}
   ) {
     returning {
-      locationId
+      sensorId
     }
   }
 }`;

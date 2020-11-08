@@ -19,4 +19,4 @@ const GET_FACTORS_WITH_SENSORS = gql`
     }
   }`
 
-  export const useGetFactors = () => useQuery<GetFactorsWithSensors>(GET_FACTORS_WITH_SENSORS) 
+export const useGetFactors = () => useQuery<GetFactorsWithSensors>(GET_FACTORS_WITH_SENSORS) 
