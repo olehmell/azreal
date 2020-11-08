@@ -93,14 +93,16 @@ const LocationTable = ({ locations }: LocationsProps) => {
     {
       id: 'elevation',
       display: 'Висота на рівнем моря',
-    },
-    {
-      id: 'airlyLink',
-      display: 'Посилання на Airly',
     }
   ];
 
-  return <DataGrid data={locations} columns={columns} />
+  const data = locations.map(({ locationId, address, elevation, airlyLink }) => ({
+    locationId,
+    elevation,
+    address: <a href={airlyLink} >{address}</a>
+  }))
+
+  return <DataGrid data={data} columns={columns} />
 }
 
 export const Locations = () => {
