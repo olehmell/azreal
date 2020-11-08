@@ -43,7 +43,6 @@ export const DataGrid = ({ columns ,data }: ViewDataProps) => {
   
     const renderCellValue = useMemo(() => {
       return ({ rowIndex, columnId }) => {
-        console.log('columnId', columnId, data[rowIndex])
         return data.hasOwnProperty(rowIndex)
           ? data[rowIndex][columnId]
           : null;
