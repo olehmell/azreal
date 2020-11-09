@@ -1,29 +1,12 @@
-import { EuiBadge, EuiButton, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from "@elastic/eui"
-import { useRouter } from "next/router"
+import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from "@elastic/eui"
 import React from "react"
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
-import { useGetSensorById } from "src/graphql/query/sensors/getSensorById"
+import { MapContainer, Marker, Popup } from "react-leaflet"
 import { createDescItem } from "../utils"
-import { ButtonLink } from "../utils/ButtonLink"
-import { Loading } from "../utils/loading"
 import { parseLatLngTuple, titleLayer } from "../utils/Map"
 import { Page } from "../utils/Page"
-import { EditSensor } from "./EditSensor"
+import { DeleteButton } from "./DeleteButton"
+import { EditButton } from "./EditSensor"
 import { SensorProps, withLoadSensorFormUrl } from "./utils"
-
-
-type StatItemProps = {
-  name: string,
-  value: number | string
-}
-
-const getStatItem = ({ name, value }: StatItemProps) => {
-  <EuiStat
-    title={value}
-    description={name}
-    titleColor="secondary"
-  />
-}
 
 const SensorDesc = ({
   sensor
@@ -78,9 +61,14 @@ export const ViewSensor = ({ sensor }: SensorProps) => {
 export const Sensor = ({ sensor }: SensorProps) => {
   return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>
     <EuiFlexItem>{`Датчик ${sensor.sensorId}`}</EuiFlexItem>
-    <EuiFlexItem>
-      <EditSensor sensor={sensor} />
-    </EuiFlexItem>
+    <EuiFlexGroup alignItems='center'>
+      <EuiFlexItem>
+        <EditButton sensor={sensor} />
+      </EuiFlexItem>
+      <EuiFlexItem>
+        <DeleteButton sensorId={sensor.sensorId} />
+      </EuiFlexItem>
+    </EuiFlexGroup>
   </EuiFlexGroup>
   }>
     <ViewSensor sensor={sensor} />

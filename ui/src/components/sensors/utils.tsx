@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import Error from 'next/error'
 import React from 'react'
 import { GetLocations_az_sensors_Locations_aggregate_nodes as Location } from 'src/graphql/query/locations/types/GetLocations'
 import { useGetSensorById } from 'src/graphql/query/sensors/getSensorById'
 import { GetSensorById_az_sensors_Sensors as SensorType } from "src/graphql/query/sensors/types/GetSensorById"
 import { Loading } from '../utils/loading'
 import * as yup from 'yup'
+import NotFoundPage from '../utils/NotFoundPage'
 
 const SENSORT_DATA_URL = 'https://airapi.airly.eu/v2/installations'
 
@@ -76,7 +78,9 @@ export const withLoadSensorFormUrl = (Component: React.ComponentType<SensorProps
   
     if (loading) return <Loading />
   
-    const sensor = data.az_sensors_Sensors.pop()
+    const sensor = data?.az_sensors_Sensors.pop()
+
+    if (!sensor) return <NotFoundPage />
 
     return <Component sensor={sensor} />
   }

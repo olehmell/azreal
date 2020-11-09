@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
-import { GetSensorById_az_sensors_Sensors as SensorType } from "src/graphql/query/sensors/types/GetSensorById"
 
 import {
   EuiButton,
@@ -11,36 +10,26 @@ import {
   EuiSpacer,
   EuiFieldNumber,
   EuiLoadingSpinner,
-  EuiFormErrorText,
-  EuiCallOut,
   EuiFlyout,
   EuiFlyoutBody,
   EuiFlyoutHeader,
-  EuiText,
   EuiTitle,
-  EuiCodeBlock,
 } from '@elastic/eui';
 
-import { loadLocationDataBySensorId, sensorSchema, withLoadSensorFormUrl } from './utils';
-import { useAddSensor } from 'src/graphql/query/sensors/addSensors';
-import { useRouter } from 'next/router';
-import { Page } from '../utils/Page';
+import { SensorProps } from './utils';
 import { useUpdateSensorById } from 'src/graphql/query/sensors/updateSensor';
+import { useRouter } from 'next/router';
 
-type SensorFormProps = {
-  sensor: SensorType
+type EditFlayOutProps = SensorProps & {
+  onClose: () => void
 }
 
-export const EditSensorForm = ({ sensor: { model, manufacturer, sensorId, Location: location } }: SensorFormProps) => {
+export const EditSensorForm = ({ sensor: { model, manufacturer, sensorId, Location } }: EditFlayOutProps) => {
   const [ updateSensors, { data: res } ] = useUpdateSensorById(sensorId)
   const [ loading, setLoading ] = useState(false)
-  const [ error, setError ] = useState('')
   const router = useRouter()
 
-  const { register, handleSubmit, watch, errors, setValue } = useForm({
-    resolver: yupResolver(sensorSchema),
-    reValidateMode: 'onBlur'
-  })
+  const { register, handleSubmit, watch, setValue } = useForm()
 
   const watchModel = watch('model')
   const watchManufacturer = watch('manufacturer')
@@ -49,53 +38,40 @@ export const EditSensorForm = ({ sensor: { model, manufacturer, sensorId, Locati
     setValue('sensorId', sensorId)
     setValue('model', model)
     setValue('manufacturer', manufacturer)
+    setValue('locationId', Location.locationId)
   }, [])
 
   const notChange = watchModel === model && watchManufacturer === manufacturer
 
   const resSensorId = res?.update_az_sensors_Sensors.returning[0].sensorId
 
-  const onSubmit = useCallback(async sensorData => {
+  useEffect(() => {
+    if (!resSensorId) return
+
+    router.reload()
+  }, [ resSensorId ])
+
+  const onSubmit = async sensorData => {
     console.log('SUBMIT', sensorData)
     setLoading(true)
     try {
         await updateSensors({ variables: {
-          ...location,
           ...sensorData
         }})
         setLoading(false)
       }
     catch (error) {
       console.error(error)
-      setError(error.toString())
       setLoading(false)
     }
-  }, [])
+  }
 
   const SubmitButton = useCallback(() => loading
     ? <EuiLoadingSpinner size='m' />
     : <EuiButton type="submit" disabled={notChange} fill>
         Редагувати датичк
       </EuiButton>
-    , [ loading, resSensorId ])
-
-  const AddedAlert = useCallback(() => (error && !resSensorId)
-    ? <EuiCallOut title="Датчик не редаговано, сталась помилка:" color='danger'>{error}</EuiCallOut>
-    : <EuiCallOut title="Датчик успішно редаговано, найближчим часом вас перенаправить на його сторінку" color='success'>
-        <EuiButton
-          color="secondary"
-          size="s"
-          onClick={() => router.push('/sensors/[sensorId]', `/sensors/${resSensorId}`)}
-        >
-          Перейти на сторінку датчика
-        </EuiButton>
-    </EuiCallOut>
-  , [ error, resSensorId || 0 ])
-
-  const SubmitPanel = useCallback(() => (error || resSensorId)
-    ? <AddedAlert />
-    : <SubmitButton />
-  , [ error, resSensorId])
+    , [ loading, resSensorId, notChange ])
 
   return (
     <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -103,39 +79,41 @@ export const EditSensorForm = ({ sensor: { model, manufacturer, sensorId, Locati
         <EuiFieldNumber
           name='sensorId'
           placeholder="ID сенсора з Airly"
-          inputRef={register}
           disabled
           fullWidth
           required
         />
       </EuiFormRow>
-      <EuiFormErrorText title={errors.sensorId} />
 
       <EuiFormRow label="Виробник" fullWidth>
         <EuiFieldText name="manufacturer" inputRef={register} fullWidth />
       </EuiFormRow>
-      <EuiFormErrorText title={errors.manufacturer} />
 
 
       <EuiFormRow label="Модель" fullWidth>
         <EuiFieldText name="model" inputRef={register} fullWidth />
       </EuiFormRow>
-      <EuiFormErrorText title={errors.model} />
+
+      <EuiFormRow label="ID локації"fullWidth>
+        <EuiFieldNumber
+          name='locationId'
+          placeholder="ID локації"
+          inputRef={register({ required: true })}
+          fullWidth
+          required
+        />
+      </EuiFormRow>
 
       <EuiSpacer />
-      <SubmitPanel />
+      <SubmitButton />
 
     </EuiForm>
   );
 };
 
-type EditFlayOutProps = SensorFormProps & {
-  onClose: () => void
-}
-
-const EditFlayOut = ({ sensor, onClose }: EditFlayOutProps) => <EuiFlyout
+const EditFlayOut = (props: EditFlayOutProps) => <EuiFlyout
     ownFocus
-    onClose={onClose}
+    onClose={props.onClose}
     aria-labelledby="flyoutTitle">
     <EuiFlyoutHeader hasBorder>
       <EuiTitle size="m">
@@ -143,12 +121,12 @@ const EditFlayOut = ({ sensor, onClose }: EditFlayOutProps) => <EuiFlyout
       </EuiTitle>
     </EuiFlyoutHeader>
     <EuiFlyoutBody>
-      <EditSensorForm sensor={sensor} />
+      <EditSensorForm {...props} />
     </EuiFlyoutBody>
   </EuiFlyout>
 
 
-export const EditSensor = ({ sensor }: SensorFormProps) => {
+export const EditButton = ({ sensor }: SensorProps) => {
   const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
 
   const FlayOut = useCallback(() => isFlyoutVisible
