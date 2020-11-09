@@ -7,13 +7,13 @@
 | ![1st picture](img/BOO.jpg ':size=300') | ![1st picture](img/BEO.jpg ':size=300') | ![1st picture](img/ROV.jpg ':size=300') |
 | Лідер проєкту | Фінансові операції, логістика | Міжнародні відносини, логістика |
 
-| [Журбас Катерина Вікторівна](https://www.facebook.com/groups/336296126817575/user/100013036576391/) | [Горобцов Інокентій Владиславович](https://www.facebook.com/inimyoworld/) | [Гусєв Олександр Михайлович](https://www.facebook.com/ohusiev) |
+| [Журбас Катерина Вікторівна](https://www.facebook.com/profile.php?id=100013036576391) | [Горобцов Інокентій Владиславович](https://www.facebook.com/inimyoworld/) | [Гусєв Олександр Михайлович](https://www.facebook.com/ohusiev) |
 | --------------------------------------- | --------------------------------------- | --------------------------------------- |
 | ![1st picture](img/ZKV.jpg ':size=300') | ![1st picture](img/HIV.jpg ':size=300') | ![1st picture](img/HOM.jpg ':size=300') |
 | Інформаційна підтримка                  | Контент-менеджер                        | Підтримка сайту                         |
 
-| [Мельничук Олег Валерійович](https://www.facebook.com/olehmell) | [Прощаваєв Владислав Романович](https://www.facebook.com/ns.f3joule) | [Дмитро]() |
+| [Мельничук Олег Валерійович](https://www.facebook.com/olehmell) | [Прощаваєв Владислав Романович](https://www.facebook.com/ns.f3joule) | [Дмитро Мотрій](https://example.com/) |
 | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![1st picture](img/MOV.jpg ':size=300') | ![1st picture](img/PVR.jpg ':size=300') | ![1st picture]() |
+| ![1st picture](img/MOV.jpg ':size=300') | ![1st picture](img/PVR.jpg ':size=300') | ![1st picture](img/unknown.png) |
 | Технічна підтримка                      | Технічна підтримка                      | Технічна підтримка                      |
 
