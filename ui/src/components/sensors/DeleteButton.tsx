@@ -19,7 +19,7 @@ export const DeleteButton = ({ sensorId }: DeleteButtonProps) => {
     if (!resId) return 
 
     router.push('/sensors')
-  }, [ resId || 0 ])
+  }, [ resId, router ])
 
   if (error) return null;
 

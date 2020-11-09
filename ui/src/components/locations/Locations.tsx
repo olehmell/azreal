@@ -41,48 +41,48 @@ const LocationMarker = ({
   location
 }: LocationProps) => <Marker
   position={parseLatLngTuple(location.locationPoint)}
-  >
-    <Popup>
-      <EuiFlexGrid columns={1} direction="column">
-        <EuiFlexItem>
-          <LocationDesc location={location} />
-        </EuiFlexItem>
+>
+  <Popup>
+    <EuiFlexGrid columns={1} direction="column">
+      <EuiFlexItem>
+        <LocationDesc location={location} />
+      </EuiFlexItem>
 
-        <EuiFlexItem >
-          <Link href='/locations/[locationId]' as={`/locations/${location.locationId}`}>
-            <a>
-              <EuiButton size="s" iconType="link" fullWidth >
+      <EuiFlexItem >
+        <Link href='/locations/[locationId]' as={`/locations/${location.locationId}`}>
+          <a>
+            <EuiButton size="s" iconType="link" fullWidth >
                 Сторінка локації
-              </EuiButton>
-            </a>
-          </Link>
-        </EuiFlexItem>
-      </EuiFlexGrid>
-    </Popup>
-  </Marker>
+            </EuiButton>
+          </a>
+        </Link>
+      </EuiFlexItem>
+    </EuiFlexGrid>
+  </Popup>
+</Marker>
 
 const LocationsMaps = ({ locations }: LocationsProps) => {
   return <MapContainer center={KYIV_COORDINATES} zoom={12} style={{ height: '600px' }}>
-      {titleLayer}
-      {locations.map(x => <LocationMarker location={x} />)}
-    </MapContainer>
+    {titleLayer}
+    {locations.map((x, i) => <LocationMarker key={i} location={x} />)}
+  </MapContainer>
 }
 
 const LocationTable = ({ locations }: LocationsProps) => {
 
-  const columns: EuiDataGridColumn[] = [{
-      id: 'locationId',
-      display: 'ID',
-      initialWidth: 100
-    },
-    {
-      id: 'address',
-      display: 'Адреса',
-    },
-    {
-      id: 'elevation',
-      display: 'Висота на рівнем моря',
-    }
+  const columns: EuiDataGridColumn[] = [ {
+    id: 'locationId',
+    display: 'ID',
+    initialWidth: 100
+  },
+  {
+    id: 'address',
+    display: 'Адреса',
+  },
+  {
+    id: 'elevation',
+    display: 'Висота на рівнем моря',
+  }
   ];
 
   const data = locations.map(({ locationId, address, elevation, airlyLink }) => ({

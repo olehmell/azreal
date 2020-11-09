@@ -57,7 +57,7 @@ const Chrome: FunctionComponent = ({ children }) => {
     <>
       <EuiHeader className={styles.chrHeader}>
         <EuiHeaderSection grow={false}>
-          <EuiShowFor sizes={['xs', 's']}>
+          <EuiShowFor sizes={[ 'xs', 's' ]}>
             <EuiHeaderSectionItem border='right'>
               <MenuTrigger onClick={() => navDrawerRef.current!.toggleOpen()} />
             </EuiHeaderSectionItem>

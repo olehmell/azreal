@@ -93,7 +93,7 @@ const measurementSelectorOptions = [
 
 const MeasurementSelector = () => {
 
-  const [selectedOptions, setSelected] = useState<any[]>();
+  const [ selectedOptions, setSelected ] = useState<any[]>();
 
   const onChange = (selectedOptions) => {
     // We should only get back either 0 or 1 options.

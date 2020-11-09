@@ -15,22 +15,22 @@ type Column = {
 const Factors = () => {
   const { data, loading, error } = useGetFactors()
 
-  const columns: EuiDataGridColumn[] = [{
+  const columns: EuiDataGridColumn[] = [ {
     id: 'label',
     display: 'Назва фактору',
-    },
-    {
-      id: 'unit',
-      display: 'Одиниці',
-    },
-    {
-      id: 'maxValues',
-      display: 'Максимальні значення',
-    },
-    {
-      id: 'amount',
-      display: 'Кількість датчиків',
-    }
+  },
+  {
+    id: 'unit',
+    display: 'Одиниці',
+  },
+  {
+    id: 'maxValues',
+    display: 'Максимальні значення',
+  },
+  {
+    id: 'amount',
+    display: 'Кількість датчиків',
+  }
   ];
 
   const sensorsData: Column[] = data?.az_sensors_PollutionFactors_aggregate.nodes

@@ -54,63 +54,63 @@ export const NewSensor = () => {
       setError(error.toString())
       setLoading(false)
     }
-  }, [])
+  }, [ addSensors ])
 
   const SubmitButton = useCallback(() => loading
     ? <EuiLoadingSpinner size='m' />
     : <EuiButton type="submit" fill>
         Додати датчик
-      </EuiButton>
-    , [ loading, resSensorId ])
+    </EuiButton>
+  , [ loading ])
 
   const AddedAlert = useCallback(() => (error && !resSensorId)
     ? <EuiCallOut title="Датчик не додано, сталась помилка:" color='danger'>{error}</EuiCallOut>
     : <EuiCallOut title="Датчик успішно додано, найближчим часом вас перенаправить на його сторінку" color='success'>
-        <EuiButton
-          color="secondary"
-          size="s"
-          onClick={() => router.push('/sensors/[sensorId]', `/sensors/${resSensorId}`)}
-        >
+      <EuiButton
+        color="secondary"
+        size="s"
+        onClick={() => router.push('/sensors/[sensorId]', `/sensors/${resSensorId}`)}
+      >
           Перейти на сторінку датчика
-        </EuiButton>
+      </EuiButton>
     </EuiCallOut>
-  , [ error, resSensorId || 0 ])
+  , [ error, resSensorId, router ])
 
   const SubmitPanel = useCallback(() => (error || resSensorId)
     ? <AddedAlert />
     : <SubmitButton />
-  , [ error, resSensorId])
+  , [ error, resSensorId ])
 
   return (
     <Page title='Редагувати датчик'>
-    <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
-      <EuiFormRow label="ID сенсора"fullWidth>
-        <EuiFieldNumber
-          name='sensorId'
-          placeholder="ID сенсора з Airly"
-          inputRef={register}
-          fullWidth
-          required
-        />
-      </EuiFormRow>
-      <EuiFormErrorText title={errors.sensorId} />
+      <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
+        <EuiFormRow label="ID сенсора"fullWidth>
+          <EuiFieldNumber
+            name='sensorId'
+            placeholder="ID сенсора з Airly"
+            inputRef={register}
+            fullWidth
+            required
+          />
+        </EuiFormRow>
+        <EuiFormErrorText title={errors.sensorId} />
 
-      <EuiFormRow label="Виробник" fullWidth>
-        <EuiFieldText name="manufacturer" inputRef={register} fullWidth />
-      </EuiFormRow>
-      <EuiFormErrorText title={errors.manufacturer} />
+        <EuiFormRow label="Виробник" fullWidth>
+          <EuiFieldText name="manufacturer" inputRef={register} fullWidth />
+        </EuiFormRow>
+        <EuiFormErrorText title={errors.manufacturer} />
 
 
-      <EuiFormRow label="Модель" fullWidth>
-        <EuiFieldText name="model" inputRef={register} fullWidth />
-      </EuiFormRow>
-      <EuiFormErrorText title={errors.model} />
+        <EuiFormRow label="Модель" fullWidth>
+          <EuiFieldText name="model" inputRef={register} fullWidth />
+        </EuiFormRow>
+        <EuiFormErrorText title={errors.model} />
 
-      <EuiSpacer />
-      <SubmitPanel />
+        <EuiSpacer />
+        <SubmitPanel />
 
-    </EuiForm>
-  </Page>
+      </EuiForm>
+    </Page>
 
   );
 };
