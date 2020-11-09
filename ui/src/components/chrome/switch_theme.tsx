@@ -21,11 +21,11 @@ type ThemeType = 'dark' | 'light'
 
 const THEME = 'theme'
 
-const DEFAULT_THEME: ThemeType = 'light'
+const isClientSide = () => typeof window !== 'undefined' 
 
-const getThemeFromStore = () => (localStorage?.getItem(THEME) || DEFAULT_THEME) as ThemeType
+const getThemeFromStore = () => ((isClientSide() && localStorage?.getItem(THEME)) || initialTheme) as ThemeType
 
-const setThemeToStore = (theme: ThemeType) => localStorage?.setItem(THEME, theme)
+const setThemeToStore = (theme: ThemeType) => isClientSide() && localStorage?.setItem(THEME, theme)
 
 const SwitchTheme: FunctionComponent = () => {
   const [ themeType, setThemeType ] = useState<ThemeType>(getThemeFromStore());
