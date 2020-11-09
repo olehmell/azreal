@@ -2,43 +2,49 @@ CREATE SCHEMA IF NOT EXISTS "az_users";
 
 CREATE TABLE IF NOT EXISTS "az_users"."Organisation"
 (
-    "organisationId"       integer NOT NULL,
+    "organisationId"   serial PRIMARY KEY,
     "fullName"         text    NOT NULL,
     "shortName"        text,
     "country"          varchar(56),
     "rntrc"            char(8) NOT NULL,
     "registryLink"     text,
     "organisationRole" text,
-    "actLink"          text,
-    PRIMARY KEY ("organisationId"),
+    "documentId"       serial,
+    FOREIGN KEY ("documentId")
+        REFERENCES "az_docs"."Documents" ("documentId") MATCH FULL
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
     UNIQUE ("organisationId"),
     UNIQUE ("rntrc")
 );
 
 CREATE TABLE IF NOT EXISTS "az_users"."Users"
 (
-    "userId"    integer NOT NULL,
-    "fullName"      text    NOT NULL,
-    "email"         text,
-    "phoneNumber"   text,
+    "userId"         serial PRIMARY KEY,
+    "fullName"       text,
+    "email"          text NOT NULL,
+    "phoneNumber"    text,
     "organisationId" integer,
-    "userRole"      text,
-    "actLink"       text,
-    PRIMARY KEY ("userId"),
     FOREIGN KEY ("organisationId")
-        REFERENCES "az_users"."Organisation" ("organisationId") MATCH SIMPLE
+        REFERENCES "az_users"."Organisation" ("organisationId") MATCH FULL
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    "userRole"       text,
+    "documentId"     serial,
+    FOREIGN KEY ("documentId")
+        REFERENCES "az_docs"."Documents" ("documentId") MATCH FULL
         ON UPDATE CASCADE
         ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS "az_users"."UsageLog"
 (
-    "userId" integer,
-    "timestamp"      timestamp NOT NULL,
-    "query"          text      NOT NULL,
-    "queryType"      char(6)   NOT NULL,
+    "timestamp" timestamp NOT NULL DEFAULT now(),
+    "userId"    serial,
     FOREIGN KEY ("userId")
-        REFERENCES "az_users"."Users" ("userId") MATCH SIMPLE
+        REFERENCES "az_users"."Users" ("userId") MATCH FULL
         ON UPDATE CASCADE
-        ON DELETE SET NULL
+        ON DELETE SET NULL,
+    "query"     text      NOT NULL,
+    "queryType" char(6)   NOT NULL
 );
