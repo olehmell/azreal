@@ -20,20 +20,8 @@ module.exports = {
 
     // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     'plugin:@typescript-eslint/recommended',
-
-    // Uses eslint-config-prettier to disable ESLint rules from
-    // @typescript-eslint/eslint-plugin that would conflict with prettier
-    'prettier/@typescript-eslint',
-
-    'prettier/react',
-    'prettier/standard',
-
-    // Enables eslint-plugin-prettier and eslint-config-prettier. This will
-    // display prettier errors as ESLint errors. Make sure this is always
-    // the last configuration in the extends array.
-    'plugin:prettier/recommended',
   ],
-  plugins: ['jsx-a11y', 'prefer-object-spread', 'prettier', 'react-hooks'],
+  plugins: [ 'jsx-a11y', 'prefer-object-spread', 'prettier', 'react-hooks' ],
   rules: {
     // In an ideal world, we'd never have to use @ts-ignore, but that's not
     // possible right now.
@@ -82,21 +70,32 @@ module.exports = {
 
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
-    'beforeStatementContinuationChars': 'always',
     // Place to specify ESLint rules. Can be used to overwrite rules
     // specified from the extended configs
 
     // We're using TypeScript, so prop-types aren't so interesting
     'react/prop-types': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [ 'off' ],
+    'semi': 'off',
+    'comma-spacing': 'warn',
+    'array-bracket-spacing': [ 'warn', 'always' ],
+    'react/display-name': 'off',
+    'padded-blocks': 'off',
+    'prefer-promise-reject-errors': 'warn',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/indent': [ 'warn', 2 ],
+    '@typescript-eslint/no-use-before-define': 'off',
+    '@typescript-eslint/member-delimiter-style': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/prefer-interface': 'off',
+    '@typescript-eslint/no-object-literal-type-assertion': 'off',
+    '@typescript-eslint/camelcase': 'off',
+    'react/prop-types': 'off',
+    '@typescript-eslint/array-type': 'off',
 
-    // This is documented as the default, but apparently now needs to be
-    // set explicitly
-    'prettier/prettier': [
-      'error',
-      {},
-      {
-        usePrettierrc: true,
-      },
-    ],
+    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 };

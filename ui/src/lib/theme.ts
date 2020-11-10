@@ -9,7 +9,7 @@ export const defaultTheme = 'light';
 
 function getThemes(): HTMLLinkElement[] {
   // @ts-ignore
-  return [...document.querySelectorAll(selector)];
+  return [ ...document.querySelectorAll(selector) ];
 }
 
 export function setTheme(name: string): void {
