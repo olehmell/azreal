@@ -53,11 +53,6 @@ export const buildExploreLinks = (
     iconType: 'visualizeApp',
   },
   {
-    label: 'Локації',
-    onClick: makeAction('/locations'),
-    iconType: 'gisApp',
-  },
-  {
     label: 'Вимірювальні фактори',
     onClick: makeAction('/factors'),
     iconType: 'metricsApp',
