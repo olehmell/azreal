@@ -58,6 +58,7 @@ export const ViewSensor = ({ sensor }: SensorProps) => {
   </EuiFlexGroup>
 }
 
+
 export const Sensor = ({ sensor }: SensorProps) => {
   return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>
     <EuiFlexItem>{`Датчик ${sensor.sensorId}`}</EuiFlexItem>

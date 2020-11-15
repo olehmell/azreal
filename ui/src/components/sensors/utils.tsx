@@ -7,7 +7,7 @@ import { useGetSensorById } from 'src/graphql/query/sensors/getSensorById'
 import { GetSensorById_az_sensors_Sensors as SensorType } from "src/graphql/query/sensors/types/GetSensorById"
 import { Loading } from '../utils/loading'
 import * as yup from 'yup'
-import NotFoundPage from '../utils/NotFoundPage'
+import { NotFoundPage } from '../utils/NotFoundPage'
 
 const SENSORT_DATA_URL = 'https://airapi.airly.eu/v2/installations'
 

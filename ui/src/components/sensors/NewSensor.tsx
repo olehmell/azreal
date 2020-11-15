@@ -65,7 +65,7 @@ export const NewSensor = () => {
 
   const AddedAlert = useCallback(() => (error && !resSensorId)
     ? <EuiCallOut title="Датчик не додано, сталась помилка:" color='danger'>{error}</EuiCallOut>
-    : <EuiCallOut title="Датчик успішно додано, найближчим часом вас перенаправить на його сторінку" color='success'>
+    : <EuiCallOut title="Датчик успішно додано" color='success'>
       <EuiButton
         color="secondary"
         size="s"
