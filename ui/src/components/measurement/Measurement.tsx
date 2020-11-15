@@ -117,11 +117,3 @@ const MeasurementSelector = () => {
   </>
   );
 }
-
-export const Measurement = () => {
-  return <Page title='Результати вимірювань'>
-    <MeasurementSelector />
-  </Page>
-}
-
-export default Measurement;
