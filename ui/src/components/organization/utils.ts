@@ -12,6 +12,6 @@ export const organizationSchema = yup.object().shape({
   country: yupRequiredStr,
   organisationRole: yupRequiredStr,
   registryLink: yup.string().url().required(),
-  documentId: yup.number().required(),
+  documentId: yup.number(),
   rntrc: yup.number().required().min(10)
 } as OrganizationSchema);

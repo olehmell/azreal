@@ -18,6 +18,7 @@ import { useAddOrganization } from 'src/graphql/query/organizations/addOrganizat
 import { useRouter } from 'next/router';
 import { Page } from '../utils/Page';
 import { organizationSchema } from './utils';
+import { DocumentLoader } from '../forms/File';
 
 type Error = {
   message: string
@@ -30,7 +31,7 @@ export const NewOrganization = () => {
   const [ error, setError ] = useState('')
   const router = useRouter()
 
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(organizationSchema)
   })
 
@@ -108,6 +109,10 @@ export const NewOrganization = () => {
           />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors.rntrc)}</EuiFormErrorText>
+
+        <EuiFormRow label="Файл організації" fullWidth>
+          <DocumentLoader documentType='Organisation' onChange={(fileId) => setValue('documentId', fileId)} />
+        </EuiFormRow>
 
         <EuiSpacer />
         <SubmitPanel />
