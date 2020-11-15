@@ -4442,7 +4442,13 @@ input bpchar_comparison_exp {
   _nin: [bpchar!]
 }
 
-scalar document_type
+enum document_type {
+  User
+  Organisation
+  Sensor
+  Location
+  Service
+}
 
 """
 expression to compare columns of type document_type. All fields are combined with logical 'AND'.

@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import { Page } from '../utils/Page';
 import { organizationSchema } from './utils';
 import { DocumentLoader } from '../forms/File';
+import { document_type } from 'src/types/graphql-global-types';
 
 type Error = {
   message: string
@@ -111,7 +112,7 @@ export const NewOrganization = () => {
         <EuiFormErrorText>{getErrorMsg(errors.rntrc)}</EuiFormErrorText>
 
         <EuiFormRow label="Файл організації" fullWidth>
-          <DocumentLoader documentType='Organisation' onChange={(fileId) => setValue('documentId', fileId)} />
+          <DocumentLoader documentType={document_type.User} onChange={(fileId) => fileId && setValue('documentId', fileId)} />
         </EuiFormRow>
 
         <EuiSpacer />

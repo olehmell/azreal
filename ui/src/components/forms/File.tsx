@@ -1,62 +1,88 @@
 import { EuiFilePicker, EuiFilePickerProps, EuiFormErrorText } from "@elastic/eui";
 import React from "react";
 import { useAddDocument } from "src/graphql/query/documents/addDocument";
+import { useAddDocuments } from "src/graphql/query/documents/addDocuments";
 import { useAddPhoto } from "src/graphql/query/photos/addPhoto";
-import { document_type } from "src/types";
+import { useAddPhotos } from "src/graphql/query/photos/addPhotos";
+import { az_docs_Documents_insert_input, az_docs_Photo_insert_input, document_type } from "src/types/graphql-global-types";
 
 type FilePicker = Omit<EuiFilePickerProps, 'onChange'> & {
-  onChange: (fileId: number) => void,
+  onChange: (fileId?: number) => void
+}
+
+type DocumentPicker = FilePicker & {
   documentType: document_type
 }
 
-export const DocumentLoader = ({ onChange, name, documentType }: FilePicker) => {
-  const [ addDocument, { data, loading, error } ] = useAddDocument()
+const InnerFileLoader = (props: EuiFilePickerProps) => <EuiFilePicker
+  multiple
+  compressed
+  fullWidth
+  display='large'
+  {...props}
+/>
+
+export const DocumentLoader = ({ onChange, name, documentType }: DocumentPicker) => {
+  const [ addDocuments, { loading, error } ] = useAddDocument()
 
   return <>
-    <EuiFilePicker
+    <InnerFileLoader
       name={name}
       isLoading={loading}
       accept='.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       initialPromptText="Виберіть або перетягніть файл"
       onChange={async (files) => {
-        const file = files.item(0)
+        const documents: az_docs_Documents_insert_input[] = []
 
-        const documentBody = await file.text()
-        await addDocument({ variables: { documentType, documentBody }})
-
-        if (!error) {
-          const fileId = data.insert_az_docs_Documents.returning[0].documentId
-          onChange(fileId);
+        for (const file of files) {
+          const documentBody = await file.text()
+          documents.push({ documentType, documentBody })
         }
+
+        console.log(documents)
+
+        try {
+          const { data } = await addDocuments({ variables: { documentBody: documents[0].documentBody, documentType } })
+          const fileIds = data.insert_az_docs_Documents.returning
+          const fileId = fileIds[0].documentId
+          onChange(fileId);
+        } catch (error) {
+          console.error(error)
+          onChange();
+        }
+
       }}
-      display='large'
     />
-    {error && <EuiFormErrorText>{error}</EuiFormErrorText>}
+    {error && <EuiFormErrorText>{error.message}</EuiFormErrorText>}
   </>
 }
 
-export const PhotoLoader = ({ onChange, name, documentType }: FilePicker) => {
-  const [ addPhoto, { data, loading, error } ] = useAddPhoto()
+export const PhotoLoader = ({ onChange, name }: FilePicker) => {
+  const [ addPhotos, { data, loading, error } ] = useAddPhotos()
 
   return <>
-    <EuiFilePicker
+    <InnerFileLoader
       name={name}
       isLoading={loading}
       accept='image/*'
       initialPromptText="Виберіть або перетягніть фото"
       onChange={async (files) => {
-        const file = files.item(0)
+        const photos: az_docs_Photo_insert_input[] = []
 
-        const photoSeries = await file.arrayBuffer()
-        await addPhoto({ variables: { photoSeries }})
+        for (const file of files) {
+          const photoSeries = await file.arrayBuffer()
+          photos.push({ photoSeries })
+        }
+
+        await addPhotos({ variables: { objects: photos }})
 
         if (!error) {
-          const fileId = data.insert_az_docs_Photo.returning[0].photoId
+          const fileIds = data.insert_az_docs_Photo.returning
+          const fileId = fileIds[0].photoId
           onChange(fileId);
         }
       }}
-      display='large'
     />
-    {error && <EuiFormErrorText>{error}</EuiFormErrorText>}
+    {error && <EuiFormErrorText>{error.message}</EuiFormErrorText>}
   </>
 }

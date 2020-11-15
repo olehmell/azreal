@@ -18,6 +18,8 @@ import { loadLocationDataBySensorId, sensorSchema } from './utils';
 import { useAddSensor } from 'src/graphql/query/sensors/addSensors';
 import { useRouter } from 'next/router';
 import { Page } from '../utils/Page';
+import { DocumentLoader, PhotoLoader } from '../forms/File';
+import { document_type } from 'src/types/graphql-global-types';
 
 
 
@@ -27,9 +29,8 @@ export const NewSensor = () => {
   const [ error, setError ] = useState('')
   const router = useRouter()
 
-  const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(sensorSchema),
-    reValidateMode: 'onBlur'
+  const { register, handleSubmit, errors, setValue } = useForm({
+    resolver: yupResolver(sensorSchema)
   })
 
   const resSensorId = res?.insert_az_sensors_Sensors.returning[0].sensorId
@@ -105,6 +106,14 @@ export const NewSensor = () => {
           <EuiFieldText name="model" inputRef={register} fullWidth />
         </EuiFormRow>
         <EuiFormErrorText title={errors.model} />
+
+        <EuiFormRow label="Файл датчика" fullWidth>
+          <DocumentLoader documentType={document_type.Organisation} onChange={(fileId) => setValue('documentId', fileId)} />
+        </EuiFormRow>
+
+        <EuiFormRow label="Фото організації" fullWidth>
+          <PhotoLoader onChange={(fileId) => setValue('photoId', fileId)} />
+        </EuiFormRow>
 
         <EuiSpacer />
         <SubmitPanel />

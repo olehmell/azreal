@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { document_type } from "./../../../../types/graphql-global-types";
+
 // ====================================================
 // GraphQL mutation operation: AddDocument
 // ====================================================
@@ -29,5 +31,5 @@ export interface AddDocument {
 
 export interface AddDocumentVariables {
   documentBody?: string | null;
-  documentType?: any | null;
+  documentType?: document_type | null;
 }
