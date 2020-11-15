@@ -12,7 +12,7 @@ const GET_ORGANIZATION_BY_ID = gql`
       organisationId
       fullName
       country
-      actLink
+      documentId
     }
   }
 `

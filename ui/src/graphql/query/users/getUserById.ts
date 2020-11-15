@@ -5,7 +5,7 @@ import { GetUser, GetUserVariables } from "./types/GetUser";
 const GET_USER_BY_ID = gql`
   query GetUser($id: Int) {
     az_users_Users(where: {userId: {_eq: $id}}) {
-      actLink
+      documentId
       email
       fullName
       organisationId

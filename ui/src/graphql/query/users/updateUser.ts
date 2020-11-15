@@ -10,7 +10,7 @@ const UPDATE_USER = gql`
       organisationId
       fullName
       email
-      actLink
+      documentId
     }
   }
 `

@@ -9,9 +9,9 @@
 
 export interface GetUser_az_users_Users {
   __typename: "az_users_Users";
-  actLink: string | null;
-  email: string | null;
-  fullName: string;
+  documentId: number;
+  email: string;
+  fullName: string | null;
   organisationId: number | null;
   phoneNumber: string | null;
   userId: number;
@@ -19,6 +19,9 @@ export interface GetUser_az_users_Users {
 }
 
 export interface GetUser {
+  /**
+   * fetch data from the table: "az_users.Users"
+   */
   az_users_Users: GetUser_az_users_Users[];
 }
 

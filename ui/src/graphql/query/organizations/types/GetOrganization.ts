@@ -16,10 +16,13 @@ export interface GetOrganization_az_users_Organisation {
   organisationId: number;
   fullName: string;
   country: string | null;
-  actLink: string | null;
+  documentId: number;
 }
 
 export interface GetOrganization {
+  /**
+   * fetch data from the table: "az_users.Organisation"
+   */
   az_users_Organisation: GetOrganization_az_users_Organisation[];
 }
 

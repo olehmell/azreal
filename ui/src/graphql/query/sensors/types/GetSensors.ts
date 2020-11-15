@@ -9,7 +9,7 @@
 
 export interface GetSensors_az_sensors_Sensors_Location {
   __typename: "az_sensors_Locations";
-  actLink: string | null;
+  documentId: number | null;
   address: string | null;
   airlyLink: string | null;
   elevation: any;
@@ -20,13 +20,19 @@ export interface GetSensors_az_sensors_Sensors_Location {
 
 export interface GetSensors_az_sensors_Sensors {
   __typename: "az_sensors_Sensors";
-  locationId: number | null;
+  locationId: number;
   manufacturer: string | null;
   model: string | null;
   sensorId: number;
-  Location: GetSensors_az_sensors_Sensors_Location | null;
+  /**
+   * An object relationship
+   */
+  Location: GetSensors_az_sensors_Sensors_Location;
 }
 
 export interface GetSensors {
+  /**
+   * fetch data from the table: "az_sensors.Sensors"
+   */
   az_sensors_Sensors: GetSensors_az_sensors_Sensors[];
 }

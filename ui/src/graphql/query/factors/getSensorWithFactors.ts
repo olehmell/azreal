@@ -8,7 +8,6 @@ export const GET_SENSORS_WITH_FACTORS = gql`
     nodes {
       SensorFactors {
         PollutionFactor {
-          maxValues
           label
           unit
         }

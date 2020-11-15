@@ -19,7 +19,6 @@ const GET_SENSOR_BY_ID = gql`
         PollutionFactor {
           unit
           label
-          maxValues
         }
       }
     }

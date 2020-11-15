@@ -7,24 +7,21 @@
 // GraphQL mutation operation: DeleteOrganization
 // ====================================================
 
-export interface DeleteOrganization_insert_az_users_Organisation_returning {
-  __typename: "az_users_Organisation";
-  organisationId: number;
-}
-
-export interface DeleteOrganization_insert_az_users_Organisation {
+export interface DeleteOrganization_delete_az_users_Organisation {
   __typename: "az_users_Organisation_mutation_response";
-  returning: DeleteOrganization_insert_az_users_Organisation_returning[];
+  /**
+   * number of affected rows by the mutation
+   */
+  affected_rows: number;
 }
 
 export interface DeleteOrganization {
-  insert_az_users_Organisation: DeleteOrganization_insert_az_users_Organisation | null;
+  /**
+   * delete data from the table: "az_users.Organisation"
+   */
+  delete_az_users_Organisation: DeleteOrganization_delete_az_users_Organisation | null;
 }
 
 export interface DeleteOrganizationVariables {
-  fullName?: string | null;
-  organisationRole?: string | null;
-  registryLink?: string | null;
-  rntrc?: any | null;
-  shortName?: string | null;
+  id?: number | null;
 }

@@ -7,6 +7,8 @@
 // START Enums and Input Objects
 //==============================================================
 
+export type document_type = 'User' | 'Organisation' | 'Sensor' | 'Location' | 'Service' 
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
