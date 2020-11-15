@@ -2,13 +2,17 @@ import React, { Fragment, FunctionComponent } from 'react';
 import { EuiButton, EuiEmptyPrompt } from '@elastic/eui';
 import Link from 'next/link';
 
-const NotFoundPage: FunctionComponent = () => (
+type NotFoundProps = {
+  message: string
+}
+
+export const NotFound = ({ message }: NotFoundProps) => (
   <EuiEmptyPrompt
     iconType='editorStrike'
     title={<h2>Упс!</h2>}
     body={
       <Fragment>
-        <p>Сторінки яку ти шукаєш не існувало, або вже не існує</p>
+        <p>{message}</p>
       </Fragment>
     }
     actions={
@@ -23,4 +27,4 @@ const NotFoundPage: FunctionComponent = () => (
   />
 );
 
-export default NotFoundPage;
+export const NotFoundPage = () => <NotFound message='Сторінки яку ти шукаєш не існувало, або вже не існує' />;
