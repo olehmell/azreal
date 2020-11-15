@@ -117,3 +117,9 @@ const MeasurementSelector = () => {
   </>
   );
 }
+
+export default () => {
+  return <Page>
+    <MeasurementSelector />
+  </Page>
+}
