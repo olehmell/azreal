@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import { getErrorMsg } from '../utils'
 import CenteredPage from '../utils/CenteredPage'
 import { checkLogin } from './login'
-import * as sha256 from 'fast-sha256'
+import { sha256 } from 'crypto-hash'
 import { useAuth } from './AuthContext'
 
 export const schema = yup.object().shape({
@@ -22,31 +22,25 @@ export const Login = () => {
 
   const { register, handleSubmit, errors } = useForm()
 
-  useEffect(() => {
-    if (router.pathname.includes('login')) return 
-
-    router.replace('/login')
-
-  }, [ router.pathname ])
-
   const onSubmit = async loginData => {
-    console.log('SUBMIT', loginData)
     setLoading(true)
     try {
       const email = loginData.email
-      const password = sha256.hash(loginData.password).toString()
-      const { data, error } = await checkLogin(email, password)
+      const password = await sha256(loginData.password)
 
+      const { data, error } = await checkLogin(email, password)
+  
       if (error) throw error
 
       if (data) {
+        console.log('data', data)
         setAuthObj(data)
         setLoading(false)
-        router.push('/', '/')
+        router.push('/')
       }
 
     } catch (error) {
-      console.error(error)
+      console.error(error.toString())
       setError(error.toString())
       setLoading(false)
     }
@@ -57,7 +51,7 @@ export const Login = () => {
       loading ? (
         <EuiLoadingSpinner size='m' />
       ) : (
-        <EuiButton type='submit' fill>
+        <EuiButton type='submit' fill fullWidth>
           Увійти
         </EuiButton>
       ),
@@ -73,7 +67,7 @@ export const Login = () => {
       <EuiFormErrorText>{getErrorMsg(errors['email'])}</EuiFormErrorText> 
 
       <EuiFormRow label="Пароль" fullWidth>
-        <EuiFieldPassword name={'password'} inputRef={register} fullWidth />
+        <EuiFieldPassword name={'password'} inputRef={register} fullWidth type='dual' />
       </EuiFormRow>
       <EuiFormErrorText>{getErrorMsg(errors['password'])}</EuiFormErrorText>
       
@@ -86,7 +80,7 @@ export const Login = () => {
 }
 
 export const LoginPage = () => {
-  return <CenteredPage>
+  return <CenteredPage title='Вхід'>
     <Login />
   </CenteredPage>
 }

@@ -37,7 +37,7 @@ const messages = {
 export const InnerEditOrganization = ({ organization }: OrganizationForm) => {
   const formType = organization ? 'edit' : 'new'
 
-  const [ upsetOrganizations ] = useUpsetOrganization(organization.organisationId)
+  const [ upsetOrganizations ] = useUpsetOrganization(organization?.organisationId)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
 
@@ -52,6 +52,7 @@ export const InnerEditOrganization = ({ organization }: OrganizationForm) => {
   })
 
   const onSubmit = useCallback(async organizationData => {
+    console.log('organizationData', organizationData)
     setLoading(true)
     try {
       const { errors, data } = await upsetOrganizations({ variables: {
@@ -102,7 +103,7 @@ export const InnerEditOrganization = ({ organization }: OrganizationForm) => {
         <EuiFormRow label="Єдиний номер платника податку" fullWidth>
           <EuiFieldNumber
             name='rntrc'
-            placeholder="0000000000"
+            placeholder="00000000"
             inputRef={register}
             fullWidth
             required

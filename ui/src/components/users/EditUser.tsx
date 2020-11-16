@@ -40,7 +40,7 @@ const messages = {
 export const InnerEditUser = ({ user }: UserForm) => {
   const formType = user ? 'edit' : 'new'
   const isNew = formType === 'new'
-  const [ upsetUsers ] = useUpsetUser(user.userId)
+  const [ upsetUsers ] = useUpsetUser(user?.userId)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
 

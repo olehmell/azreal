@@ -63,7 +63,7 @@ export const ChangePassword = () => {
       loading ? (
         <EuiLoadingSpinner size='m' />
       ) : (
-        <EuiButton type='submit' fill>
+        <EuiButton type='submit' fill fullWidth>
           Змінити пароль
         </EuiButton>
       ),
@@ -91,7 +91,7 @@ export const ChangePassword = () => {
 }
 
 export const ChangePasswordPage = () => {
-  return <CenteredPage>
+  return <CenteredPage title='Зміна паролю'>
     <ChangePassword />
   </CenteredPage>
 }

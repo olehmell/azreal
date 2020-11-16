@@ -4,6 +4,7 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { graphqlUrl } from '../utils'
 import { LoginPage } from './Login'
+import { Loading } from '../utils/loading'
 
 const MY_AUTH_OBJECT = 'auth-object'
 
@@ -49,8 +50,9 @@ function reducer (state: AuthState, action: AuthAction): AuthState {
       return { ...state, authObj, inited: true }
 
     case 'setAuthObj':
-      authObj = action.authObj
-      if (authObj.userId !== action.authObj.userId) {
+      if (authObj?.userId !== action.authObj.userId) {
+        authObj = action.authObj
+        console.log(authObj.userId, action.authObj)
         if (authObj) {
           console.log('Set my new authObj', authObj)
           localStorageAuthObj(authObj)
@@ -115,6 +117,8 @@ export function AuthProvider (props: React.PropsWithChildren<any>) {
   if (!authObj) return <AuthContext.Provider value={contextValue}>
     <LoginPage />
   </AuthContext.Provider>
+
+  console.log('authObj', authObj)
 
   const client = new ApolloClient({
     uri: graphqlUrl,
