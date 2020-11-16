@@ -1,15 +1,16 @@
 import { EuiFilePicker, EuiFilePickerProps, EuiFormErrorText } from "@elastic/eui";
 import React from "react";
-import { useAddDocument } from "src/graphql/query/documents/addDocument";
+import { useAddDocuments } from "src/graphql/query/documents/addDocuments";
 import { useAddPhotos } from "src/graphql/query/photos/addPhotos";
-import { az_docs_Documents_insert_input, az_docs_Photo_insert_input, document_type } from "src/types/graphql-global-types";
+import { az_docs_Documents_insert_input, az_docs_enum_document_type_enum, az_docs_Photo_insert_input } from "src/types/graphql-global-types";
 
 type FilePicker = Omit<EuiFilePickerProps, 'onChange'> & {
   onChange: (fileId?: number) => void
+  fileIds?: number[]
 }
 
 type DocumentPicker = FilePicker & {
-  documentType: document_type
+  documentType: az_docs_enum_document_type_enum,
 }
 
 const InnerFileLoader = (props: EuiFilePickerProps) => <EuiFilePicker
@@ -20,8 +21,8 @@ const InnerFileLoader = (props: EuiFilePickerProps) => <EuiFilePicker
   {...props}
 />
 
-export const DocumentLoader = ({ onChange, name, documentType }: DocumentPicker) => {
-  const [ addDocuments, { loading, error } ] = useAddDocument()
+export const DocumentLoader = ({ onChange, name, documentType, fileIds }: DocumentPicker) => {
+  const [ addDocuments, { loading, error } ] = useAddDocuments()
 
   return <>
     <InnerFileLoader
@@ -40,7 +41,7 @@ export const DocumentLoader = ({ onChange, name, documentType }: DocumentPicker)
         console.log(documents)
 
         try {
-          const { data } = await addDocuments({ variables: { documentBody: documents[0].documentBody, documentType } })
+          const { data } = await addDocuments({ variables: { objects: documents } })
           const fileIds = data.insert_az_docs_Documents.returning
           const fileId = fileIds[0].documentId
           onChange(fileId);
