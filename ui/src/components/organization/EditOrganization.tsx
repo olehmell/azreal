@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import {
   EuiButton,
@@ -11,30 +11,19 @@ import {
   EuiFieldNumber,
   EuiLoadingSpinner,
   EuiFormErrorText,
-  EuiCallOut,
-} from '@elastic/eui';
+} from '@elastic/eui'
 
-import { useAddOrganization } from 'src/graphql/query/organizations/addOrganization';
-import { useUpdateOrganization } from 'src/graphql/query/organizations/updateOrganization';
-import { useRouter } from 'next/router';
-import { Page } from '../utils/Page';
-import { OrganizationProps, organizationSchema, withLoadOrganizationFormUrl } from './utils';
-import { DocumentLoader } from '../forms/File';
-import { document_type } from 'src/types/graphql-global-types';
-import { fillInitValues } from '../utils';
-import { EditButton } from '../utils/EditButton';
-import { MutationTuple } from '@apollo/react-hooks';
-import { AddOrganization, AddOrganizationVariables } from 'src/graphql/query/organizations/types/AddOrganization';
-import { UpdateOrganization, UpdateOrganizationVariables } from 'src/graphql/query/organizations/types/UpdateOrganization';
+import { useRouter } from 'next/router'
+import { Page } from '../utils/Page'
+import { OrganizationProps, organizationSchema, withLoadOrganizationFormUrl } from './utils'
+import { DocumentLoader } from '../forms/File'
+import { fillInitValues, getErrorMsg } from '../utils'
+import { EditButton } from '../utils/EditButton'
+import { AddOrganization } from 'src/graphql/query/organizations/types/AddOrganization'
+import { useUpsetOrganization } from 'src/graphql/query/organizations/upsertOrganization'
+import { az_docs_enum_document_type_enum } from 'src/types/graphql-global-types'
 
-type Error = {
-  message: string
-}
-const getErrorMsg = (error?: Error) => error?.message
-
-type OrganizationForm = Partial<OrganizationProps> & {
-  useUpset: (id?: number) => MutationTuple<AddOrganization | UpdateOrganization, AddOrganizationVariables | UpdateOrganizationVariables>
-}
+type OrganizationForm = Partial<OrganizationProps>
 
 const messages = {
   new: {
@@ -45,10 +34,10 @@ const messages = {
   }
 }
 
-export const InnerEditOrganization = ({ organization, useUpset }: OrganizationForm) => {
+export const InnerEditOrganization = ({ organization }: OrganizationForm) => {
   const formType = organization ? 'edit' : 'new'
 
-  const [ upsetOrganizations ] = useUpset(organization.organisationId)
+  const [ upsetOrganizations ] = useUpsetOrganization(organization.organisationId)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
 
@@ -72,7 +61,7 @@ export const InnerEditOrganization = ({ organization, useUpset }: OrganizationFo
       if (errors) throw errors
   
       setLoading(false)
-      const organisationId = (data as AddOrganization)?.insert_az_users_Organisation.returning[0].organisationId || organization.organisationId
+      const organisationId = (data as AddOrganization)?.insert_az_users_Organisation_one.organisationId || organization.organisationId
       router.push(`/organizations/${organisationId}`)
     } catch (error) {
       console.error(error)
@@ -122,7 +111,7 @@ export const InnerEditOrganization = ({ organization, useUpset }: OrganizationFo
         <EuiFormErrorText>{getErrorMsg(errors.rntrc)}</EuiFormErrorText>
 
         <EuiFormRow label="Файл організації" fullWidth>
-          <DocumentLoader documentType={document_type.User} onChange={(fileId) => fileId && setValue('documentId', fileId)} />
+          <DocumentLoader documentType={az_docs_enum_document_type_enum.Organisation} onChange={(fileId) => fileId && setValue('documentId', fileId)} />
         </EuiFormRow>
 
         <EuiSpacer />
@@ -131,9 +120,9 @@ export const InnerEditOrganization = ({ organization, useUpset }: OrganizationFo
       </EuiForm>
     </Page>
 
-  );
-};
+  )
+}
 
-export const NewOrganization = () => <InnerEditOrganization useUpset={useAddOrganization} />
-export const EditOrganization = withLoadOrganizationFormUrl(() => <InnerEditOrganization useUpset={useUpdateOrganization} />)
-export const EditOrganizationButton = ({ organization: { organisationId } }: OrganizationProps) =>  <EditButton id={organisationId} typeEdit='organisations' />
+export const NewOrganization = InnerEditOrganization
+export const EditOrganization = withLoadOrganizationFormUrl(InnerEditOrganization)
+export const EditOrganizationButton = ({ organization: { organisationId } }: OrganizationProps) => <EditButton id={organisationId} typeEdit='organisations' />
