@@ -4,17 +4,17 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetUsers
+// GraphQL query operation: GetUserById
 // ====================================================
 
-export interface GetUsers_az_users_Users_Organisation {
+export interface GetUserById_az_users_Users_Organisation {
   __typename: "az_users_Organisation";
   shortName: string | null;
   fullName: string;
   organisationId: number;
 }
 
-export interface GetUsers_az_users_Users {
+export interface GetUserById_az_users_Users {
   __typename: "az_users_Users";
   email: string;
   fullName: string | null;
@@ -25,12 +25,16 @@ export interface GetUsers_az_users_Users {
   /**
    * An object relationship
    */
-  Organisation: GetUsers_az_users_Users_Organisation | null;
+  Organisation: GetUserById_az_users_Users_Organisation | null;
 }
 
-export interface GetUsers {
+export interface GetUserById {
   /**
    * fetch data from the table: "az_users.Users"
    */
-  az_users_Users: GetUsers_az_users_Users[];
+  az_users_Users: GetUserById_az_users_Users[];
+}
+
+export interface GetUserByIdVariables {
+  userId?: number | null;
 }

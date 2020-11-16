@@ -42,9 +42,152 @@ input _measurement_value_comparison_exp {
 columns and relationships of "az_docs.Documents"
 """
 type az_docs_Documents {
-  documentBody: String
+  """An array relationship"""
+  Locations(
+    """distinct select on columns"""
+    distinct_on: [az_sensors_Locations_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_sensors_Locations_order_by!]
+
+    """filter the rows returned"""
+    where: az_sensors_Locations_bool_exp
+  ): [az_sensors_Locations!]!
+
+  """An aggregated array relationship"""
+  Locations_aggregate(
+    """distinct select on columns"""
+    distinct_on: [az_sensors_Locations_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_sensors_Locations_order_by!]
+
+    """filter the rows returned"""
+    where: az_sensors_Locations_bool_exp
+  ): az_sensors_Locations_aggregate!
+
+  """An array relationship"""
+  Organisations(
+    """distinct select on columns"""
+    distinct_on: [az_users_Organisation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_users_Organisation_order_by!]
+
+    """filter the rows returned"""
+    where: az_users_Organisation_bool_exp
+  ): [az_users_Organisation!]!
+
+  """An aggregated array relationship"""
+  Organisations_aggregate(
+    """distinct select on columns"""
+    distinct_on: [az_users_Organisation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_users_Organisation_order_by!]
+
+    """filter the rows returned"""
+    where: az_users_Organisation_bool_exp
+  ): az_users_Organisation_aggregate!
+
+  """An array relationship"""
+  ServiceLogs(
+    """distinct select on columns"""
+    distinct_on: [az_sensors_ServiceLog_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_sensors_ServiceLog_order_by!]
+
+    """filter the rows returned"""
+    where: az_sensors_ServiceLog_bool_exp
+  ): [az_sensors_ServiceLog!]!
+
+  """An aggregated array relationship"""
+  ServiceLogs_aggregate(
+    """distinct select on columns"""
+    distinct_on: [az_sensors_ServiceLog_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_sensors_ServiceLog_order_by!]
+
+    """filter the rows returned"""
+    where: az_sensors_ServiceLog_bool_exp
+  ): az_sensors_ServiceLog_aggregate!
+
+  """An array relationship"""
+  Users(
+    """distinct select on columns"""
+    distinct_on: [az_users_Users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_users_Users_order_by!]
+
+    """filter the rows returned"""
+    where: az_users_Users_bool_exp
+  ): [az_users_Users!]!
+
+  """An aggregated array relationship"""
+  Users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [az_users_Users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_users_Users_order_by!]
+
+    """filter the rows returned"""
+    where: az_users_Users_bool_exp
+  ): az_users_Users_aggregate!
+  documentBody: String!
   documentId: Int!
-  documentType: document_type!
+  documentType: az_docs_enum_document_type_enum
 }
 
 """
@@ -113,12 +256,16 @@ input az_docs_Documents_avg_order_by {
 Boolean expression to filter rows from the table "az_docs.Documents". All fields are combined with a logical 'AND'.
 """
 input az_docs_Documents_bool_exp {
+  Locations: az_sensors_Locations_bool_exp
+  Organisations: az_users_Organisation_bool_exp
+  ServiceLogs: az_sensors_ServiceLog_bool_exp
+  Users: az_users_Users_bool_exp
   _and: [az_docs_Documents_bool_exp]
   _not: az_docs_Documents_bool_exp
   _or: [az_docs_Documents_bool_exp]
   documentBody: String_comparison_exp
   documentId: Int_comparison_exp
-  documentType: document_type_comparison_exp
+  documentType: az_docs_enum_document_type_enum_comparison_exp
 }
 
 """
@@ -140,9 +287,13 @@ input az_docs_Documents_inc_input {
 input type for inserting data into table "az_docs.Documents"
 """
 input az_docs_Documents_insert_input {
+  Locations: az_sensors_Locations_arr_rel_insert_input
+  Organisations: az_users_Organisation_arr_rel_insert_input
+  ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
+  Users: az_users_Users_arr_rel_insert_input
   documentBody: String
   documentId: Int
-  documentType: document_type
+  documentType: az_docs_enum_document_type_enum
 }
 
 """aggregate max on columns"""
@@ -205,6 +356,10 @@ input az_docs_Documents_on_conflict {
 ordering options when selecting data from "az_docs.Documents"
 """
 input az_docs_Documents_order_by {
+  Locations_aggregate: az_sensors_Locations_aggregate_order_by
+  Organisations_aggregate: az_users_Organisation_aggregate_order_by
+  ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
+  Users_aggregate: az_users_Users_aggregate_order_by
   documentBody: order_by
   documentId: order_by
   documentType: order_by
@@ -237,7 +392,7 @@ input type for updating data in table "az_docs.Documents"
 input az_docs_Documents_set_input {
   documentBody: String
   documentId: Int
-  documentType: document_type
+  documentType: az_docs_enum_document_type_enum
 }
 
 """aggregate stddev on columns"""
@@ -339,9 +494,218 @@ input az_docs_Documents_variance_order_by {
 }
 
 """
+columns and relationships of "az_docs.enum_document_type"
+"""
+type az_docs_enum_document_type {
+  name: String!
+}
+
+"""
+aggregated selection of "az_docs.enum_document_type"
+"""
+type az_docs_enum_document_type_aggregate {
+  aggregate: az_docs_enum_document_type_aggregate_fields
+  nodes: [az_docs_enum_document_type!]!
+}
+
+"""
+aggregate fields of "az_docs.enum_document_type"
+"""
+type az_docs_enum_document_type_aggregate_fields {
+  count(columns: [az_docs_enum_document_type_select_column!], distinct: Boolean): Int
+  max: az_docs_enum_document_type_max_fields
+  min: az_docs_enum_document_type_min_fields
+}
+
+"""
+order by aggregate values of table "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_aggregate_order_by {
+  count: order_by
+  max: az_docs_enum_document_type_max_order_by
+  min: az_docs_enum_document_type_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_arr_rel_insert_input {
+  data: [az_docs_enum_document_type_insert_input!]!
+  on_conflict: az_docs_enum_document_type_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "az_docs.enum_document_type". All fields are combined with a logical 'AND'.
+"""
+input az_docs_enum_document_type_bool_exp {
+  _and: [az_docs_enum_document_type_bool_exp]
+  _not: az_docs_enum_document_type_bool_exp
+  _or: [az_docs_enum_document_type_bool_exp]
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "az_docs.enum_document_type"
+"""
+enum az_docs_enum_document_type_constraint {
+  """unique or primary key constraint"""
+  enum_document_type_pk
+}
+
+enum az_docs_enum_document_type_enum {
+  Location
+  Organisation
+  Sensor
+  Service
+  User
+}
+
+"""
+expression to compare columns of type az_docs_enum_document_type_enum. All fields are combined with logical 'AND'.
+"""
+input az_docs_enum_document_type_enum_comparison_exp {
+  _eq: az_docs_enum_document_type_enum
+  _in: [az_docs_enum_document_type_enum!]
+  _is_null: Boolean
+  _neq: az_docs_enum_document_type_enum
+  _nin: [az_docs_enum_document_type_enum!]
+}
+
+"""
+input type for inserting data into table "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_insert_input {
+  name: String
+}
+
+"""aggregate max on columns"""
+type az_docs_enum_document_type_max_fields {
+  name: String
+}
+
+"""
+order by max() on columns of table "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_max_order_by {
+  name: order_by
+}
+
+"""aggregate min on columns"""
+type az_docs_enum_document_type_min_fields {
+  name: String
+}
+
+"""
+order by min() on columns of table "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_min_order_by {
+  name: order_by
+}
+
+"""
+response of any mutation on the table "az_docs.enum_document_type"
+"""
+type az_docs_enum_document_type_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [az_docs_enum_document_type!]!
+}
+
+"""
+input type for inserting object relation for remote table "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_obj_rel_insert_input {
+  data: az_docs_enum_document_type_insert_input!
+  on_conflict: az_docs_enum_document_type_on_conflict
+}
+
+"""
+on conflict condition type for table "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_on_conflict {
+  constraint: az_docs_enum_document_type_constraint!
+  update_columns: [az_docs_enum_document_type_update_column!]!
+  where: az_docs_enum_document_type_bool_exp
+}
+
+"""
+ordering options when selecting data from "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_order_by {
+  name: order_by
+}
+
+"""
+primary key columns input for table: "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_pk_columns_input {
+  name: String!
+}
+
+"""
+select columns of table "az_docs.enum_document_type"
+"""
+enum az_docs_enum_document_type_select_column {
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "az_docs.enum_document_type"
+"""
+input az_docs_enum_document_type_set_input {
+  name: String
+}
+
+"""
+update columns of table "az_docs.enum_document_type"
+"""
+enum az_docs_enum_document_type_update_column {
+  """column name"""
+  name
+}
+
+"""
 columns and relationships of "az_docs.Photo"
 """
 type az_docs_Photo {
+  """An array relationship"""
+  ServiceLogs(
+    """distinct select on columns"""
+    distinct_on: [az_sensors_ServiceLog_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_sensors_ServiceLog_order_by!]
+
+    """filter the rows returned"""
+    where: az_sensors_ServiceLog_bool_exp
+  ): [az_sensors_ServiceLog!]!
+
+  """An aggregated array relationship"""
+  ServiceLogs_aggregate(
+    """distinct select on columns"""
+    distinct_on: [az_sensors_ServiceLog_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_sensors_ServiceLog_order_by!]
+
+    """filter the rows returned"""
+    where: az_sensors_ServiceLog_bool_exp
+  ): az_sensors_ServiceLog_aggregate!
   photoId: Int!
   photoSeries: _bytea!
 }
@@ -412,6 +776,7 @@ input az_docs_Photo_avg_order_by {
 Boolean expression to filter rows from the table "az_docs.Photo". All fields are combined with a logical 'AND'.
 """
 input az_docs_Photo_bool_exp {
+  ServiceLogs: az_sensors_ServiceLog_bool_exp
   _and: [az_docs_Photo_bool_exp]
   _not: az_docs_Photo_bool_exp
   _or: [az_docs_Photo_bool_exp]
@@ -438,6 +803,7 @@ input az_docs_Photo_inc_input {
 input type for inserting data into table "az_docs.Photo"
 """
 input az_docs_Photo_insert_input {
+  ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
   photoId: Int
   photoSeries: _bytea
 }
@@ -498,6 +864,7 @@ input az_docs_Photo_on_conflict {
 ordering options when selecting data from "az_docs.Photo"
 """
 input az_docs_Photo_order_by {
+  ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
   photoId: order_by
   photoSeries: order_by
 }
@@ -3942,41 +4309,8 @@ input az_users_UsageLog_variance_order_by {
 columns and relationships of "az_users.Users"
 """
 type az_users_Users {
-  """An array relationship"""
-  AuthData(
-    """distinct select on columns"""
-    distinct_on: [az_users_AuthData_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [az_users_AuthData_order_by!]
-
-    """filter the rows returned"""
-    where: az_users_AuthData_bool_exp
-  ): [az_users_AuthData!]!
-
-  """An aggregated array relationship"""
-  AuthData_aggregate(
-    """distinct select on columns"""
-    distinct_on: [az_users_AuthData_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [az_users_AuthData_order_by!]
-
-    """filter the rows returned"""
-    where: az_users_AuthData_bool_exp
-  ): az_users_AuthData_aggregate!
+  """An object relationship"""
+  AuthDatum: az_users_AuthData
 
   """An object relationship"""
   Document: az_docs_Documents!
@@ -4098,7 +4432,7 @@ input az_users_Users_avg_order_by {
 Boolean expression to filter rows from the table "az_users.Users". All fields are combined with a logical 'AND'.
 """
 input az_users_Users_bool_exp {
-  AuthData: az_users_AuthData_bool_exp
+  AuthDatum: az_users_AuthData_bool_exp
   Document: az_docs_Documents_bool_exp
   Organisation: az_users_Organisation_bool_exp
   UsageLogs: az_users_UsageLog_bool_exp
@@ -4135,7 +4469,7 @@ input az_users_Users_inc_input {
 input type for inserting data into table "az_users.Users"
 """
 input az_users_Users_insert_input {
-  AuthData: az_users_AuthData_arr_rel_insert_input
+  AuthDatum: az_users_AuthData_obj_rel_insert_input
   Document: az_docs_Documents_obj_rel_insert_input
   Organisation: az_users_Organisation_obj_rel_insert_input
   UsageLogs: az_users_UsageLog_arr_rel_insert_input
@@ -4228,7 +4562,7 @@ input az_users_Users_on_conflict {
 ordering options when selecting data from "az_users.Users"
 """
 input az_users_Users_order_by {
-  AuthData_aggregate: az_users_AuthData_aggregate_order_by
+  AuthDatum: az_users_AuthData_order_by
   Document: az_docs_Documents_order_by
   Organisation: az_users_Organisation_order_by
   UsageLogs_aggregate: az_users_UsageLog_aggregate_order_by
@@ -4442,29 +4776,6 @@ input bpchar_comparison_exp {
   _nin: [bpchar!]
 }
 
-enum document_type {
-  User
-  Organisation
-  Sensor
-  Location
-  Service
-}
-
-"""
-expression to compare columns of type document_type. All fields are combined with logical 'AND'.
-"""
-input document_type_comparison_exp {
-  _eq: document_type
-  _gt: document_type
-  _gte: document_type
-  _in: [document_type!]
-  _is_null: Boolean
-  _lt: document_type
-  _lte: document_type
-  _neq: document_type
-  _nin: [document_type!]
-}
-
 scalar float8
 
 """
@@ -4480,11 +4791,6 @@ input float8_comparison_exp {
   _lte: float8
   _neq: float8
   _nin: [float8!]
-}
-
-input Input {
-  email: String!
-  password: String!
 }
 
 """
@@ -4546,6 +4852,19 @@ type mutation_root {
   delete single row from the table: "az_docs.Photo"
   """
   delete_az_docs_Photo_by_pk(photoId: Int!): az_docs_Photo
+
+  """
+  delete data from the table: "az_docs.enum_document_type"
+  """
+  delete_az_docs_enum_document_type(
+    """filter the rows which have to be deleted"""
+    where: az_docs_enum_document_type_bool_exp!
+  ): az_docs_enum_document_type_mutation_response
+
+  """
+  delete single row from the table: "az_docs.enum_document_type"
+  """
+  delete_az_docs_enum_document_type_by_pk(name: String!): az_docs_enum_document_type
 
   """
   delete data from the table: "az_measurements.Measurements"
@@ -4695,6 +5014,28 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: az_docs_Photo_on_conflict
   ): az_docs_Photo
+
+  """
+  insert data into the table: "az_docs.enum_document_type"
+  """
+  insert_az_docs_enum_document_type(
+    """the rows to be inserted"""
+    objects: [az_docs_enum_document_type_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: az_docs_enum_document_type_on_conflict
+  ): az_docs_enum_document_type_mutation_response
+
+  """
+  insert a single row into the table: "az_docs.enum_document_type"
+  """
+  insert_az_docs_enum_document_type_one(
+    """the row to be inserted"""
+    object: az_docs_enum_document_type_insert_input!
+
+    """on conflict condition"""
+    on_conflict: az_docs_enum_document_type_on_conflict
+  ): az_docs_enum_document_type
 
   """
   insert data into the table: "az_measurements.Measurements"
@@ -4951,6 +5292,26 @@ type mutation_root {
   ): az_docs_Photo
 
   """
+  update data of the table: "az_docs.enum_document_type"
+  """
+  update_az_docs_enum_document_type(
+    """sets the columns of the filtered rows to the given values"""
+    _set: az_docs_enum_document_type_set_input
+
+    """filter the rows which have to be updated"""
+    where: az_docs_enum_document_type_bool_exp!
+  ): az_docs_enum_document_type_mutation_response
+
+  """
+  update single row of the table: "az_docs.enum_document_type"
+  """
+  update_az_docs_enum_document_type_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: az_docs_enum_document_type_set_input
+    pk_columns: az_docs_enum_document_type_pk_columns_input!
+  ): az_docs_enum_document_type
+
+  """
   update data of the table: "az_measurements.Measurements"
   """
   update_az_measurements_Measurements(
@@ -5172,12 +5533,6 @@ enum order_by {
   desc_nulls_last
 }
 
-type Output {
-  organizationId: Int
-  userId: Int!
-  userRole: String!
-}
-
 scalar point
 
 """
@@ -5284,6 +5639,51 @@ type query_root {
 
   """fetch data from the table: "az_docs.Photo" using primary key columns"""
   az_docs_Photo_by_pk(photoId: Int!): az_docs_Photo
+
+  """
+  fetch data from the table: "az_docs.enum_document_type"
+  """
+  az_docs_enum_document_type(
+    """distinct select on columns"""
+    distinct_on: [az_docs_enum_document_type_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_docs_enum_document_type_order_by!]
+
+    """filter the rows returned"""
+    where: az_docs_enum_document_type_bool_exp
+  ): [az_docs_enum_document_type!]!
+
+  """
+  fetch aggregated fields from the table: "az_docs.enum_document_type"
+  """
+  az_docs_enum_document_type_aggregate(
+    """distinct select on columns"""
+    distinct_on: [az_docs_enum_document_type_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_docs_enum_document_type_order_by!]
+
+    """filter the rows returned"""
+    where: az_docs_enum_document_type_bool_exp
+  ): az_docs_enum_document_type_aggregate!
+
+  """
+  fetch data from the table: "az_docs.enum_document_type" using primary key columns
+  """
+  az_docs_enum_document_type_by_pk(name: String!): az_docs_enum_document_type
 
   """
   fetch data from the table: "az_measurements.Measurements"
@@ -5709,15 +6109,6 @@ type query_root {
   az_users_Users_by_pk(userId: Int!): az_users_Users
 }
 
-input SampleInput {
-  password: String!
-  username: String!
-}
-
-type SampleOutput {
-  accessToken: String!
-}
-
 scalar service_type
 
 """
@@ -5845,6 +6236,51 @@ type subscription_root {
 
   """fetch data from the table: "az_docs.Photo" using primary key columns"""
   az_docs_Photo_by_pk(photoId: Int!): az_docs_Photo
+
+  """
+  fetch data from the table: "az_docs.enum_document_type"
+  """
+  az_docs_enum_document_type(
+    """distinct select on columns"""
+    distinct_on: [az_docs_enum_document_type_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_docs_enum_document_type_order_by!]
+
+    """filter the rows returned"""
+    where: az_docs_enum_document_type_bool_exp
+  ): [az_docs_enum_document_type!]!
+
+  """
+  fetch aggregated fields from the table: "az_docs.enum_document_type"
+  """
+  az_docs_enum_document_type_aggregate(
+    """distinct select on columns"""
+    distinct_on: [az_docs_enum_document_type_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [az_docs_enum_document_type_order_by!]
+
+    """filter the rows returned"""
+    where: az_docs_enum_document_type_bool_exp
+  ): az_docs_enum_document_type_aggregate!
+
+  """
+  fetch data from the table: "az_docs.enum_document_type" using primary key columns
+  """
+  az_docs_enum_document_type_by_pk(name: String!): az_docs_enum_document_type
 
   """
   fetch data from the table: "az_measurements.Measurements"

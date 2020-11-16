@@ -30,9 +30,9 @@ export interface AddUser {
 export interface AddUserVariables {
   userRole?: string | null;
   phoneNumber?: string | null;
+  organisationId?: number | null;
   fullName?: string | null;
   email?: string | null;
   documentId?: number | null;
-  userId?: number | null;
-  organisationId?: number | null;
+  password?: string | null;
 }

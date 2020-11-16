@@ -22,3 +22,23 @@ export const fillInitValues = (data: any, setValue: (key, value) => void) => {
     setValue(key, value)
   }
 }
+
+type Error = {
+  message: string
+}
+
+export const getErrorMsg = (error?: Error) => error?.message
+
+require('dotenv').config()
+
+const getGraphqlUrl = () => {
+  let urlFromEnv = process.env.GRAPHQL_URL
+
+  if (!urlFromEnv) throw new Error('Dont find graphql url fron ENV')
+
+  return urlFromEnv
+}
+
+
+export const graphqlUrl = getGraphqlUrl()
+export const hasuraSecret = process.env.SECRET

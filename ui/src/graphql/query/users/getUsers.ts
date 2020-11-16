@@ -5,13 +5,17 @@ import { GetUsers } from "./types/GetUsers";
 const GET_USERS = gql`
   query GetUsers {
     az_users_Users {
-      documentId
       email
       fullName
-      organisationId
       phoneNumber
-      userId
       userRole
+      userId
+      documentId
+      Organisation {
+        shortName
+        fullName
+        organisationId
+      }
     }
   }
 `

@@ -4,22 +4,22 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: AddOrganization
+// GraphQL mutation operation: UpsertOrganization
 // ====================================================
 
-export interface AddOrganization_insert_az_users_Organisation_one {
+export interface UpsertOrganization_insert_az_users_Organisation_one {
   __typename: "az_users_Organisation";
   organisationId: number;
 }
 
-export interface AddOrganization {
+export interface UpsertOrganization {
   /**
    * insert a single row into the table: "az_users.Organisation"
    */
-  insert_az_users_Organisation_one: AddOrganization_insert_az_users_Organisation_one | null;
+  insert_az_users_Organisation_one: UpsertOrganization_insert_az_users_Organisation_one | null;
 }
 
-export interface AddOrganizationVariables {
+export interface UpsertOrganizationVariables {
   country?: string | null;
   documentId?: number | null;
   fullName?: string | null;
@@ -27,4 +27,5 @@ export interface AddOrganizationVariables {
   registryLink?: string | null;
   rntrc?: any | null;
   shortName?: string | null;
+  organisationId?: number | null;
 }

@@ -18,8 +18,8 @@ import { loadLocationDataBySensorId, sensorSchema } from './utils';
 import { useAddSensor } from 'src/graphql/query/sensors/addSensors';
 import { useRouter } from 'next/router';
 import { Page } from '../utils/Page';
-import { DocumentLoader, PhotoLoader } from '../forms/File';
-import { document_type } from 'src/types/graphql-global-types';
+import { DocumentLoader } from '../forms/File';
+import { az_docs_enum_document_type_enum } from 'src/types/graphql-global-types';
 
 export const NewSensor = () => {
   const [ addSensors, { data: res } ] = useAddSensor()
@@ -99,18 +99,13 @@ export const NewSensor = () => {
         </EuiFormRow>
         <EuiFormErrorText title={errors.manufacturer} />
 
-
         <EuiFormRow label="Модель" fullWidth>
           <EuiFieldText name="model" inputRef={register} fullWidth />
         </EuiFormRow>
         <EuiFormErrorText title={errors.model} />
 
         <EuiFormRow label="Файл датчика" fullWidth>
-          <DocumentLoader documentType={document_type.Organisation} onChange={(fileId) => setValue('documentId', fileId)} />
-        </EuiFormRow>
-
-        <EuiFormRow label="Фото організації" fullWidth>
-          <PhotoLoader onChange={(fileId) => setValue('photoId', fileId)} />
+          <DocumentLoader documentType={az_docs_enum_document_type_enum.Sensor} onChange={(fileId) => setValue('documentId', fileId)} />
         </EuiFormRow>
 
         <EuiSpacer />

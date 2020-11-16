@@ -1,19 +1,23 @@
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
-import { GetUser, GetUserVariables } from "./types/GetUser";
+import { GetUserById, GetUserByIdVariables } from "./types/GetUserById";
 
 const GET_USER_BY_ID = gql`
-  query GetUser($id: Int) {
-    az_users_Users(where: {userId: {_eq: $id}}) {
-      documentId
+  query GetUserById($userId: Int = 0) {
+    az_users_Users(where: {userId: {_eq: $userId}}) {
       email
       fullName
-      organisationId
       phoneNumber
-      userId
       userRole
+      userId
+      documentId
+      Organisation {
+        shortName
+        fullName
+        organisationId
+      }
     }
   }
 `
 
-export const useGetUsersById = (id: number) => useQuery<GetUser, GetUserVariables>(GET_USER_BY_ID, { variables: { id }})
+export const useGetUsersById = (id: number) => useQuery<GetUserById, GetUserByIdVariables>(GET_USER_BY_ID, { variables: { userId: id }})
