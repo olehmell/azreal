@@ -8,7 +8,6 @@ import { Page } from '../utils/Page';
 type Column = {
   label: string,
   unit: string,
-  maxValues: number,
   amount: number
 }
 
@@ -24,20 +23,15 @@ const Factors = () => {
     display: 'Одиниці',
   },
   {
-    id: 'maxValues',
-    display: 'Максимальні значення',
-  },
-  {
     id: 'amount',
     display: 'Кількість датчиків',
   }
   ];
 
   const sensorsData: Column[] = data?.az_sensors_PollutionFactors_aggregate.nodes
-    .map(({ label, maxValues, unit, SensorFactors }) => ({
+    .map(({ label, unit, SensorFactors }) => ({
       label,
       unit,
-      maxValues,
       amount: SensorFactors.length
     }))
 
