@@ -1,4 +1,4 @@
-import { EuiComboBox, EuiDataGridColumn, EuiFormRow, EuiSpacer } from "@elastic/eui"
+import { EuiComboBox, EuiDataGridColumn, EuiFormRow, EuiSpacer, EuiDatePicker} from "@elastic/eui"
 import React, { useState } from "react"
 import { useGetMeasurementLastDay } from "src/graphql/query/measurement/getMeasurement"
 import { GetMeasuremetLastDay_az_measurements_Measurements_aggregate_nodes as Measurements } from "src/graphql/query/measurement/types/GetMeasuremetLastDay"
@@ -6,6 +6,11 @@ import { DataGrid } from "../utils/DataGrid"
 import { Loading } from "../utils/loading"
 import { Page } from "../utils/Page"
 import { ChartByParam } from "./ChartByParams"
+import moment from 'moment';
+import { date } from "faker"
+import { debug } from "console"
+import { dateValue } from "@elastic/eui/src/components/search_bar/query/date_value"
+
 
 
 type MeasurementTProps = {
@@ -103,6 +108,7 @@ const MeasurementSelector = () => {
   return (<>
     <EuiFormRow
       label='Оберіть розмір вибірки'
+      style={{ maxWidth: 200 }}
       helpText="Розмір вибірки">
       <EuiComboBox
         placeholder="Виберіть розмір вибірки"
@@ -118,8 +124,41 @@ const MeasurementSelector = () => {
   );
 }
 
+const FromDate = () => {
+  const [ startDate, setStartDate ] = useState(moment());
+  const handleChange = (date) => {
+    setStartDate(date);
+    const date_for_Oleh = JSON.stringify(date);
+    console.log(date_for_Oleh.slice(0, 11));
+    console.log(typeof date_for_Oleh)
+  };
+  return ( <>
+    <EuiFormRow label="Select a start date">
+      <EuiDatePicker selected={startDate} onChange={handleChange} />
+    </EuiFormRow>
+  </>
+  );
+}
+
+const ToDate = () => {
+  const [ startDate, setStartDate ] = useState(moment());
+  const handleChange = (date) => {
+    setStartDate(date);
+    const date_for_Oleh = JSON.stringify(date);
+    console.log(date_for_Oleh.slice(0, 11));
+  };
+  return ( <>
+    <EuiFormRow label="Select a end date">
+      <EuiDatePicker selected={startDate} onChange={handleChange} />
+    </EuiFormRow>
+  </>
+  );
+}
+
 export default () => {
   return <Page>
     <MeasurementSelector />
+    <FromDate />
+    <ToDate />
   </Page>
 }
