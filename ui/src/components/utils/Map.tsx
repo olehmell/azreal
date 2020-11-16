@@ -1,6 +1,6 @@
-import { LatLngTuple } from "leaflet"
-import React from "react"
-import { MapContainer as LeafletMapContainer, MapContainerProps, TileLayer } from "react-leaflet"
+import { LatLngTuple } from 'leaflet'
+import React from 'react'
+import { MapContainer as LeafletMapContainer, MapContainerProps, TileLayer } from 'react-leaflet'
 
 export const KYIV_COORDINATES: LatLngTuple = [ 50.4387102, 30.4908161 ]
 

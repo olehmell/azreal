@@ -12,7 +12,6 @@ import { debug } from "console"
 import { dateValue } from "@elastic/eui/src/components/search_bar/query/date_value"
 
 
-
 type MeasurementTProps = {
   measurements: Measurements[]
 }
@@ -93,17 +92,17 @@ const measurementSelectorOptions = [
   {
     label: 'Усі дані',
   }
-];
+]
 
 
 const MeasurementSelector = () => {
 
-  const [ selectedOptions, setSelected ] = useState<any[]>();
+  const [ selectedOptions, setSelected ] = useState<any[]>()
 
   const onChange = (selectedOptions) => {
     // We should only get back either 0 or 1 options.
-    setSelected(selectedOptions);
-  };
+    setSelected(selectedOptions)
+  }
 
   return (<>
     <EuiFormRow
@@ -121,7 +120,7 @@ const MeasurementSelector = () => {
     <EuiSpacer size='xxl' />
     {selectedOptions && <MeasurementData />}
   </>
-  );
+  )
 }
 
 const FromDate = () => {

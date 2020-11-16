@@ -1,17 +1,17 @@
-import React, { ReactElement } from 'react';
-import Document, { Head, Html, Main, NextScript } from 'next/document';
-import { defaultTheme, Theme, themeConfig } from '../lib/theme';
+import React, { ReactElement } from 'react'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
+import { defaultTheme, Theme, themeConfig } from '../lib/theme'
 
-const pathPrefix = process.env.PATH_PREFIX;
+const pathPrefix = process.env.PATH_PREFIX
 
-function themeLink(theme: Theme): ReactElement {
-  let disabledProps = {};
+function themeLink (theme: Theme): ReactElement {
+  let disabledProps = {}
 
   if (theme.id !== defaultTheme) {
     disabledProps = {
       disabled: true,
       'aria-disabled': true,
-    };
+    }
   }
 
   return (
@@ -24,7 +24,7 @@ function themeLink(theme: Theme): ReactElement {
       key={theme.id}
       {...disabledProps}
     />
-  );
+  )
 }
 
 /**
@@ -39,7 +39,7 @@ function themeLink(theme: Theme): ReactElement {
  * @see https://nextjs.org/docs/advanced-features/custom-document
  */
 export default class MyDocument extends Document {
-  render(): ReactElement {
+  render (): ReactElement {
     return (
       <Html lang='en'>
         <Head>{themeConfig.availableThemes.map(each => themeLink(each))}</Head>
@@ -48,6 +48,6 @@ export default class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }

@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { GetOrganizations } from "./types/GetOrganizations";
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { GetOrganizations } from './types/GetOrganizations'
 
 const GET_ORGANIZATIONS = gql`
   query GetOrganizations {

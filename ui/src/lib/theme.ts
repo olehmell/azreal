@@ -4,36 +4,36 @@
  * that doesn't work on the server, where we just use a default.
  */
 
-const selector = 'link[data-name="eui-theme"]';
-export const defaultTheme = 'light';
+const selector = 'link[data-name="eui-theme"]'
+export const defaultTheme = 'light'
 
-function getThemes(): HTMLLinkElement[] {
+function getThemes (): HTMLLinkElement[] {
   // @ts-ignore
-  return [ ...document.querySelectorAll(selector) ];
+  return [ ...document.querySelectorAll(selector) ]
 }
 
-export function setTheme(name: string): void {
-  localStorage.setItem('theme', name);
+export function setTheme (name: string): void {
+  localStorage.setItem('theme', name)
 
   for (const theme of getThemes()) {
-    theme.disabled = theme.dataset.theme !== name;
+    theme.disabled = theme.dataset.theme !== name
   }
 }
 
-export function getTheme(): string {
-  const storedTheme = localStorage.getItem('theme');
+export function getTheme (): string {
+  const storedTheme = localStorage.getItem('theme')
 
-  return storedTheme || defaultTheme;
+  return storedTheme || defaultTheme
 }
 
-export function setInitialTheme(): string {
+export function setInitialTheme (): string {
   if (typeof window !== 'object') {
-    return defaultTheme;
+    return defaultTheme
   }
 
-  const theme = getTheme();
-  setTheme(theme);
-  return theme;
+  const theme = getTheme()
+  setTheme(theme)
+  return theme
 }
 
 export interface Theme {
@@ -52,4 +52,4 @@ export interface ThemeConfig {
 }
 
 // The config is generated during the build and made available in a JSON string.
-export const themeConfig: ThemeConfig = JSON.parse(process.env.THEME_CONFIG!);
+export const themeConfig: ThemeConfig = JSON.parse(process.env.THEME_CONFIG!)

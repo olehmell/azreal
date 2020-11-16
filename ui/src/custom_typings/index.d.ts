@@ -5,21 +5,21 @@
 // simply return a value, which they do, thanks to Webpack.
 
 declare module '*.png' {
-  const value: any;
+  const value: any
   export = value;
 }
 
 declare module '*.svg' {
-  const value: any;
+  const value: any
   export = value;
 }
 
 declare module '*.module.scss' {
-  const content: { [className: string]: string };
-  export default content;
+  const content: { [className: string]: string }
+  export default content
 }
 
 declare module '*.module.sass' {
-  const content: { [className: string]: string };
-  export default content;
+  const content: { [className: string]: string }
+  export default content
 }

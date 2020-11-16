@@ -7,30 +7,22 @@
 // GraphQL mutation operation: AddOrganization
 // ====================================================
 
-export interface AddOrganization_insert_az_users_Organisation_returning {
+export interface AddOrganization_insert_az_users_Organisation_one {
   __typename: "az_users_Organisation";
   organisationId: number;
 }
 
-export interface AddOrganization_insert_az_users_Organisation {
-  __typename: "az_users_Organisation_mutation_response";
-  /**
-   * data of the affected rows by the mutation
-   */
-  returning: AddOrganization_insert_az_users_Organisation_returning[];
-}
-
 export interface AddOrganization {
   /**
-   * insert data into the table: "az_users.Organisation"
+   * insert a single row into the table: "az_users.Organisation"
    */
-  insert_az_users_Organisation: AddOrganization_insert_az_users_Organisation | null;
+  insert_az_users_Organisation_one: AddOrganization_insert_az_users_Organisation_one | null;
 }
 
 export interface AddOrganizationVariables {
-  fullName?: string | null;
-  documentId?: number | null;
   country?: string | null;
+  documentId?: number | null;
+  fullName?: string | null;
   organisationRole?: string | null;
   registryLink?: string | null;
   rntrc?: any | null;

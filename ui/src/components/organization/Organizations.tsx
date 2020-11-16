@@ -1,12 +1,12 @@
-import { EuiDataGridColumn, EuiSpacer } from "@elastic/eui"
-import Link from "next/link"
-import React from "react"
-import { useGetOrganizations } from "src/graphql/query/organizations/getOrganizations"
-import { GetOrganizations_az_users_Organisation as OrganizationsType } from "src/graphql/query/organizations/types/GetOrganizations"
-import { DataGrid } from "../utils/DataGrid"
-import { Loading } from "../utils/loading"
-import { Page } from "../utils/Page"
-import { NotFound } from "../utils/NotFoundPage"
+import { EuiDataGridColumn, EuiSpacer } from '@elastic/eui'
+import Link from 'next/link'
+import React from 'react'
+import { useGetOrganizations } from 'src/graphql/query/organizations/getOrganizations'
+import { GetOrganizations_az_users_Organisation as OrganizationsType } from 'src/graphql/query/organizations/types/GetOrganizations'
+import { DataGrid } from '../utils/DataGrid'
+import { Loading } from '../utils/loading'
+import { Page } from '../utils/Page'
+import { NotFound } from '../utils/NotFoundPage'
 
 type ViewOrganizationsProps = {
   organizations: OrganizationsType[]

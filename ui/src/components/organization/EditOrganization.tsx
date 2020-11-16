@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import {
   EuiButton,
@@ -11,74 +11,74 @@ import {
   EuiFieldNumber,
   EuiLoadingSpinner,
   EuiFormErrorText,
-  EuiCallOut,
-} from '@elastic/eui';
+} from '@elastic/eui'
 
-import { useAddOrganization } from 'src/graphql/query/organizations/addOrganization';
-import { useRouter } from 'next/router';
-import { Page } from '../utils/Page';
-import { organizationSchema } from './utils';
-import { DocumentLoader } from '../forms/File';
-import { document_type } from 'src/types/graphql-global-types';
+import { useRouter } from 'next/router'
+import { Page } from '../utils/Page'
+import { OrganizationProps, organizationSchema, withLoadOrganizationFormUrl } from './utils'
+import { DocumentLoader } from '../forms/File'
+import { fillInitValues, getErrorMsg } from '../utils'
+import { EditButton } from '../utils/EditButton'
+import { AddOrganization } from 'src/graphql/query/organizations/types/AddOrganization'
+import { useUpsetOrganization } from 'src/graphql/query/organizations/upsertOrganization'
+import { az_docs_enum_document_type_enum } from 'src/types/graphql-global-types'
 
-type Error = {
-  message: string
+type OrganizationForm = Partial<OrganizationProps>
+
+const messages = {
+  new: {
+    title: 'Додати організацію',
+  },
+  edit: {
+    title: 'Редагувати дані організації'
+  }
 }
-const getErrorMsg = (error?: Error) => error?.message
 
-export const NewOrganization = () => {
-  const [ addOrganizations, { data: res } ] = useAddOrganization()
+export const InnerEditOrganization = ({ organization }: OrganizationForm) => {
+  const formType = organization ? 'edit' : 'new'
+
+  const [ upsetOrganizations ] = useUpsetOrganization(organization?.organisationId)
   const [ loading, setLoading ] = useState(false)
-  const [ error, setError ] = useState('')
   const router = useRouter()
 
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(organizationSchema)
   })
 
-  const resOrganizationId = res?.insert_az_users_Organisation.returning[0].organisationId
+  useEffect(() => {
+    if (formType === 'new') return
+
+    fillInitValues(organization, setValue)
+  })
 
   const onSubmit = useCallback(async organizationData => {
+    console.log('organizationData', organizationData)
     setLoading(true)
     try {
-      await addOrganizations({ variables: {
+      const { errors, data } = await upsetOrganizations({ variables: {
         ...organizationData
       }})
+
+      if (errors) throw errors
+  
       setLoading(false)
+      const organisationId = (data as AddOrganization)?.insert_az_users_Organisation_one.organisationId || organization.organisationId
+      router.push(`/organizations/${organisationId}`)
     } catch (error) {
       console.error(error)
-      setError(error.toString())
       setLoading(false)
     }
-  }, [ addOrganizations ])
+  }, [ upsetOrganizations ])
 
   const SubmitButton = useCallback(() => loading
     ? <EuiLoadingSpinner size='m' />
     : <EuiButton type="submit" fill>
-        Додати датчик
+      {messages[formType].title}
     </EuiButton>
   , [ loading ])
 
-  const AddedAlert = useCallback(() => (error && !resOrganizationId)
-    ? <EuiCallOut title="Органіцазію не додано, сталась помилка:" color='danger'>{error}</EuiCallOut>
-    : <EuiCallOut title="Органіцазію успішно додано" color='success'>
-      <EuiButton
-        color="secondary"
-        size="s"
-        onClick={() => router.push('/organizations/[organizationId]', `/organizations/${resOrganizationId}`)}
-      >
-          Перейти на сторінку організації
-      </EuiButton>
-    </EuiCallOut>
-  , [ error, resOrganizationId, router ])
-
-  const SubmitPanel = useCallback(() => (error || resOrganizationId)
-    ? <AddedAlert />
-    : <SubmitButton />
-  , [ error, resOrganizationId ])
-
   return (
-    <Page title='Нова організація'>
+    <Page title={messages[formType].title}>
       <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
         <EuiFormRow label="Повна назва організації"fullWidth>
           <EuiFieldText name="fullName" inputRef={register} fullWidth />
@@ -103,7 +103,7 @@ export const NewOrganization = () => {
         <EuiFormRow label="Єдиний номер платника податку" fullWidth>
           <EuiFieldNumber
             name='rntrc'
-            placeholder="0000000000"
+            placeholder="00000000"
             inputRef={register}
             fullWidth
             required
@@ -112,16 +112,18 @@ export const NewOrganization = () => {
         <EuiFormErrorText>{getErrorMsg(errors.rntrc)}</EuiFormErrorText>
 
         <EuiFormRow label="Файл організації" fullWidth>
-          <DocumentLoader documentType={document_type.User} onChange={(fileId) => fileId && setValue('documentId', fileId)} />
+          <DocumentLoader documentType={az_docs_enum_document_type_enum.Organisation} onChange={(fileId) => fileId && setValue('documentId', fileId)} />
         </EuiFormRow>
 
         <EuiSpacer />
-        <SubmitPanel />
+        <SubmitButton />
 
       </EuiForm>
     </Page>
 
-  );
-};
+  )
+}
 
-export default NewOrganization
+export const NewOrganization = InnerEditOrganization
+export const EditOrganization = withLoadOrganizationFormUrl(InnerEditOrganization)
+export const EditOrganizationButton = ({ organization: { organisationId } }: OrganizationProps) => <EditButton id={organisationId} typeEdit='organisations' />

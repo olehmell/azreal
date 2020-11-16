@@ -1,10 +1,10 @@
-import { EuiButton, EuiDescriptionList, EuiFlexGrid, EuiFlexItem } from "@elastic/eui"
-import Link from "next/link"
-import React from "react"
-import { MapContainer, Marker, Popup } from "react-leaflet"
-import { GetSensors_az_sensors_Sensors as SensorsType } from "src/graphql/query/sensors/types/GetSensors"
-import { createDescItem } from "../utils"
-import { KYIV_COORDINATES, parseLatLngTuple, titleLayer } from "../utils/Map"
+import { EuiButton, EuiDescriptionList, EuiFlexGrid, EuiFlexItem } from '@elastic/eui'
+import Link from 'next/link'
+import React from 'react'
+import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { GetSensors_az_sensors_Sensors as SensorsType } from 'src/graphql/query/sensors/types/GetSensors'
+import { createDescItem } from '../utils'
+import { KYIV_COORDINATES, parseLatLngTuple, titleLayer } from '../utils/Map'
 
 type LocationsProps = {
   sensors: SensorsType[]

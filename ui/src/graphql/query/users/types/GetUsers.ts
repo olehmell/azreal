@@ -7,15 +7,25 @@
 // GraphQL query operation: GetUsers
 // ====================================================
 
+export interface GetUsers_az_users_Users_Organisation {
+  __typename: "az_users_Organisation";
+  shortName: string | null;
+  fullName: string;
+  organisationId: number;
+}
+
 export interface GetUsers_az_users_Users {
   __typename: "az_users_Users";
-  documentId: number;
   email: string;
   fullName: string | null;
-  organisationId: number | null;
   phoneNumber: string | null;
-  userId: number;
   userRole: string | null;
+  userId: number;
+  documentId: number;
+  /**
+   * An object relationship
+   */
+  Organisation: GetUsers_az_users_Users_Organisation | null;
 }
 
 export interface GetUsers {

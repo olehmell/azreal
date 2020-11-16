@@ -1,4 +1,4 @@
-import { EuiNavDrawerGroupProps } from '@elastic/eui';
+import { EuiNavDrawerGroupProps } from '@elastic/eui'
 
 export const buildExploreLinks = (
   makeAction: (path: string) => () => void
@@ -67,4 +67,4 @@ export const buildExploreLinks = (
     onClick: makeAction('/logs'),
     iconType: 'logsApp',
   },
-];
+]
