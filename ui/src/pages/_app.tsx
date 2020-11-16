@@ -13,7 +13,7 @@ require('dotenv').config()
 const secret = process.env.SECRET
 
 const client = new ApolloClient({
-  uri: 'https://sterling-piranha-97.hasura.app/v1/graphql?',
+  uri: 'https://azreal-hasura.hasura.app/v1/graphql?',
   headers: {
     'x-hasura-admin-secret': secret,
     'content-type': 'application/json'

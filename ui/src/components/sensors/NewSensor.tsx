@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -20,8 +20,6 @@ import { useRouter } from 'next/router';
 import { Page } from '../utils/Page';
 import { DocumentLoader, PhotoLoader } from '../forms/File';
 import { document_type } from 'src/types/graphql-global-types';
-
-
 
 export const NewSensor = () => {
   const [ addSensors, { data: res } ] = useAddSensor()

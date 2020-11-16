@@ -1,8 +1,6 @@
 import { EuiFilePicker, EuiFilePickerProps, EuiFormErrorText } from "@elastic/eui";
 import React from "react";
 import { useAddDocument } from "src/graphql/query/documents/addDocument";
-import { useAddDocuments } from "src/graphql/query/documents/addDocuments";
-import { useAddPhoto } from "src/graphql/query/photos/addPhoto";
 import { useAddPhotos } from "src/graphql/query/photos/addPhotos";
 import { az_docs_Documents_insert_input, az_docs_Photo_insert_input, document_type } from "src/types/graphql-global-types";
 

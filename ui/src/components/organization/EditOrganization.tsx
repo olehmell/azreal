@@ -15,70 +15,80 @@ import {
 } from '@elastic/eui';
 
 import { useAddOrganization } from 'src/graphql/query/organizations/addOrganization';
+import { useUpdateOrganization } from 'src/graphql/query/organizations/updateOrganization';
 import { useRouter } from 'next/router';
 import { Page } from '../utils/Page';
-import { organizationSchema } from './utils';
+import { OrganizationProps, organizationSchema, withLoadOrganizationFormUrl } from './utils';
 import { DocumentLoader } from '../forms/File';
 import { document_type } from 'src/types/graphql-global-types';
+import { fillInitValues } from '../utils';
+import { EditButton } from '../utils/EditButton';
+import { MutationTuple } from '@apollo/react-hooks';
+import { AddOrganization, AddOrganizationVariables } from 'src/graphql/query/organizations/types/AddOrganization';
+import { UpdateOrganization, UpdateOrganizationVariables } from 'src/graphql/query/organizations/types/UpdateOrganization';
 
 type Error = {
   message: string
 }
 const getErrorMsg = (error?: Error) => error?.message
 
-export const NewOrganization = () => {
-  const [ addOrganizations, { data: res } ] = useAddOrganization()
+type OrganizationForm = Partial<OrganizationProps> & {
+  useUpset: (id?: number) => MutationTuple<AddOrganization | UpdateOrganization, AddOrganizationVariables | UpdateOrganizationVariables>
+}
+
+const messages = {
+  new: {
+    title: 'Додати організацію',
+  },
+  edit: {
+    title: 'Редагувати дані організації'
+  }
+}
+
+export const InnerEditOrganization = ({ organization, useUpset }: OrganizationForm) => {
+  const formType = organization ? 'edit' : 'new'
+
+  const [ upsetOrganizations ] = useUpset(organization.organisationId)
   const [ loading, setLoading ] = useState(false)
-  const [ error, setError ] = useState('')
   const router = useRouter()
 
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(organizationSchema)
   })
 
-  const resOrganizationId = res?.insert_az_users_Organisation.returning[0].organisationId
+  useEffect(() => {
+    if (formType === 'new') return
+
+    fillInitValues(organization, setValue)
+  })
 
   const onSubmit = useCallback(async organizationData => {
     setLoading(true)
     try {
-      await addOrganizations({ variables: {
+      const { errors, data } = await upsetOrganizations({ variables: {
         ...organizationData
       }})
+
+      if (errors) throw errors
+  
       setLoading(false)
+      const organisationId = (data as AddOrganization)?.insert_az_users_Organisation.returning[0].organisationId || organization.organisationId
+      router.push(`/organizations/${organisationId}`)
     } catch (error) {
       console.error(error)
-      setError(error.toString())
       setLoading(false)
     }
-  }, [ addOrganizations ])
+  }, [ upsetOrganizations ])
 
   const SubmitButton = useCallback(() => loading
     ? <EuiLoadingSpinner size='m' />
     : <EuiButton type="submit" fill>
-        Додати датчик
+      {messages[formType].title}
     </EuiButton>
   , [ loading ])
 
-  const AddedAlert = useCallback(() => (error && !resOrganizationId)
-    ? <EuiCallOut title="Органіцазію не додано, сталась помилка:" color='danger'>{error}</EuiCallOut>
-    : <EuiCallOut title="Органіцазію успішно додано" color='success'>
-      <EuiButton
-        color="secondary"
-        size="s"
-        onClick={() => router.push('/organizations/[organizationId]', `/organizations/${resOrganizationId}`)}
-      >
-          Перейти на сторінку організації
-      </EuiButton>
-    </EuiCallOut>
-  , [ error, resOrganizationId, router ])
-
-  const SubmitPanel = useCallback(() => (error || resOrganizationId)
-    ? <AddedAlert />
-    : <SubmitButton />
-  , [ error, resOrganizationId ])
-
   return (
-    <Page title='Нова організація'>
+    <Page title={messages[formType].title}>
       <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
         <EuiFormRow label="Повна назва організації"fullWidth>
           <EuiFieldText name="fullName" inputRef={register} fullWidth />
@@ -116,7 +126,7 @@ export const NewOrganization = () => {
         </EuiFormRow>
 
         <EuiSpacer />
-        <SubmitPanel />
+        <SubmitButton />
 
       </EuiForm>
     </Page>
@@ -124,4 +134,6 @@ export const NewOrganization = () => {
   );
 };
 
-export default NewOrganization
+export const NewOrganization = () => <InnerEditOrganization useUpset={useAddOrganization} />
+export const EditOrganization = withLoadOrganizationFormUrl(() => <InnerEditOrganization useUpset={useUpdateOrganization} />)
+export const EditOrganizationButton = ({ organization: { organisationId } }: OrganizationProps) =>  <EditButton id={organisationId} typeEdit='organisations' />
