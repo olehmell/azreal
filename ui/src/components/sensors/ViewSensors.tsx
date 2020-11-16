@@ -1,13 +1,13 @@
-import { EuiDataGridColumn, EuiSpacer } from "@elastic/eui"
-import Link from "next/link"
-import React from "react"
-import { useGetSensors } from "src/graphql/query/sensors/getSensors"
-import { GetSensors_az_sensors_Sensors as SensorsType } from "src/graphql/query/sensors/types/GetSensors"
-import { SensorsMaps } from "./Maps"
-import { DataGrid } from "../utils/DataGrid"
-import { Loading } from "../utils/loading"
-import { Page } from "../utils/Page"
-import { NotFound } from "../utils/NotFoundPage"
+import { EuiDataGridColumn, EuiSpacer } from '@elastic/eui'
+import Link from 'next/link'
+import React from 'react'
+import { useGetSensors } from 'src/graphql/query/sensors/getSensors'
+import { GetSensors_az_sensors_Sensors as SensorsType } from 'src/graphql/query/sensors/types/GetSensors'
+import { SensorsMaps } from './Maps'
+import { DataGrid } from '../utils/DataGrid'
+import { Loading } from '../utils/loading'
+import { Page } from '../utils/Page'
+import { NotFound } from '../utils/NotFoundPage'
 
 type ViewSensorsProps = {
   sensors: SensorsType[]

@@ -1,13 +1,13 @@
-import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from "@elastic/eui"
-import React from "react"
-import { MapContainer, Marker, Popup } from "react-leaflet"
-import { createDescItem } from "../utils"
-import { ButtonLink } from "../utils/ButtonLink"
-import { parseLatLngTuple, titleLayer } from "../utils/Map"
-import { Page } from "../utils/Page"
-import { DeleteButton } from "./DeleteButton"
-import { EditOrganizationButton } from "./EditOrganization"
-import { OrganizationProps, withLoadOrganizationFormUrl } from "./utils"
+import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
+import React from 'react'
+import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { createDescItem } from '../utils'
+import { ButtonLink } from '../utils/ButtonLink'
+import { parseLatLngTuple, titleLayer } from '../utils/Map'
+import { Page } from '../utils/Page'
+import { DeleteButton } from './DeleteButton'
+import { EditOrganizationButton } from './EditOrganization'
+import { OrganizationProps, withLoadOrganizationFormUrl } from './utils'
 
 const OrganizationDesc = ({
   organization
@@ -59,4 +59,4 @@ export const Organization = ({ organization }: OrganizationProps) => {
   </Page>
 }
 
-export default withLoadOrganizationFormUrl(Organization);
+export default withLoadOrganizationFormUrl(Organization)

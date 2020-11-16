@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { UpsetPhotos, UpsetPhotosVariables } from "./types/UpsetPhotos";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { UpsetPhotos, UpsetPhotosVariables } from './types/UpsetPhotos'
 
 const UPSET_PHOTO = gql`
   mutation UpsetPhotos($objects: [az_docs_Photo_insert_input!]!) {

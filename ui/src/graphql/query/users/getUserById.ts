@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { GetUserById, GetUserByIdVariables } from "./types/GetUserById";
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { GetUserById, GetUserByIdVariables } from './types/GetUserById'
 
 const GET_USER_BY_ID = gql`
   query GetUserById($userId: Int = 0) {

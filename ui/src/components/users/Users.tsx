@@ -1,12 +1,12 @@
-import { EuiDataGridColumn, EuiSpacer } from "@elastic/eui"
-import Link from "next/link"
-import React from "react"
-import { useGetUsers } from "src/graphql/query/users/getUsers"
-import { GetUsers_az_users_Users as UsersType } from "src/graphql/query/users/types/GetUsers"
-import { DataGrid } from "../utils/DataGrid"
-import { Loading } from "../utils/loading"
-import { Page } from "../utils/Page"
-import { NotFound } from "../utils/NotFoundPage"
+import { EuiDataGridColumn, EuiSpacer } from '@elastic/eui'
+import Link from 'next/link'
+import React from 'react'
+import { useGetUsers } from 'src/graphql/query/users/getUsers'
+import { GetUsers_az_users_Users as UsersType } from 'src/graphql/query/users/types/GetUsers'
+import { DataGrid } from '../utils/DataGrid'
+import { Loading } from '../utils/loading'
+import { Page } from '../utils/Page'
+import { NotFound } from '../utils/NotFoundPage'
 
 type ViewUsersProps = {
   users: UsersType[]

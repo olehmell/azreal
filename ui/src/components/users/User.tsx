@@ -1,14 +1,14 @@
-import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from "@elastic/eui"
-import Link from "next/link"
-import React from "react"
-import { MapContainer, Marker, Popup } from "react-leaflet"
-import { createDescItem } from "../utils"
-import { ButtonLink } from "../utils/ButtonLink"
-import { parseLatLngTuple, titleLayer } from "../utils/Map"
-import { Page } from "../utils/Page"
-import { DeleteButton } from "./DeleteButton"
-import { EditUserButton } from "./EditUser"
-import { UserProps, withLoadMyUser, withLoadUserFormUrl } from "./utils"
+import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
+import Link from 'next/link'
+import React from 'react'
+import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { createDescItem } from '../utils'
+import { ButtonLink } from '../utils/ButtonLink'
+import { parseLatLngTuple, titleLayer } from '../utils/Map'
+import { Page } from '../utils/Page'
+import { DeleteButton } from './DeleteButton'
+import { EditUserButton } from './EditUser'
+import { UserProps, withLoadMyUser, withLoadUserFormUrl } from './utils'
 
 const UserDesc = ({
   user
@@ -64,5 +64,5 @@ export const UserPage = ({ user }: UserProps) => {
   </Page>
 }
 
-export const User = withLoadUserFormUrl(UserPage);
+export const User = withLoadUserFormUrl(UserPage)
 export const MyUser = withLoadMyUser(UserPage)

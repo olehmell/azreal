@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { AddSensors, AddSensorsVariables } from "./types/AddSensors";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { AddSensors, AddSensorsVariables } from './types/AddSensors'
 
 export const ADD_SENSORS_QUERY = gql`
     mutation AddSensors($locationId: Int, $manufacturer: String, $model: String, $sensorId: Int, $locationPoint: point, $mapsLink: String, $elevation: float8, $airlyLink: String, $documentId: Int, $address: String) {
@@ -11,6 +11,6 @@ export const ADD_SENSORS_QUERY = gql`
       sensorId
     }
   }
-}`;
+}`
 
 export const useAddSensor = () => useMutation<AddSensors, AddSensorsVariables>(ADD_SENSORS_QUERY)

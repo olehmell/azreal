@@ -1,8 +1,8 @@
-import { EuiFilePicker, EuiFilePickerProps, EuiFormErrorText } from "@elastic/eui";
-import React from "react";
-import { useAddDocuments } from "src/graphql/query/documents/addDocuments";
-import { useAddPhotos } from "src/graphql/query/photos/addPhotos";
-import { az_docs_Documents_insert_input, az_docs_enum_document_type_enum, az_docs_Photo_insert_input } from "src/types/graphql-global-types";
+import { EuiFilePicker, EuiFilePickerProps, EuiFormErrorText } from '@elastic/eui'
+import React from 'react'
+import { useAddDocuments } from 'src/graphql/query/documents/addDocuments'
+import { useAddPhotos } from 'src/graphql/query/photos/addPhotos'
+import { az_docs_Documents_insert_input, az_docs_enum_document_type_enum, az_docs_Photo_insert_input } from 'src/types/graphql-global-types'
 
 type FilePicker = Omit<EuiFilePickerProps, 'onChange'> & {
   onChange: (fileId?: number) => void
@@ -44,10 +44,10 @@ export const DocumentLoader = ({ onChange, name, documentType, fileIds }: Docume
           const { data } = await addDocuments({ variables: { objects: documents } })
           const fileIds = data.insert_az_docs_Documents.returning
           const fileId = fileIds[0].documentId
-          onChange(fileId);
+          onChange(fileId)
         } catch (error) {
           console.error(error)
-          onChange();
+          onChange()
         }
 
       }}
@@ -78,7 +78,7 @@ export const PhotoLoader = ({ onChange, name }: FilePicker) => {
         if (!error) {
           const fileIds = data.insert_az_docs_Photo.returning
           const fileId = fileIds[0].photoId
-          onChange(fileId);
+          onChange(fileId)
         }
       }}
     />

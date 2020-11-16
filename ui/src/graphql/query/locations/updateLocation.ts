@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { UpdateLocationById, UpdateLocationByIdVariables } from "./types/UpdateLocationById";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { UpdateLocationById, UpdateLocationByIdVariables } from './types/UpdateLocationById'
 
 const UPDATE_LOCATION_BY_ID = gql`
   mutation UpdateLocationById($id: Int, $documentId: Int, $address: String, $airlyLink: String, $elevation: float8 , $locationPoint: point , $mapsLink: String) {

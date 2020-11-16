@@ -1,15 +1,15 @@
-import React, { FunctionComponent } from 'react';
-import { useRouter } from 'next/router';
-import { EuiBreadcrumb, EuiHeaderBreadcrumbs } from '@elastic/eui';
+import React, { FunctionComponent } from 'react'
+import { useRouter } from 'next/router'
+import { EuiBreadcrumb, EuiHeaderBreadcrumbs } from '@elastic/eui'
 
-function segmentToName(segment: string): string {
+function segmentToName (segment: string): string {
   if (!segment) {
-    return segment;
+    return segment
   }
 
-  const withSpaces = segment.replace(/-/g, ' ');
+  const withSpaces = segment.replace(/-/g, ' ')
 
-  return withSpaces[0].toUpperCase() + withSpaces.slice(1);
+  return withSpaces[0].toUpperCase() + withSpaces.slice(1)
 }
 
 /**
@@ -23,28 +23,28 @@ function segmentToName(segment: string): string {
  * that at the moment.
  */
 export const Breadcrumbs: FunctionComponent = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   // We don't use router.pathname as it gives the path on disk, which could
   // be e.g. `/my-app/[slug]`.  Make sure to remove any URL fragment too.
-  const pathname = router.asPath.replace(/#.*/, '');
+  const pathname = router.asPath.replace(/#.*/, '')
 
-  const pathSegments = pathname.split('/');
+  const pathSegments = pathname.split('/')
 
-  const breadcrumbs: EuiBreadcrumb[] = [];
+  const breadcrumbs: EuiBreadcrumb[] = []
 
-  const breadcrumbContext: string[] = [];
+  const breadcrumbContext: string[] = []
 
   for (const segment of pathSegments) {
-    const breadcrumbPath = breadcrumbContext.concat(segment).join('/');
+    const breadcrumbPath = breadcrumbContext.concat(segment).join('/')
 
     breadcrumbs.push({
       text: segmentToName(segment),
       onClick: () => router.push(breadcrumbPath),
-    });
+    })
 
-    breadcrumbContext.push(segment);
+    breadcrumbContext.push(segment)
   }
 
-  return <EuiHeaderBreadcrumbs breadcrumbs={breadcrumbs} />;
-};
+  return <EuiHeaderBreadcrumbs breadcrumbs={breadcrumbs} />
+}

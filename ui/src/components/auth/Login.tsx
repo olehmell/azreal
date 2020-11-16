@@ -1,37 +1,37 @@
-import { EuiButton, EuiFieldPassword, EuiFieldText, EuiForm, EuiFormErrorText, EuiFormRow, EuiLoadingSpinner, EuiSpacer } from "@elastic/eui"
-import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useState } from "react"
-import { useForm } from "react-hook-form";
+import { EuiButton, EuiFieldPassword, EuiFieldText, EuiForm, EuiFormErrorText, EuiFormRow, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui'
+import { useRouter } from 'next/router'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import { getErrorMsg } from "../utils";
-import CenteredPage from "../utils/CenteredPage";
-import { checkLogin } from "./login";
+import { getErrorMsg } from '../utils'
+import CenteredPage from '../utils/CenteredPage'
+import { checkLogin } from './login'
 import * as sha256 from 'fast-sha256'
-import { useAuth } from "./AuthContext";
+import { useAuth } from './AuthContext'
 
 export const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(8).required(),
-});
+})
 
 export const Login = () => {
   const { setAuthObj } = useAuth()
   const [ loading, setLoading ] = useState(false)
   const [ error, setError ] = useState('')
-  const router = useRouter();
+  const router = useRouter()
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm()
 
   useEffect(() => {
     if (router.pathname.includes('login')) return 
 
     router.replace('/login')
 
-  }, [router.pathname])
+  }, [ router.pathname ])
 
   const onSubmit = async loginData => {
-    console.log('SUBMIT', loginData);
-    setLoading(true);
+    console.log('SUBMIT', loginData)
+    setLoading(true)
     try {
       const email = loginData.email
       const password = sha256.hash(loginData.password).toString()
@@ -41,16 +41,16 @@ export const Login = () => {
 
       if (data) {
         setAuthObj(data)
-        setLoading(false);
+        setLoading(false)
         router.push('/', '/')
       }
 
     } catch (error) {
-      console.error(error);
+      console.error(error)
       setError(error.toString())
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const SubmitButton = useCallback(
     () =>
@@ -62,7 +62,7 @@ export const Login = () => {
         </EuiButton>
       ),
     [ loading ]
-  );
+  )
 
   return (
     <EuiForm component='form' onSubmit={handleSubmit(onSubmit)}>
@@ -82,7 +82,7 @@ export const Login = () => {
       <EuiSpacer />
       <SubmitButton />
     </EuiForm>
-  );
+  )
 }
 
 export const LoginPage = () => {

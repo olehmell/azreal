@@ -1,8 +1,8 @@
-import { EuiButton } from "@elastic/eui";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { useDeleteUser } from "src/graphql/query/users/deleteUser";
-import { Loading } from "../utils/loading";
+import { EuiButton } from '@elastic/eui'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
+import { useDeleteUser } from 'src/graphql/query/users/deleteUser'
+import { Loading } from '../utils/loading'
 
 
 type DeleteButtonProps = {
@@ -11,7 +11,7 @@ type DeleteButtonProps = {
 
 export const DeleteButton = ({ userId }: DeleteButtonProps) => {
   const [ deleteOrganisation, { data: res, error, loading } ] = useDeleteUser(userId)
-  const router = useRouter();
+  const router = useRouter()
 
   const deletedId = res?.delete_az_users_Users.returning[0].userId || 0
 
@@ -21,7 +21,7 @@ export const DeleteButton = ({ userId }: DeleteButtonProps) => {
     router.push('/users')
   }, [ deletedId, router ])
 
-  if (error) return null;
+  if (error) return null
 
   if (loading) return <Loading />
 

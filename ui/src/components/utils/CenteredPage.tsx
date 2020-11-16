@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React from 'react'
 
 import {
   EuiPage,
@@ -9,7 +9,7 @@ import {
   EuiPageContentHeader,
   EuiPageContentHeaderSection,
   EuiTitle,
-} from '@elastic/eui';
+} from '@elastic/eui'
 
 type PageProps = {
   title?: React.ReactNode,
@@ -32,4 +32,4 @@ export default ({ width, title, children }: PageProps) => (
       </EuiPageContent>
     </EuiPageBody>
   </EuiPage>
-);
+)

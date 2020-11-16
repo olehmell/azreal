@@ -1,14 +1,14 @@
-import { EuiButton, EuiFieldPassword, EuiForm, EuiFormErrorText, EuiFormRow, EuiLoadingSpinner, EuiSpacer } from "@elastic/eui"
-import { useRouter } from "next/router";
-import React, { useCallback, useState } from "react"
-import { useForm } from "react-hook-form";
-import { useChangePassword } from "src/graphql/query/users/chagePassword";
-import { ChangePasswordVariables } from "src/graphql/query/users/types/ChangePassword";
+import { EuiButton, EuiFieldPassword, EuiForm, EuiFormErrorText, EuiFormRow, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui'
+import { useRouter } from 'next/router'
+import React, { useCallback, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useChangePassword } from 'src/graphql/query/users/chagePassword'
+import { ChangePasswordVariables } from 'src/graphql/query/users/types/ChangePassword'
 import * as yup from 'yup'
-import { getErrorMsg } from "../utils";
+import { getErrorMsg } from '../utils'
 import * as sha256 from 'fast-sha256'
-import { useAuthObj } from "./AuthContext";
-import CenteredPage from "../utils/CenteredPage";
+import { useAuthObj } from './AuthContext'
+import CenteredPage from '../utils/CenteredPage'
 
 type ChangePasswordKeys = keyof ChangePasswordVariables
 
@@ -18,22 +18,22 @@ export const schema = yup.object().shape({
   password: yup.string().min(8),
   oldpassword: yup.string().min(8),
   userId: yup.number().required()
-} as SchemaType);
+} as SchemaType)
 
 export const getFiledName = (name: ChangePasswordKeys) => name
 
 export const ChangePassword = () => {
-  const [ changePassword ] = useChangePassword();
+  const [ changePassword ] = useChangePassword()
   const { userId } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
   const [ error, setError ] = useState('')
-  const router = useRouter();
+  const router = useRouter()
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm()
 
   const onSubmit = async changePasswordData => {
-    console.log('SUBMIT', changePasswordData);
-    setLoading(true);
+    console.log('SUBMIT', changePasswordData)
+    setLoading(true)
     try {
       const { data, errors } = await changePassword({
         variables: {
@@ -41,22 +41,22 @@ export const ChangePassword = () => {
           password: sha256.hash(changePasswordData.password).toString(),
           oldpassword: sha256.hash(changePasswordData.oldpassword).toString()
         },
-      });
+      })
 
       if (errors) throw errors
 
       if (data?.insert_az_users_AuthData_one.userId) {
-        setLoading(false);
+        setLoading(false)
         router.back()
       }
 
       throw new Error('Ви ввели неправильний старий пароль')
     } catch (error) {
-      console.error(error);
+      console.error(error)
       setError(error.toString())
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const SubmitButton = useCallback(
     () =>
@@ -68,7 +68,7 @@ export const ChangePassword = () => {
         </EuiButton>
       ),
     [ loading ]
-  );
+  )
 
   return (
     <EuiForm component='form' onSubmit={handleSubmit(onSubmit)}>
@@ -87,7 +87,7 @@ export const ChangePassword = () => {
       <EuiSpacer />
       <SubmitButton />
     </EuiForm>
-  );
+  )
 }
 
 export const ChangePasswordPage = () => {

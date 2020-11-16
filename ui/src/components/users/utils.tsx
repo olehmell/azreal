@@ -1,12 +1,12 @@
-import { GetUserById_az_users_Users as UserType } from '../../graphql/query/users/types/GetUserById';
+import { GetUserById_az_users_Users as UserType } from '../../graphql/query/users/types/GetUserById'
 import * as yup from 'yup'
-import { useRouter } from 'next/router';
-import React from 'react';
-import { useGetUsersById } from 'src/graphql/query/users/getUserById';
-import { NotFoundPage } from '../utils/NotFoundPage';
-import { Loading } from '../utils/loading';
-import { AddUserVariables } from 'src/graphql/query/users/types/AddUser';
-import { useAuthObj } from '../auth/AuthContext';
+import { useRouter } from 'next/router'
+import React from 'react'
+import { useGetUsersById } from 'src/graphql/query/users/getUserById'
+import { NotFoundPage } from '../utils/NotFoundPage'
+import { Loading } from '../utils/loading'
+import { AddUserVariables } from 'src/graphql/query/users/types/AddUser'
+import { useAuthObj } from '../auth/AuthContext'
 
 type UserKeys = keyof UserType | keyof AddUserVariables
 type UserSchema = Record<UserKeys, any>
@@ -24,7 +24,7 @@ export const userSchema = yup.object().shape({
   phoneNumber: yup.number(),
   documentId: yup.number(),
   password: yup.number().min(8)
-} as unknown as UserSchema);
+} as unknown as UserSchema)
 
 export type UserProps = {
   user: UserType
@@ -36,7 +36,7 @@ export const withLoadUser = (Component: React.ComponentType<UserProps>) => {
 
     console.log('DAuseGetUserByIdTA', data)
   
-    if (error) return null;
+    if (error) return null
   
     if (loading) return <Loading />
   

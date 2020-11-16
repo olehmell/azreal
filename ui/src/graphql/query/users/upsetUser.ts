@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { UpsetUser, UpsetUserVariables } from "./types/UpsetUser";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { UpsetUser, UpsetUserVariables } from './types/UpsetUser'
 
 export const UPSET_USER = gql`
   mutation AddUser($userRole: String = "user", $phoneNumber: String, $organisationId: Int, $fullName: String, $email: String, $documentId: Int, $password: String) {

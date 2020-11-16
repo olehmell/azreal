@@ -1,6 +1,6 @@
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from "apollo-boost";
-import { GetMeasuremetLastDay } from './types/GetMeasuremetLastDay';
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { GetMeasuremetLastDay } from './types/GetMeasuremetLastDay'
 
 export const GET_MEASUREMENT_LAST_DAY = gql`
   query GetMeasuremetLastDay {

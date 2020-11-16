@@ -1,9 +1,9 @@
 import React, { useReducer, createContext, useContext, useEffect } from 'react'
 import Chrome from '../chrome'
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { graphqlUrl } from '../utils';
-import { LoginPage } from './Login';
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from '@apollo/react-hooks'
+import { graphqlUrl } from '../utils'
+import { LoginPage } from './Login'
 
 const MY_AUTH_OBJECT = 'auth-object'
 
@@ -15,7 +15,7 @@ export type Auth_Obj = {
 
 export function readAuthObj (): Auth_Obj | undefined {
   const authObj: Auth_Obj | undefined = JSON.parse(localStorage.getItem(MY_AUTH_OBJECT))
-  console.log(`Read my authObj from the local storage`, authObj)
+  console.log('Read my authObj from the local storage', authObj)
   return authObj
 }
 
@@ -45,14 +45,14 @@ function reducer (state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case 'reload':
       authObj = readAuthObj()
-      console.log(`Reload my authObj`, authObj)
+      console.log('Reload my authObj', authObj)
       return { ...state, authObj, inited: true }
 
     case 'setAuthObj':
       authObj = action.authObj
       if (authObj.userId !== action.authObj.userId) {
         if (authObj) {
-          console.log(`Set my new authObj`, authObj)
+          console.log('Set my new authObj', authObj)
           localStorageAuthObj(authObj)
           return { ...state, authObj, inited: true }
         } else {
@@ -118,7 +118,7 @@ export function AuthProvider (props: React.PropsWithChildren<any>) {
       'x-hasura-admin-secret': authObj.token,
       'content-type': 'application/json'
     }
-  });
+  })
 
   return (
     <AuthContext.Provider value={contextValue}>

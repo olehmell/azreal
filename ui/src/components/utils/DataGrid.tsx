@@ -1,5 +1,5 @@
-import { EuiDataGrid, EuiDataGridColumn } from "@elastic/eui";
-import React, { useState, useCallback, useMemo } from "react";
+import { EuiDataGrid, EuiDataGridColumn } from '@elastic/eui'
+import React, { useState, useCallback, useMemo } from 'react'
 
 type ViewDataProps = {
   columns: EuiDataGridColumn[],
@@ -11,7 +11,7 @@ const DEFAULT_PAGINATION_SIZE = 20
 export const DataGrid = ({ columns, data }: ViewDataProps) => {
   
   // ** Pagination config
-  const [ pagination, setPagination ] = useState({ pageIndex: 0, pageSize: data.length < DEFAULT_PAGINATION_SIZE ? data.length : DEFAULT_PAGINATION_SIZE});
+  const [ pagination, setPagination ] = useState({ pageIndex: 0, pageSize: data.length < DEFAULT_PAGINATION_SIZE ? data.length : DEFAULT_PAGINATION_SIZE})
   const onChangeItemsPerPage = useCallback(
     (pageSize) =>
       setPagination((pagination) => ({
@@ -20,34 +20,34 @@ export const DataGrid = ({ columns, data }: ViewDataProps) => {
         pageIndex: 0,
       })),
     [ setPagination ]
-  );
+  )
   const onChangePage = useCallback(
     (pageIndex) =>
       setPagination((pagination) => ({ ...pagination, pageIndex })),
     [ setPagination ]
-  );
+  )
   
   // ** Sorting config
-  const [ sortingColumns, setSortingColumns ] = useState([]);
+  const [ sortingColumns, setSortingColumns ] = useState([])
   const onSort = useCallback(
     (sortingColumns) => {
-      setSortingColumns(sortingColumns);
+      setSortingColumns(sortingColumns)
     },
     [ setSortingColumns ]
-  );
+  )
   
   // Column visibility
   const [ visibleColumns, setVisibleColumns ] = useState(() =>
     columns.map(({ id }) => id)
-  ); // initialize to the full set of columns
+  ) // initialize to the full set of columns
   
   const renderCellValue = useMemo(() => {
     return ({ rowIndex, columnId }) => {
       return data.hasOwnProperty(rowIndex)
         ? data[rowIndex][columnId]
-        : null;
-    };
-  }, [ data ]);
+        : null
+    }
+  }, [ data ])
   
   return <EuiDataGrid
     aria-label="Data grid for data"
@@ -64,7 +64,7 @@ export const DataGrid = ({ columns, data }: ViewDataProps) => {
       onChangePage: onChangePage,
     }}
     onColumnResize={(eventData) => {
-      console.log(eventData);
+      console.log(eventData)
     }}
   />
-};
+}

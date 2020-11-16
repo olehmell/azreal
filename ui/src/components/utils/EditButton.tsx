@@ -1,4 +1,4 @@
-import { ButtonLink } from "./ButtonLink"
+import { ButtonLink } from './ButtonLink'
 
 type EditButtonProps = {
   typeEdit: 'organisations' | 'sensors' | 'users',

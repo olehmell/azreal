@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useRef } from 'react';
-import { useRouter } from 'next/router';
+import React, { FunctionComponent, useRef } from 'react'
+import { useRouter } from 'next/router'
 
 import {
   EuiHeader,
@@ -12,14 +12,14 @@ import {
   EuiNavDrawer,
   EuiNavDrawerGroup,
   EuiShowFor,
-} from '@elastic/eui';
+} from '@elastic/eui'
 
-import { buildExploreLinks } from '../navigation_links/explore_links';
+import { buildExploreLinks } from '../navigation_links/explore_links'
 
-import { Breadcrumbs } from './breadcrumbs';
-import SwitchTheme from './switch_theme';
+import { Breadcrumbs } from './breadcrumbs'
+import SwitchTheme from './switch_theme'
 
-import styles from './chrome.module.scss';
+import styles from './chrome.module.scss'
 
 const Logo: FunctionComponent<{ onClick: () => void }> = ({ onClick }) => (
   <EuiHeaderLogo
@@ -27,7 +27,7 @@ const Logo: FunctionComponent<{ onClick: () => void }> = ({ onClick }) => (
     onClick={onClick}
     aria-label='Goes to home'
   />
-);
+)
 
 const MenuTrigger: FunctionComponent<{ onClick: () => void }> = ({
   onClick,
@@ -35,7 +35,7 @@ const MenuTrigger: FunctionComponent<{ onClick: () => void }> = ({
   <EuiHeaderSectionItemButton aria-label='Open nav' onClick={onClick}>
     <EuiIcon type='apps' href='#' size='m' />
   </EuiHeaderSectionItemButton>
-);
+)
 
 const Chrome: FunctionComponent = ({ children }) => {
 /**
@@ -44,7 +44,7 @@ const Chrome: FunctionComponent = ({ children }) => {
   // This is an EuiNavDrawer, which isn't a TypeScript module yet
   const navDrawerRef = useRef<EuiNavDrawer>(null)
 
-  const router = useRouter();
+  const router = useRouter()
 
   // In this example app, all the side navigation links go to a placeholder
   // page. That's why the `push` call here points at the catch-all route - the
@@ -85,7 +85,7 @@ const Chrome: FunctionComponent = ({ children }) => {
       </EuiNavDrawer>
       <div className={styles.chrWrap}>{children}</div>
     </>
-  );
-};
+  )
+}
 
-export default Chrome;
+export default Chrome

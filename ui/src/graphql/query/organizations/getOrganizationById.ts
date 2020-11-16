@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { GetOrganization, GetOrganizationVariables } from "./types/GetOrganization";
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { GetOrganization, GetOrganizationVariables } from './types/GetOrganization'
 
 const GET_ORGANIZATION_BY_ID = gql`
   query GetOrganization($id: Int) {

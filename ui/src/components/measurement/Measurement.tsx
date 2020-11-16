@@ -1,11 +1,11 @@
-import { EuiComboBox, EuiDataGridColumn, EuiFormRow, EuiSpacer } from "@elastic/eui"
-import React, { useState } from "react"
-import { useGetMeasurementLastDay } from "src/graphql/query/measurement/getMeasurement"
-import { GetMeasuremetLastDay_az_measurements_Measurements_aggregate_nodes as Measurements } from "src/graphql/query/measurement/types/GetMeasuremetLastDay"
-import { DataGrid } from "../utils/DataGrid"
-import { Loading } from "../utils/loading"
-import { Page } from "../utils/Page"
-import { ChartByParam } from "./ChartByParams"
+import { EuiComboBox, EuiDataGridColumn, EuiFormRow, EuiSpacer } from '@elastic/eui'
+import React, { useState } from 'react'
+import { useGetMeasurementLastDay } from 'src/graphql/query/measurement/getMeasurement'
+import { GetMeasuremetLastDay_az_measurements_Measurements_aggregate_nodes as Measurements } from 'src/graphql/query/measurement/types/GetMeasuremetLastDay'
+import { DataGrid } from '../utils/DataGrid'
+import { Loading } from '../utils/loading'
+import { Page } from '../utils/Page'
+import { ChartByParam } from './ChartByParams'
 
 
 type MeasurementTProps = {
@@ -88,17 +88,17 @@ const measurementSelectorOptions = [
   {
     label: 'Усі дані',
   }
-];
+]
 
 
 const MeasurementSelector = () => {
 
-  const [ selectedOptions, setSelected ] = useState<any[]>();
+  const [ selectedOptions, setSelected ] = useState<any[]>()
 
   const onChange = (selectedOptions) => {
     // We should only get back either 0 or 1 options.
-    setSelected(selectedOptions);
-  };
+    setSelected(selectedOptions)
+  }
 
   return (<>
     <EuiFormRow
@@ -115,7 +115,7 @@ const MeasurementSelector = () => {
     <EuiSpacer size='xxl' />
     {selectedOptions && <MeasurementData />}
   </>
-  );
+  )
 }
 
 export default () => {

@@ -1,6 +1,6 @@
-import { EuiButton, EuiButtonProps } from "@elastic/eui";
-import Link from "next/link";
-import React from "react";
+import { EuiButton, EuiButtonProps } from '@elastic/eui'
+import Link from 'next/link'
+import React from 'react'
 
 type ButtonLinkProps = EuiButtonProps & {
   href: string

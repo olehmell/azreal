@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { ChangePassword, ChangePasswordVariables } from "./types/ChangePassword";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { ChangePassword, ChangePasswordVariables } from './types/ChangePassword'
 
 const CHANGE_PASSWORD = gql`
   mutation ChangePassword($password: String, $oldpassword: String, $userId: Int) {

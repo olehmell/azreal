@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { UpsertOrganization, UpsertOrganizationVariables } from "./types/UpsertOrganization";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { UpsertOrganization, UpsertOrganizationVariables } from './types/UpsertOrganization'
 
 const UPSERT_ORGANIZATION = gql`
   mutation UpsertOrganization($country: String, $documentId: Int, $fullName: String, $organisationRole: String, $registryLink: String, $rntrc: bpchar, $shortName: String, $organisationId: Int) {

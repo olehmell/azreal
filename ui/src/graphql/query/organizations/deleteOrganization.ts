@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { DeleteOrganization, DeleteOrganizationVariables } from "./types/DeleteOrganization";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { DeleteOrganization, DeleteOrganizationVariables } from './types/DeleteOrganization'
 
 const DELETE_ORGANIZATION = gql`
   mutation DeleteOrganization($id: Int) {

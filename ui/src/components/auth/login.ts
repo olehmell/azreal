@@ -1,11 +1,11 @@
-import { graphqlUrl, hasuraSecret } from "../utils"
-import { Auth_Obj } from "./AuthContext"
+import { graphqlUrl, hasuraSecret } from '../utils'
+import { Auth_Obj } from './AuthContext'
 
 export const checkLogin = async (email: string, password: string) => {
   try {
     const query = {
-      query: "query CheckLogin($userId: Int = 0, $password: String = \"\") { az_users_Users(where: {userId: {_eq: $userId}, AuthDatum: {password: {_eq: $password}}}) { userId userRole } }",
-      operationName: "CheckLogin",
+      query: 'query CheckLogin($userId: Int = 0, $password: String = "") { az_users_Users(where: {userId: {_eq: $userId}, AuthDatum: {password: {_eq: $password}}}) { userId userRole } }',
+      operationName: 'CheckLogin',
       variables: { 
         email,
         password
@@ -17,8 +17,8 @@ export const checkLogin = async (email: string, password: string) => {
       method: 'POST',
       body: JSON.stringify(query), 
       headers: {
-      'x-hasura-admin-secret': hasuraSecret,
-      'content-type': 'application/json'
+        'x-hasura-admin-secret': hasuraSecret,
+        'content-type': 'application/json'
       }
     } as any)
   

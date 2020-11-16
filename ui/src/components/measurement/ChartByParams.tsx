@@ -1,6 +1,6 @@
 import { Chart, Settings, LineSeries, Axis, timeFormatter, niceTimeFormatByDay } from '@elastic/charts/'
 import { dateFormatAliases, formatDate } from '@elastic/eui'
-import React from "react"
+import React from 'react'
 
 export const ChartByParam = () => {
   return <Chart size={{height: 200}}>

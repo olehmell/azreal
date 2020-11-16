@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup'
 import * as sha256 from 'fast-sha256'
 
 import {
@@ -14,17 +14,17 @@ import {
   EuiFormErrorText,
   EuiFieldPassword,
   EuiButtonEmpty,
-} from '@elastic/eui';
+} from '@elastic/eui'
 
-import { useRouter } from 'next/router';
-import { Page } from '../utils/Page';
-import { getFiledName, UserProps, userSchema, withLoadMyUser, withLoadUserFormUrl } from './utils';
-import { fillInitValues, getErrorMsg } from '../utils';
-import { EditButton } from '../utils/EditButton';
-import { useUpsetUser } from 'src/graphql/query/users/upsetUser';
-import { UserRoleSelect } from './UserRoleSelect';
-import { OrganizationSelect } from './OrganizationSelect';
-import generatePassword from 'password-generator';
+import { useRouter } from 'next/router'
+import { Page } from '../utils/Page'
+import { getFiledName, UserProps, userSchema, withLoadMyUser, withLoadUserFormUrl } from './utils'
+import { fillInitValues, getErrorMsg } from '../utils'
+import { EditButton } from '../utils/EditButton'
+import { useUpsetUser } from 'src/graphql/query/users/upsetUser'
+import { UserRoleSelect } from './UserRoleSelect'
+import { OrganizationSelect } from './OrganizationSelect'
+import generatePassword from 'password-generator'
 
 type UserForm = Partial<UserProps>
 
@@ -133,8 +133,8 @@ export const InnerEditUser = ({ user }: UserForm) => {
       </EuiForm>
     </Page>
 
-  );
-};
+  )
+}
 
 export const NewUser = InnerEditUser
 export const EditUser = withLoadUserFormUrl(InnerEditUser)

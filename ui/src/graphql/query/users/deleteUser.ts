@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { DeleteUser, DeleteUserVariables } from "./types/DeleteUser";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { DeleteUser, DeleteUserVariables } from './types/DeleteUser'
 
 const DELETE_USER = gql`
   mutation DeleteUser($id: Int) {

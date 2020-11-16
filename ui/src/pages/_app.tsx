@@ -1,9 +1,9 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import React, { FunctionComponent } from 'react';
-import { EuiErrorBoundary } from '@elastic/eui';
+import { AppProps } from 'next/app'
+import Head from 'next/head'
+import React, { FunctionComponent } from 'react'
+import { EuiErrorBoundary } from '@elastic/eui'
 
-import { AuthProvider } from 'src/components/auth/AuthContext';
+import { AuthProvider } from 'src/components/auth/AuthContext'
 
 const EuiApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => (
   <>
@@ -16,12 +16,12 @@ const EuiApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => (
       />
       <title>Airzoom UI</title>
     </Head>
-      <AuthProvider>
-        <EuiErrorBoundary>
-          <Component {...pageProps} />
-        </EuiErrorBoundary>
-      </AuthProvider>
+    <AuthProvider>
+      <EuiErrorBoundary>
+        <Component {...pageProps} />
+      </EuiErrorBoundary>
+    </AuthProvider>
   </>
-);
+)
 
-export default EuiApp;
+export default EuiApp

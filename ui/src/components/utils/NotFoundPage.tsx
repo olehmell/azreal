@@ -1,6 +1,6 @@
-import React, { Fragment, FunctionComponent } from 'react';
-import { EuiButton, EuiEmptyPrompt } from '@elastic/eui';
-import Link from 'next/link';
+import React, { Fragment, FunctionComponent } from 'react'
+import { EuiButton, EuiEmptyPrompt } from '@elastic/eui'
+import Link from 'next/link'
 
 type NotFoundProps = {
   message: string
@@ -25,6 +25,6 @@ export const NotFound = ({ message }: NotFoundProps) => (
       </Link>
     }
   />
-);
+)
 
-export const NotFoundPage = () => <NotFound message='Сторінки яку ти шукаєш не існувало, або вже не існує' />;
+export const NotFoundPage = () => <NotFound message='Сторінки яку ти шукаєш не існувало, або вже не існує' />

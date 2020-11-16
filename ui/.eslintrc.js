@@ -107,6 +107,7 @@ module.exports = {
     'space-before-function-paren': [ 'warn', 'always' ],
     'non-nullish value': 'off',
     'react/display-name': 'off',
-    '@typescript-eslint/ban-types': 'off'
+    '@typescript-eslint/ban-types': 'off',
+    'react-hooks/exhaustive-deps': 'off'
   },
-};
+}
