@@ -1,12 +1,14 @@
-import { GetUser_az_users_Users as UserType } from '../../graphql/query/users/types/GetUser';
+import { GetUserById_az_users_Users as UserType } from '../../graphql/query/users/types/GetUserById';
 import * as yup from 'yup'
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useGetUsersById } from 'src/graphql/query/users/getUserById';
 import { NotFoundPage } from '../utils/NotFoundPage';
 import { Loading } from '../utils/loading';
+import { AddUserVariables } from 'src/graphql/query/users/types/AddUser';
+import { useAuthObj } from '../auth/AuthContext';
 
-type UserKeys = keyof UserType
+type UserKeys = keyof UserType | keyof AddUserVariables
 type UserSchema = Record<UserKeys, any>
 
 const yupRequiredStr = yup.string().required()
@@ -20,17 +22,17 @@ export const userSchema = yup.object().shape({
   userRole: yupRequiredStr,
   registryLink: yupRequiredStr.url(),
   phoneNumber: yup.number(),
-  documentId: yup.number()
+  documentId: yup.number(),
+  password: yup.number().min(8)
 } as unknown as UserSchema);
 
 export type UserProps = {
   user: UserType
 }
 
-export const withLoadUserFormUrl = (Component: React.ComponentType<UserProps>) => {
-  return () => {
-    const { query: { userId }} = useRouter()
-    const { data, loading, error } = useGetUsersById(parseInt(userId as string))
+export const withLoadUser = (Component: React.ComponentType<UserProps>) => {
+  return (userId: number) => {
+    const { data, loading, error } = useGetUsersById(userId)
 
     console.log('DAuseGetUserByIdTA', data)
   
@@ -43,5 +45,21 @@ export const withLoadUserFormUrl = (Component: React.ComponentType<UserProps>) =
     if (!user) return <NotFoundPage />
 
     return <Component user={user} />
+  }
+}
+
+export const withLoadUserFormUrl = (Component: React.ComponentType<UserProps>) => {
+  return () => {
+    const { query: { userId }} = useRouter()
+
+    return withLoadUser(Component)(parseInt(userId as string))
+  }
+}
+
+export const withLoadMyUser = (Component: React.ComponentType<UserProps>) => {
+  return () => {
+    const { userId } = useAuthObj()
+
+    return withLoadUser(Component)(userId)
   }
 }

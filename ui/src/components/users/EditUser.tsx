@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as sha256 from 'fast-sha256'
 
 import {
   EuiButton,
@@ -11,20 +12,19 @@ import {
   EuiFieldNumber,
   EuiLoadingSpinner,
   EuiFormErrorText,
+  EuiFieldPassword,
+  EuiButtonEmpty,
 } from '@elastic/eui';
 
 import { useRouter } from 'next/router';
 import { Page } from '../utils/Page';
-import { getFiledName, UserProps, userSchema, withLoadUserFormUrl } from './utils';
-import { fillInitValues } from '../utils';
+import { getFiledName, UserProps, userSchema, withLoadMyUser, withLoadUserFormUrl } from './utils';
+import { fillInitValues, getErrorMsg } from '../utils';
 import { EditButton } from '../utils/EditButton';
 import { useUpsetUser } from 'src/graphql/query/users/upsetUser';
-
-type Error = {
-  message: string
-}
-
-const getErrorMsg = (error?: Error) => error?.message
+import { UserRoleSelect } from './UserRoleSelect';
+import { OrganizationSelect } from './OrganizationSelect';
+import generatePassword from 'password-generator';
 
 type UserForm = Partial<UserProps>
 
@@ -39,7 +39,7 @@ const messages = {
 
 export const InnerEditUser = ({ user }: UserForm) => {
   const formType = user ? 'edit' : 'new'
-
+  const isNew = formType === 'new'
   const [ upsetUsers ] = useUpsetUser(user.userId)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
@@ -49,16 +49,21 @@ export const InnerEditUser = ({ user }: UserForm) => {
   })
 
   useEffect(() => {
-    if (formType === 'new') return
-
-    fillInitValues(user, setValue)
+    if (isNew) {
+      setValue(getFiledName('password'), generatePassword(12, false))
+    } else {
+      fillInitValues(user, setValue)
+    }
   })
 
   const onSubmit = useCallback(async userData => {
     setLoading(true)
     try {
+      const password = sha256.hash(userData.password).toString()
+      console.log(password)
       const { errors, data } = await upsetUsers({ variables: {
-        ...userData
+        ...userData,
+        password
       }})
 
       if (errors) throw errors
@@ -78,6 +83,13 @@ export const InnerEditUser = ({ user }: UserForm) => {
       {messages[formType].title}
     </EuiButton>
   , [ loading ])
+
+  const PasswordInput = useCallback(() => isNew ? <>
+    <EuiFormRow label="Пароль користувача" fullWidth>
+      <EuiFieldPassword name={getFiledName('password')} inputRef={register} fullWidth />
+    </EuiFormRow>
+    <EuiFormErrorText>{getErrorMsg(errors.getFiledName('organisationId'))}</EuiFormErrorText>
+  </> : <EuiButtonEmpty href='/password-change'>Змінити пароль</EuiButtonEmpty>, [ isNew ])
 
   return (
     <Page title={messages[formType].title}>
@@ -104,9 +116,16 @@ export const InnerEditUser = ({ user }: UserForm) => {
         <EuiFormErrorText>{getFiledName('phoneNumber')}</EuiFormErrorText>
 
         <EuiFormRow label="Рівень доступу користувача" fullWidth>
-          <EuiFieldText name={getFiledName('userRole')} inputRef={register} fullWidth />
+          <UserRoleSelect name={getFiledName('userRole')} inputRef={register} fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors.getFiledName('userRole'))}</EuiFormErrorText>
+
+        <EuiFormRow label="Організація" fullWidth>
+          <OrganizationSelect name={getFiledName('organisationId')} inputRef={register} fullWidth />
+        </EuiFormRow>
+        <EuiFormErrorText>{getErrorMsg(errors.getFiledName('organisationId'))}</EuiFormErrorText>
+
+        <PasswordInput />
 
         <EuiSpacer />
         <SubmitButton />
@@ -119,4 +138,5 @@ export const InnerEditUser = ({ user }: UserForm) => {
 
 export const NewUser = InnerEditUser
 export const EditUser = withLoadUserFormUrl(InnerEditUser)
-export const EditUserButton = ({ user: { userId } }: UserProps) =>  <EditButton id={userId} typeEdit='users' />
+export const EditMyUser = withLoadMyUser(InnerEditUser)
+export const EditUserButton = ({ user: { userId } }: UserProps) => <EditButton id={userId} typeEdit='users' />
