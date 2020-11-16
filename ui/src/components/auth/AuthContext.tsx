@@ -112,25 +112,25 @@ export function AuthProvider (props: React.PropsWithChildren<any>) {
     signOut: () => dispatch({ type: 'forget' })
   }
 
+  if (!authObj) return <AuthContext.Provider value={contextValue}>
+    <LoginPage />
+  </AuthContext.Provider>
+
   const client = new ApolloClient({
     uri: graphqlUrl,
     headers: {
-      'x-hasura-admin-secret': authObj.token,
+      'x-hasura-admin-secret': authObj?.token,
       'content-type': 'application/json'
     }
   })
 
   return (
     <AuthContext.Provider value={contextValue}>
-      {authObj
-        ? 
-        <ApolloProvider client={client}>
-          <Chrome>
-            {props.children}
-          </Chrome>
-        </ApolloProvider>
-        : <LoginPage />
-      }
+      <ApolloProvider client={client}>
+        <Chrome>
+          {props.children}
+        </Chrome>
+      </ApolloProvider>
     </AuthContext.Provider>
   )
 }
