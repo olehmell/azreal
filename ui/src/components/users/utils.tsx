@@ -20,10 +20,10 @@ export const userSchema = yup.object().shape({
   organisationId: yupRequiredStr,
   fullName: yupRequiredStr,
   userRole: yupRequiredStr,
-  registryLink: yupRequiredStr.url(),
-  phoneNumber: yup.number(),
+  registryLink: yup.string().url(),
+  phoneNumber: yup.string(),
   documentId: yup.number(),
-  password: yup.number().min(8)
+  password: yup.string().min(8)
 } as unknown as UserSchema)
 
 export type UserProps = {
@@ -48,7 +48,7 @@ export const withLoadUser = (Component: React.ComponentType<UserProps>) => {
   }
 }
 
-export const withLoadUserFormUrl = (Component: React.ComponentType<UserProps>) => {
+export const withLoadUserFromUrl = (Component: React.ComponentType<UserProps>) => {
   return () => {
     const { query: { userId }} = useRouter()
 

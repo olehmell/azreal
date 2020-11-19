@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DeleteOrganization
+// GraphQL mutation operation: DeleteOrganisation
 // ====================================================
 
-export interface DeleteOrganization_delete_az_users_Organisation {
+export interface DeleteOrganisation_delete_az_users_Organisation {
   __typename: "az_users_Organisation_mutation_response";
   /**
    * number of affected rows by the mutation
@@ -15,13 +15,13 @@ export interface DeleteOrganization_delete_az_users_Organisation {
   affected_rows: number;
 }
 
-export interface DeleteOrganization {
+export interface DeleteOrganisation {
   /**
    * delete data from the table: "az_users.Organisation"
    */
-  delete_az_users_Organisation: DeleteOrganization_delete_az_users_Organisation | null;
+  delete_az_users_Organisation: DeleteOrganisation_delete_az_users_Organisation | null;
 }
 
-export interface DeleteOrganizationVariables {
+export interface DeleteOrganisationVariables {
   id?: number | null;
 }

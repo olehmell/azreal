@@ -14,26 +14,28 @@ import {
   EuiFormErrorText,
   EuiFieldPassword,
   EuiButtonEmpty,
+  EuiFlexItem,
 } from '@elastic/eui'
 
 import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
-import { getFiledName, UserProps, userSchema, withLoadMyUser, withLoadUserFormUrl } from './utils'
+import { getFiledName, UserProps, userSchema, withLoadMyUser, withLoadUserFromUrl } from './utils'
 import { fillInitValues, getErrorMsg } from '../utils'
 import { EditButton } from '../utils/EditButton'
 import { useUpsetUser } from 'src/graphql/query/users/upsetUser'
 import { UserRoleSelect } from './UserRoleSelect'
-import { OrganizationSelect } from './OrganizationSelect'
+import { OrganisationSelect } from './OrganisationSelect'
 import generatePassword from 'password-generator'
+import { useNotification } from '../utils/Notifications'
 
 type UserForm = Partial<UserProps>
 
 const messages = {
   new: {
-    title: 'Додати організацію',
+    title: 'Додати користувача',
   },
   edit: {
-    title: 'Редагувати дані організації'
+    title: 'Редагувати дані користувача'
   }
 }
 
@@ -43,10 +45,13 @@ export const InnerEditUser = ({ user }: UserForm) => {
   const [ upsetUsers ] = useUpsetUser(user?.userId)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
+  const { addToast } = useNotification()
 
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(userSchema)
   })
+
+  console.log(errors)
 
   useEffect(() => {
     if (isNew) {
@@ -70,7 +75,15 @@ export const InnerEditUser = ({ user }: UserForm) => {
   
       setLoading(false)
       const userId = data.insert_az_users_Users.returning[0].userId || user.userId
-      router.push(`/users/${userId}`)
+      await addToast({ 
+        title: 'Незабудьте пароль!',
+        color: 'success',
+        text: <EuiFlexItem>
+          Цей пароль потрібний для входу у систему для створеного користувача, не забудьте передати його!
+          <EuiFieldPassword type='dual' value={userData.password} readOnly fullWidth />
+        </EuiFlexItem>
+      })
+      router.push('/users/[userId]', `/users/${userId}`)
     } catch (error) {
       console.error(error)
       setLoading(false)
@@ -86,44 +99,43 @@ export const InnerEditUser = ({ user }: UserForm) => {
 
   const PasswordInput = useCallback(() => isNew ? <>
     <EuiFormRow label="Пароль користувача" fullWidth>
-      <EuiFieldPassword name={getFiledName('password')} inputRef={register} fullWidth />
+      <EuiFieldPassword name={getFiledName('password')} required type='dual' inputRef={register} fullWidth />
     </EuiFormRow>
-    <EuiFormErrorText>{getErrorMsg(errors.getFiledName('organisationId'))}</EuiFormErrorText>
+    <EuiFormErrorText>{getErrorMsg(errors[getFiledName('password')])}</EuiFormErrorText>
   </> : <EuiButtonEmpty href='/password-change'>Змінити пароль</EuiButtonEmpty>, [ isNew ])
 
   return (
     <Page title={messages[formType].title}>
       <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
         <EuiFormRow label="Прізвище ім'я по-батькові"fullWidth>
-          <EuiFieldText name={getFiledName('fullName')} inputRef={register} fullWidth />
+          <EuiFieldText name={getFiledName('fullName')} inputRef={register} required fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('fullName')])}</EuiFormErrorText>
 
         <EuiFormRow label="Email" fullWidth>
-          <EuiFieldText name={getFiledName('email')} inputRef={register} fullWidth />
+          <EuiFieldText name={getFiledName('email')} inputRef={register} required fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('email')])}</EuiFormErrorText>
 
         <EuiFormRow label="Номер телефону" fullWidth>
-          <EuiFieldNumber
+          <EuiFieldText
             name={getFiledName('phoneNumber')}
             placeholder="+380(000)0000000"
             inputRef={register}
             fullWidth
-            required
           />
         </EuiFormRow>
-        <EuiFormErrorText>{getFiledName('phoneNumber')}</EuiFormErrorText>
+        <EuiFormErrorText>{getErrorMsg(errors[getFiledName('phoneNumber')])}</EuiFormErrorText>
 
         <EuiFormRow label="Рівень доступу користувача" fullWidth>
-          <UserRoleSelect name={getFiledName('userRole')} inputRef={register} fullWidth />
+          <UserRoleSelect name={getFiledName('userRole')} required inputRef={register} fullWidth />
         </EuiFormRow>
-        <EuiFormErrorText>{getErrorMsg(errors.getFiledName('userRole'))}</EuiFormErrorText>
+        <EuiFormErrorText>{getErrorMsg(errors[getFiledName('userRole')])}</EuiFormErrorText>
 
         <EuiFormRow label="Організація" fullWidth>
-          <OrganizationSelect name={getFiledName('organisationId')} inputRef={register} fullWidth />
+          <OrganisationSelect name={getFiledName('organisationId')} inputRef={register} fullWidth />
         </EuiFormRow>
-        <EuiFormErrorText>{getErrorMsg(errors.getFiledName('organisationId'))}</EuiFormErrorText>
+        <EuiFormErrorText>{getErrorMsg(errors[getFiledName('organisationId')])}</EuiFormErrorText>
 
         <PasswordInput />
 
@@ -137,6 +149,6 @@ export const InnerEditUser = ({ user }: UserForm) => {
 }
 
 export const NewUser = InnerEditUser
-export const EditUser = withLoadUserFormUrl(InnerEditUser)
+export const EditUser = withLoadUserFromUrl(InnerEditUser)
 export const EditMyUser = withLoadMyUser(InnerEditUser)
 export const EditUserButton = ({ user: { userId } }: UserProps) => <EditButton id={userId} typeEdit='users' />

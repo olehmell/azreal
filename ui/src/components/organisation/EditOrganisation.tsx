@@ -15,15 +15,15 @@ import {
 
 import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
-import { OrganizationProps, organizationSchema, withLoadOrganizationFormUrl } from './utils'
+import { OrganisationProps, organisationSchema, withLoadOrganisationFromUrl } from './utils'
 import { DocumentLoader } from '../forms/File'
 import { fillInitValues, getErrorMsg } from '../utils'
 import { EditButton } from '../utils/EditButton'
-import { AddOrganization } from 'src/graphql/query/organizations/types/AddOrganization'
-import { useUpsetOrganization } from 'src/graphql/query/organizations/upsertOrganization'
+import { AddOrganisation } from 'src/graphql/query/organisations/types/AddOrganisation'
+import { useUpsetOrganisation } from 'src/graphql/query/organisations/upsertOrganisation'
 import { az_docs_enum_document_type_enum } from 'src/types/graphql-global-types'
 
-type OrganizationForm = Partial<OrganizationProps>
+type OrganisationForm = Partial<OrganisationProps>
 
 const messages = {
   new: {
@@ -34,41 +34,41 @@ const messages = {
   }
 }
 
-export const InnerEditOrganization = ({ organization }: OrganizationForm) => {
-  const formType = organization ? 'edit' : 'new'
+export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
+  const formType = organisation ? 'edit' : 'new'
 
-  const [ upsetOrganizations ] = useUpsetOrganization(organization?.organisationId)
+  const [ upsetOrganisations ] = useUpsetOrganisation(organisation?.organisationId)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
 
   const { register, handleSubmit, errors, setValue } = useForm({
-    resolver: yupResolver(organizationSchema)
+    resolver: yupResolver(organisationSchema)
   })
 
   useEffect(() => {
     if (formType === 'new') return
 
-    fillInitValues(organization, setValue)
+    fillInitValues(organisation, setValue)
   })
 
-  const onSubmit = useCallback(async organizationData => {
-    console.log('organizationData', organizationData)
+  const onSubmit = useCallback(async organisationData => {
+    console.log('organisationData', organisationData)
     setLoading(true)
     try {
-      const { errors, data } = await upsetOrganizations({ variables: {
-        ...organizationData
+      const { errors, data } = await upsetOrganisations({ variables: {
+        ...organisationData
       }})
 
       if (errors) throw errors
   
       setLoading(false)
-      const organisationId = (data as AddOrganization)?.insert_az_users_Organisation_one.organisationId || organization.organisationId
-      router.push(`/organizations/${organisationId}`)
+      const organisationId = (data as AddOrganisation)?.insert_az_users_Organisation_one.organisationId || organisation.organisationId
+      router.push(`/organisations/${organisationId}`)
     } catch (error) {
       console.error(error)
       setLoading(false)
     }
-  }, [ upsetOrganizations ])
+  }, [ upsetOrganisations ])
 
   const SubmitButton = useCallback(() => loading
     ? <EuiLoadingSpinner size='m' />
@@ -124,6 +124,6 @@ export const InnerEditOrganization = ({ organization }: OrganizationForm) => {
   )
 }
 
-export const NewOrganization = InnerEditOrganization
-export const EditOrganization = withLoadOrganizationFormUrl(InnerEditOrganization)
-export const EditOrganizationButton = ({ organization: { organisationId } }: OrganizationProps) => <EditButton id={organisationId} typeEdit='organisations' />
+export const NewOrganisation = InnerEditOrganisation
+export const EditOrganisation = withLoadOrganisationFromUrl(InnerEditOrganisation)
+export const EditOrganisationButton = ({ organisation: { organisationId } }: OrganisationProps) => <EditButton id={organisationId} typeEdit='organisations' />

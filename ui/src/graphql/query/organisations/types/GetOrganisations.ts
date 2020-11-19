@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetOrganizations
+// GraphQL query operation: GetOrganisations
 // ====================================================
 
-export interface GetOrganizations_az_users_Organisation {
+export interface GetOrganisations_az_users_Organisation {
   __typename: "az_users_Organisation";
   shortName: string | null;
   rntrc: any;
@@ -19,9 +19,9 @@ export interface GetOrganizations_az_users_Organisation {
   documentId: number;
 }
 
-export interface GetOrganizations {
+export interface GetOrganisations {
   /**
    * fetch data from the table: "az_users.Organisation"
    */
-  az_users_Organisation: GetOrganizations_az_users_Organisation[];
+  az_users_Organisation: GetOrganisations_az_users_Organisation[];
 }

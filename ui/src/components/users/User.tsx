@@ -8,7 +8,7 @@ import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
 import { EditUserButton } from './EditUser'
-import { UserProps, withLoadMyUser, withLoadUserFormUrl } from './utils'
+import { UserProps, withLoadMyUser, withLoadUserFromUrl } from './utils'
 
 const UserDesc = ({
   user
@@ -29,7 +29,7 @@ const UserDesc = ({
     createDescItem('ПІБ', fullName),
     createDescItem('Email', email),
     createDescItem('Номер телефону', phoneNumber),
-    createDescItem('Організація', <Link href='/organizations/[organizationId]' as={`/organizations/${organisationId}]`}><a>{shortName || organisationFullName}</a></Link>),
+    createDescItem('Організація', <Link href='/organisations/[organisationId]' as={`/organisations/${organisationId}]`}><a>{shortName || organisationFullName}</a></Link>),
     createDescItem('Файли', documentId)
   ].filter(x => x !== undefined)
 
@@ -64,5 +64,5 @@ export const UserPage = ({ user }: UserProps) => {
   </Page>
 }
 
-export const User = withLoadUserFormUrl(UserPage)
+export const User = withLoadUserFromUrl(UserPage)
 export const MyUser = withLoadMyUser(UserPage)

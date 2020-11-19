@@ -11,7 +11,7 @@ export const buildExploreLinks = (
       listItems: [
         {
           label: 'Організації',
-          onClick: makeAction('/organizations'),
+          onClick: makeAction('/organisations'),
           iconType: 'graphApp'
         },
         {
@@ -21,7 +21,7 @@ export const buildExploreLinks = (
         },
         {
           label: 'Створити організацію',
-          onClick: makeAction('/organizations/new'),
+          onClick: makeAction('/organisations/new'),
           iconType: 'usersRolesApp'
         }
       ],

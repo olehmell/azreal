@@ -48,13 +48,13 @@ const ViewUsers = ({ users }: ViewUsersProps) => {
     Organisation: {
       organisationId,
       shortName,
-      fullName: organizationFullName
+      fullName: organisationFullName
     }
   }) => ({
     fullName: <Link href='/users/[sensorId]' as={`/users/${userId}`}><a>{fullName}</a></Link>,
     email,
     phoneNumber,
-    Organisation: <Link href='/organisations/[organisationId]' as={`/organisations/${organisationId}`}><a>{shortName || organizationFullName}</a></Link>,
+    Organisation: <Link href='/organisations/[organisationId]' as={`/organisations/${organisationId}`}><a>{shortName || organisationFullName}</a></Link>,
     userRole
   }))
 
