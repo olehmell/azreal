@@ -26,7 +26,9 @@ export const Login = () => {
     setLoading(true)
     try {
       const email = loginData.email
-      const password = await sha256(loginData.password)
+      const password = await (await sha256(loginData.password)).toString()
+
+      console.log('password', password)
 
       const { data, error } = await checkLogin(email, password)
   

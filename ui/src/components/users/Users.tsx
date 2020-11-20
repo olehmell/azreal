@@ -1,4 +1,4 @@
-import { EuiDataGridColumn, EuiSpacer } from '@elastic/eui'
+import { EuiDataGridColumn } from '@elastic/eui'
 import Link from 'next/link'
 import React from 'react'
 import { useGetUsers } from 'src/graphql/query/users/getUsers'
@@ -7,6 +7,7 @@ import { DataGrid } from '../utils/DataGrid'
 import { Loading } from '../utils/loading'
 import { Page } from '../utils/Page'
 import { NotFound } from '../utils/NotFoundPage'
+import { OrganisationLink } from './utils'
 
 type ViewUsersProps = {
   users: UsersType[]
@@ -27,7 +28,7 @@ const ViewUsers = ({ users }: ViewUsersProps) => {
   },
   {
     id: 'phoneNumber',
-    display: 'Країна'
+    display: 'Номер телефону'
   },
   {
     id: 'userRole',
@@ -45,16 +46,12 @@ const ViewUsers = ({ users }: ViewUsersProps) => {
     userId,
     phoneNumber,
     userRole,
-    Organisation: {
-      organisationId,
-      shortName,
-      fullName: organisationFullName
-    }
+    Organisation
   }) => ({
     fullName: <Link href='/users/[sensorId]' as={`/users/${userId}`}><a>{fullName}</a></Link>,
     email,
     phoneNumber,
-    Organisation: <Link href='/organisations/[organisationId]' as={`/organisations/${organisationId}`}><a>{shortName || organisationFullName}</a></Link>,
+    Organisation: <OrganisationLink organisation={Organisation as any} />,
     userRole
   }))
 
@@ -71,6 +68,8 @@ export const Users = () => {
   const users = data.az_users_Users
 
   if (!users.length) return <NotFound message='Немає користувачів'/>
+
+  console.log('users', users)
 
   return <Page
     title='Користувачі'

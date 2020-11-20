@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as sha256 from 'fast-sha256'
+import { sha256 } from 'crypto-hash'
 
 import {
   EuiButton,
@@ -64,8 +64,8 @@ export const InnerEditUser = ({ user }: UserForm) => {
   const onSubmit = useCallback(async userData => {
     setLoading(true)
     try {
-      const password = sha256.hash(userData.password).toString()
-      console.log(password)
+      const password = await (await sha256(userData.password)).toString()
+      console.log('password', password)
       const { errors, data } = await upsetUsers({ variables: {
         ...userData,
         password
@@ -74,7 +74,7 @@ export const InnerEditUser = ({ user }: UserForm) => {
       if (errors) throw errors
   
       setLoading(false)
-      const userId = data.insert_az_users_Users.returning[0].userId || user.userId
+      const userId = data.insert_az_users_AuthData_one.userId || user.userId
       await addToast({ 
         title: 'Незабудьте пароль!',
         color: 'success',

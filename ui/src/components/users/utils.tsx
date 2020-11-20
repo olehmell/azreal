@@ -7,8 +7,11 @@ import { NotFoundPage } from '../utils/NotFoundPage'
 import { Loading } from '../utils/loading'
 import { AddUserVariables } from 'src/graphql/query/users/types/AddUser'
 import { useAuthObj } from '../auth/AuthContext'
+import { AddPasswordVariables } from 'src/graphql/query/users/types/AddPassword'
+import Link from 'next/link'
+import { OrganisationProps } from '../organisation/utils'
 
-type UserKeys = keyof UserType | keyof AddUserVariables
+type UserKeys = keyof UserType | keyof AddUserVariables | keyof AddPasswordVariables
 type UserSchema = Record<UserKeys, any>
 
 const yupRequiredStr = yup.string().required()
@@ -62,4 +65,11 @@ export const withLoadMyUser = (Component: React.ComponentType<UserProps>) => {
 
     return withLoadUser(Component)(userId)
   }
+}
+
+export const OrganisationLink = ({ organisation}: OrganisationProps) => {
+  if (!organisation) return null
+  const { organisationId, shortName, fullName } = organisation
+
+  return <Link href='/organisations/[organisationId]' as={`/organisations/${organisationId}`}><a>{shortName || fullName}</a></Link>
 }

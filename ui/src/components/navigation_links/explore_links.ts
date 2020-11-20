@@ -15,6 +15,11 @@ export const buildExploreLinks = (
           iconType: 'graphApp'
         },
         {
+          label: 'Користувачі',
+          onClick: makeAction('/users'),
+          iconType: 'usersRolesApp'
+        },
+        {
           label: 'Додати користувача',
           onClick: makeAction('/users/new'),
           iconType: 'createSingleMetricJob'
@@ -22,7 +27,7 @@ export const buildExploreLinks = (
         {
           label: 'Створити організацію',
           onClick: makeAction('/organisations/new'),
-          iconType: 'usersRolesApp'
+          iconType: 'packetbeatApp'
         }
       ],
     },

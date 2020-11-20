@@ -8,7 +8,7 @@ import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
 import { EditUserButton } from './EditUser'
-import { UserProps, withLoadMyUser, withLoadUserFromUrl } from './utils'
+import { OrganisationLink, UserProps, withLoadMyUser, withLoadUserFromUrl } from './utils'
 
 const UserDesc = ({
   user
@@ -17,11 +17,7 @@ const UserDesc = ({
     fullName,
     email,
     phoneNumber,
-    Organisation: { 
-      fullName: organisationFullName,
-      shortName,
-      organisationId
-    },
+    Organisation,
     documentId
   } = user
 
@@ -29,8 +25,8 @@ const UserDesc = ({
     createDescItem('ПІБ', fullName),
     createDescItem('Email', email),
     createDescItem('Номер телефону', phoneNumber),
-    createDescItem('Організація', <Link href='/organisations/[organisationId]' as={`/organisations/${organisationId}]`}><a>{shortName || organisationFullName}</a></Link>),
-    createDescItem('Файли', documentId)
+    createDescItem('Файли', documentId),
+    createDescItem('Організація', <OrganisationLink organisation={Organisation as any} />)
   ].filter(x => x !== undefined)
 
   return <EuiDescriptionList textStyle="reverse" listItems={items} />
