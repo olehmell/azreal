@@ -14,10 +14,16 @@ export interface AddSensors_insert_az_sensors_Sensors_returning {
 
 export interface AddSensors_insert_az_sensors_Sensors {
   __typename: "az_sensors_Sensors_mutation_response";
+  /**
+   * data of the affected rows by the mutation
+   */
   returning: AddSensors_insert_az_sensors_Sensors_returning[];
 }
 
 export interface AddSensors {
+  /**
+   * insert data into the table: "az_sensors.Sensors"
+   */
   insert_az_sensors_Sensors: AddSensors_insert_az_sensors_Sensors | null;
 }
 
@@ -30,6 +36,6 @@ export interface AddSensorsVariables {
   mapsLink?: string | null;
   elevation?: any | null;
   airlyLink?: string | null;
-  actLink?: string | null;
+  documentId?: number | null;
   address?: string | null;
 }

@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { UpdateSensorById, UpdateSensorByIdVariables } from "./types/UpdateSensorById";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { UpdateSensorById, UpdateSensorByIdVariables } from './types/UpdateSensorById'
 
 const UPDATE_SENSOR_BY_ID = gql`
   mutation UpdateSensorById($locationId: Int, $manufacturer: String, $model: String, $id: Int) {

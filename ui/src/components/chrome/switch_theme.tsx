@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react'
 import {
   EuiButton,
   EuiContextMenuItem,
@@ -6,11 +6,11 @@ import {
   EuiIcon,
   EuiPopover,
   EuiSwitch,
-} from '@elastic/eui';
+} from '@elastic/eui'
 
-import { setInitialTheme, setTheme, Theme, themeConfig } from '../../lib/theme';
+import { setInitialTheme, setTheme, Theme, themeConfig } from '../../lib/theme'
 
-const initialTheme = setInitialTheme();
+const initialTheme = setInitialTheme()
 
 /**
  * Renders a dropdown menu for selecting the current theme. The selection
@@ -28,7 +28,7 @@ const getThemeFromStore = () => ((isClientSide() && localStorage?.getItem(THEME)
 const setThemeToStore = (theme: ThemeType) => isClientSide() && localStorage?.setItem(THEME, theme)
 
 const SwitchTheme: FunctionComponent = () => {
-  const [ themeType, setThemeType ] = useState<ThemeType>(getThemeFromStore());
+  const [ themeType, setThemeType ] = useState<ThemeType>(getThemeFromStore())
 
   const isDark = themeType === 'dark'
 
@@ -36,7 +36,7 @@ const SwitchTheme: FunctionComponent = () => {
     setTheme(newTheme)
     setThemeType(newTheme)
     setThemeToStore(newTheme)
-  };
+  }
 
   return <EuiSwitch
     label={`${isDark ? 'Dark' : 'Light'} mode`}
@@ -45,6 +45,6 @@ const SwitchTheme: FunctionComponent = () => {
     compressed
   />
 
-};
+}
 
-export default SwitchTheme;
+export default SwitchTheme

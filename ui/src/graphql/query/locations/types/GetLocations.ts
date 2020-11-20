@@ -15,7 +15,7 @@ export interface GetLocations_az_sensors_Locations_aggregate_nodes {
   elevation: any;
   address: string | null;
   airlyLink: string | null;
-  actLink: string | null;
+  documentId: number | null;
 }
 
 export interface GetLocations_az_sensors_Locations_aggregate {
@@ -24,5 +24,8 @@ export interface GetLocations_az_sensors_Locations_aggregate {
 }
 
 export interface GetLocations {
+  /**
+   * fetch aggregated fields from the table: "az_sensors.Locations"
+   */
   az_sensors_Locations_aggregate: GetLocations_az_sensors_Locations_aggregate;
 }

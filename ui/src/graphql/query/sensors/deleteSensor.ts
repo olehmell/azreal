@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { DeleteSensorById, DeleteSensorByIdVariables } from "./types/DeleteSensorById";
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { DeleteSensorById, DeleteSensorByIdVariables } from './types/DeleteSensorById'
 
 const DELETE_SENSOR_BY_ID = gql`
   mutation DeleteSensorById($id: Int) {

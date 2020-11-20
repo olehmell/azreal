@@ -1,11 +1,13 @@
-import { EuiDataGridColumn, EuiFlexGrid, EuiFlexItem } from "@elastic/eui"
-import Link from "next/link"
-import React from "react"
-import { useGetSensors } from "src/graphql/query/sensors/getSensors"
-import { GetSensors, GetSensors_az_sensors_Sensors as SensorsType } from "src/graphql/query/sensors/types/GetSensors"
-import { DataGrid } from "../utils/DataGrid"
-import { Loading } from "../utils/loading"
-import { Page } from "../utils/Page"
+import { EuiDataGridColumn, EuiSpacer } from '@elastic/eui'
+import Link from 'next/link'
+import React from 'react'
+import { useGetSensors } from 'src/graphql/query/sensors/getSensors'
+import { GetSensors_az_sensors_Sensors as SensorsType } from 'src/graphql/query/sensors/types/GetSensors'
+import { SensorsMaps } from './Maps'
+import { DataGrid } from '../utils/DataGrid'
+import { Loading } from '../utils/loading'
+import { Page } from '../utils/Page'
+import { NotFound } from '../utils/NotFoundPage'
 
 type ViewSensorsProps = {
   sensors: SensorsType[]
@@ -49,9 +51,17 @@ export const Sensors = () => {
 
   const sensors = data.az_sensors_Sensors
 
+  console.log('SENSORS', sensors, !sensors.length)
+
+  if (!sensors.length) return <NotFound message='Не вдалось знайти датчики'/>
+
   return <Page
     title='Датчики'
   >
+    <SensorsMaps sensors={sensors} />
+
+    <EuiSpacer size='xxl' />
+
     <ViewSensors sensors={sensors} />
   </Page>
 }

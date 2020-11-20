@@ -1,12 +1,12 @@
-import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from "@elastic/eui"
-import React from "react"
-import { MapContainer, Marker, Popup } from "react-leaflet"
-import { createDescItem } from "../utils"
-import { parseLatLngTuple, titleLayer } from "../utils/Map"
-import { Page } from "../utils/Page"
-import { DeleteButton } from "./DeleteButton"
-import { EditButton } from "./EditSensor"
-import { SensorProps, withLoadSensorFormUrl } from "./utils"
+import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
+import React from 'react'
+import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { createDescItem } from '../utils'
+import { parseLatLngTuple, titleLayer } from '../utils/Map'
+import { Page } from '../utils/Page'
+import { DeleteButton } from './DeleteButton'
+import { EditButton } from './EditSensor'
+import { SensorProps, withLoadSensorFromUrl } from './utils'
 
 const SensorDesc = ({
   sensor
@@ -58,6 +58,7 @@ export const ViewSensor = ({ sensor }: SensorProps) => {
   </EuiFlexGroup>
 }
 
+
 export const Sensor = ({ sensor }: SensorProps) => {
   return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>
     <EuiFlexItem>{`Датчик ${sensor.sensorId}`}</EuiFlexItem>
@@ -75,4 +76,4 @@ export const Sensor = ({ sensor }: SensorProps) => {
   </Page>
 }
 
-export default withLoadSensorFormUrl(Sensor);
+export default withLoadSensorFromUrl(Sensor)

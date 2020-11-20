@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { GetLocations } from "./types/GetLocations";
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { GetLocations } from './types/GetLocations'
 
 const GET_LOCATIONS = gql`
   query GetLocations {
@@ -12,7 +12,7 @@ const GET_LOCATIONS = gql`
         elevation
         address
         airlyLink
-        actLink
+        documentId
       }
     }
   }`

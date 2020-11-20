@@ -1,14 +1,13 @@
-import { EuiDataGrid, EuiDataGridColumn, EuiLink, EuiLoadingChart, EuiPage, EuiPageBody, EuiPageContent, EuiPageContentBody, EuiPageHeader, EuiPageHeaderSection, EuiTitle } from '@elastic/eui';
-import React, { Fragment, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors';
-import { DataGrid } from '../utils/DataGrid';
-import { Loading } from '../utils/loading';
-import { Page } from '../utils/Page';
+import { EuiDataGrid, EuiDataGridColumn, EuiLink, EuiLoadingChart, EuiPage, EuiPageBody, EuiPageContent, EuiPageContentBody, EuiPageHeader, EuiPageHeaderSection, EuiTitle } from '@elastic/eui'
+import React, { Fragment, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors'
+import { DataGrid } from '../utils/DataGrid'
+import { Loading } from '../utils/loading'
+import { Page } from '../utils/Page'
 
 type Column = {
   label: string,
   unit: string,
-  maxValues: number,
   amount: number
 }
 
@@ -24,24 +23,19 @@ const Factors = () => {
     display: 'Одиниці',
   },
   {
-    id: 'maxValues',
-    display: 'Максимальні значення',
-  },
-  {
     id: 'amount',
     display: 'Кількість датчиків',
   }
-  ];
+  ]
 
   const sensorsData: Column[] = data?.az_sensors_PollutionFactors_aggregate.nodes
-    .map(({ label, maxValues, unit, SensorFactors }) => ({
+    .map(({ label, unit, SensorFactors }) => ({
       label,
       unit,
-      maxValues,
       amount: SensorFactors.length
     }))
 
-  if (error) return null;
+  if (error) return null
 
   if (loading) return <Loading />
 

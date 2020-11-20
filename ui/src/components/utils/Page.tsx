@@ -1,5 +1,5 @@
-import { EuiPage, EuiPageBody, EuiPageContent, EuiPageContentBody, EuiPageHeader, EuiPageHeaderSection, EuiTitle } from "@elastic/eui"
-import React from "react"
+import { EuiPage, EuiPageBody, EuiPageContent, EuiPageContentBody, EuiPageHeader, EuiPageHeaderSection, EuiTitle } from '@elastic/eui'
+import React from 'react'
 
 type PageProps = {
   title?: React.ReactNode,
