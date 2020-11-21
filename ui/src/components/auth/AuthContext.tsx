@@ -4,7 +4,6 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { graphqlUrl } from '../utils'
 import { LoginPage } from './Login'
-import { Loading } from '../utils/loading'
 
 const MY_AUTH_OBJECT = 'auth-object'
 
@@ -15,7 +14,10 @@ export type Auth_Obj = {
 }
 
 export function readAuthObj (): Auth_Obj | undefined {
-  const authObj: Auth_Obj | undefined = JSON.parse(localStorage.getItem(MY_AUTH_OBJECT))
+  const json = localStorage.getItem(MY_AUTH_OBJECT)
+
+  console.log('json', json)
+  const authObj: Auth_Obj | undefined = json ? JSON.parse(json) :undefined 
   console.log('Read my authObj from the local storage', authObj)
   return authObj
 }
@@ -37,7 +39,7 @@ type AuthAction = {
 function reducer (state: AuthState, action: AuthAction): AuthState {
   function forget () {
     console.log('Forget my authObj and injected users')
-    localStorage.setItem(MY_AUTH_OBJECT, undefined)
+    localStorage.removeItem(MY_AUTH_OBJECT)
     return { ...state, authObj: undefined }
   }
 

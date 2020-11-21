@@ -1,10 +1,10 @@
 import { EuiSelect, EuiSelectProps } from '@elastic/eui'
 import React from 'react'
-import { useGetOrganizations } from 'src/graphql/query/organizations/getOrganizations'
+import { useGetOrganisations } from 'src/graphql/query/organisations/getOrganisations'
 import { Loading } from '../utils/loading'
 
-export const OrganizationSelect = (props: EuiSelectProps) => {
-  const { data, error, loading } = useGetOrganizations()
+export const OrganisationSelect = (props: EuiSelectProps) => {
+  const { data, error, loading } = useGetOrganisations()
 
   if (loading) return <Loading />
 

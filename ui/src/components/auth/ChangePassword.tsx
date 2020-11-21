@@ -74,14 +74,14 @@ export const ChangePassword = () => {
     <EuiForm component='form' onSubmit={handleSubmit(onSubmit)}>
 
       <EuiFormRow label="Старий пароль" fullWidth>
-        <EuiFieldPassword name={getFiledName('oldpassword')} inputRef={register} fullWidth />
+        <EuiFieldPassword name={getFiledName('oldpassword')} inputRef={register} type='dual' fullWidth />
       </EuiFormRow>
-      <EuiFormErrorText>{getErrorMsg(errors.getFiledName('oldpassword'))}</EuiFormErrorText>
+      <EuiFormErrorText>{getErrorMsg(errors[getFiledName('oldpassword')])}</EuiFormErrorText>
 
       <EuiFormRow label="Новий пароль" fullWidth>
-        <EuiFieldPassword name={getFiledName('password')} inputRef={register} fullWidth />
+        <EuiFieldPassword name={getFiledName('password')} inputRef={register} type='dual' fullWidth />
       </EuiFormRow>
-      <EuiFormErrorText>{getErrorMsg(errors.getFiledName('password'))}</EuiFormErrorText>
+      <EuiFormErrorText>{getErrorMsg(errors[getFiledName('password')])}</EuiFormErrorText>
       <EuiFormErrorText>{error}</EuiFormErrorText>
       
       <EuiSpacer />
@@ -95,3 +95,5 @@ export const ChangePasswordPage = () => {
     <ChangePassword />
   </CenteredPage>
 }
+
+export default ChangePasswordPage

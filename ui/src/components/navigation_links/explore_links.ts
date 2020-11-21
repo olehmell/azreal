@@ -11,8 +11,13 @@ export const buildExploreLinks = (
       listItems: [
         {
           label: 'Організації',
-          onClick: makeAction('/organizations'),
+          onClick: makeAction('/organisations'),
           iconType: 'graphApp'
+        },
+        {
+          label: 'Користувачі',
+          onClick: makeAction('/users'),
+          iconType: 'usersRolesApp'
         },
         {
           label: 'Додати користувача',
@@ -21,8 +26,8 @@ export const buildExploreLinks = (
         },
         {
           label: 'Створити організацію',
-          onClick: makeAction('/organizations/new'),
-          iconType: 'usersRolesApp'
+          onClick: makeAction('/organisations/new'),
+          iconType: 'packetbeatApp'
         }
       ],
     },

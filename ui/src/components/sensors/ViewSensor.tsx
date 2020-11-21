@@ -6,7 +6,7 @@ import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
 import { EditButton } from './EditSensor'
-import { SensorProps, withLoadSensorFormUrl } from './utils'
+import { SensorProps, withLoadSensorFromUrl } from './utils'
 
 const SensorDesc = ({
   sensor
@@ -76,4 +76,4 @@ export const Sensor = ({ sensor }: SensorProps) => {
   </Page>
 }
 
-export default withLoadSensorFormUrl(Sensor)
+export default withLoadSensorFromUrl(Sensor)

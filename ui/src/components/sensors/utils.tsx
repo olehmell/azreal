@@ -67,7 +67,7 @@ export type SensorProps = {
   sensor: SensorType
 }
 
-export const withLoadSensorFormUrl = (Component: React.ComponentType<SensorProps>) => {
+export const withLoadSensorFromUrl = (Component: React.ComponentType<SensorProps>) => {
   return () => {
     const { query: { sensorId }} = useRouter()
     const { data, loading, error } = useGetSensorById(parseInt(sensorId as string))

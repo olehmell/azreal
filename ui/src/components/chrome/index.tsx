@@ -2,6 +2,7 @@ import React, { FunctionComponent, useRef } from 'react'
 import { useRouter } from 'next/router'
 
 import {
+  EuiButtonEmpty,
   EuiHeader,
   EuiHeaderLogo,
   EuiHeaderSection,
@@ -20,6 +21,7 @@ import { Breadcrumbs } from './breadcrumbs'
 import SwitchTheme from './switch_theme'
 
 import styles from './chrome.module.scss'
+import { useAuth } from '../auth/AuthContext'
 
 const Logo: FunctionComponent<{ onClick: () => void }> = ({ onClick }) => (
   <EuiHeaderLogo
@@ -38,7 +40,8 @@ const MenuTrigger: FunctionComponent<{ onClick: () => void }> = ({
 )
 
 const Chrome: FunctionComponent = ({ children }) => {
-/**
+  const { signOut } = useAuth()
+  /**
  * Renders the UI that surrounds the page content.
  */
   // This is an EuiNavDrawer, which isn't a TypeScript module yet
@@ -77,6 +80,7 @@ const Chrome: FunctionComponent = ({ children }) => {
         <EuiHeaderSection side='right'>
           <EuiHeaderSectionItem className={styles.chrHeaderSectionItem}>
             <SwitchTheme />
+            <EuiButtonEmpty iconType='kqlFunction'onClick={signOut}></EuiButtonEmpty>
           </EuiHeaderSectionItem>
         </EuiHeaderSection>
       </EuiHeader>

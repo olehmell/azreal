@@ -20,9 +20,10 @@ import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
 import { DocumentLoader } from '../forms/File'
 import { az_docs_enum_document_type_enum } from 'src/types/graphql-global-types'
+import { getErrorMsg } from '../utils'
 
 export const NewSensor = () => {
-  const [ addSensors, { data: res } ] = useAddSensor()
+  const [ addSensors ] = useAddSensor()
   const [ loading, setLoading ] = useState(false)
   const [ error, setError ] = useState('')
   const router = useRouter()
@@ -30,8 +31,6 @@ export const NewSensor = () => {
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(sensorSchema)
   })
-
-  const resSensorId = res?.insert_az_sensors_Sensors.returning[0].sensorId
 
   const onSubmit = useCallback(async sensorData => {
     setLoading(true)
@@ -42,11 +41,15 @@ export const NewSensor = () => {
         throw error
       } else if (location) {
         console.log(sensorData, location)
-        await addSensors({ variables: {
+        const { data, errors } = await addSensors({ variables: {
           ...location,
           ...sensorData
         }})
+
+        if (errors) throw errors
+
         setLoading(false)
+        router.push('/sensors/[sensorId]', `/sensors/${data.insert_az_sensors_Sensors.returning[0].sensorId}`)
       }
     } catch (error) {
       console.error(error)
@@ -62,24 +65,6 @@ export const NewSensor = () => {
     </EuiButton>
   , [ loading ])
 
-  const AddedAlert = useCallback(() => (error && !resSensorId)
-    ? <EuiCallOut title="Датчик не додано, сталась помилка:" color='danger'>{error}</EuiCallOut>
-    : <EuiCallOut title="Датчик успішно додано" color='success'>
-      <EuiButton
-        color="secondary"
-        size="s"
-        onClick={() => router.push('/sensors/[sensorId]', `/sensors/${resSensorId}`)}
-      >
-          Перейти на сторінку датчика
-      </EuiButton>
-    </EuiCallOut>
-  , [ error, resSensorId, router ])
-
-  const SubmitPanel = useCallback(() => (error || resSensorId)
-    ? <AddedAlert />
-    : <SubmitButton />
-  , [ error, resSensorId ])
-
   return (
     <Page title='Редагувати датчик'>
       <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -92,24 +77,25 @@ export const NewSensor = () => {
             required
           />
         </EuiFormRow>
-        <EuiFormErrorText title={errors.sensorId} />
+        <EuiFormErrorText>{getErrorMsg(errors.sensorId)}</EuiFormErrorText>
 
         <EuiFormRow label="Виробник" fullWidth>
           <EuiFieldText name="manufacturer" inputRef={register} fullWidth />
         </EuiFormRow>
-        <EuiFormErrorText title={errors.manufacturer} />
+        <EuiFormErrorText>{getErrorMsg(errors.manufacturer)}</EuiFormErrorText>
 
         <EuiFormRow label="Модель" fullWidth>
           <EuiFieldText name="model" inputRef={register} fullWidth />
         </EuiFormRow>
-        <EuiFormErrorText title={errors.model} />
+        <EuiFormErrorText>{getErrorMsg(errors.model)}</EuiFormErrorText>
 
         <EuiFormRow label="Файл датчика" fullWidth>
           <DocumentLoader documentType={az_docs_enum_document_type_enum.Sensor} onChange={(fileId) => setValue('documentId', fileId)} />
         </EuiFormRow>
 
         <EuiSpacer />
-        <SubmitPanel />
+        <SubmitButton />
+        <EuiFormErrorText>{error}</EuiFormErrorText>
 
       </EuiForm>
     </Page>

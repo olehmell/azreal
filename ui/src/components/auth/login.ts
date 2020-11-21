@@ -18,6 +18,8 @@ export const checkLogin = async (email: string, password: string) => {
     const res = await fetch('https://azreal-hasura.hasura.app/v1/graphql', config)
   
     const data = await res.json()
+
+    if (!data?.data?.az_users_Users[0]) throw new Error('Невірний логін або пароль')
   
     return { data: { ...data?.data.az_users_Users[0], token: hasuraSecret } as Auth_Obj }
   } catch (error) {

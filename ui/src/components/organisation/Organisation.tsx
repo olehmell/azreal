@@ -6,19 +6,19 @@ import { ButtonLink } from '../utils/ButtonLink'
 import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
-import { EditOrganizationButton } from './EditOrganization'
-import { OrganizationProps, withLoadOrganizationFormUrl } from './utils'
+import { EditOrganisationButton } from './EditOrganisation'
+import { OrganisationProps, withLoadOrganisationFromUrl } from './utils'
 
-const OrganizationDesc = ({
-  organization
-}: OrganizationProps) => {
+const OrganisationDesc = ({
+  organisation
+}: OrganisationProps) => {
   const {
     shortName,
     registryLink,
     rntrc,
     organisationRole,
     documentId
-  } = organization
+  } = organisation
 
   const items = [
     createDescItem('Коротка назва', shortName),
@@ -31,10 +31,10 @@ const OrganizationDesc = ({
   return <EuiDescriptionList textStyle="reverse" listItems={items} />
 }
 
-export const ViewOrganization = ({ organization }: OrganizationProps) => {
+export const ViewOrganisation = ({ organisation }: OrganisationProps) => {
   return <EuiFlexGroup>
     <EuiFlexItem>
-      <OrganizationDesc organization={organization} />
+      <OrganisationDesc organisation={organisation} />
     </EuiFlexItem>
     <EuiFlexItem>
     </EuiFlexItem>
@@ -42,21 +42,21 @@ export const ViewOrganization = ({ organization }: OrganizationProps) => {
 }
 
 
-export const Organization = ({ organization }: OrganizationProps) => {
+export const Organisation = ({ organisation }: OrganisationProps) => {
   return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>
-    <EuiFlexItem>{organization.fullName}</EuiFlexItem>
+    <EuiFlexItem>{organisation.fullName}</EuiFlexItem>
     <EuiFlexGroup alignItems='center'>
       <EuiFlexItem>
-        <EditOrganizationButton organization={organization} />
+        <EditOrganisationButton organisation={organisation} />
       </EuiFlexItem>
       <EuiFlexItem>
-        <DeleteButton organisationId={organization.organisationId} />
+        <DeleteButton organisationId={organisation.organisationId} />
       </EuiFlexItem>
     </EuiFlexGroup>
   </EuiFlexGroup>
   }>
-    <ViewOrganization organization={organization} />
+    <ViewOrganisation organisation={organisation} />
   </Page>
 }
 
-export default withLoadOrganizationFormUrl(Organization)
+export default withLoadOrganisationFromUrl(Organisation)

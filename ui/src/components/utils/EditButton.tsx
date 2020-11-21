@@ -8,6 +8,7 @@ type EditButtonProps = {
 export const EditButton = ({ id, typeEdit }: EditButtonProps) => <ButtonLink
   href={`/${typeEdit}/${id}/edit`}
   iconType='documentEdit'
+  fullWidth
   size='s'>
     Редагувати
 </ButtonLink>

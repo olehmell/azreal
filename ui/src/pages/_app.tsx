@@ -4,6 +4,7 @@ import React, { FunctionComponent } from 'react'
 import { EuiErrorBoundary } from '@elastic/eui'
 
 import { AuthProvider } from 'src/components/auth/AuthContext'
+import { NotificationProvider } from 'src/components/utils/Notifications'
 
 const EuiApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => (
   <>
@@ -16,11 +17,13 @@ const EuiApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => (
       />
       <title>Airzoom UI</title>
     </Head>
-    <AuthProvider>
-      <EuiErrorBoundary>
-        <Component {...pageProps} />
-      </EuiErrorBoundary>
-    </AuthProvider>
+    <EuiErrorBoundary>
+      <AuthProvider>
+        <NotificationProvider>
+          <Component {...pageProps} />
+        </NotificationProvider>
+      </AuthProvider>
+    </EuiErrorBoundary>
   </>
 )
 

@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import { GetOrganizations } from './types/GetOrganizations'
+import { GetOrganisations } from './types/GetOrganisations'
 
-const GET_ORGANIZATIONS = gql`
-  query GetOrganizations {
+const GET_ORGANISATIONS = gql`
+  query GetOrganisations {
     az_users_Organisation {
       shortName
       rntrc
@@ -17,4 +17,4 @@ const GET_ORGANIZATIONS = gql`
   }
 `
 
-export const useGetOrganizations = () => useQuery<GetOrganizations>(GET_ORGANIZATIONS)
+export const useGetOrganisations = () => useQuery<GetOrganisations>(GET_ORGANISATIONS)
