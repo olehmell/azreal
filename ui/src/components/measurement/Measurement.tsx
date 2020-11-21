@@ -1,15 +1,16 @@
-import { EuiComboBox, EuiDataGridColumn, EuiFormRow, EuiSpacer, EuiDatePicker} from "@elastic/eui"
-import React, { useState } from "react"
-import { useGetMeasurementLastDay } from "src/graphql/query/measurement/getMeasurement"
-import { GetMeasuremetLastDay_az_measurements_Measurements_aggregate_nodes as Measurements } from "src/graphql/query/measurement/types/GetMeasuremetLastDay"
-import { DataGrid } from "../utils/DataGrid"
-import { Loading } from "../utils/loading"
-import { Page } from "../utils/Page"
-import { ChartByParam } from "./ChartByParams"
-import moment from 'moment';
-import { date } from "faker"
-import { debug } from "console"
-import { dateValue } from "@elastic/eui/src/components/search_bar/query/date_value"
+import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiLoadingSpinner, EuiFlexGroup, EuiFlexItem, EuiSelect} from '@elastic/eui'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useGetMeasurementLastDay } from 'src/graphql/query/measurement/getMeasurement'
+import { GetMeasuremetLastDay_az_measurements_Measurements_aggregate_nodes as Measurements } from 'src/graphql/query/measurement/types/GetMeasuremetLastDay'
+import { Loading } from '../utils/loading'
+import { Page } from '../utils/Page'
+import { ChartByParam } from './ChartByParams'
+import moment from 'moment'
+import { useGetMeasurementsBetweenDate } from 'src/graphql/query/measurement/getMeasurementBetweenDate'
+import { GetMeasurementsBetweenDateVariables } from 'src/graphql/query/measurement/types/GetMeasurementsBetweenDate'
+import { SensorsSelect } from './SensorsSelect'
+import { Table } from '../utils/Table'
+import { MeasurementMock } from './test_data'
 
 
 type MeasurementTProps = {
@@ -20,7 +21,7 @@ const MeasurementTable = ({ measurements }: MeasurementTProps) => {
 
   const dynamicColumnIds = new Set()
 
-  const measurementData = measurements.map(({ locationId, sensorId, timestamp, values }) => {
+  const measurementData = measurements.map(({ timestamp, values }) => {
 
     const measurementValue = {}
 
@@ -31,33 +32,31 @@ const MeasurementTable = ({ measurements }: MeasurementTProps) => {
     })
 
     return {
-      locationId,
-      sensorId,
       timestamp,
       ...measurementValue
     }
   })
 
   const dynamicColumn = []
-  dynamicColumnIds.forEach(id => dynamicColumn.push({ id }))
+  dynamicColumnIds.forEach(id => dynamicColumn.push({
+    field: id,
+    name: id,
+    truncateText: true,
+    sortable: true
+  }))
 
-  const columns: EuiDataGridColumn[] = [
+  const columns = [
     {
-      id: 'timestamp',
-      display: 'Дата'
+      field: 'timestamp',
+      name: 'Час',
+      sortable: true,
+      truncateText: true,
+      render: (date) => moment(date).format('lll')
     },
-    {
-      id: 'locationId',
-      display: 'ID локації'
-    },
-    {
-      id: 'sensorId',
-      display: 'ID сенсора'
-    }, 
     ...dynamicColumn
   ]
 
-  return <DataGrid data={measurementData} columns={columns} />
+  return <Table data={measurementData} columns={columns} />
 }
 
 export const MeasurementData = () => {
@@ -76,88 +75,142 @@ export const MeasurementData = () => {
   </>
 }
 
-const measurementSelectorOptions = [
+type SelectorOptionType = {
+  text: string,
+  value: string
+}
+
+const measurementSelectorOptions: SelectorOptionType[] = [
   {
-    label: 'День',
+    text: 'Година',
+    value: 'hour'
   },
   {
-    label: 'Тиждень',
+    text: 'День',
+    value: 'day'
   },
   {
-    label: 'Місяць',
+    text: 'Тиждень',
+    value: 'week'
   },
   {
-    label: 'Рік',
+    text: 'Місяць',
+    value: 'month'
   },
   {
-    label: 'Усі дані',
+    text: 'Рік',
+    value: 'year'
   }
 ]
 
+type MeasurementSelectionType = {
+  from: string,
+  to: string,
+  aggregation?: 'day' | 'week' | 'month' | 'year'
+}
 
-const MeasurementSelector = () => {
+type MeasurementSelectorProps = {
+  onChange: (measurements: Measurements[]) => void,
+  sensorId?: number
+}
 
-  const [ selectedOptions, setSelected ] = useState<any[]>()
+const initSelectionData: MeasurementSelectionType = {
+  from: moment().startOf('day').toISOString(),
+  to: moment().toISOString()
+}
 
-  const onChange = (selectedOptions) => {
-    // We should only get back either 0 or 1 options.
-    setSelected(selectedOptions)
+export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: MeasurementSelectorProps) => {
+  const [ fromData, setFromData ] = useState(initSelectionData.from)
+  const [ toData, setToData ] = useState(initSelectionData.to)
+  const [ aggregation, setAggregation ] = useState<string>()
+  const [ sensorId, setSensorId ] = useState<number>(initialSensorId)
+  const [ variables, setVariables ] = useState<GetMeasurementsBetweenDateVariables>()
+  const { data, error, loading } = useGetMeasurementsBetweenDate(variables)
+
+  useEffect(() => {
+    if (loading || !data) return
+
+    console.log('DATA', data)
+
+    onChange(MeasurementMock.filter(x => x.sensorId == sensorId) as any)
+  }, [ loading, data ])
+
+  const onChangeSelector = (onChange) =>
+    (e) => onChange(e.target.value)
+
+  const onChangeFromData = (from) => {
+    console.log(from)
+    setFromData(from)
   }
 
-  return (<>
-    <EuiFormRow
-      label='Оберіть розмір вибірки'
-      style={{ maxWidth: 200 }}
-      helpText="Розмір вибірки">
-      <EuiComboBox
-        placeholder="Виберіть розмір вибірки"
-        singleSelection={{ asPlainText: true }}
-        options={measurementSelectorOptions}
-        selectedOptions={selectedOptions}
-        onChange={onChange}
-      />
-    </EuiFormRow>
-    <EuiSpacer size='xxl' />
-    {selectedOptions && <MeasurementData />}
-  </>
+  const onChangeToData= (to) => {
+    console.log(to)
+    setToData(to)
+  }
+
+  const Loading = useCallback(() => loading
+    ? <EuiLoadingSpinner size='l' />
+    : <EuiButton fill onClick={() => setVariables({ to: toData, from: fromData, sensorId })}>
+      Отримати
+    </EuiButton>
+  , [ loading ])
+
+  return (
+    <EuiFlexGroup justifyContent='spaceBetween' alignItems='center'>
+      <EuiFlexItem>
+        <EuiSelect
+          placeholder="Оберіть розмір вибірки"
+          options={measurementSelectorOptions}
+          onChange={onChangeSelector(setAggregation)}
+          value={aggregation}
+        />
+      </EuiFlexItem>
+
+      <EuiFlexItem>
+        <EuiDatePicker showTimeSelect selected={moment(fromData)} onChange={onChangeFromData} />
+      </EuiFlexItem>
+
+      <EuiFlexItem>
+        <EuiDatePicker showTimeSelect selected={moment(toData)} onChange={onChangeToData} />
+      </EuiFlexItem>
+
+      {!initialSensorId && <EuiFlexItem>
+        <SensorsSelect
+          placeholder="Оберіть Id датчика"
+          value={sensorId}
+          onChange={onChangeSelector(setSensorId)} />
+      </EuiFlexItem>}
+
+      <EuiFlexItem>
+        <Loading />
+      </EuiFlexItem>
+
+      <EuiFormErrorText>{error}</EuiFormErrorText>
+
+    </EuiFlexGroup>
+
   )
 }
 
-const FromDate = () => {
-  const [ startDate, setStartDate ] = useState(moment());
-  const handleChange = (date) => {
-    setStartDate(date);
-    const date_for_Oleh = JSON.stringify(date);
-    console.log(date_for_Oleh.slice(0, 11));
-    console.log(typeof date_for_Oleh)
-  };
-  return ( <>
-    <EuiFormRow label="Select a start date">
-      <EuiDatePicker selected={startDate} onChange={handleChange} />
-    </EuiFormRow>
-  </>
-  );
+type MeasurementsForSensorProps = {
+  sensorId: number
 }
 
-const ToDate = () => {
-  const [ startDate, setStartDate ] = useState(moment());
-  const handleChange = (date) => {
-    setStartDate(date);
-    const date_for_Oleh = JSON.stringify(date);
-    console.log(date_for_Oleh.slice(0, 11));
-  };
-  return ( <>
-    <EuiFormRow label="Select a end date">
-      <EuiDatePicker selected={startDate} onChange={handleChange} />
-    </EuiFormRow>
+const MeasurementsSection = ({ sensorId }: Partial<MeasurementsForSensorProps>) => {
+  const [ measurements, setMeasurements ] = useState<Measurements[]>()
+
+  return <>
+    <EuiSpacer size='xl' />
+    <MeasurementSelector onChange={(data) => setMeasurements(data)} sensorId={sensorId} />
+    <EuiSpacer size='xl' />
+    {measurements && <MeasurementTable measurements={measurements} />}
   </>
-  );
 }
+
+export const MeasurementsForSensor = (props: MeasurementsForSensorProps) => <MeasurementsSection {...props} />
 
 export default () => {
-  return <Page>
-    <MeasurementSelector />
-    <FromDate />
-    <ToDate />
+  return <Page title='Вибірка даних' >
+    <MeasurementsSection />
   </Page>
 }
