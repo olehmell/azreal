@@ -1,55 +1,53 @@
 from flask import Flask, request, make_response
 from dotenv import load_dotenv
-from hashlib import md5
 import os
-import pymongo
-
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from gridfs import GridFS
+from flask_cors import CORS
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
-
 app = Flask(__name__)
+CORS(app)
+port = os.getenv('PORT')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-my_client = pymongo.MongoClient(os.getenv('POSTGRES_HOSTNAME'))
+
+my_client = MongoClient(os.getenv('POSTGRES_HOSTNAME'))
 my_db = my_client["test"]
-my_col = my_db["collect"]
+grid_fs = GridFS(my_db)
 
-
-@app.route("/add", methods=["POST"])
+@app.route('/add', methods=['POST'])
 def add_files():
     user_file = request.files['file']
-    _id = md5(user_file.read()).hexdigest()
-    if my_col.find_one({'_id': _id}):
-        return _id, 'file is exist'
+    with grid_fs.new_file(filename=user_file.filename) as fp:
+        fp.write(request.data)
+        file_id = fp._id
+
+    if grid_fs.find_one(file_id) is not None:
+        return { 'status': 'File saved successfully', 'id': str(file_id) }, 200
     else:
-        my_col.insert_one({
-            '_id': _id,
-            'filename': user_file.filename,
-            'content': user_file.read(),
-            'mimetype': user_file.mimetype
-        })
-        return _id, 'file add'
+        return {'status': 'Error occurred while saving file.'}, 500
 
+@app.route("/get/<id>", methods=["GET"])
+def get_file(id):
+    grid_fs_file = grid_fs.find_one({ '_id': ObjectId(id) })
+    if grid_fs_file is not None:
+        response = make_response(grid_fs_file.read())
+        response.headers['Content-Type'] = 'application/octet-stream'
+        response.headers.set(
+            'Content-Disposition', 'attachment', filename=grid_fs_file.filename)
+        return response
+    else: 
+        return {'status': 'File is not found'}, 404
 
-@app.route("/get", methods=["GET"])
-def get_file():
-    res = request.args.get('id')
-    file = my_col.find_one({'_id': res})
-    response = make_response(file['content'])
-    response.headers.set('Content-Type', file['mimetype'])
-    response.headers.set(
-        'Content-Disposition', 'attachment', filename=file['filename'])
-    return response
-
-
-@app.route("/delete", methods=["DELETE"])
-def delete_file():
-    file_id = request.args.get('id')
-    my_col.find_one_and_delete({'_id': file_id})
-    return file_id, 'file deleted'
-
+@app.route("/delete/<id>", methods=["DELETE"])
+def delete_file(id):
+    grid_fs.delete(ObjectId(id))
+    return {'status': 'File delete successfully'}, 200
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3001)
+    app.run(debug=True, port=port)

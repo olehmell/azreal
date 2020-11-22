@@ -4,12 +4,16 @@ import os
 import requests
 import json
 from hashlib import sha256
+from flask_cors import CORS
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
 app = Flask(__name__)
+CORS(app)
+port = os.getenv('PORT')
+
 hasura_secret_key = os.getenv('HASURA_SECRET_KEY')
 hasura_url = os.getenv('HASURA_URL')
 
@@ -28,6 +32,7 @@ def login():
     hasura_user_id = ""
     hasura_user_role = ""
     user_data = request.get_json()
+    print(request)
     hash_pass = sha256(user_data['password'].encode('utf-8')).hexdigest()
     headers = {'x-hasura-admin-secret': hasura_secret_key, 'Content-Type': 'application/json'}
     url = hasura_url
@@ -43,10 +48,11 @@ def login():
             hasura_user_id = info['userId']
             hasura_user_role = info['userRole']
         if hasura_user_password == hash_pass:
-            return {'UserID': hasura_user_id, 'UserRole': hasura_user_role, 'token': hasura_secret_key}
+            print(hasura_user_id)
+            return {'userId': hasura_user_id, 'userRole': hasura_user_role, 'token': hasura_secret_key}
         else:
             return {'error': 'your password so faggot'}, 401
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3002)
+    app.run(debug=True, port=port)
