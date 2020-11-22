@@ -18,35 +18,33 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 my_client = MongoClient(os.getenv('POSTGRES_HOSTNAME'))
 my_db = my_client["test"]
-grid_fs = GridFS(my_db)
+my_col = my_db["collect"]
 
-@app.route('/add', methods=['POST'])
+@app.route("/add", methods=["POST"])
 def add_files():
     user_file = request.files['file']
-    with grid_fs.new_file(filename=user_file.filename) as fp:
-        fp.write(request.data)
-        file_id = fp._id
-
-    if grid_fs.find_one(file_id) is not None:
-        return { 'status': 'File saved successfully', 'id': str(file_id) }, 200
-    else:
-        return {'status': 'Error occurred while saving file.'}, 500
+    file_id = my_col.insert_one({
+        'filename': user_file.filename,
+        'content': user_file.read(),
+        'mimetype': user_file.mimetype
+    })
+    return { 'status': 'File saved successfully', 'id': str(file_id) }, 200
 
 @app.route("/get/<id>", methods=["GET"])
 def get_file(id):
-    grid_fs_file = grid_fs.find_one({ '_id': ObjectId(id) })
-    if grid_fs_file is not None:
-        response = make_response(grid_fs_file.read())
-        response.headers['Content-Type'] = 'application/octet-stream'
+    file = my_col.find_one({'_id': ObjectId(id)})
+    if file is not None:
+        response = make_response(file['content'])
+        response.headers.set('Content-Type', file['mimetype'])
         response.headers.set(
-            'Content-Disposition', 'attachment', filename=grid_fs_file.filename)
+            'Content-Disposition', 'attachment', filename=file['filename'])
         return response
     else: 
         return {'status': 'File is not found'}, 404
 
 @app.route("/delete/<id>", methods=["DELETE"])
 def delete_file(id):
-    grid_fs.delete(ObjectId(id))
+    my_col.find_one_and_delete({'_id': ObjectId(id)})
     return {'status': 'File delete successfully'}, 200
 
 if __name__ == '__main__':
