@@ -23,12 +23,12 @@ my_col = my_db["collect"]
 @app.route("/add", methods=["POST"])
 def add_files():
     user_file = request.files['file']
-    file_id = my_col.insert_one({
+    res = my_col.insert_one({
         'filename': user_file.filename,
         'content': user_file.read(),
         'mimetype': user_file.mimetype
     })
-    return { 'status': 'File saved successfully', 'id': str(file_id) }, 200
+    return { 'status': 'File saved successfully', 'id': str(res.inserted_id) }, 200
 
 @app.route("/get/<id>", methods=["GET"])
 def get_file(id):
