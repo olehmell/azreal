@@ -10,19 +10,30 @@ import {
   EuiCallOut,
   EuiCode,
   EuiBasicTableColumn,
+  EuiButton,
 } from '@elastic/eui'
+import { exportToCsv } from './export'
 
 type TableProps<T> = {
   data: T[]
-  columns: EuiBasicTableColumn<T>[]
+  columns: EuiBasicTableColumn<T>[],
+  fileName?: string
 }
 
-export const Table = ({ data, columns }: TableProps<Record<string, any>>) => {
+type ExportButtonProps = {
+  fileName?: string,
+  data: any[]
+}
+
+const ExportButton = ({ fileName, data }: ExportButtonProps) => <EuiButton onClick={() => exportToCsv(fileName, data)}>Експортувати</EuiButton>
+
+export const Table = ({ data, columns, fileName }: TableProps<Record<string, any>>) => {
 
   const search = {
     box: {
       schema: true,
     },
+    toolsRight: <ExportButton data={data} fileName={fileName} />,
     // filters:
     // [
     //       {

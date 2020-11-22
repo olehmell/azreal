@@ -14,14 +14,15 @@ import { MeasurementMock } from './test_data'
 
 
 type MeasurementTProps = {
-  measurements: Measurements[]
+  measurements: Measurements[],
+  fileName?: string
 }
 
-const MeasurementTable = ({ measurements }: MeasurementTProps) => {
+const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
 
   const dynamicColumnIds = new Set()
 
-  const measurementData = measurements.map(({ timestamp, values }) => {
+  const measurementData = measurements.map(({ timestamp, sensorId, values }) => {
 
     const measurementValue = {}
 
@@ -33,6 +34,7 @@ const MeasurementTable = ({ measurements }: MeasurementTProps) => {
 
     return {
       timestamp,
+      sensorId,
       ...measurementValue
     }
   })
@@ -56,7 +58,7 @@ const MeasurementTable = ({ measurements }: MeasurementTProps) => {
     ...dynamicColumn
   ]
 
-  return <Table data={measurementData} columns={columns} />
+  return <Table data={measurementData} columns={columns} fileName={fileName} />
 }
 
 export const MeasurementData = () => {
@@ -203,7 +205,7 @@ const MeasurementsSection = ({ sensorId }: Partial<MeasurementsForSensorProps>) 
     <EuiSpacer size='xl' />
     <MeasurementSelector onChange={(data) => setMeasurements(data)} sensorId={sensorId} />
     <EuiSpacer size='xl' />
-    {measurements && <MeasurementTable measurements={measurements} />}
+    {measurements && <MeasurementTable fileName={`Measurements-${sensorId}`} measurements={measurements} />}
   </>
 }
 
