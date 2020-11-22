@@ -2,4 +2,5 @@
   - [Загальний огляд](general_description.md)
   - [Детальний технічний опис датчиків](sens_detail.md)
   - [Розташування датчиків](location.md)
+  - [Встановлення датчиків](sensor_install.md)
   - [Фактори моніторингу](factors/README.md)
