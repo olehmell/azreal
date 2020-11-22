@@ -11,6 +11,7 @@ import { GetMeasurementsBetweenDateVariables } from 'src/graphql/query/measureme
 import { SensorsSelect } from './SensorsSelect'
 import { Table } from '../utils/Table'
 import { MeasurementMock } from './test_data'
+import { getErrorMsg } from '../utils'
 
 
 type MeasurementTProps = {
@@ -59,22 +60,6 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
   ]
 
   return <Table data={measurementData} columns={columns} fileName={fileName} />
-}
-
-export const MeasurementData = () => {
-  const { data, error, loading } = useGetMeasurementLastDay()
-
-  if (error) return null
-
-  if (loading) return <Loading />
-
-  const measurements = data.az_measurements_Measurements_aggregate.nodes
-
-  return <>
-    <MeasurementTable measurements={measurements} />
-    <EuiSpacer size='xxl' />
-    <ChartByParam />
-  </>
 }
 
 type SelectorOptionType = {
@@ -157,39 +142,42 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     </EuiButton>
   , [ loading ])
 
+  console.error(error)
+
   return (
-    <EuiFlexGroup justifyContent='spaceBetween' alignItems='center'>
-      <EuiFlexItem>
-        <EuiSelect
-          placeholder="Оберіть розмір вибірки"
-          options={measurementSelectorOptions}
-          onChange={onChangeSelector(setAggregation)}
-          value={aggregation}
-        />
-      </EuiFlexItem>
+    <>
+      <EuiFlexGroup justifyContent='spaceBetween' alignItems='center'>
+        <EuiFlexItem>
+          <EuiSelect
+            placeholder="Оберіть розмір вибірки"
+            options={measurementSelectorOptions}
+            onChange={onChangeSelector(setAggregation)}
+            value={aggregation}
+          />
+        </EuiFlexItem>
 
-      <EuiFlexItem>
-        <EuiDatePicker showTimeSelect selected={moment(fromData)} onChange={onChangeFromData} />
-      </EuiFlexItem>
+        <EuiFlexItem>
+          <EuiDatePicker showTimeSelect selected={moment(fromData)} onChange={onChangeFromData} />
+        </EuiFlexItem>
 
-      <EuiFlexItem>
-        <EuiDatePicker showTimeSelect selected={moment(toData)} onChange={onChangeToData} />
-      </EuiFlexItem>
+        <EuiFlexItem>
+          <EuiDatePicker showTimeSelect selected={moment(toData)} onChange={onChangeToData} />
+        </EuiFlexItem>
 
-      {!initialSensorId && <EuiFlexItem>
-        <SensorsSelect
-          placeholder="Оберіть Id датчика"
-          value={sensorId}
-          onChange={onChangeSelector(setSensorId)} />
-      </EuiFlexItem>}
+        {!initialSensorId && <EuiFlexItem>
+          <SensorsSelect
+            placeholder="Оберіть Id датчика"
+            value={sensorId}
+            onChange={onChangeSelector(setSensorId)} />
+        </EuiFlexItem>}
 
-      <EuiFlexItem>
-        <Loading />
-      </EuiFlexItem>
+        <EuiFlexItem>
+          <Loading />
+        </EuiFlexItem>
 
-      <EuiFormErrorText>{error}</EuiFormErrorText>
-
-    </EuiFlexGroup>
+      </EuiFlexGroup>
+      {error && <EuiFormErrorText>{getErrorMsg(error)}</EuiFormErrorText>}
+    </>
 
   )
 }
@@ -205,7 +193,9 @@ const MeasurementsSection = ({ sensorId }: Partial<MeasurementsForSensorProps>) 
     <EuiSpacer size='xl' />
     <MeasurementSelector onChange={(data) => setMeasurements(data)} sensorId={sensorId} />
     <EuiSpacer size='xl' />
-    {measurements && <MeasurementTable fileName={`Measurements-${sensorId}`} measurements={measurements} />}
+    <MeasurementTable fileName={`Measurements-${sensorId}`} measurements={MeasurementMock as any} />
+    <EuiSpacer size='xxl' />
+    <ChartByParam chartData={MeasurementMock as any} />
   </>
 }
 
