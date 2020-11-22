@@ -23,7 +23,7 @@ const THEME = 'theme'
 
 const isClientSide = () => typeof window !== 'undefined' 
 
-const getThemeFromStore = () => ((isClientSide() && localStorage?.getItem(THEME)) || initialTheme) as ThemeType
+export const getThemeFromStore = () => ((isClientSide() && localStorage?.getItem(THEME)) || initialTheme) as ThemeType
 
 const setThemeToStore = (theme: ThemeType) => isClientSide() && localStorage?.setItem(THEME, theme)
 
@@ -39,7 +39,7 @@ const SwitchTheme: FunctionComponent = () => {
   }
 
   return <EuiSwitch
-    label={`${isDark ? 'Dark' : 'Light'} mode`}
+    label={`${isDark ? 'Темна' : 'Світла'} тема`}
     checked={isDark}
     onChange={(e) => handleChangeTheme(e.target.checked ? 'dark' : 'light')}
     compressed
