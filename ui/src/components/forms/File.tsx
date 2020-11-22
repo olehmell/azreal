@@ -3,6 +3,8 @@ import React from 'react'
 import { useAddDocuments } from 'src/graphql/query/documents/addDocuments'
 import { useAddPhotos } from 'src/graphql/query/photos/addPhotos'
 import { az_docs_Documents_insert_input, az_docs_enum_document_type_enum, az_docs_Photo_insert_input } from 'src/types/graphql-global-types'
+import axios from 'axios'
+import { mongoUrl } from '../utils'
 
 type FilePicker = Omit<EuiFilePickerProps, 'onChange'> & {
   onChange: (fileId?: number) => void
@@ -21,6 +23,14 @@ const InnerFileLoader = (props: EuiFilePickerProps) => <EuiFilePicker
   {...props}
 />
 
+const saveFile = async (file: File) => {
+  const form = new FormData()
+  form.append('file', file)
+  const { data } = await axios.post(`${mongoUrl}/add`, form)
+
+  return data
+}
+
 export const DocumentLoader = ({ onChange, name, documentType, fileIds }: DocumentPicker) => {
   const [ addDocuments, { loading, error } ] = useAddDocuments()
 
@@ -31,14 +41,17 @@ export const DocumentLoader = ({ onChange, name, documentType, fileIds }: Docume
       accept='.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       initialPromptText="Виберіть або перетягніть файл"
       onChange={async (files) => {
-        const documents: az_docs_Documents_insert_input[] = []
+        const promisesFileHash = []
 
         for (const file of files) {
-          const documentBody = await file.text()
-          documents.push({ documentType, documentBody })
+          promisesFileHash.push((saveFile(file)))
         }
 
-        console.log(documents)
+        const ids = await Promise.all(promisesFileHash)
+
+        console.log(ids)
+
+        const documents: az_docs_Documents_insert_input[] = ids.map(id => ({ documentType, documentBody: id }))
 
         try {
           const { data } = await addDocuments({ variables: { objects: documents } })
@@ -66,12 +79,17 @@ export const PhotoLoader = ({ onChange, name }: FilePicker) => {
       accept='image/*'
       initialPromptText="Виберіть або перетягніть фото"
       onChange={async (files) => {
-        const photos: az_docs_Photo_insert_input[] = []
+        const promisesFileHash = []
 
         for (const file of files) {
-          const photoSeries = await file.arrayBuffer()
-          photos.push({ photoSeries })
+          promisesFileHash.push((saveFile(file)))
         }
+
+        const ids = await Promise.all(promisesFileHash)
+
+        console.log(ids)
+
+        const photos: az_docs_Photo_insert_input[] = ids.map(id => ({ photoSeries: id }))
 
         await addPhotos({ variables: { objects: photos }})
 

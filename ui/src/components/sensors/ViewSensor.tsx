@@ -1,6 +1,7 @@
 import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
 import React from 'react'
 import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { MeasurementsForSensor } from '../measurement/Measurement'
 import { createDescItem } from '../utils'
 import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
@@ -40,22 +41,25 @@ const FactorsDesc = ({
 }
 
 export const ViewSensor = ({ sensor }: SensorProps) => {
-  const { Location: { locationPoint, address }, } = sensor
+  const { Location: { locationPoint, address }, sensorId } = sensor
   const sensorCoordinaties = parseLatLngTuple(locationPoint)
   console.log('parseLatLngTuple(locationPoint)', sensorCoordinaties)
-  return <EuiFlexGroup>
-    <EuiFlexItem>
-      <MapContainer center={sensorCoordinaties} style={{ height: '300px'}} zoom={13}>
-        {titleLayer}
-        <Marker position={sensorCoordinaties}>
-          <Popup>{address}</Popup>
-        </Marker>
-      </MapContainer>
-    </EuiFlexItem>
-    <EuiFlexItem>
-      <SensorDesc sensor={sensor} />
-    </EuiFlexItem>
-  </EuiFlexGroup>
+  return <>
+    <EuiFlexGroup>
+      <EuiFlexItem>
+        <MapContainer center={sensorCoordinaties} style={{ height: '300px'}} zoom={13}>
+          {titleLayer}
+          <Marker position={sensorCoordinaties}>
+            <Popup>{address}</Popup>
+          </Marker>
+        </MapContainer>
+      </EuiFlexItem>
+      <EuiFlexItem>
+        <SensorDesc sensor={sensor} />
+      </EuiFlexItem>
+    </EuiFlexGroup>
+    <MeasurementsForSensor sensorId={sensorId} />
+  </>
 }
 
 

@@ -22,13 +22,9 @@ export const Login = () => {
 
   const { register, handleSubmit, errors } = useForm()
 
-  const onSubmit = async loginData => {
+  const onSubmit = async ({ email, password }) => {
     setLoading(true)
     try {
-      const email = loginData.email
-      const password = await (await sha256(loginData.password)).toString()
-
-      console.log('password', password)
 
       const { data, error } = await checkLogin(email, password)
   
@@ -38,13 +34,13 @@ export const Login = () => {
         console.log('data', data)
         setAuthObj(data)
         setLoading(false)
-        router.push('/')
       }
 
     } catch (error) {
-      console.error(error.toString())
+      console.error(error)
       setError(error.toString())
       setLoading(false)
+      router.reload()
     }
   }
 
