@@ -21,5 +21,8 @@ export interface GetMeasuremetLastDay_az_measurements_Measurements_aggregate {
 }
 
 export interface GetMeasuremetLastDay {
+  /**
+   * fetch aggregated fields from the table: "az_measurements.Measurements"
+   */
   az_measurements_Measurements_aggregate: GetMeasuremetLastDay_az_measurements_Measurements_aggregate;
 }

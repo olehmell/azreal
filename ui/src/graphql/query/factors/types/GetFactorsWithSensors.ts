@@ -15,14 +15,19 @@ export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nod
 
 export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes_SensorFactors {
   __typename: "az_sensors_SensorFactors";
+  /**
+   * An object relationship
+   */
   Sensor: GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes_SensorFactors_Sensor;
 }
 
 export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes {
   __typename: "az_sensors_PollutionFactors";
   label: string;
-  maxValues: any | null;
   unit: any;
+  /**
+   * An array relationship
+   */
   SensorFactors: GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes_SensorFactors[];
 }
 
@@ -32,5 +37,8 @@ export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate {
 }
 
 export interface GetFactorsWithSensors {
+  /**
+   * fetch aggregated fields from the table: "az_sensors.PollutionFactors"
+   */
   az_sensors_PollutionFactors_aggregate: GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate;
 }

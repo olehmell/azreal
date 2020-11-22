@@ -1,4 +1,4 @@
-import { EuiNavDrawerGroupProps } from '@elastic/eui';
+import { EuiNavDrawerGroupProps } from '@elastic/eui'
 
 export const buildExploreLinks = (
   makeAction: (path: string) => () => void
@@ -11,8 +11,13 @@ export const buildExploreLinks = (
       listItems: [
         {
           label: 'Організації',
-          onClick: makeAction('/organizations'),
+          onClick: makeAction('/organisations'),
           iconType: 'graphApp'
+        },
+        {
+          label: 'Користувачі',
+          onClick: makeAction('/users'),
+          iconType: 'usersRolesApp'
         },
         {
           label: 'Додати користувача',
@@ -21,8 +26,8 @@ export const buildExploreLinks = (
         },
         {
           label: 'Створити організацію',
-          onClick: makeAction('/organizations/new'),
-          iconType: 'usersRolesApp'
+          onClick: makeAction('/organisations/new'),
+          iconType: 'packetbeatApp'
         }
       ],
     },
@@ -53,11 +58,6 @@ export const buildExploreLinks = (
     iconType: 'visualizeApp',
   },
   {
-    label: 'Локації',
-    onClick: makeAction('/locations'),
-    iconType: 'gisApp',
-  },
-  {
     label: 'Вимірювальні фактори',
     onClick: makeAction('/factors'),
     iconType: 'metricsApp',
@@ -72,4 +72,4 @@ export const buildExploreLinks = (
     onClick: makeAction('/logs'),
     iconType: 'logsApp',
   },
-];
+]

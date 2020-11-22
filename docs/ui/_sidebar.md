@@ -1,3 +1,4 @@
 - [&uarr;&uarr;](../README.md) [КОД ІНТЕРФЕЙСУ КОРИСТУВАЧА](README.md)
     - [Швидкий старт](quick_start.md)
-    - [Що там всередині](what_is_in.md)
+    - [Стек технологій](tech_stack.md)
+    - [Структура проекту](struct_of_project.md)

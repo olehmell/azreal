@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { GetSensors } from "./types/GetSensors";
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { GetSensors } from './types/GetSensors'
 
 export const GET_SENSOR_QUERY = gql`
   query GetSensors {
@@ -10,7 +10,7 @@ export const GET_SENSOR_QUERY = gql`
       model
       sensorId
       Location {
-        actLink
+        documentId
         address
         airlyLink
         elevation

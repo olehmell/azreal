@@ -97,5 +97,17 @@ module.exports = {
 
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'semi': [ 'warn', 'never' ],
+    'react/prop-types': 'off',
+    'quotes': [ 'warn', 'single' ],
+    'array-bracket-spacing' : [ 'warn', 'always' ],
+    'no-multi-spaces': 'error',
+    'space-before-function-paren': [ 'warn', 'always' ],
+    'non-nullish value': 'off',
+    'react/display-name': 'off',
+    '@typescript-eslint/ban-types': 'off',
+    'react-hooks/exhaustive-deps': 'off'
   },
-};
+}

@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react'
 import {
   EuiButton,
   EuiPage,
   EuiPageBody,
   EuiPageHeader,
   EuiPageHeaderSection,
-} from '@elastic/eui';
+} from '@elastic/eui'
 
 const Index: FunctionComponent = () => (
   <EuiPage restrictWidth>
@@ -23,6 +23,6 @@ const Index: FunctionComponent = () => (
       </EuiPageHeader>
     </EuiPageBody>
   </EuiPage>
-);
+)
 
-export default Index;
+export default Index

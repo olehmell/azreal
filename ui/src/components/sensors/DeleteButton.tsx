@@ -1,8 +1,8 @@
-import { EuiButton } from "@elastic/eui";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { useDeleteSensorById } from "src/graphql/query/sensors/deleteSensor"
-import { Loading } from "../utils/loading";
+import { EuiButton } from '@elastic/eui'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
+import { useDeleteSensorById } from 'src/graphql/query/sensors/deleteSensor'
+import { Loading } from '../utils/loading'
 
 
 type DeleteButtonProps = {
@@ -11,7 +11,7 @@ type DeleteButtonProps = {
 
 export const DeleteButton = ({ sensorId }: DeleteButtonProps) => {
   const [ deleteSensor, { data: res, error, loading } ] = useDeleteSensorById(sensorId)
-  const router = useRouter();
+  const router = useRouter()
 
   const resId = res?.delete_az_sensors_Sensors.returning[0].sensorId
 
@@ -21,7 +21,7 @@ export const DeleteButton = ({ sensorId }: DeleteButtonProps) => {
     router.push('/sensors')
   }, [ resId, router ])
 
-  if (error) return null;
+  if (error) return null
 
   if (loading) return <Loading />
 

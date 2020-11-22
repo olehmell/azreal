@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import React, { useCallback, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import {
   EuiButton,
@@ -14,11 +14,11 @@ import {
   EuiFlyoutBody,
   EuiFlyoutHeader,
   EuiTitle,
-} from '@elastic/eui';
+} from '@elastic/eui'
 
-import { SensorProps } from './utils';
-import { useUpdateSensorById } from 'src/graphql/query/sensors/updateSensor';
-import { useRouter } from 'next/router';
+import { SensorProps } from './utils'
+import { useUpdateSensorById } from 'src/graphql/query/sensors/updateSensor'
+import { useRouter } from 'next/router'
 
 type EditFlayOutProps = SensorProps & {
   onClose: () => void;
@@ -27,48 +27,48 @@ type EditFlayOutProps = SensorProps & {
 export const EditSensorForm = ({
   sensor: { model, manufacturer, sensorId, Location },
 }: EditFlayOutProps) => {
-  const [ updateSensors, { data: res } ] = useUpdateSensorById(sensorId);
-  const [ loading, setLoading ] = useState(false);
-  const router = useRouter();
+  const [ updateSensors, { data: res } ] = useUpdateSensorById(sensorId)
+  const [ loading, setLoading ] = useState(false)
+  const router = useRouter()
 
-  const { register, handleSubmit, watch, setValue } = useForm();
+  const { register, handleSubmit, watch, setValue } = useForm()
 
-  const watchModel = watch('model');
-  const watchManufacturer = watch('manufacturer');
+  const watchModel = watch('model')
+  const watchManufacturer = watch('manufacturer')
 
   useEffect(() => {
-    setValue('sensorId', sensorId);
-    setValue('model', model);
-    setValue('manufacturer', manufacturer);
-    setValue('locationId', Location.locationId);
+    setValue('sensorId', sensorId)
+    setValue('model', model)
+    setValue('manufacturer', manufacturer)
+    setValue('locationId', Location.locationId)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
-  const notChange = watchModel === model && watchManufacturer === manufacturer;
+  const notChange = watchModel === model && watchManufacturer === manufacturer
 
-  const resSensorId = res?.update_az_sensors_Sensors.returning[0].sensorId;
+  const resSensorId = res?.update_az_sensors_Sensors.returning[0].sensorId
 
   useEffect(() => {
-    if (!resSensorId) return;
+    if (!resSensorId) return
 
-    router.reload();
-  }, [ resSensorId, router ]);
+    router.reload()
+  }, [ resSensorId, router ])
 
   const onSubmit = async sensorData => {
-    console.log('SUBMIT', sensorData);
-    setLoading(true);
+    console.log('SUBMIT', sensorData)
+    setLoading(true)
     try {
       await updateSensors({
         variables: {
           ...sensorData,
         },
-      });
-      setLoading(false);
+      })
+      setLoading(false)
     } catch (error) {
-      console.error(error);
-      setLoading(false);
+      console.error(error)
+      setLoading(false)
     }
-  };
+  }
 
   const SubmitButton = useCallback(
     () =>
@@ -80,7 +80,7 @@ export const EditSensorForm = ({
         </EuiButton>
       ),
     [ loading, notChange ]
-  );
+  )
 
   return (
     <EuiForm component='form' onSubmit={handleSubmit(onSubmit)}>
@@ -115,8 +115,8 @@ export const EditSensorForm = ({
       <EuiSpacer />
       <SubmitButton />
     </EuiForm>
-  );
-};
+  )
+}
 
 const EditFlayOut = (props: EditFlayOutProps) => (
   <EuiFlyout ownFocus onClose={props.onClose} aria-labelledby='flyoutTitle'>
@@ -129,10 +129,10 @@ const EditFlayOut = (props: EditFlayOutProps) => (
       <EditSensorForm {...props} />
     </EuiFlyoutBody>
   </EuiFlyout>
-);
+)
 
 export const EditButton = ({ sensor }: SensorProps) => {
-  const [ isFlyoutVisible, setIsFlyoutVisible ] = useState(false);
+  const [ isFlyoutVisible, setIsFlyoutVisible ] = useState(false)
 
   const FlayOut = useCallback(
     () =>
@@ -143,7 +143,7 @@ export const EditButton = ({ sensor }: SensorProps) => {
         />
       ) : null,
     [ isFlyoutVisible, sensor ]
-  );
+  )
 
   return (
     <>
@@ -155,5 +155,5 @@ export const EditButton = ({ sensor }: SensorProps) => {
       </EuiButton>
       <FlayOut />
     </>
-  );
-};
+  )
+}
