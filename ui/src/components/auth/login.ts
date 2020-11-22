@@ -1,27 +1,26 @@
-import { graphqlUrl, hasuraSecret } from '../utils'
+import { graphqlUrl, hasuraSecret, loginUrl } from '../utils'
 import { Auth_Obj } from './AuthContext'
+import axios from 'axios'
 
 export const checkLogin = async (email: string, password: string) => {
 
   try {
-    const config = {
-      'method': 'POST',
-      'headers': {
-        'x-hasura-admin-secret': 'azrealadmin',
+
+    console.log('URL', loginUrl)
+    const { data } = await axios.post(
+      `${loginUrl}/login`,
+      { email, password }, 
+      { headers: { 
         'content-type': 'application/json',
         'cache-control': 'no-cache',
-      },
-      'processData': false,
-      'body': `{\n  "query": "query CheckLogin($email: String, $password: String) { az_users_Users(where: {email: {_eq: $email}, AuthDatum: {password: {_eq: $password}}}) { userId userRole } } ",\n  "operationName": "CheckLogin",\n  "variables": { "email": \"${email}\", "password": \"${password}\" }\n}`
-    }
-
-    const res = await fetch('https://azreal-hasura.hasura.app/v1/graphql', config)
+      }}
+    )
   
-    const data = await res.json()
+    console.log('data', data)
 
-    if (!data?.data?.az_users_Users[0]) throw new Error('Невірний логін або пароль')
+    if (data?.error) throw new Error('Невірний логін або пароль')
   
-    return { data: { ...data?.data.az_users_Users[0], token: hasuraSecret } as Auth_Obj }
+    return { data: data as Auth_Obj }
   } catch (error) {
     return { error }
   }
