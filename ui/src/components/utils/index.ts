@@ -1,4 +1,3 @@
-import { ParsedUrlQuery } from 'querystring'
 
 export const createDescItem = (title: string, description?: string | number | React.ReactNode) => description
   ? { 
@@ -32,14 +31,7 @@ export const getErrorMsg = (error?: Error) => error?.message
 
 require('dotenv').config()
 
-const getGraphqlUrl = () => {
-  const urlFromEnv = process.env.GRAPHQL_URL
-
-  if (!urlFromEnv) throw new Error('Dont find graphql url fron ENV')
-
-  return urlFromEnv
-}
-
-
-export const graphqlUrl = getGraphqlUrl()
+export const graphqlUrl = process.env.GRAPHQL_URL
+export const mongoUrl = process.env.MONGO_URL
+export const loginUrl = process.env.LOGIN_URL
 export const hasuraSecret = process.env.SECRET

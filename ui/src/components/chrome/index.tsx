@@ -2,7 +2,9 @@ import React, { FunctionComponent, useRef } from 'react'
 import { useRouter } from 'next/router'
 
 import {
+  EuiButton,
   EuiButtonEmpty,
+  EuiButtonIcon,
   EuiHeader,
   EuiHeaderLogo,
   EuiHeaderSection,
@@ -80,7 +82,9 @@ const Chrome: FunctionComponent = ({ children }) => {
         <EuiHeaderSection side='right'>
           <EuiHeaderSectionItem className={styles.chrHeaderSectionItem}>
             <SwitchTheme />
-            <EuiButtonEmpty iconType='kqlFunction'onClick={signOut}></EuiButtonEmpty>
+          </EuiHeaderSectionItem>
+          <EuiHeaderSectionItem className={styles.chrHeaderSectionItem}>
+            <EuiButtonEmpty size='l' iconType='kqlFunction' onClick={signOut}>Вихід</EuiButtonEmpty>
           </EuiHeaderSectionItem>
         </EuiHeaderSection>
       </EuiHeader>

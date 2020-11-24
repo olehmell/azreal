@@ -63,11 +63,6 @@ export const buildExploreLinks = (
     iconType: 'metricsApp',
   },
   {
-    label: 'Документи',
-    onClick: makeAction('/documents'),
-    iconType: 'dashboardApp',
-  },
-  {
     label: 'Журнал',
     onClick: makeAction('/logs'),
     iconType: 'logsApp',
