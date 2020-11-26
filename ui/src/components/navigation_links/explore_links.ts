@@ -64,7 +64,22 @@ export const buildExploreLinks = (
   },
   {
     label: 'Журнал',
-    onClick: makeAction('/logs'),
+    onClick: makeAction('/service'),
     iconType: 'logsApp',
-  },
+    flyoutMenu: {
+      title: 'Датчики',
+      listItems: [
+        {
+          label: 'Календар',
+          onClick: makeAction('/service/timeline'),
+          iconType: 'outlierDetectionJob'
+        },
+        {
+          label: 'Новий запис',
+          onClick: makeAction('/service/new'),
+          iconType: 'createAdvancedJob'
+        }
+      ],
+    },
+  }
 ]

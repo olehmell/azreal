@@ -112,7 +112,7 @@ export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
         <EuiFormErrorText>{getErrorMsg(errors.rntrc)}</EuiFormErrorText>
 
         <EuiFormRow label="Файл організації" fullWidth>
-          <DocumentLoader documentType={az_docs_enum_document_type_enum.Organisation} onChange={(fileId) => fileId && setValue('documentId', fileId)} />
+          <DocumentLoader onChange={(fileId) => fileId && setValue('documentId', fileId)} />
         </EuiFormRow>
 
         <EuiSpacer />
