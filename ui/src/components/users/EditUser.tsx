@@ -128,12 +128,12 @@ export const InnerEditUser = ({ user }: UserForm) => {
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('phoneNumber')])}</EuiFormErrorText>
 
         <EuiFormRow label="Рівень доступу користувача" fullWidth>
-          <UserRoleSelect name={getFiledName('userRole')} required inputRef={register} fullWidth />
+          <UserRoleSelect disabled={!isNew} name={getFiledName('userRole')} required inputRef={register} fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('userRole')])}</EuiFormErrorText>
 
         <EuiFormRow label="Організація" fullWidth>
-          <OrganisationSelect name={getFiledName('organisationId')} inputRef={register} fullWidth />
+          <OrganisationSelect disabled={!isNew} name={getFiledName('organisationId')} inputRef={register} fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('organisationId')])}</EuiFormErrorText>
 

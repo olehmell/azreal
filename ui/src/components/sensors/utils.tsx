@@ -15,20 +15,6 @@ const apikey = process.env.AIRLY_API_KEY
 
 const getLocationDataBySensorIdUrl = (id: number) => `${SENSORT_DATA_URL}/${id}`
 
-type SensorsData = {
-  location: Location,
-  error?: string
-}
-
-const emptyData: SensorsData = { 
-  location: undefined
-}
-
-type HookData<T> = {
-  data: T,
-  loading: boolean
-} 
-
 export const loadLocationDataBySensorId = async (id: number) => {
   try {
     const loadUrl = getLocationDataBySensorIdUrl(id)

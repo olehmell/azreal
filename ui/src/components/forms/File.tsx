@@ -1,105 +1,79 @@
 import { EuiFilePicker, EuiFilePickerProps, EuiFormErrorText } from '@elastic/eui'
-import React from 'react'
-import { useAddDocuments } from 'src/graphql/query/documents/addDocuments'
-import { useAddPhotos } from 'src/graphql/query/photos/addPhotos'
-import { az_docs_Documents_insert_input, az_docs_enum_document_type_enum, az_docs_Photo_insert_input } from 'src/types/graphql-global-types'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { mongoUrl } from '../utils'
 
 type FilePicker = Omit<EuiFilePickerProps, 'onChange'> & {
-  onChange: (fileId?: number) => void
+  onChange: (fileIds?: number[]) => void
   fileIds?: number[]
 }
 
-type DocumentPicker = FilePicker & {
-  documentType: az_docs_enum_document_type_enum,
+const InnerFileLoader = ({ onChange, fileIds: initialFileIds, ...props}: FilePicker) => {
+  const [ loading, setLoading ] = useState(false)
+  const [ fileIds, setFileIds ] = useState(initialFileIds || [])
+  const [ error, setError ] = useState<string>()
+
+  return <><EuiFilePicker
+    multiple
+    compressed
+    isLoading={loading}
+    fullWidth
+    display='large'
+    onChange={
+      async (files) => {
+        try {
+          setLoading(true)
+          deleteFiles(fileIds)
+  
+          const promisesFileHash = []
+  
+          for (const file of files) {
+            promisesFileHash.push((saveFile(file)))
+          }
+  
+          const ids = await Promise.all(promisesFileHash)
+
+          console.log('ids', ids)
+          
+          onChange(ids)
+          setFileIds(ids)
+          setLoading(false)
+        } catch (error) {
+          console.error(error)
+          setError(error?.toString())
+          onChange()
+        }
+      }}
+    {...props}
+  />
+  {error && <EuiFormErrorText>{error}</EuiFormErrorText>}
+  </>
 }
 
-const InnerFileLoader = (props: EuiFilePickerProps) => <EuiFilePicker
-  multiple
-  compressed
-  fullWidth
-  display='large'
-  {...props}
-/>
 
 const saveFile = async (file: File) => {
   const form = new FormData()
   form.append('file', file)
   const { data } = await axios.post(`${mongoUrl}/add`, form)
 
-  return data
+  return data.id as number
 }
 
-export const DocumentLoader = ({ onChange, name, documentType, fileIds }: DocumentPicker) => {
-  const [ addDocuments, { loading, error } ] = useAddDocuments()
-
-  return <>
-    <InnerFileLoader
-      name={name}
-      isLoading={loading}
-      accept='.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      initialPromptText="Виберіть або перетягніть файл"
-      onChange={async (files) => {
-        const promisesFileHash = []
-
-        for (const file of files) {
-          promisesFileHash.push((saveFile(file)))
-        }
-
-        const ids = await Promise.all(promisesFileHash)
-
-        console.log(ids)
-
-        const documents: az_docs_Documents_insert_input[] = ids.map(id => ({ documentType, documentBody: id }))
-
-        try {
-          const { data } = await addDocuments({ variables: { objects: documents } })
-          const fileIds = data.insert_az_docs_Documents.returning
-          const fileId = fileIds[0].documentId
-          onChange(fileId)
-        } catch (error) {
-          console.error(error)
-          onChange()
-        }
-
-      }}
-    />
-    {error && <EuiFormErrorText>{error.message}</EuiFormErrorText>}
-  </>
+const deleteFile = async (fileId: number) => {
+  const { data } = await axios.delete(`${mongoUrl}/delete/${fileId}`)
+  console.log(data.status)
 }
 
-export const PhotoLoader = ({ onChange, name }: FilePicker) => {
-  const [ addPhotos, { data, loading, error } ] = useAddPhotos()
+const deleteFiles = (ids?: number[]) => ids && ids.forEach(id => deleteFile(id))
 
-  return <>
-    <InnerFileLoader
-      name={name}
-      isLoading={loading}
-      accept='image/*'
-      initialPromptText="Виберіть або перетягніть фото"
-      onChange={async (files) => {
-        const promisesFileHash = []
+export const DocumentLoader = ({ name, ...props }: FilePicker) => <InnerFileLoader
+  accept='.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  initialPromptText="Виберіть або перетягніть файл"
+  {...props}
+/>
 
-        for (const file of files) {
-          promisesFileHash.push((saveFile(file)))
-        }
-
-        const ids = await Promise.all(promisesFileHash)
-
-        console.log(ids)
-
-        const photos: az_docs_Photo_insert_input[] = ids.map(id => ({ photoSeries: id }))
-
-        await addPhotos({ variables: { objects: photos }})
-
-        if (!error) {
-          const fileIds = data.insert_az_docs_Photo.returning
-          const fileId = fileIds[0].photoId
-          onChange(fileId)
-        }
-      }}
-    />
-    {error && <EuiFormErrorText>{error.message}</EuiFormErrorText>}
-  </>
-}
+export const PhotoLoader = (props: FilePicker) => <InnerFileLoader
+  name={name}
+  accept='image/*'
+  initialPromptText="Виберіть або перетягніть фото"
+  {...props} />

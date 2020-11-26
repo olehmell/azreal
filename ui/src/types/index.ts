@@ -12,3 +12,7 @@ export type document_type = 'User' | 'Organisation' | 'Sensor' | 'Location' | 'S
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
+export type SelectorOptionType = {
+  text: string,
+  value: string
+}
