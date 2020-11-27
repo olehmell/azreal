@@ -12,6 +12,7 @@ import { SensorsSelect } from './SensorsSelect'
 import { Table } from '../utils/Table'
 import { MeasurementMock } from './test_data'
 import { getErrorMsg } from '../utils'
+import { SelectorOptionType } from 'src/types'
 
 
 type MeasurementTProps = {
@@ -60,11 +61,6 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
   ]
 
   return <Table data={measurementData} columns={columns} fileName={fileName} />
-}
-
-type SelectorOptionType = {
-  text: string,
-  value: string
 }
 
 const measurementSelectorOptions: SelectorOptionType[] = [
