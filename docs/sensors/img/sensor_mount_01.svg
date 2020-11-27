@@ -1,425 +1,93 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<!-- Создано Microsoft Visio 11.0, Экспорт SVG, версия 1.0 201126 Схема монтажу лінія 01.svg Страница-1 -->
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
-		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="9.58514in" height="11.4322in"
-		viewBox="0 0 690.13 823.12" xml:space="preserve" color-interpolation-filters="sRGB" class="st14">
-	<v:documentProperties v:langID="1049" v:metric="true" v:viewMarkup="false"/>
-
-	<style type="text/css">
-	<![CDATA[
-		.st1 {fill:none;stroke:#000000;stroke-dasharray:21,15;stroke-linecap:round;stroke-linejoin:round;stroke-width:3}
-		.st2 {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5}
-		.st3 {fill:#000000;font-family:Calibri;font-size:1.33333em}
-		.st4 {font-size:1em}
-		.st5 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:3}
-		.st6 {fill:none}
-		.st7 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5}
-		.st8 {fill:#000000;font-family:Calibri;font-size:1.00001em}
-		.st9 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
-		.st10 {fill:#ffffff}
-		.st11 {fill:#000000;font-family:Calibri;font-size:2.50001em}
-		.st12 {font-size:0.799995em}
-		.st13 {fill:#000000;font-family:Calibri;font-size:1.5em}
-		.st14 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
-	]]>
-	</style>
-
-	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
-		<v:userDefs>
-			<v:ud v:nameU="PEHideTags"/>
-		</v:userDefs>
-		<title>Страница-1</title>
-		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
-				v:shadowOffsetY="-8.50394"/>
-		<v:layer v:name="Соединительная линия" v:index="0"/>
-		<v:layer v:name="Оборудование" v:index="1"/>
-		<v:layer v:name="Электрический" v:index="2"/>
-		<g id="shape1-1" v:mID="1" v:groupContext="shape" transform="translate(18.6398,-428.939)">
-			<title>Прямоугольник</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<path d="M0 823.12 L289.13 823.12 L289.13 431.94 L0 431.94 L0 823.12 Z" class="st1"/>
-		</g>
-		<g id="shape3-3" v:mID="3" v:groupContext="shape" transform="translate(171.711,-565.002)">
-			<title>Квадрат.3</title>
-			<desc>USB AM</desc>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="42.5197" cy="780.6" width="85.04" height="85.0394"/>
-			<rect x="0" y="738.081" width="85.0394" height="85.0394" class="st2"/>
-			<text x="29.36" y="775.8" class="st3" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>USB<v:newlineChar/><tspan
-						x="31.05" dy="1.2em" class="st4">AM</tspan></text>		</g>
-		<g id="shape4-7" v:mID="4" v:groupContext="shape" v:layerMember="0" transform="translate(256.75,-607.522)">
-			<title>Динамическая соединительная линия</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<path d="M0 823.12 L280.63 823.12 L280.63 952.95 L280.63 1035.72" class="st5"/>
-		</g>
-		<g id="shape5-10" v:mID="5" v:groupContext="shape" transform="translate(511.868,-292.876)">
-			<title>Прямоугольник.5</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="51.0236" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape6-12" v:mID="6" v:groupContext="shape" v:layerMember="1" transform="translate(69.6634,-565.002)">
-			<title>Фильтр 2</title>
-			<desc>Блок живлення</desc>
-			<v:custProps>
-				<v:cp v:nameU="Description" v:lbl="Описание" v:type="0" v:sortKey="0" v:langID="1049"/>
-				<v:cp v:nameU="Material" v:lbl="Материал" v:type="0" v:sortKey="1" v:langID="1049"/>
-				<v:cp v:nameU="Manufacturer" v:lbl="Изготовитель" v:type="0" v:sortKey="2" v:langID="1049"/>
-				<v:cp v:nameU="Model" v:lbl="Модель" v:type="0" v:sortKey="3" v:langID="1049"/>
-			</v:custProps>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(0):26"/>
-				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
-				<v:ud v:nameU="ShapeClass" v:val="VT4(Оборудование)"/>
-				<v:ud v:nameU="PETagFormat" v:prompt="E-1" v:val="VT4(Оборудование)"/>
-				<v:ud v:nameU="PETagNumber" v:val="VT0(1):26"/>
-				<v:ud v:nameU="PEHideTag"/>
-				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
-				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
-				<v:ud v:nameU="CPMSetList" v:prompt="Description,Material,Manufacturer,Model" v:val="VT4(Оборудование)"/>
-				<v:ud v:nameU="PEComponentTag" v:val="VT4(E-1)"/>
-			</v:userDefs>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="42.5197" cy="844.952" width="96" height="22.4037"/>
-			<path d="M0 823.12 L0 738.08 L85.04 738.08 L85.04 823.12 L0 823.12 Z" class="st6"/>
-			<path d="M0 823.12 L0 738.08 L85.04 738.08 L85.04 823.12 L0 823.12" class="st7"/>
-			<path d="M0 823.12 L12.16 810.96" class="st7"/>
-			<path d="M20.92 802.2 L36.48 786.64" class="st7"/>
-			<path d="M48.56 774.56 L60.72 762.4" class="st7"/>
-			<path d="M72.88 750.24 L85.04 738.08" class="st7"/>
-			<text x="3.37" y="848.55" class="st8" v:langID="1058"><v:paragraph v:horizAlign="1"/><v:tabList/>Блок живлення</text>		</g>
-		<g id="shape2-20" v:mID="2" v:groupContext="shape" transform="translate(52.6555,-624.53)">
-			<title>Лист.2</title>
-			<path d="M0 823.12 L11.34 823.12 L17.01 823.12" class="st7"/>
-		</g>
-		<g id="shape7-23" v:mID="7" v:groupContext="shape" transform="translate(52.6555,-590.514)">
-			<title>Лист.7</title>
-			<path d="M0 823.12 L17.01 823.12" class="st7"/>
-		</g>
-		<g id="shape8-26" v:mID="8" v:groupContext="shape" transform="translate(0.75,-661.467)">
-			<title>Лист.8</title>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-		</g>
-		<g id="shape9-28" v:mID="9" v:groupContext="shape" v:layerMember="2" transform="translate(78.1673,-628.781)">
-			<title>Генератор</title>
-			<v:userDefs>
-				<v:ud v:nameU="visDescription" v:val="VT4(Обобщенный источник переменного тока.)"/>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<path d="M0 814.62 A8.50394 8.50394 0 0 1 17.01 814.62 A8.50394 8.50394 0 1 1 0 814.62 Z" class="st10"/>
-			<path d="M8.5 818.87 A4.25197 4.25197 180 1 0 17.01 818.87" class="st7"/>
-			<path d="M-0 818.87 A4.25197 4.25197 0 0 1 8.5 818.87" class="st7"/>
-			<path d="M0 814.62 A8.50394 8.50394 0 0 1 17.01 814.62 A8.50394 8.50394 0 1 1 0 814.62" class="st7"/>
-		</g>
-		<g id="shape10-33" v:mID="10" v:groupContext="shape" transform="translate(129.191,-582.01)">
-			<title>Лист.10</title>
-			<path d="M0 823.12 L14.53 823.12" class="st7"/>
-		</g>
-		<g id="shape11-36" v:mID="11" v:groupContext="shape" transform="translate(14.0335,-609.648)">
-			<title>Лист.11</title>
-			<desc>220 V</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="62.12" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>220 <tspan
-						class="st4" v:langID="1033">V</tspan></text>		</g>
-		<g id="shape12-40" v:mID="12" v:groupContext="shape" transform="translate(61.1594,-582.01)">
-			<title>Лист.12</title>
-			<desc>5 V</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="68.2" y="816.72" class="st8" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>5 V</text>		</g>
-		<g id="shape13-43" v:mID="13" v:groupContext="shape" transform="translate(494.86,-309.884)">
-			<title>Квадрат.13</title>
-			<desc>USB FM</desc>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="42.5197" cy="780.6" width="85.04" height="85.0394"/>
-			<rect x="0" y="738.081" width="85.0394" height="85.0394" class="st2"/>
-			<text x="29.36" y="775.8" class="st3" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>USB<v:newlineChar/><tspan
-						x="32" dy="1.2em" class="st4">FM</tspan></text>		</g>
-		<g id="shape14-47" v:mID="14" v:groupContext="shape" transform="translate(494.86,-207.837)">
-			<title>Квадрат.14</title>
-			<desc>USB AM</desc>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="42.5197" cy="780.6" width="85.04" height="85.0394"/>
-			<rect x="0" y="738.081" width="85.0394" height="85.0394" class="st2"/>
-			<text x="29.36" y="775.8" class="st3" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>USB<v:newlineChar/><tspan
-						x="31.05" dy="1.2em" class="st4">AM</tspan></text>		</g>
-		<g id="shape15-51" v:mID="15" v:groupContext="shape" transform="translate(409.821,-173.821)">
-			<title>Прямоугольник.15</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<path d="M0 823.12 L255.12 823.12 L255.12 568 L0 568 L0 823.12 Z" class="st1"/>
-		</g>
-		<g id="shape16-53" v:mID="16" v:groupContext="shape" transform="translate(154.703,-582.01)">
-			<title>Прямоугольник.16</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="772.096" width="17.0079" height="51.0236" class="st2"/>
-		</g>
-		<g id="shape17-55" v:mID="17" v:groupContext="shape" v:layerMember="0" transform="translate(537.38,-207.837)">
-			<title>Динамическая соединительная линия.17</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<path d="M0 823.12 L0 1001.7 L42.52 1001.7" class="st5"/>
-		</g>
-		<g id="shape18-58" v:mID="18" v:groupContext="shape" transform="translate(579.9,-24.1516)">
-			<title>Квадрат</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="755.089" width="68.0315" height="68.0315" class="st2"/>
-		</g>
-		<g id="shape19-60" v:mID="19" v:groupContext="shape" transform="translate(596.907,-49.6634)">
-			<title>Круг</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<path d="M0 806.11 A17.0079 17.0079 0 0 1 34.02 806.11 A17.0079 17.0079 0 1 1 -0 806.11 Z" class="st2"/>
-		</g>
-		<g id="shape20-62" v:mID="20" v:groupContext="shape" transform="translate(579.9,-32.6555)">
-			<title>Лист.20</title>
-			<path d="M0 823.12 L68.03 823.12" class="st7"/>
-		</g>
-		<g id="shape21-65" v:mID="21" v:groupContext="shape" transform="translate(-209.205,730.937) rotate(-90)">
-			<title>Лист.21</title>
-			<path d="M0 823.12 L51.02 823.12" class="st7"/>
-		</g>
-		<g id="shape22-68" v:mID="22" v:groupContext="shape" transform="translate(588.404,-92.1831)">
-			<title>Прямоугольник.22</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="814.616" width="51.0236" height="8.50394" class="st2"/>
-		</g>
-		<g id="shape23-70" v:mID="23" v:groupContext="shape" transform="translate(384.309,-616.026)">
-			<title>Лист.23</title>
-			<desc>Патчкорд UTP Cat 5e 4x2x1</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="8.08" y="816.72" class="st8" v:langID="1058"><v:paragraph v:horizAlign="1"/><v:tabList/>Патчкорд <tspan
-						class="st4" v:langID="1033">UTP Cat </tspan><tspan class="st4" v:langID="1033">5</tspan><tspan class="st4"
-						v:langID="1033">e </tspan><tspan class="st4" v:langID="1033">4</tspan><tspan class="st4" v:langID="1033">x</tspan><tspan
-						class="st4" v:langID="1033">2</tspan><tspan class="st4" v:langID="1033">x</tspan><tspan class="st4"
-						v:langID="1033">1</tspan></text>		</g>
-		<g id="shape24-81" v:mID="24" v:groupContext="shape" transform="translate(494.86,-207.837)">
-			<title>Квадрат.24</title>
-			<desc>USB AM</desc>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="42.5197" cy="780.6" width="85.04" height="85.0394"/>
-			<rect x="0" y="738.081" width="85.0394" height="85.0394" class="st2"/>
-			<text x="29.36" y="775.8" class="st3" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>USB<v:newlineChar/><tspan
-						x="31.05" dy="1.2em" class="st4">AM</tspan></text>		</g>
-		<g id="shape25-85" v:mID="25" v:groupContext="shape" transform="translate(35.6476,-233.348)">
-			<title>Квадрат.25</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="17.0079" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape26-87" v:mID="26" v:groupContext="shape" transform="translate(69.6634,-233.348)">
-			<title>Квадрат.26</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="17.0079" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape27-89" v:mID="27" v:groupContext="shape" transform="translate(103.679,-233.348)">
-			<title>Квадрат.27</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="17.0079" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape28-91" v:mID="28" v:groupContext="shape" transform="translate(137.695,-233.348)">
-			<title>Квадрат.28</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="17.0079" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape29-93" v:mID="29" v:groupContext="shape" transform="translate(35.6476,-148.309)">
-			<title>Квадрат.29</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="17.0079" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape30-95" v:mID="30" v:groupContext="shape" transform="translate(69.6634,-148.309)">
-			<title>Квадрат.30</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="17.0079" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape31-97" v:mID="31" v:groupContext="shape" transform="translate(103.679,-148.309)">
-			<title>Квадрат.31</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="17.0079" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape32-99" v:mID="32" v:groupContext="shape" transform="translate(137.695,-148.309)">
-			<title>Квадрат.32</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="806.112" width="17.0079" height="17.0079" class="st2"/>
-		</g>
-		<g id="shape33-101" v:mID="33" v:groupContext="shape" transform="translate(18.6398,-233.348)">
-			<title>Прямоугольник.33</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="780.6" width="153.071" height="42.5197" class="st2"/>
-		</g>
-		<g id="shape34-103" v:mID="34" v:groupContext="shape" transform="translate(18.6398,-122.797)">
-			<title>Прямоугольник.34</title>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-			</v:userDefs>
-			<rect x="0" y="772.096" width="153.071" height="51.0236" class="st2"/>
-		</g>
-		<g id="shape35-105" v:mID="35" v:groupContext="shape" transform="translate(35.6476,-165.317)">
-			<title>Лист.35</title>
-			<path d="M0 823.12 L119.06 823.12" class="st7"/>
-		</g>
-		<g id="shape36-108" v:mID="36" v:groupContext="shape" transform="translate(136.6,-250.356)">
-			<title>Лист.36</title>
-			<desc>1</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="9.05118" cy="813.12" width="18.11" height="20"/>
-			<rect x="0" y="803.12" width="18.1024" height="20" class="st9"/>
-			<text x="6.01" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>1</text>		</g>
-		<g id="shape37-111" v:mID="37" v:groupContext="shape" transform="translate(103.096,-250.356)">
-			<title>Лист.37</title>
-			<desc>2</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="9.08661" cy="813.12" width="18.18" height="20"/>
-			<rect x="0" y="803.12" width="18.1732" height="20" class="st9"/>
-			<text x="6.05" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>2</text>		</g>
-		<g id="shape38-114" v:mID="38" v:groupContext="shape" transform="translate(67.0965,-250.356)">
-			<title>Лист.38</title>
-			<desc>3</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="11.0709" cy="813.12" width="22.15" height="20"/>
-			<rect x="0" y="803.12" width="22.1417" height="20" class="st9"/>
-			<text x="8.03" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>3</text>		</g>
-		<g id="shape39-117" v:mID="39" v:groupContext="shape" transform="translate(33.6122,-250.356)">
-			<title>Лист.39</title>
-			<desc>4</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="10.5394" cy="813.12" width="21.08" height="20"/>
-			<rect x="0" y="803.12" width="21.0787" height="20" class="st9"/>
-			<text x="7.5" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>4</text>		</g>
-		<g id="shape40-120" v:mID="40" v:groupContext="shape" transform="translate(35.6476,-129.805)">
-			<title>Лист.40</title>
-			<desc>1</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="9.05118" cy="813.12" width="18.11" height="20"/>
-			<rect x="0" y="803.12" width="18.1024" height="20" class="st9"/>
-			<text x="6.01" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>1</text>		</g>
-		<g id="shape41-123" v:mID="41" v:groupContext="shape" transform="translate(69.6634,-129.805)">
-			<title>Лист.41</title>
-			<desc>2</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="9.08661" cy="813.12" width="18.18" height="20"/>
-			<rect x="0" y="803.12" width="18.1732" height="20" class="st9"/>
-			<text x="6.05" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>2</text>		</g>
-		<g id="shape42-126" v:mID="42" v:groupContext="shape" transform="translate(101.112,-129.805)">
-			<title>Лист.42</title>
-			<desc>3</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="11.0709" cy="813.12" width="22.15" height="20"/>
-			<rect x="0" y="803.12" width="22.1417" height="20" class="st9"/>
-			<text x="8.03" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>3</text>		</g>
-		<g id="shape43-129" v:mID="43" v:groupContext="shape" transform="translate(135.659,-129.805)">
-			<title>Лист.43</title>
-			<desc>4</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="10.5394" cy="813.12" width="21.08" height="20"/>
-			<rect x="0" y="803.12" width="21.0787" height="20" class="st9"/>
-			<text x="7.5" y="816.72" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>4</text>		</g>
-		<g id="shape44-132" v:mID="44" v:groupContext="shape" transform="translate(18.6398,-304.569)">
-			<title>Лист.44</title>
-			<desc>USB тип А</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="20.9" y="822.12" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>USB <tspan
-						class="st12" v:langID="1058">тип</tspan><tspan class="st12" v:langID="1058"> </tspan><tspan class="st12"
-						v:langID="1058">А</tspan></text>		</g>
-		<g id="shape45-138" v:mID="45" v:groupContext="shape" transform="translate(167.459,-245.041)">
-			<title>Лист.45</title>
-			<desc>AM - Штекер</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="27.12" y="818.52" class="st13" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>AM<tspan class="st4"
-						v:langID="1058"> </tspan><tspan class="st4" v:langID="1058">-</tspan> <tspan class="st4" v:langID="1058">Штекер</tspan></text>		</g>
-		<g id="shape46-144" v:mID="46" v:groupContext="shape" transform="translate(168.876,-139.805)">
-			<title>Лист.46</title>
-			<desc>FM - Гніздо</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="33.03" y="818.52" class="st13" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>FM<tspan class="st4"
-						v:langID="1058"> </tspan><tspan class="st4" v:langID="1058">-</tspan> <tspan class="st4" v:langID="1058">Гніздо</tspan></text>		</g>
-		<g id="shape47-150" v:mID="47" v:groupContext="shape" transform="translate(86.6713,-766.104)">
-			<title>Лист.47</title>
-			<desc>Розподільчий ящик відеонагляду КП «Інформатика»</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="26.29" y="802.32" class="st8" v:langID="1058"><v:paragraph v:horizAlign="1"/><v:tabList/>Розподільчий ящик <tspan
-						x="42.12" dy="1.2em" class="st4">відеонагляду<v:newlineChar/></tspan><tspan x="28.57" dy="1.2em"
-						class="st4">КП</tspan> «Інформатика»</text>		</g>
-		<g id="shape48-155" v:mID="48" v:groupContext="shape" transform="translate(528.876,-434.451)">
-			<title>Лист.48</title>
-			<desc>Розподільча коробка</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="22.15" y="816.72" class="st8" v:langID="1058"><v:paragraph v:horizAlign="1"/><v:tabList/>Розподільча коробка</text>		</g>
-		<g id="shape49-158" v:mID="49" v:groupContext="shape" transform="translate(35.6476,-29.2539)">
-			<title>Лист.49</title>
-			<desc>1 +5V білокоричневий 2 пусто 3 пусто 4 -5V коричневий</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="101.512" cy="791.86" width="203.03" height="62.5197"/>
-			<rect x="0" y="760.6" width="203.024" height="62.5197" class="st9"/>
-			<text x="4" y="764.86" class="st13" v:langID="1058"><v:paragraph/><v:tabList/>1  +5<tspan class="st4" v:langID="1033">V </tspan>білокоричневий<v:newlineChar/><tspan
-						x="4" dy="1.2em" class="st4">2  </tspan>пусто<v:newlineChar/><tspan x="4" dy="1.2em" class="st4">3  </tspan>пусто<v:newlineChar/><tspan
-						x="4" dy="1.2em" class="st4">4  </tspan>-5<tspan class="st4" v:langID="1033">V </tspan>коричневий</text>		</g>
-		<g id="shape50-166" v:mID="50" v:groupContext="shape" transform="translate(537.38,-0.75)">
-			<title>Лист.50</title>
-			<desc>Датчик якості повітря</desc>
-			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="76" cy="813.12" width="152" height="20"/>
-			<rect x="0" y="803.12" width="152" height="20" class="st9"/>
-			<text x="21.5" y="816.72" class="st8" v:langID="1058"><v:paragraph v:horizAlign="1"/><v:tabList/>Датчик якості повітря</text>		</g>
-	</g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="954px" clip-rule="evenodd" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" version="1.1" viewBox="0 0 821.02 979.26" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">  
+   <polygon points="21.33 468.75 366.05 468.75 366.05 2.35 21.33 2.35" fill="none" stroke="#000" stroke-dasharray="37.670000 28.260000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="4.71"/>
+   <rect x="203.83" y="205.14" width="101.39" height="101.39" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <text x="238.83" y="250.11" fill="black" font-family="Calibri" font-size="19.08px">USB </text>
+   <text x="240.76" y="273.01" fill="black" font-family="Calibri" font-size="19.08px">AM</text>
+   <polyline points="305.22 255.84 639.8 255.84 639.8 509.3" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="4.71"/>
+   <rect x="609.38" y="610.69" width="60.83" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <polygon points="82.16 306.53 82.16 205.14 183.55 205.14 183.55 306.53" fill="none"/>
+   <polyline points="82.16 306.53 82.16 205.14 183.55 205.14 183.55 306.53 82.16 306.53" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="82.16" x2="96.66" y1="306.53" y2="292.02" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="107.1" x2="125.66" y1="281.59" y2="263.03" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="140.06" x2="154.56" y1="248.64" y2="234.14" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="169.05" x2="183.55" y1="219.64" y2="205.14" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <text x="86.18" y="336.85" fill="black" font-family="Calibri" font-size="14.31px">Блок живлення</text>
+   <polyline points="61.88 235.56 75.4 235.56 82.17 235.56" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="61.88" x2="82.17" y1="276.12" y2="276.12" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect y="167.67" width="181.22" height="23.85" fill="none"/>
+  <path d="m92.3 220.35c0-5.6 4.54-10.15 10.14-10.15s10.14 4.55 10.14 10.14c0 5.6-4.54 10.14-10.14 10.14s-10.14-4.54-10.14-10.14v0.01z" fill="#fff"/>
+  <path d="m102.44 225.41c0 2.8 2.27 5.08 5.07 5.07 2.8 0 5.07-2.27 5.07-5.07" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+  <path d="m92.3 225.41c0.08-2.74 2.33-4.91 5.07-4.91s4.98 2.17 5.07 4.91" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="153.13" x2="170.46" y1="286.25" y2="286.25" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="15.84" y="229.45" width="181.22" height="23.85" fill="none"/>
+   <text x="89.9" y="245.67" fill="black" font-family="Calibri" font-size="14.31px">220 V</text>
+   <rect x="72.02" y="262.4" width="181.22" height="23.85" fill="none"/>
+   <text x="153.34" y="278.62" fill="black" font-family="Calibri" font-size="14.31px">5 V</text>
+   <rect x="589.11" y="509.3" width="101.39" height="101.39" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <text x="624.11" y="554.28" fill="black" font-family="Calibri" font-size="19.08px">USB </text>
+   <text x="627.18" y="577.17" fill="black" font-family="Calibri" font-size="19.08px">FM</text>
+   <rect x="589.11" y="630.97" width="101.39" height="101.39" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <text x="624.11" y="675.95" fill="black" font-family="Calibri" font-size="19.08px">USB </text>
+   <text x="626.04" y="698.84" fill="black" font-family="Calibri" font-size="19.08px">AM</text>
+   <polygon points="487.72 772.92 791.89 772.92 791.89 468.75 487.72 468.75" fill="none" stroke="#000" stroke-dasharray="37.670000 28.260000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="4.71"/>
+   <rect x="183.55" y="225.41" width="20.28" height="60.83" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <polyline points="639.8 732.36 639.8 945.28 690.5 945.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="4.71"/>
+   <rect x="690.5" y="870.25" width="81.11" height="81.11" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <path d="m710.77 900.67c0-11.2 9.08-20.28 20.28-20.28s20.28 9.08 20.28 20.28-9.08 20.28-20.28 20.28-20.28-9.08-20.28-20.28v0z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="690.5" x2="771.61" y1="941.23" y2="941.23" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="731.06" x2="731.06" y1="870.25" y2="809.42" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="700.63" y="860.11" width="60.83" height="10.14" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="457.3" y="221.85" width="181.22" height="23.85" fill="none"/>
+   <text x="466.93" y="238.07" fill="black" font-family="Calibri" font-size="14.31px">Патчкорд UTP Cat 5e 4x2x1</text>
+   <rect x="589.11" y="630.97" width="101.39" height="101.39" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <text x="624.11" y="675.95" fill="black" font-family="Calibri" font-size="19.08px">USB </text>
+   <text x="626.04" y="698.84" fill="black" font-family="Calibri" font-size="19.08px">AM</text>
+   <rect x="41.61" y="681.67" width="20.28" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="82.16" y="681.67" width="20.28" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="122.72" y="681.67" width="20.28" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="163.27" y="681.67" width="20.28" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="41.61" y="783.05" width="20.28" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="82.16" y="783.05" width="20.28" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="122.72" y="783.05" width="20.28" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="163.27" y="783.05" width="20.28" height="20.28" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="21.33" y="651.25" width="182.5" height="50.69" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="21.33" y="772.91" width="182.5" height="60.83" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <line x1="41.61" x2="183.56" y1="783.06" y2="783.06" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.926" stroke-width="2.35"/>
+   <rect x="161.97" y="657.82" width="21.58" height="23.85" fill="none"/>
+   <text x="169.13" y="674.04" fill="black" font-family="Calibri" font-size="14.31px">1</text>
+   <rect x="122.02" y="657.82" width="21.67" height="23.85" fill="none"/>
+   <text x="129.24" y="674.04" fill="black" font-family="Calibri" font-size="14.31px">2</text>
+   <rect x="79.1" y="657.82" width="26.4" height="23.85" fill="none"/>
+   <text x="88.68" y="674.04" fill="black" font-family="Calibri" font-size="14.31px">3</text>
+   <rect x="39.18" y="657.82" width="25.13" height="23.85" fill="none"/>
+   <text x="48.12" y="674.04" fill="black" font-family="Calibri" font-size="14.31px">4</text>
+   <rect x="41.61" y="801.55" width="21.58" height="23.85" fill="none"/>
+   <text x="48.77" y="817.77" fill="black" font-family="Calibri" font-size="14.31px">1</text>
+   <rect x="82.16" y="801.55" width="21.67" height="23.85" fill="none"/>
+   <text x="89.38" y="817.77" fill="black" font-family="Calibri" font-size="14.31px">2</text>
+   <rect x="119.66" y="801.55" width="26.4" height="23.85" fill="none"/>
+   <text x="129.23" y="817.77" fill="black" font-family="Calibri" font-size="14.31px">3</text>
+   <rect x="160.85" y="801.55" width="25.13" height="23.85" fill="none"/>
+   <text x="169.79" y="817.77" fill="black" font-family="Calibri" font-size="14.31px">4</text>
+   <rect x="21.33" y="593.18" width="181.22" height="23.85" fill="none"/>
+   <text x="46.25" y="615.84" fill="black" font-family="Calibri" font-size="35.77px">USB </text>
+   <text x="113.17" y="615.84" fill="black" font-family="Calibri" font-size="28.61px">тип А</text>
+   <rect x="198.76" y="664.16" width="181.22" height="23.85" fill="none"/>
+   <text x="231.09" y="682.52" fill="black" font-family="Calibri" font-size="21.46px">AM - Штекер</text>
+   <rect x="200.45" y="789.63" width="181.22" height="23.85" fill="none"/>
+   <text x="239.83" y="807.99" fill="black" font-family="Calibri" font-size="21.46px">FM - Гніздо</text>
+   <rect x="102.44" y="42.92" width="181.22" height="23.85" fill="none"/>
+   <text x="133.78" y="41.97" fill="black" font-family="Calibri" font-size="14.31px">Розподільчий ящик </text>
+   <text x="152.09" y="59.14" fill="black" font-family="Calibri" font-size="14.31px">відеонагляду </text>
+   <text x="135.13" y="76.3" fill="black" font-family="Calibri" font-size="14.31px">КП «Інформатика»</text>
+   <rect x="629.66" y="438.33" width="181.22" height="23.85" fill="none"/>
+   <text x="656.07" y="454.55" fill="black" font-family="Calibri" font-size="14.31px">Розподільча коробка</text>
+   <rect x="41.61" y="870.74" width="242.06" height="74.54" fill="none"/>
+   <text x="47.29" y="875.82" fill="black" font-family="Calibri" font-size="21.46px">1  +5V білокоричневий </text>
+   <text x="47.01" y="901.57" fill="black" font-family="Calibri" font-size="21.46px">2  пусто </text>
+   <text x="46.58" y="927.33" fill="black" font-family="Calibri" font-size="21.46px">3  пусто </text>
+   <text x="46.38" y="953.08" fill="black" font-family="Calibri" font-size="21.46px">4  -5V коричневий</text>
+   <rect x="639.8" y="955.41" width="181.22" height="23.85" fill="none"/>
+   <text x="665.43" y="971.64" fill="black" font-family="Calibri" font-size="14.31px">Датчик якості повітря</text>
 </svg>
