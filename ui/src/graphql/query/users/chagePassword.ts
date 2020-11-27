@@ -4,7 +4,7 @@ import { ChangePassword, ChangePasswordVariables } from './types/ChangePassword'
 
 const CHANGE_PASSWORD = gql`
   mutation ChangePassword($password: String, $oldpassword: String, $userId: Int) {
-    insert_az_users_AuthData_one(object: {password: $password, userId: $userId}, on_conflict: {constraint: AuthData_userId_key, update_columns: password, where: {password: {_eq: $oldpassword}}}) {
+    insert_az_users_AuthData_one(object: {password: $password, userId: $userId}, on_conflict: {constraint: AuthData_pkey, update_columns: password, where: {password: {_eq: $oldpassword}}}) {
       userId
     }
   }

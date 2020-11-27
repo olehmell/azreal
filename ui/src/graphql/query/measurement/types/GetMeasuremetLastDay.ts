@@ -10,7 +10,6 @@
 export interface GetMeasuremetLastDay_az_measurements_Measurements_aggregate_nodes {
   __typename: "az_measurements_Measurements";
   timestamp: any;
-  values: any;
   sensorId: number;
   locationId: number;
 }
@@ -21,8 +20,5 @@ export interface GetMeasuremetLastDay_az_measurements_Measurements_aggregate {
 }
 
 export interface GetMeasuremetLastDay {
-  /**
-   * fetch aggregated fields from the table: "az_measurements.Measurements"
-   */
   az_measurements_Measurements_aggregate: GetMeasuremetLastDay_az_measurements_Measurements_aggregate;
 }

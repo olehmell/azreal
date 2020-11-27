@@ -14,16 +14,10 @@ export interface UpsetUser_insert_az_users_Users_returning {
 
 export interface UpsetUser_insert_az_users_Users {
   __typename: "az_users_Users_mutation_response";
-  /**
-   * data of the affected rows by the mutation
-   */
   returning: UpsetUser_insert_az_users_Users_returning[];
 }
 
 export interface UpsetUser {
-  /**
-   * insert data into the table: "az_users.Users"
-   */
   insert_az_users_Users: UpsetUser_insert_az_users_Users | null;
 }
 
@@ -32,7 +26,6 @@ export interface UpsetUserVariables {
   phoneNumber?: string | null;
   fullName?: string | null;
   email?: string | null;
-  documentId?: number | null;
   userId?: number | null;
   organisationId?: number | null;
 }

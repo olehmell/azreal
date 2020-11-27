@@ -13,18 +13,14 @@ export interface AddOrganisation_insert_az_users_Organisation_one {
 }
 
 export interface AddOrganisation {
-  /**
-   * insert a single row into the table: "az_users.Organisation"
-   */
   insert_az_users_Organisation_one: AddOrganisation_insert_az_users_Organisation_one | null;
 }
 
 export interface AddOrganisationVariables {
   country?: string | null;
-  documentId?: number | null;
   fullName?: string | null;
   organisationRole?: string | null;
-  registryLink?: string | null;
-  rntrc?: any | null;
+  rntrc?: string | null;
   shortName?: string | null;
+  fileIds?: string | null;
 }

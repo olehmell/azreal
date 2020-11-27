@@ -13,19 +13,15 @@ export interface UpsertOrganisation_insert_az_users_Organisation_one {
 }
 
 export interface UpsertOrganisation {
-  /**
-   * insert a single row into the table: "az_users.Organisation"
-   */
   insert_az_users_Organisation_one: UpsertOrganisation_insert_az_users_Organisation_one | null;
 }
 
 export interface UpsertOrganisationVariables {
   country?: string | null;
-  documentId?: number | null;
   fullName?: string | null;
   organisationRole?: string | null;
-  registryLink?: string | null;
-  rntrc?: any | null;
   shortName?: string | null;
   organisationId?: number | null;
+  fileIds?: string | null;
+  rntrc?: string | null;
 }

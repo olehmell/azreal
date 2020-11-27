@@ -7,7 +7,6 @@ export const GET_MEASUREMENT_LAST_DAY = gql`
     az_measurements_Measurements_aggregate(limit: 48) {
       nodes {
         timestamp
-        values
         sensorId
         locationId
       }

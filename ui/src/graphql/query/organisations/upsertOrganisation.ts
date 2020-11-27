@@ -3,16 +3,16 @@ import { gql } from 'apollo-boost'
 import { UpsertOrganisation, UpsertOrganisationVariables } from './types/UpsertOrganisation'
 
 const UPSERT_ORGANISATION = gql`
-  mutation UpsertOrganisation($country: String, $documentId: Int, $fullName: String, $organisationRole: String, $registryLink: String, $rntrc: bpchar, $shortName: String, $organisationId: Int) {
-    insert_az_users_Organisation_one(object: {shortName: $shortName, rntrc: $rntrc, registryLink: $registryLink, organisationRole: $organisationRole, fullName: $fullName, country: $country, documentId: $documentId, organisationId: $organisationId}, on_conflict: {constraint: Organisation_pkey, update_columns: [country, fullName, shortName, registryLink, organisationRole, rntrc, documentId]}) {
+  mutation UpsertOrganisation($country: String, $fullName: String, $organisationRole: String, $shortName: String, $organisationId: Int, $fileIds: String = "", $rntrc: String = "") {
+    insert_az_users_Organisation_one(object: {shortName: $shortName, organisationRole: $organisationRole, fullName: $fullName, country: $country, organisationId: $organisationId, Document: {data: {documentType: Organisation, documentBody: $fileIds}}, rntrc: $rntrc}, on_conflict: {constraint: Organisation_pkey, update_columns: [country, fullName, shortName, organisationRole, rntrc]}) {
       organisationId
     }
   }
 `
 
 const ADD_ORGANISATION = gql`
-  mutation AddOrganisation($country: String, $documentId: Int, $fullName: String, $organisationRole: String, $registryLink: String, $rntrc: bpchar, $shortName: String) {
-    insert_az_users_Organisation_one(object: {shortName: $shortName, rntrc: $rntrc, registryLink: $registryLink, organisationRole: $organisationRole, fullName: $fullName, country: $country, documentId: $documentId}, on_conflict: {constraint: Organisation_pkey, update_columns: [country, fullName, shortName, registryLink, organisationRole, rntrc, documentId]}) {
+  mutation AddOrganisation($country: String, $fullName: String, $organisationRole: String, $rntrc: String, $shortName: String, $fileIds: String = "") {
+    insert_az_users_Organisation_one(object: {shortName: $shortName, rntrc: $rntrc, organisationRole: $organisationRole, fullName: $fullName, country: $country, Document: {data: {documentBody: $fileIds}}}, on_conflict: {constraint: Organisation_pkey, update_columns: [country, fullName, shortName, organisationRole, rntrc]}) {
       organisationId
     }
   }

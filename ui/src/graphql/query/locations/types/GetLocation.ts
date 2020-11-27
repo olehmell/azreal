@@ -7,9 +7,14 @@
 // GraphQL query operation: GetLocation
 // ====================================================
 
+export interface GetLocation_az_sensors_Locations_Document {
+  __typename: "az_docs_Documents";
+  documentBody: string | null;
+}
+
 export interface GetLocation_az_sensors_Locations {
   __typename: "az_sensors_Locations";
-  documentId: number | null;
+  Document: GetLocation_az_sensors_Locations_Document;
   address: string | null;
   airlyLink: string | null;
   elevation: any;
@@ -19,9 +24,6 @@ export interface GetLocation_az_sensors_Locations {
 }
 
 export interface GetLocation {
-  /**
-   * fetch data from the table: "az_sensors.Locations"
-   */
   az_sensors_Locations: GetLocation_az_sensors_Locations[];
 }
 

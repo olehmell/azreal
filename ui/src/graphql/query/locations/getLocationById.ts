@@ -5,7 +5,9 @@ import { GetLocation, GetLocationVariables } from './types/GetLocation'
 const GET_LOCATION_BY_ID = gql`
   query GetLocation($locationId: Int) {
     az_sensors_Locations(where: {locationId: {_eq: $locationId}}) {
-      documentId
+      Document {
+        documentBody
+      }
       address
       airlyLink
       elevation

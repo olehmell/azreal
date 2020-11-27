@@ -9,15 +9,11 @@
 
 export interface GetMeasurementsBetweenDate_az_measurements_Measurements {
   __typename: "az_measurements_Measurements";
-  values: any;
   timestamp: any;
   sensorId: number;
 }
 
 export interface GetMeasurementsBetweenDate {
-  /**
-   * fetch data from the table: "az_measurements.Measurements"
-   */
   az_measurements_Measurements: GetMeasurementsBetweenDate_az_measurements_Measurements[];
 }
 

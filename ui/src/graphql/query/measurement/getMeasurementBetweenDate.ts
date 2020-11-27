@@ -5,7 +5,6 @@ import { GetMeasurementsBetweenDate, GetMeasurementsBetweenDateVariables } from 
 const GET_BETWEEN_DATE = gql`
   query GetMeasurementsBetweenDate($from: timestamp = "2018-08-28T07:00:00", $to: timestamp = "2019-08-28T07:00:00", $sensorId: Int) {
     az_measurements_Measurements(where: {timestamp: {_gte: $from}, _and: {timestamp: {_lte: $to}, _and: {sensorId: {_eq: $sensorId}}}}, order_by: {timestamp: asc}) {
-      values
       timestamp
       sensorId
     }

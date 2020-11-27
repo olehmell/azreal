@@ -15,7 +15,7 @@ import {
 } from '@elastic/eui'
 
 import { loadLocationDataBySensorId, sensorSchema } from './utils'
-import { useAddSensor } from 'src/graphql/query/sensors/addSensors'
+import { useAddSensor } from 'src/graphql/query/sensors/addSensor'
 import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
 import { DocumentLoader } from '../forms/File'
@@ -90,7 +90,7 @@ export const NewSensor = () => {
         <EuiFormErrorText>{getErrorMsg(errors.model)}</EuiFormErrorText>
 
         <EuiFormRow label="Файл датчика" fullWidth>
-          <DocumentLoader documentType={az_docs_enum_document_type_enum.Sensor} onChange={(fileId) => setValue('documentId', fileId)} />
+          <DocumentLoader onChange={(fileId) => setValue('documentId', fileId)} />
         </EuiFormRow>
 
         <EuiSpacer />

@@ -16,16 +16,10 @@ export interface UpsetPhotos_insert_az_docs_Photo_returning {
 
 export interface UpsetPhotos_insert_az_docs_Photo {
   __typename: "az_docs_Photo_mutation_response";
-  /**
-   * data of the affected rows by the mutation
-   */
   returning: UpsetPhotos_insert_az_docs_Photo_returning[];
 }
 
 export interface UpsetPhotos {
-  /**
-   * insert data into the table: "az_docs.Photo"
-   */
   insert_az_docs_Photo: UpsetPhotos_insert_az_docs_Photo | null;
 }
 

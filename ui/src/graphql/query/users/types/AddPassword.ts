@@ -13,9 +13,6 @@ export interface AddPassword_insert_az_users_AuthData_one {
 }
 
 export interface AddPassword {
-  /**
-   * insert a single row into the table: "az_users.AuthData"
-   */
   insert_az_users_AuthData_one: AddPassword_insert_az_users_AuthData_one | null;
 }
 

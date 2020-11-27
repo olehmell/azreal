@@ -12,7 +12,9 @@ const GET_LOCATIONS = gql`
         elevation
         address
         airlyLink
-        documentId
+        Document {
+          documentBody
+        }
       }
     }
   }`

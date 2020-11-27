@@ -7,6 +7,11 @@
 // GraphQL query operation: GetLocations
 // ====================================================
 
+export interface GetLocations_az_sensors_Locations_aggregate_nodes_Document {
+  __typename: "az_docs_Documents";
+  documentBody: string | null;
+}
+
 export interface GetLocations_az_sensors_Locations_aggregate_nodes {
   __typename: "az_sensors_Locations";
   mapsLink: string | null;
@@ -15,7 +20,7 @@ export interface GetLocations_az_sensors_Locations_aggregate_nodes {
   elevation: any;
   address: string | null;
   airlyLink: string | null;
-  documentId: number | null;
+  Document: GetLocations_az_sensors_Locations_aggregate_nodes_Document;
 }
 
 export interface GetLocations_az_sensors_Locations_aggregate {
@@ -24,8 +29,5 @@ export interface GetLocations_az_sensors_Locations_aggregate {
 }
 
 export interface GetLocations {
-  /**
-   * fetch aggregated fields from the table: "az_sensors.Locations"
-   */
   az_sensors_Locations_aggregate: GetLocations_az_sensors_Locations_aggregate;
 }

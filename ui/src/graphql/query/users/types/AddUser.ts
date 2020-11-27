@@ -13,9 +13,6 @@ export interface AddUser_insert_az_users_Users_one {
 }
 
 export interface AddUser {
-  /**
-   * insert a single row into the table: "az_users.Users"
-   */
   insert_az_users_Users_one: AddUser_insert_az_users_Users_one | null;
 }
 
@@ -25,5 +22,4 @@ export interface AddUserVariables {
   organisationId?: number | null;
   fullName?: string | null;
   email?: string | null;
-  documentId?: number | null;
 }

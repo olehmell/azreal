@@ -10,7 +10,9 @@ const GET_USERS = gql`
       phoneNumber
       userRole
       userId
-      documentId
+      Document {
+        documentBody
+      } 
       Organisation {
         shortName
         fullName

@@ -7,12 +7,13 @@ const GET_ORGANISATIONS = gql`
     az_users_Organisation {
       shortName
       rntrc
-      registryLink
       organisationRole
       organisationId
       fullName
       country
-      documentId
+      Document {
+        documentBody
+      }
     }
   }
 `

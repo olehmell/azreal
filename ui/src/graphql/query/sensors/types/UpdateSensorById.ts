@@ -14,16 +14,10 @@ export interface UpdateSensorById_update_az_sensors_Sensors_returning {
 
 export interface UpdateSensorById_update_az_sensors_Sensors {
   __typename: "az_sensors_Sensors_mutation_response";
-  /**
-   * data of the affected rows by the mutation
-   */
   returning: UpdateSensorById_update_az_sensors_Sensors_returning[];
 }
 
 export interface UpdateSensorById {
-  /**
-   * update data of the table: "az_sensors.Sensors"
-   */
   update_az_sensors_Sensors: UpdateSensorById_update_az_sensors_Sensors | null;
 }
 

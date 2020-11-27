@@ -7,38 +7,30 @@
 // START Enums and Input Objects
 //==============================================================
 
-/**
- * unique or primary key constraints on table "az_docs.Documents"
- */
 export enum az_docs_Documents_constraint {
   Documents_pkey = "Documents_pkey",
 }
 
-/**
- * update columns of table "az_docs.Documents"
- */
 export enum az_docs_Documents_update_column {
   documentBody = "documentBody",
   documentId = "documentId",
   documentType = "documentType",
 }
 
-/**
- * unique or primary key constraints on table "az_docs.Photo"
- */
 export enum az_docs_Photo_constraint {
   Photo_pkey = "Photo_pkey",
 }
 
-/**
- * update columns of table "az_docs.Photo"
- */
 export enum az_docs_Photo_update_column {
   photoId = "photoId",
   photoSeries = "photoSeries",
 }
 
-export enum az_docs_enum_document_type_enum {
+export enum az_docs_e_document_type_constraint {
+  e_document_type_pkey = "e_document_type_pkey",
+}
+
+export enum az_docs_e_document_type_enum {
   Location = "Location",
   Organisation = "Organisation",
   Sensor = "Sensor",
@@ -46,16 +38,15 @@ export enum az_docs_enum_document_type_enum {
   User = "User",
 }
 
-/**
- * unique or primary key constraints on table "az_sensors.Locations"
- */
+export enum az_docs_e_document_type_update_column {
+  description = "description",
+  value = "value",
+}
+
 export enum az_sensors_Locations_constraint {
   Locations_pkey = "Locations_pkey",
 }
 
-/**
- * update columns of table "az_sensors.Locations"
- */
 export enum az_sensors_Locations_update_column {
   address = "address",
   airlyLink = "airlyLink",
@@ -66,16 +57,10 @@ export enum az_sensors_Locations_update_column {
   mapsLink = "mapsLink",
 }
 
-/**
- * unique or primary key constraints on table "az_sensors.PollutionFactors"
- */
 export enum az_sensors_PollutionFactors_constraint {
   PollutionFactors_pkey = "PollutionFactors_pkey",
 }
 
-/**
- * update columns of table "az_sensors.PollutionFactors"
- */
 export enum az_sensors_PollutionFactors_update_column {
   factorId = "factorId",
   label = "label",
@@ -83,32 +68,20 @@ export enum az_sensors_PollutionFactors_update_column {
   unit = "unit",
 }
 
-/**
- * unique or primary key constraints on table "az_sensors.SensorFactors"
- */
 export enum az_sensors_SensorFactors_constraint {
   SensorFactors_sensorId_factorId_key = "SensorFactors_sensorId_factorId_key",
 }
 
-/**
- * update columns of table "az_sensors.SensorFactors"
- */
 export enum az_sensors_SensorFactors_update_column {
   factorId = "factorId",
   sensorId = "sensorId",
 }
 
-/**
- * unique or primary key constraints on table "az_sensors.Sensors"
- */
 export enum az_sensors_Sensors_constraint {
   Sensors_pkey = "Sensors_pkey",
   Sensors_sensorId_locationId_key = "Sensors_sensorId_locationId_key",
 }
 
-/**
- * update columns of table "az_sensors.Sensors"
- */
 export enum az_sensors_Sensors_update_column {
   locationId = "locationId",
   manufacturer = "manufacturer",
@@ -116,53 +89,69 @@ export enum az_sensors_Sensors_update_column {
   sensorId = "sensorId",
 }
 
-/**
- * unique or primary key constraints on table "az_users.AuthData"
- */
-export enum az_users_AuthData_constraint {
-  AuthData_userId_key = "AuthData_userId_key",
+export enum az_sensors_e_measurement_unit_constraint {
+  e_measurement_unit_pkey = "e_measurement_unit_pkey",
 }
 
-/**
- * update columns of table "az_users.AuthData"
- */
+export enum az_sensors_e_measurement_unit_enum {
+  celsium = "celsium",
+  degree = "degree",
+  hPa = "hPa",
+  kmph = "kmph",
+  mcgpcm = "mcgpcm",
+  percent = "percent",
+}
+
+export enum az_sensors_e_measurement_unit_update_column {
+  description = "description",
+  value = "value",
+}
+
+export enum az_sensors_e_service_type_constraint {
+  e_service_type_pkey = "e_service_type_pkey",
+}
+
+export enum az_sensors_e_service_type_enum {
+  Planned = "Planned",
+  Replacement = "Replacement",
+  Unscheduled = "Unscheduled",
+}
+
+export enum az_sensors_e_service_type_update_column {
+  description = "description",
+  value = "value",
+}
+
+export enum az_users_AuthData_constraint {
+  AuthData_pkey = "AuthData_pkey",
+}
+
 export enum az_users_AuthData_update_column {
   password = "password",
   userId = "userId",
 }
 
-/**
- * unique or primary key constraints on table "az_users.Organisation"
- */
 export enum az_users_Organisation_constraint {
   Organisation_pkey = "Organisation_pkey",
   Organisation_rntrc_key = "Organisation_rntrc_key",
 }
 
-/**
- * update columns of table "az_users.Organisation"
- */
 export enum az_users_Organisation_update_column {
   country = "country",
   documentId = "documentId",
   fullName = "fullName",
   organisationId = "organisationId",
   organisationRole = "organisationRole",
-  registryLink = "registryLink",
   rntrc = "rntrc",
   shortName = "shortName",
 }
 
-/**
- * unique or primary key constraints on table "az_users.Users"
- */
 export enum az_users_Users_constraint {
+  Users_email_key = "Users_email_key",
+  Users_phoneNumber_key = "Users_phoneNumber_key",
   Users_pkey = "Users_pkey",
 }
 
-/**
- * update columns of table "az_users.Users"
- */
 export enum az_users_Users_update_column {
   documentId = "documentId",
   email = "email",
@@ -173,9 +162,6 @@ export enum az_users_Users_update_column {
   userRole = "userRole",
 }
 
-/**
- * expression to compare columns of type Int. All fields are combined with logical 'AND'.
- */
 export interface Int_comparison_exp {
   _eq?: number | null;
   _gt?: number | null;
@@ -188,9 +174,6 @@ export interface Int_comparison_exp {
   _nin?: number[] | null;
 }
 
-/**
- * expression to compare columns of type String. All fields are combined with logical 'AND'.
- */
 export interface String_comparison_exp {
   _eq?: string | null;
   _gt?: string | null;
@@ -209,9 +192,6 @@ export interface String_comparison_exp {
   _similar?: string | null;
 }
 
-/**
- * expression to compare columns of type _bytea. All fields are combined with logical 'AND'.
- */
 export interface _bytea_comparison_exp {
   _eq?: any | null;
   _gt?: any | null;
@@ -224,24 +204,11 @@ export interface _bytea_comparison_exp {
   _nin?: any[] | null;
 }
 
-/**
- * expression to compare columns of type _measurement_value. All fields are combined with logical 'AND'.
- */
-export interface _measurement_value_comparison_exp {
-  _eq?: any | null;
-  _gt?: any | null;
-  _gte?: any | null;
-  _in?: any[] | null;
-  _is_null?: boolean | null;
-  _lt?: any | null;
-  _lte?: any | null;
-  _neq?: any | null;
-  _nin?: any[] | null;
+export interface az_docs_Documents_arr_rel_insert_input {
+  data: az_docs_Documents_insert_input[];
+  on_conflict?: az_docs_Documents_on_conflict | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_docs.Documents". All fields are combined with a logical 'AND'.
- */
 export interface az_docs_Documents_bool_exp {
   Locations?: az_sensors_Locations_bool_exp | null;
   Organisations?: az_users_Organisation_bool_exp | null;
@@ -252,12 +219,10 @@ export interface az_docs_Documents_bool_exp {
   _or?: (az_docs_Documents_bool_exp | null)[] | null;
   documentBody?: String_comparison_exp | null;
   documentId?: Int_comparison_exp | null;
-  documentType?: az_docs_enum_document_type_enum_comparison_exp | null;
+  documentType?: az_docs_e_document_type_enum_comparison_exp | null;
+  e_document_type?: az_docs_e_document_type_bool_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_docs.Documents"
- */
 export interface az_docs_Documents_insert_input {
   Locations?: az_sensors_Locations_arr_rel_insert_input | null;
   Organisations?: az_users_Organisation_arr_rel_insert_input | null;
@@ -265,29 +230,21 @@ export interface az_docs_Documents_insert_input {
   Users?: az_users_Users_arr_rel_insert_input | null;
   documentBody?: string | null;
   documentId?: number | null;
-  documentType?: az_docs_enum_document_type_enum | null;
+  documentType?: az_docs_e_document_type_enum | null;
+  e_document_type?: az_docs_e_document_type_obj_rel_insert_input | null;
 }
 
-/**
- * input type for inserting object relation for remote table "az_docs.Documents"
- */
 export interface az_docs_Documents_obj_rel_insert_input {
   data: az_docs_Documents_insert_input;
   on_conflict?: az_docs_Documents_on_conflict | null;
 }
 
-/**
- * on conflict condition type for table "az_docs.Documents"
- */
 export interface az_docs_Documents_on_conflict {
   constraint: az_docs_Documents_constraint;
   update_columns: az_docs_Documents_update_column[];
   where?: az_docs_Documents_bool_exp | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_docs.Photo". All fields are combined with a logical 'AND'.
- */
 export interface az_docs_Photo_bool_exp {
   ServiceLogs?: az_sensors_ServiceLog_bool_exp | null;
   _and?: (az_docs_Photo_bool_exp | null)[] | null;
@@ -297,92 +254,64 @@ export interface az_docs_Photo_bool_exp {
   photoSeries?: _bytea_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_docs.Photo"
- */
 export interface az_docs_Photo_insert_input {
   ServiceLogs?: az_sensors_ServiceLog_arr_rel_insert_input | null;
   photoId?: number | null;
   photoSeries?: any | null;
 }
 
-/**
- * input type for inserting object relation for remote table "az_docs.Photo"
- */
 export interface az_docs_Photo_obj_rel_insert_input {
   data: az_docs_Photo_insert_input;
   on_conflict?: az_docs_Photo_on_conflict | null;
 }
 
-/**
- * on conflict condition type for table "az_docs.Photo"
- */
 export interface az_docs_Photo_on_conflict {
   constraint: az_docs_Photo_constraint;
   update_columns: az_docs_Photo_update_column[];
   where?: az_docs_Photo_bool_exp | null;
 }
 
-/**
- * expression to compare columns of type az_docs_enum_document_type_enum. All fields are combined with logical 'AND'.
- */
-export interface az_docs_enum_document_type_enum_comparison_exp {
-  _eq?: az_docs_enum_document_type_enum | null;
-  _in?: az_docs_enum_document_type_enum[] | null;
+export interface az_docs_e_document_type_bool_exp {
+  Documents?: az_docs_Documents_bool_exp | null;
+  _and?: (az_docs_e_document_type_bool_exp | null)[] | null;
+  _not?: az_docs_e_document_type_bool_exp | null;
+  _or?: (az_docs_e_document_type_bool_exp | null)[] | null;
+  description?: String_comparison_exp | null;
+  value?: String_comparison_exp | null;
+}
+
+export interface az_docs_e_document_type_enum_comparison_exp {
+  _eq?: az_docs_e_document_type_enum | null;
+  _in?: az_docs_e_document_type_enum[] | null;
   _is_null?: boolean | null;
-  _neq?: az_docs_enum_document_type_enum | null;
-  _nin?: az_docs_enum_document_type_enum[] | null;
+  _neq?: az_docs_e_document_type_enum | null;
+  _nin?: az_docs_e_document_type_enum[] | null;
 }
 
-/**
- * input type for inserting array relation for remote table "az_measurements.Measurements"
- */
-export interface az_measurements_Measurements_arr_rel_insert_input {
-  data: az_measurements_Measurements_insert_input[];
+export interface az_docs_e_document_type_insert_input {
+  Documents?: az_docs_Documents_arr_rel_insert_input | null;
+  description?: string | null;
+  value?: string | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_measurements.Measurements".
- * All fields are combined with a logical 'AND'.
- */
-export interface az_measurements_Measurements_bool_exp {
-  Location?: az_sensors_Locations_bool_exp | null;
-  Sensor?: az_sensors_Sensors_bool_exp | null;
-  _and?: (az_measurements_Measurements_bool_exp | null)[] | null;
-  _not?: az_measurements_Measurements_bool_exp | null;
-  _or?: (az_measurements_Measurements_bool_exp | null)[] | null;
-  locationId?: Int_comparison_exp | null;
-  sensorId?: Int_comparison_exp | null;
-  timestamp?: timestamp_comparison_exp | null;
-  values?: _measurement_value_comparison_exp | null;
+export interface az_docs_e_document_type_obj_rel_insert_input {
+  data: az_docs_e_document_type_insert_input;
+  on_conflict?: az_docs_e_document_type_on_conflict | null;
 }
 
-/**
- * input type for inserting data into table "az_measurements.Measurements"
- */
-export interface az_measurements_Measurements_insert_input {
-  Location?: az_sensors_Locations_obj_rel_insert_input | null;
-  Sensor?: az_sensors_Sensors_obj_rel_insert_input | null;
-  locationId?: number | null;
-  sensorId?: number | null;
-  timestamp?: any | null;
-  values?: any | null;
+export interface az_docs_e_document_type_on_conflict {
+  constraint: az_docs_e_document_type_constraint;
+  update_columns: az_docs_e_document_type_update_column[];
+  where?: az_docs_e_document_type_bool_exp | null;
 }
 
-/**
- * input type for inserting array relation for remote table "az_sensors.Locations"
- */
 export interface az_sensors_Locations_arr_rel_insert_input {
   data: az_sensors_Locations_insert_input[];
   on_conflict?: az_sensors_Locations_on_conflict | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_sensors.Locations". All fields are combined with a logical 'AND'.
- */
 export interface az_sensors_Locations_bool_exp {
   Document?: az_docs_Documents_bool_exp | null;
-  Measurements?: az_measurements_Measurements_bool_exp | null;
   Sensors?: az_sensors_Sensors_bool_exp | null;
   ServiceLogs?: az_sensors_ServiceLog_bool_exp | null;
   _and?: (az_sensors_Locations_bool_exp | null)[] | null;
@@ -397,12 +326,8 @@ export interface az_sensors_Locations_bool_exp {
   mapsLink?: String_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_sensors.Locations"
- */
 export interface az_sensors_Locations_insert_input {
   Document?: az_docs_Documents_obj_rel_insert_input | null;
-  Measurements?: az_measurements_Measurements_arr_rel_insert_input | null;
   Sensors?: az_sensors_Sensors_arr_rel_insert_input | null;
   ServiceLogs?: az_sensors_ServiceLog_arr_rel_insert_input | null;
   address?: string | null;
@@ -414,77 +339,59 @@ export interface az_sensors_Locations_insert_input {
   mapsLink?: string | null;
 }
 
-/**
- * input type for inserting object relation for remote table "az_sensors.Locations"
- */
 export interface az_sensors_Locations_obj_rel_insert_input {
   data: az_sensors_Locations_insert_input;
   on_conflict?: az_sensors_Locations_on_conflict | null;
 }
 
-/**
- * on conflict condition type for table "az_sensors.Locations"
- */
 export interface az_sensors_Locations_on_conflict {
   constraint: az_sensors_Locations_constraint;
   update_columns: az_sensors_Locations_update_column[];
   where?: az_sensors_Locations_bool_exp | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_sensors.PollutionFactors".
- * All fields are combined with a logical 'AND'.
- */
+export interface az_sensors_PollutionFactors_arr_rel_insert_input {
+  data: az_sensors_PollutionFactors_insert_input[];
+  on_conflict?: az_sensors_PollutionFactors_on_conflict | null;
+}
+
 export interface az_sensors_PollutionFactors_bool_exp {
   SensorFactors?: az_sensors_SensorFactors_bool_exp | null;
   _and?: (az_sensors_PollutionFactors_bool_exp | null)[] | null;
   _not?: az_sensors_PollutionFactors_bool_exp | null;
   _or?: (az_sensors_PollutionFactors_bool_exp | null)[] | null;
+  e_measurement_unit?: az_sensors_e_measurement_unit_bool_exp | null;
   factorId?: Int_comparison_exp | null;
   label?: String_comparison_exp | null;
   name?: String_comparison_exp | null;
-  unit?: measurement_unit_comparison_exp | null;
+  unit?: az_sensors_e_measurement_unit_enum_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_sensors.PollutionFactors"
- */
 export interface az_sensors_PollutionFactors_insert_input {
   SensorFactors?: az_sensors_SensorFactors_arr_rel_insert_input | null;
+  e_measurement_unit?: az_sensors_e_measurement_unit_obj_rel_insert_input | null;
   factorId?: number | null;
   label?: string | null;
   name?: string | null;
-  unit?: any | null;
+  unit?: az_sensors_e_measurement_unit_enum | null;
 }
 
-/**
- * input type for inserting object relation for remote table "az_sensors.PollutionFactors"
- */
 export interface az_sensors_PollutionFactors_obj_rel_insert_input {
   data: az_sensors_PollutionFactors_insert_input;
   on_conflict?: az_sensors_PollutionFactors_on_conflict | null;
 }
 
-/**
- * on conflict condition type for table "az_sensors.PollutionFactors"
- */
 export interface az_sensors_PollutionFactors_on_conflict {
   constraint: az_sensors_PollutionFactors_constraint;
   update_columns: az_sensors_PollutionFactors_update_column[];
   where?: az_sensors_PollutionFactors_bool_exp | null;
 }
 
-/**
- * input type for inserting array relation for remote table "az_sensors.SensorFactors"
- */
 export interface az_sensors_SensorFactors_arr_rel_insert_input {
   data: az_sensors_SensorFactors_insert_input[];
   on_conflict?: az_sensors_SensorFactors_on_conflict | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_sensors.SensorFactors". All fields are combined with a logical 'AND'.
- */
 export interface az_sensors_SensorFactors_bool_exp {
   PollutionFactor?: az_sensors_PollutionFactors_bool_exp | null;
   Sensor?: az_sensors_Sensors_bool_exp | null;
@@ -495,9 +402,6 @@ export interface az_sensors_SensorFactors_bool_exp {
   sensorId?: Int_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_sensors.SensorFactors"
- */
 export interface az_sensors_SensorFactors_insert_input {
   PollutionFactor?: az_sensors_PollutionFactors_obj_rel_insert_input | null;
   Sensor?: az_sensors_Sensors_obj_rel_insert_input | null;
@@ -505,29 +409,19 @@ export interface az_sensors_SensorFactors_insert_input {
   sensorId?: number | null;
 }
 
-/**
- * on conflict condition type for table "az_sensors.SensorFactors"
- */
 export interface az_sensors_SensorFactors_on_conflict {
   constraint: az_sensors_SensorFactors_constraint;
   update_columns: az_sensors_SensorFactors_update_column[];
   where?: az_sensors_SensorFactors_bool_exp | null;
 }
 
-/**
- * input type for inserting array relation for remote table "az_sensors.Sensors"
- */
 export interface az_sensors_Sensors_arr_rel_insert_input {
   data: az_sensors_Sensors_insert_input[];
   on_conflict?: az_sensors_Sensors_on_conflict | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_sensors.Sensors". All fields are combined with a logical 'AND'.
- */
 export interface az_sensors_Sensors_bool_exp {
   Location?: az_sensors_Locations_bool_exp | null;
-  Measurements?: az_measurements_Measurements_bool_exp | null;
   SensorFactors?: az_sensors_SensorFactors_bool_exp | null;
   ServiceLogs?: az_sensors_ServiceLog_bool_exp | null;
   _and?: (az_sensors_Sensors_bool_exp | null)[] | null;
@@ -539,12 +433,8 @@ export interface az_sensors_Sensors_bool_exp {
   sensorId?: Int_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_sensors.Sensors"
- */
 export interface az_sensors_Sensors_insert_input {
   Location?: az_sensors_Locations_obj_rel_insert_input | null;
-  Measurements?: az_measurements_Measurements_arr_rel_insert_input | null;
   SensorFactors?: az_sensors_SensorFactors_arr_rel_insert_input | null;
   ServiceLogs?: az_sensors_ServiceLog_arr_rel_insert_input | null;
   locationId?: number | null;
@@ -553,33 +443,21 @@ export interface az_sensors_Sensors_insert_input {
   sensorId?: number | null;
 }
 
-/**
- * input type for inserting object relation for remote table "az_sensors.Sensors"
- */
 export interface az_sensors_Sensors_obj_rel_insert_input {
   data: az_sensors_Sensors_insert_input;
   on_conflict?: az_sensors_Sensors_on_conflict | null;
 }
 
-/**
- * on conflict condition type for table "az_sensors.Sensors"
- */
 export interface az_sensors_Sensors_on_conflict {
   constraint: az_sensors_Sensors_constraint;
   update_columns: az_sensors_Sensors_update_column[];
   where?: az_sensors_Sensors_bool_exp | null;
 }
 
-/**
- * input type for inserting array relation for remote table "az_sensors.ServiceLog"
- */
 export interface az_sensors_ServiceLog_arr_rel_insert_input {
   data: az_sensors_ServiceLog_insert_input[];
 }
 
-/**
- * Boolean expression to filter rows from the table "az_sensors.ServiceLog". All fields are combined with a logical 'AND'.
- */
 export interface az_sensors_ServiceLog_bool_exp {
   Document?: az_docs_Documents_bool_exp | null;
   Location?: az_sensors_Locations_bool_exp | null;
@@ -589,32 +467,101 @@ export interface az_sensors_ServiceLog_bool_exp {
   _not?: az_sensors_ServiceLog_bool_exp | null;
   _or?: (az_sensors_ServiceLog_bool_exp | null)[] | null;
   documentId?: Int_comparison_exp | null;
+  e_service_type?: az_sensors_e_service_type_bool_exp | null;
   locationId?: Int_comparison_exp | null;
   photoId?: Int_comparison_exp | null;
   sensorId?: Int_comparison_exp | null;
-  serviceType?: service_type_comparison_exp | null;
+  serviceType?: az_sensors_e_service_type_enum_comparison_exp | null;
   timestamp?: timestamp_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_sensors.ServiceLog"
- */
 export interface az_sensors_ServiceLog_insert_input {
   Document?: az_docs_Documents_obj_rel_insert_input | null;
   Location?: az_sensors_Locations_obj_rel_insert_input | null;
   Photo?: az_docs_Photo_obj_rel_insert_input | null;
   Sensor?: az_sensors_Sensors_obj_rel_insert_input | null;
   documentId?: number | null;
+  e_service_type?: az_sensors_e_service_type_obj_rel_insert_input | null;
   locationId?: number | null;
   photoId?: number | null;
   sensorId?: number | null;
-  serviceType?: any | null;
+  serviceType?: az_sensors_e_service_type_enum | null;
   timestamp?: any | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_users.AuthData". All fields are combined with a logical 'AND'.
- */
+export interface az_sensors_e_measurement_unit_bool_exp {
+  PollutionFactors?: az_sensors_PollutionFactors_bool_exp | null;
+  _and?: (az_sensors_e_measurement_unit_bool_exp | null)[] | null;
+  _not?: az_sensors_e_measurement_unit_bool_exp | null;
+  _or?: (az_sensors_e_measurement_unit_bool_exp | null)[] | null;
+  description?: String_comparison_exp | null;
+  value?: String_comparison_exp | null;
+}
+
+export interface az_sensors_e_measurement_unit_enum_comparison_exp {
+  _eq?: az_sensors_e_measurement_unit_enum | null;
+  _in?: az_sensors_e_measurement_unit_enum[] | null;
+  _is_null?: boolean | null;
+  _neq?: az_sensors_e_measurement_unit_enum | null;
+  _nin?: az_sensors_e_measurement_unit_enum[] | null;
+}
+
+export interface az_sensors_e_measurement_unit_insert_input {
+  PollutionFactors?: az_sensors_PollutionFactors_arr_rel_insert_input | null;
+  description?: string | null;
+  value?: string | null;
+}
+
+export interface az_sensors_e_measurement_unit_obj_rel_insert_input {
+  data: az_sensors_e_measurement_unit_insert_input;
+  on_conflict?: az_sensors_e_measurement_unit_on_conflict | null;
+}
+
+export interface az_sensors_e_measurement_unit_on_conflict {
+  constraint: az_sensors_e_measurement_unit_constraint;
+  update_columns: az_sensors_e_measurement_unit_update_column[];
+  where?: az_sensors_e_measurement_unit_bool_exp | null;
+}
+
+export interface az_sensors_e_service_type_bool_exp {
+  ServiceLogs?: az_sensors_ServiceLog_bool_exp | null;
+  _and?: (az_sensors_e_service_type_bool_exp | null)[] | null;
+  _not?: az_sensors_e_service_type_bool_exp | null;
+  _or?: (az_sensors_e_service_type_bool_exp | null)[] | null;
+  description?: String_comparison_exp | null;
+  value?: String_comparison_exp | null;
+}
+
+export interface az_sensors_e_service_type_enum_comparison_exp {
+  _eq?: az_sensors_e_service_type_enum | null;
+  _in?: az_sensors_e_service_type_enum[] | null;
+  _is_null?: boolean | null;
+  _neq?: az_sensors_e_service_type_enum | null;
+  _nin?: az_sensors_e_service_type_enum[] | null;
+}
+
+export interface az_sensors_e_service_type_insert_input {
+  ServiceLogs?: az_sensors_ServiceLog_arr_rel_insert_input | null;
+  description?: string | null;
+  value?: string | null;
+}
+
+export interface az_sensors_e_service_type_obj_rel_insert_input {
+  data: az_sensors_e_service_type_insert_input;
+  on_conflict?: az_sensors_e_service_type_on_conflict | null;
+}
+
+export interface az_sensors_e_service_type_on_conflict {
+  constraint: az_sensors_e_service_type_constraint;
+  update_columns: az_sensors_e_service_type_update_column[];
+  where?: az_sensors_e_service_type_bool_exp | null;
+}
+
+export interface az_users_AuthData_arr_rel_insert_input {
+  data: az_users_AuthData_insert_input[];
+  on_conflict?: az_users_AuthData_on_conflict | null;
+}
+
 export interface az_users_AuthData_bool_exp {
   User?: az_users_Users_bool_exp | null;
   _and?: (az_users_AuthData_bool_exp | null)[] | null;
@@ -624,43 +571,23 @@ export interface az_users_AuthData_bool_exp {
   userId?: Int_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_users.AuthData"
- */
 export interface az_users_AuthData_insert_input {
   User?: az_users_Users_obj_rel_insert_input | null;
   password?: string | null;
   userId?: number | null;
 }
 
-/**
- * input type for inserting object relation for remote table "az_users.AuthData"
- */
-export interface az_users_AuthData_obj_rel_insert_input {
-  data: az_users_AuthData_insert_input;
-  on_conflict?: az_users_AuthData_on_conflict | null;
-}
-
-/**
- * on conflict condition type for table "az_users.AuthData"
- */
 export interface az_users_AuthData_on_conflict {
   constraint: az_users_AuthData_constraint;
   update_columns: az_users_AuthData_update_column[];
   where?: az_users_AuthData_bool_exp | null;
 }
 
-/**
- * input type for inserting array relation for remote table "az_users.Organisation"
- */
 export interface az_users_Organisation_arr_rel_insert_input {
   data: az_users_Organisation_insert_input[];
   on_conflict?: az_users_Organisation_on_conflict | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_users.Organisation". All fields are combined with a logical 'AND'.
- */
 export interface az_users_Organisation_bool_exp {
   Document?: az_docs_Documents_bool_exp | null;
   Users?: az_users_Users_bool_exp | null;
@@ -672,14 +599,10 @@ export interface az_users_Organisation_bool_exp {
   fullName?: String_comparison_exp | null;
   organisationId?: Int_comparison_exp | null;
   organisationRole?: String_comparison_exp | null;
-  registryLink?: String_comparison_exp | null;
-  rntrc?: bpchar_comparison_exp | null;
+  rntrc?: String_comparison_exp | null;
   shortName?: String_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_users.Organisation"
- */
 export interface az_users_Organisation_insert_input {
   Document?: az_docs_Documents_obj_rel_insert_input | null;
   Users?: az_users_Users_arr_rel_insert_input | null;
@@ -688,38 +611,25 @@ export interface az_users_Organisation_insert_input {
   fullName?: string | null;
   organisationId?: number | null;
   organisationRole?: string | null;
-  registryLink?: string | null;
-  rntrc?: any | null;
+  rntrc?: string | null;
   shortName?: string | null;
 }
 
-/**
- * input type for inserting object relation for remote table "az_users.Organisation"
- */
 export interface az_users_Organisation_obj_rel_insert_input {
   data: az_users_Organisation_insert_input;
   on_conflict?: az_users_Organisation_on_conflict | null;
 }
 
-/**
- * on conflict condition type for table "az_users.Organisation"
- */
 export interface az_users_Organisation_on_conflict {
   constraint: az_users_Organisation_constraint;
   update_columns: az_users_Organisation_update_column[];
   where?: az_users_Organisation_bool_exp | null;
 }
 
-/**
- * input type for inserting array relation for remote table "az_users.UsageLog"
- */
 export interface az_users_UsageLog_arr_rel_insert_input {
   data: az_users_UsageLog_insert_input[];
 }
 
-/**
- * Boolean expression to filter rows from the table "az_users.UsageLog". All fields are combined with a logical 'AND'.
- */
 export interface az_users_UsageLog_bool_exp {
   User?: az_users_Users_bool_exp | null;
   _and?: (az_users_UsageLog_bool_exp | null)[] | null;
@@ -731,9 +641,6 @@ export interface az_users_UsageLog_bool_exp {
   userId?: Int_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_users.UsageLog"
- */
 export interface az_users_UsageLog_insert_input {
   User?: az_users_Users_obj_rel_insert_input | null;
   query?: string | null;
@@ -742,19 +649,13 @@ export interface az_users_UsageLog_insert_input {
   userId?: number | null;
 }
 
-/**
- * input type for inserting array relation for remote table "az_users.Users"
- */
 export interface az_users_Users_arr_rel_insert_input {
   data: az_users_Users_insert_input[];
   on_conflict?: az_users_Users_on_conflict | null;
 }
 
-/**
- * Boolean expression to filter rows from the table "az_users.Users". All fields are combined with a logical 'AND'.
- */
 export interface az_users_Users_bool_exp {
-  AuthDatum?: az_users_AuthData_bool_exp | null;
+  AuthData?: az_users_AuthData_bool_exp | null;
   Document?: az_docs_Documents_bool_exp | null;
   Organisation?: az_users_Organisation_bool_exp | null;
   UsageLogs?: az_users_UsageLog_bool_exp | null;
@@ -770,11 +671,8 @@ export interface az_users_Users_bool_exp {
   userRole?: String_comparison_exp | null;
 }
 
-/**
- * input type for inserting data into table "az_users.Users"
- */
 export interface az_users_Users_insert_input {
-  AuthDatum?: az_users_AuthData_obj_rel_insert_input | null;
+  AuthData?: az_users_AuthData_arr_rel_insert_input | null;
   Document?: az_docs_Documents_obj_rel_insert_input | null;
   Organisation?: az_users_Organisation_obj_rel_insert_input | null;
   UsageLogs?: az_users_UsageLog_arr_rel_insert_input | null;
@@ -787,26 +685,17 @@ export interface az_users_Users_insert_input {
   userRole?: string | null;
 }
 
-/**
- * input type for inserting object relation for remote table "az_users.Users"
- */
 export interface az_users_Users_obj_rel_insert_input {
   data: az_users_Users_insert_input;
   on_conflict?: az_users_Users_on_conflict | null;
 }
 
-/**
- * on conflict condition type for table "az_users.Users"
- */
 export interface az_users_Users_on_conflict {
   constraint: az_users_Users_constraint;
   update_columns: az_users_Users_update_column[];
   where?: az_users_Users_bool_exp | null;
 }
 
-/**
- * expression to compare columns of type bpchar. All fields are combined with logical 'AND'.
- */
 export interface bpchar_comparison_exp {
   _eq?: any | null;
   _gt?: any | null;
@@ -819,9 +708,6 @@ export interface bpchar_comparison_exp {
   _nin?: any[] | null;
 }
 
-/**
- * expression to compare columns of type float8. All fields are combined with logical 'AND'.
- */
 export interface float8_comparison_exp {
   _eq?: any | null;
   _gt?: any | null;
@@ -834,24 +720,6 @@ export interface float8_comparison_exp {
   _nin?: any[] | null;
 }
 
-/**
- * expression to compare columns of type measurement_unit. All fields are combined with logical 'AND'.
- */
-export interface measurement_unit_comparison_exp {
-  _eq?: any | null;
-  _gt?: any | null;
-  _gte?: any | null;
-  _in?: any[] | null;
-  _is_null?: boolean | null;
-  _lt?: any | null;
-  _lte?: any | null;
-  _neq?: any | null;
-  _nin?: any[] | null;
-}
-
-/**
- * expression to compare columns of type point. All fields are combined with logical 'AND'.
- */
 export interface point_comparison_exp {
   _eq?: any | null;
   _gt?: any | null;
@@ -864,24 +732,6 @@ export interface point_comparison_exp {
   _nin?: any[] | null;
 }
 
-/**
- * expression to compare columns of type service_type. All fields are combined with logical 'AND'.
- */
-export interface service_type_comparison_exp {
-  _eq?: any | null;
-  _gt?: any | null;
-  _gte?: any | null;
-  _in?: any[] | null;
-  _is_null?: boolean | null;
-  _lt?: any | null;
-  _lte?: any | null;
-  _neq?: any | null;
-  _nin?: any[] | null;
-}
-
-/**
- * expression to compare columns of type timestamp. All fields are combined with logical 'AND'.
- */
 export interface timestamp_comparison_exp {
   _eq?: any | null;
   _gt?: any | null;

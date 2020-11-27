@@ -16,16 +16,10 @@ export interface AddDocuments_insert_az_docs_Documents_returning {
 
 export interface AddDocuments_insert_az_docs_Documents {
   __typename: "az_docs_Documents_mutation_response";
-  /**
-   * data of the affected rows by the mutation
-   */
   returning: AddDocuments_insert_az_docs_Documents_returning[];
 }
 
 export interface AddDocuments {
-  /**
-   * insert data into the table: "az_docs.Documents"
-   */
   insert_az_docs_Documents: AddDocuments_insert_az_docs_Documents | null;
 }
 

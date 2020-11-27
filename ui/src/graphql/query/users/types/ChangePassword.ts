@@ -13,9 +13,6 @@ export interface ChangePassword_insert_az_users_AuthData_one {
 }
 
 export interface ChangePassword {
-  /**
-   * insert a single row into the table: "az_users.AuthData"
-   */
   insert_az_users_AuthData_one: ChangePassword_insert_az_users_AuthData_one | null;
 }
 
