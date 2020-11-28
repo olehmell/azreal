@@ -16,7 +16,7 @@ import { SelectorOptionType } from 'src/types'
 
 
 type MeasurementTProps = {
-  measurements: Measurements[],
+  measurements: any[], // !- Measurement type!
   fileName?: string
 }
 
@@ -108,7 +108,7 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   const [ aggregation, setAggregation ] = useState<string>()
   const [ sensorId, setSensorId ] = useState<number>(initialSensorId)
   const [ variables, setVariables ] = useState<GetMeasurementsBetweenDateVariables>()
-  const { data, error, loading } = useGetMeasurementsBetweenDate(variables)
+  const { data, error, loading } = { data: [], error: { message: 'Implement this method' }, loading: false } // useGetMeasurementsBetweenDate(variables)
 
   useEffect(() => {
     if (loading || !data) return
@@ -159,13 +159,13 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
         <EuiFlexItem>
           <EuiDatePicker showTimeSelect selected={moment(toData)} onChange={onChangeToData} />
         </EuiFlexItem>
-
+{/* 
         {!initialSensorId && <EuiFlexItem>
           <SensorsSelect
             placeholder="Оберіть Id датчика"
             value={sensorId}
             onChange={onChangeSelector(setSensorId)} />
-        </EuiFlexItem>}
+        </EuiFlexItem>} */}
 
         <EuiFlexItem>
           <Loading />

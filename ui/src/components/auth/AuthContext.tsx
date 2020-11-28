@@ -4,12 +4,17 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { graphqlUrl } from '../utils'
 import { LoginPage } from './Login'
+import { NotFound, NotFoundPage } from '../utils/NotFoundPage'
+import { useGetMyRole } from 'src/graphql/query/users/getRoleByUserId'
+import { Loading } from '../utils/loading'
 
 const MY_AUTH_OBJECT = 'auth-object'
 
+type UserRole = 'user' | 'manager'
+
 export type Auth_Obj = {
   userId: number,
-  userRole: number,
+  userRole: UserRole,
   token: string
 }
 
@@ -100,7 +105,6 @@ export const AuthContext = createContext<AuthContextProps>(contextStub)
 
 export function AuthProvider (props: React.PropsWithChildren<any>) {
   const [ state, dispatch ] = useReducer(reducer, initialState)
-
   const { inited, authObj } = state
 
   useEffect(() => {
@@ -130,12 +134,30 @@ export function AuthProvider (props: React.PropsWithChildren<any>) {
     }
   })
 
+  const Content = () => {
+    const { data, error, loading } = useGetMyRole(state.authObj?.userId)
+    const userRole = data?.az_users_Users?.pop()?.userRole as UserRole
+
+    useEffect(() => {
+      if (loading || error || !data) return
+
+      dispatch({ type: 'setAuthObj', authObj: { ...state.authObj, userRole }})
+    }
+    , [ userRole ])
+
+    if (loading) return <Loading /> 
+
+    if (error) return <NotFound message={error.message}/>
+
+    return <Chrome>
+      {props.children}
+    </Chrome>
+  }
+
   return (
     <AuthContext.Provider value={contextValue}>
       <ApolloProvider client={client}>
-        <Chrome>
-          {props.children}
-        </Chrome>
+        <Content />
       </ApolloProvider>
     </AuthContext.Provider>
   )
@@ -152,5 +174,10 @@ export function useAuthObj () {
 export function useIsSignedIn () {
   return !!useAuthObj()
 }
+
+export const useIsManagerAccess = () => useAuthObj()?.userRole === 'manager'
+
+export const OnlyManagerAccess = ({ children }) => useIsManagerAccess() ? children : null
+export const OnlyManagerPage = ({ children }) => useIsManagerAccess() ? children : <NotFoundPage />
 
 export default AuthProvider

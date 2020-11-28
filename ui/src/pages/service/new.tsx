@@ -1,7 +1,7 @@
 import React from 'react'
 import { OnlyManagerPage } from 'src/components/auth/AuthContext'
-import Organisation from 'src/components/organisation/Organisation'
+import { NewLog } from 'src/components/service-log/NewLog'
 
 export default () => <OnlyManagerPage>
-  <Organisation />
+  <NewLog />
 </OnlyManagerPage>

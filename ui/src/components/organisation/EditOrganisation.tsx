@@ -21,7 +21,6 @@ import { fillInitValues, getErrorMsg } from '../utils'
 import { EditButton } from '../utils/EditButton'
 import { AddOrganisation } from 'src/graphql/query/organisations/types/AddOrganisation'
 import { useUpsetOrganisation } from 'src/graphql/query/organisations/upsertOrganisation'
-import { az_docs_enum_document_type_enum } from 'src/types/graphql-global-types'
 
 type OrganisationForm = Partial<OrganisationProps>
 

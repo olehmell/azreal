@@ -1,9 +1,15 @@
 import { EuiNavDrawerGroupProps } from '@elastic/eui'
 
 export const buildExploreLinks = (
-  makeAction: (path: string) => () => void
+  makeAction: (path: string) => () => void,
+  isManagerAccess: boolean
 ): EuiNavDrawerGroupProps['listItems'] => [
   {
+    label: 'Мій аккаунт',
+    onClick: makeAction('/profile'),
+    iconType: 'usersRolesApp',
+  },
+  isManagerAccess && {
     label: 'Користувачі та організації',
     iconType: 'users',
     flyoutMenu: {
@@ -32,14 +38,14 @@ export const buildExploreLinks = (
       ],
     },
   },
-  {
-    label: 'Датчики',
-    onClick: makeAction('/sensors'),
-    iconType: 'watchesApp',
-    flyoutMenu: {
-      title: 'Датчики',
-      listItems: [
-        {
+  isManagerAccess
+    ? {
+      label: 'Датчики',
+      onClick: makeAction('/sensors'),
+      iconType: 'watchesApp',
+      flyoutMenu: {
+        title: 'Датчики',
+        listItems: [ {
           label: 'Усі датчики',
           onClick: makeAction('/sensors'),
           iconType: 'outlierDetectionJob'
@@ -49,9 +55,14 @@ export const buildExploreLinks = (
           onClick: makeAction('/sensors/new'),
           iconType: 'createAdvancedJob'
         }
-      ],
+        ]
+      },
+    }
+    : {
+      label: 'Датчики',
+      onClick: makeAction('/sensors'),
+      iconType: 'watchesApp'
     },
-  },
   {
     label: 'Візуалізація',
     onClick: makeAction('/measurement'),
@@ -62,24 +73,30 @@ export const buildExploreLinks = (
     onClick: makeAction('/factors'),
     iconType: 'metricsApp',
   },
-  {
-    label: 'Журнал',
-    onClick: makeAction('/service'),
-    iconType: 'logsApp',
-    flyoutMenu: {
-      title: 'Датчики',
-      listItems: [
-        {
-          label: 'Календар',
-          onClick: makeAction('/service/timeline'),
-          iconType: 'outlierDetectionJob'
-        },
-        {
-          label: 'Новий запис',
-          onClick: makeAction('/service/new'),
-          iconType: 'createAdvancedJob'
-        }
-      ],
+  isManagerAccess
+    ? {
+      label: 'Журнал',
+      onClick: makeAction('/service/timeline'),
+      iconType: 'logsApp',
+      flyoutMenu: {
+        title: 'Датчики',
+        listItems: [
+          {
+            label: 'Календар',
+            onClick: makeAction('/service/timeline'),
+            iconType: 'outlierDetectionJob'
+          },
+          isManagerAccess && {
+            label: 'Новий запис',
+            onClick: makeAction('/service/new'),
+            iconType: 'createAdvancedJob'
+          }
+        ]
+      }
+    }
+    : {
+      label: 'Журнал',
+      onClick: makeAction('/service/timeline'),
+      iconType: 'logsApp'
     },
-  }
-]
+].filter(x => !!x)
