@@ -1,26 +1,25 @@
-import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiLoadingSpinner, EuiFlexGroup, EuiFlexItem, EuiSelect} from '@elastic/eui'
+import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiLoadingSpinner, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDataGridColumn} from '@elastic/eui'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useGetMeasurementLastDay } from 'src/graphql/query/measurement/getMeasurement'
-import { GetMeasuremetLastDay_az_measurements_Measurements_aggregate_nodes as Measurements } from 'src/graphql/query/measurement/types/GetMeasuremetLastDay'
-import { Loading } from '../utils/loading'
 import { Page } from '../utils/Page'
 import { ChartByParam } from './ChartByParams'
 import moment from 'moment'
-import { useGetMeasurementsBetweenDate } from 'src/graphql/query/measurement/getMeasurementBetweenDate'
-import { GetMeasurementsBetweenDateVariables } from 'src/graphql/query/measurement/types/GetMeasurementsBetweenDate'
-import { SensorsSelect } from './SensorsSelect'
 import { Table } from '../utils/Table'
 import { MeasurementMock } from './test_data'
 import { getErrorMsg } from '../utils'
 import { SelectorOptionType } from 'src/types'
+import { AggregationType, MeasurementType, useGetMeasurements } from './aggregations'
+import { GetMeasurementsBySensorIdVariables } from 'src/graphql/query/measurement/types/GetMeasurementsBySensorId'
+import { SensorsSelect } from './SensorsSelect'
+import { DataGrid } from '../utils/DataGrid'
 
 
 type MeasurementTProps = {
-  measurements: any[], // !- Measurement type!
+  measurements: MeasurementType[]
   fileName?: string
 }
 
 const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
+  if (!measurements.length) return null
 
   const dynamicColumnIds = new Set()
 
@@ -42,58 +41,50 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
   })
 
   const dynamicColumn = []
-  dynamicColumnIds.forEach(id => dynamicColumn.push({
-    field: id,
-    name: id,
-    truncateText: true,
-    sortable: true
-  }))
+  dynamicColumnIds.forEach(id => dynamicColumn.push({ id }))
 
-  const columns = [
+  const columns: EuiDataGridColumn[] = [
     {
-      field: 'timestamp',
-      name: 'Час',
-      sortable: true,
-      truncateText: true,
-      render: (date) => moment(date).format('lll')
+      id: 'timestamp',
+      display: 'Дата'
     },
     ...dynamicColumn
   ]
 
-  return <Table data={measurementData} columns={columns} fileName={fileName} />
+  return <DataGrid data={measurementData} columns={columns} />
 }
 
 const measurementSelectorOptions: SelectorOptionType[] = [
   {
     text: 'Година',
-    value: 'hour'
+    value: 'hours'
   },
   {
     text: 'День',
-    value: 'day'
+    value: 'days'
   },
   {
     text: 'Тиждень',
-    value: 'week'
+    value: 'weeks'
   },
   {
     text: 'Місяць',
-    value: 'month'
+    value: 'months'
   },
   {
     text: 'Рік',
-    value: 'year'
+    value: 'years'
   }
 ]
 
 type MeasurementSelectionType = {
   from: string,
   to: string,
-  aggregation?: 'day' | 'week' | 'month' | 'year'
+  aggregation?: AggregationType
 }
 
 type MeasurementSelectorProps = {
-  onChange: (measurements: Measurements[]) => void,
+  onChange: (measurements: MeasurementType[]) => void,
   sensorId?: number
 }
 
@@ -105,18 +96,20 @@ const initSelectionData: MeasurementSelectionType = {
 export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: MeasurementSelectorProps) => {
   const [ fromData, setFromData ] = useState(initSelectionData.from)
   const [ toData, setToData ] = useState(initSelectionData.to)
-  const [ aggregation, setAggregation ] = useState<string>()
+  const [ aggregation, setAggregation ] = useState<AggregationType>('hours')
   const [ sensorId, setSensorId ] = useState<number>(initialSensorId)
-  const [ variables, setVariables ] = useState<GetMeasurementsBetweenDateVariables>()
-  const { data, error, loading } = { data: [], error: { message: 'Implement this method' }, loading: false } // useGetMeasurementsBetweenDate(variables)
+  const [ variables, setVariables ] = useState<GetMeasurementsBySensorIdVariables>()
+  const { data, error, loading } = useGetMeasurements({ ...variables, type: aggregation })
+
+  console.log('Meas', data, error, loading)
 
   useEffect(() => {
-    if (loading || !data) return
+    if (loading || !data) return onChange([])
 
     console.log('DATA', data)
 
-    onChange(MeasurementMock.filter(x => x.sensorId == sensorId) as any)
-  }, [ loading, data ])
+    onChange(data)
+  }, [ loading, data.length ])
 
   const onChangeSelector = (onChange) =>
     (e) => onChange(e.target.value)
@@ -159,13 +152,13 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
         <EuiFlexItem>
           <EuiDatePicker showTimeSelect selected={moment(toData)} onChange={onChangeToData} />
         </EuiFlexItem>
-{/* 
+
         {!initialSensorId && <EuiFlexItem>
           <SensorsSelect
             placeholder="Оберіть Id датчика"
             value={sensorId}
             onChange={onChangeSelector(setSensorId)} />
-        </EuiFlexItem>} */}
+        </EuiFlexItem>}
 
         <EuiFlexItem>
           <Loading />
@@ -183,15 +176,15 @@ type MeasurementsForSensorProps = {
 }
 
 const MeasurementsSection = ({ sensorId }: Partial<MeasurementsForSensorProps>) => {
-  const [ measurements, setMeasurements ] = useState<Measurements[]>()
+  const [ measurements, setMeasurements ] = useState<MeasurementType[]>([])
 
   return <>
     <EuiSpacer size='xl' />
     <MeasurementSelector onChange={(data) => setMeasurements(data)} sensorId={sensorId} />
     <EuiSpacer size='xl' />
-    <MeasurementTable fileName={`Measurements-${sensorId}`} measurements={MeasurementMock as any} />
+    <MeasurementTable fileName={`Measurements-${sensorId}`} measurements={measurements} />
     <EuiSpacer size='xxl' />
-    <ChartByParam chartData={MeasurementMock as any} />
+    <ChartByParam chartData={measurements} />
   </>
 }
 
