@@ -4,19 +4,19 @@ schema {
   subscription: subscription_root
 }
 
-scalar _bytea
+scalar _text
 
-# expression to compare columns of type _bytea. All fields are combined with logical 'AND'.
-input _bytea_comparison_exp {
-  _eq: _bytea
-  _gt: _bytea
-  _gte: _bytea
-  _in: [_bytea!]
+# expression to compare columns of type _text. All fields are combined with logical 'AND'.
+input _text_comparison_exp {
+  _eq: _text
+  _gt: _text
+  _gte: _text
+  _in: [_text!]
   _is_null: Boolean
-  _lt: _bytea
-  _lte: _bytea
-  _neq: _bytea
-  _nin: [_bytea!]
+  _lt: _text
+  _lte: _text
+  _neq: _text
+  _nin: [_text!]
 }
 
 # columns and relationships of "az_docs.Documents"
@@ -164,12 +164,12 @@ type az_docs_Documents {
     # filter the rows returned
     where: az_users_Users_bool_exp
   ): az_users_Users_aggregate!
-  documentBody: String
   documentId: Int!
   documentType: az_docs_e_document_type_enum!
 
   # An object relationship
   e_document_type: az_docs_e_document_type!
+  fileIds: _text!
 }
 
 # aggregated selection of "az_docs.Documents"
@@ -233,10 +233,10 @@ input az_docs_Documents_bool_exp {
   _and: [az_docs_Documents_bool_exp]
   _not: az_docs_Documents_bool_exp
   _or: [az_docs_Documents_bool_exp]
-  documentBody: String_comparison_exp
   documentId: Int_comparison_exp
   documentType: az_docs_e_document_type_enum_comparison_exp
   e_document_type: az_docs_e_document_type_bool_exp
+  fileIds: _text_comparison_exp
 }
 
 # unique or primary key constraints on table "az_docs.Documents"
@@ -256,33 +256,29 @@ input az_docs_Documents_insert_input {
   Organisations: az_users_Organisation_arr_rel_insert_input
   ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
   Users: az_users_Users_arr_rel_insert_input
-  documentBody: String
   documentId: Int
   documentType: az_docs_e_document_type_enum
   e_document_type: az_docs_e_document_type_obj_rel_insert_input
+  fileIds: _text
 }
 
 # aggregate max on columns
 type az_docs_Documents_max_fields {
-  documentBody: String
   documentId: Int
 }
 
 # order by max() on columns of table "az_docs.Documents"
 input az_docs_Documents_max_order_by {
-  documentBody: order_by
   documentId: order_by
 }
 
 # aggregate min on columns
 type az_docs_Documents_min_fields {
-  documentBody: String
   documentId: Int
 }
 
 # order by min() on columns of table "az_docs.Documents"
 input az_docs_Documents_min_order_by {
-  documentBody: order_by
   documentId: order_by
 }
 
@@ -314,10 +310,10 @@ input az_docs_Documents_order_by {
   Organisations_aggregate: az_users_Organisation_aggregate_order_by
   ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
   Users_aggregate: az_users_Users_aggregate_order_by
-  documentBody: order_by
   documentId: order_by
   documentType: order_by
   e_document_type: az_docs_e_document_type_order_by
+  fileIds: order_by
 }
 
 # primary key columns input for table: "az_docs.Documents"
@@ -328,20 +324,20 @@ input az_docs_Documents_pk_columns_input {
 # select columns of table "az_docs.Documents"
 enum az_docs_Documents_select_column {
   # column name
-  documentBody
-
-  # column name
   documentId
 
   # column name
   documentType
+
+  # column name
+  fileIds
 }
 
 # input type for updating data in table "az_docs.Documents"
 input az_docs_Documents_set_input {
-  documentBody: String
   documentId: Int
   documentType: az_docs_e_document_type_enum
+  fileIds: _text
 }
 
 # aggregate stddev on columns
@@ -387,13 +383,13 @@ input az_docs_Documents_sum_order_by {
 # update columns of table "az_docs.Documents"
 enum az_docs_Documents_update_column {
   # column name
-  documentBody
-
-  # column name
   documentId
 
   # column name
   documentType
+
+  # column name
+  fileIds
 }
 
 # aggregate var_pop on columns
@@ -652,8 +648,8 @@ type az_docs_Photo {
     # filter the rows returned
     where: az_sensors_ServiceLog_bool_exp
   ): az_sensors_ServiceLog_aggregate!
+  fileIds: _text!
   photoId: Int!
-  photoSeries: _bytea!
 }
 
 # aggregated selection of "az_docs.Photo"
@@ -714,8 +710,8 @@ input az_docs_Photo_bool_exp {
   _and: [az_docs_Photo_bool_exp]
   _not: az_docs_Photo_bool_exp
   _or: [az_docs_Photo_bool_exp]
+  fileIds: _text_comparison_exp
   photoId: Int_comparison_exp
-  photoSeries: _bytea_comparison_exp
 }
 
 # unique or primary key constraints on table "az_docs.Photo"
@@ -732,8 +728,8 @@ input az_docs_Photo_inc_input {
 # input type for inserting data into table "az_docs.Photo"
 input az_docs_Photo_insert_input {
   ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
+  fileIds: _text
   photoId: Int
-  photoSeries: _bytea
 }
 
 # aggregate max on columns
@@ -781,8 +777,8 @@ input az_docs_Photo_on_conflict {
 # ordering options when selecting data from "az_docs.Photo"
 input az_docs_Photo_order_by {
   ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
+  fileIds: order_by
   photoId: order_by
-  photoSeries: order_by
 }
 
 # primary key columns input for table: "az_docs.Photo"
@@ -793,16 +789,16 @@ input az_docs_Photo_pk_columns_input {
 # select columns of table "az_docs.Photo"
 enum az_docs_Photo_select_column {
   # column name
-  photoId
+  fileIds
 
   # column name
-  photoSeries
+  photoId
 }
 
 # input type for updating data in table "az_docs.Photo"
 input az_docs_Photo_set_input {
+  fileIds: _text
   photoId: Int
-  photoSeries: _bytea
 }
 
 # aggregate stddev on columns
@@ -848,10 +844,10 @@ input az_docs_Photo_sum_order_by {
 # update columns of table "az_docs.Photo"
 enum az_docs_Photo_update_column {
   # column name
-  photoId
+  fileIds
 
   # column name
-  photoSeries
+  photoId
 }
 
 # aggregate var_pop on columns
@@ -1207,7 +1203,10 @@ input az_measurements_Measurements_variance_order_by {
 type az_measurements_MeasurementValues {
   # An object relationship
   Measurement: az_measurements_Measurements
-  name: String!
+
+  # An object relationship
+  PollutionFactor: az_sensors_PollutionFactors!
+  factorId: Int!
   sensorId: Int!
   timestamp: timestamp!
   value: float8!
@@ -1257,12 +1256,14 @@ input az_measurements_MeasurementValues_arr_rel_insert_input {
 
 # aggregate avg on columns
 type az_measurements_MeasurementValues_avg_fields {
+  factorId: Float
   sensorId: Float
   value: Float
 }
 
 # order by avg() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_avg_order_by {
+  factorId: order_by
   sensorId: order_by
   value: order_by
 }
@@ -1271,10 +1272,11 @@ input az_measurements_MeasurementValues_avg_order_by {
 # "az_measurements.MeasurementValues". All fields are combined with a logical 'AND'.
 input az_measurements_MeasurementValues_bool_exp {
   Measurement: az_measurements_Measurements_bool_exp
+  PollutionFactor: az_sensors_PollutionFactors_bool_exp
   _and: [az_measurements_MeasurementValues_bool_exp]
   _not: az_measurements_MeasurementValues_bool_exp
   _or: [az_measurements_MeasurementValues_bool_exp]
-  name: String_comparison_exp
+  factorId: Int_comparison_exp
   sensorId: Int_comparison_exp
   timestamp: timestamp_comparison_exp
   value: float8_comparison_exp
@@ -1288,6 +1290,7 @@ enum az_measurements_MeasurementValues_constraint {
 
 # input type for incrementing integer column in table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_inc_input {
+  factorId: Int
   sensorId: Int
   value: float8
 }
@@ -1295,7 +1298,8 @@ input az_measurements_MeasurementValues_inc_input {
 # input type for inserting data into table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_insert_input {
   Measurement: az_measurements_Measurements_obj_rel_insert_input
-  name: String
+  PollutionFactor: az_sensors_PollutionFactors_obj_rel_insert_input
+  factorId: Int
   sensorId: Int
   timestamp: timestamp
   value: float8
@@ -1303,7 +1307,7 @@ input az_measurements_MeasurementValues_insert_input {
 
 # aggregate max on columns
 type az_measurements_MeasurementValues_max_fields {
-  name: String
+  factorId: Int
   sensorId: Int
   timestamp: timestamp
   value: float8
@@ -1311,7 +1315,7 @@ type az_measurements_MeasurementValues_max_fields {
 
 # order by max() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_max_order_by {
-  name: order_by
+  factorId: order_by
   sensorId: order_by
   timestamp: order_by
   value: order_by
@@ -1319,7 +1323,7 @@ input az_measurements_MeasurementValues_max_order_by {
 
 # aggregate min on columns
 type az_measurements_MeasurementValues_min_fields {
-  name: String
+  factorId: Int
   sensorId: Int
   timestamp: timestamp
   value: float8
@@ -1327,7 +1331,7 @@ type az_measurements_MeasurementValues_min_fields {
 
 # order by min() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_min_order_by {
-  name: order_by
+  factorId: order_by
   sensorId: order_by
   timestamp: order_by
   value: order_by
@@ -1358,7 +1362,8 @@ input az_measurements_MeasurementValues_on_conflict {
 # ordering options when selecting data from "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_order_by {
   Measurement: az_measurements_Measurements_order_by
-  name: order_by
+  PollutionFactor: az_sensors_PollutionFactors_order_by
+  factorId: order_by
   sensorId: order_by
   timestamp: order_by
   value: order_by
@@ -1373,7 +1378,7 @@ input az_measurements_MeasurementValues_pk_columns_input {
 # select columns of table "az_measurements.MeasurementValues"
 enum az_measurements_MeasurementValues_select_column {
   # column name
-  name
+  factorId
 
   # column name
   sensorId
@@ -1387,7 +1392,7 @@ enum az_measurements_MeasurementValues_select_column {
 
 # input type for updating data in table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_set_input {
-  name: String
+  factorId: Int
   sensorId: Int
   timestamp: timestamp
   value: float8
@@ -1395,48 +1400,56 @@ input az_measurements_MeasurementValues_set_input {
 
 # aggregate stddev on columns
 type az_measurements_MeasurementValues_stddev_fields {
+  factorId: Float
   sensorId: Float
   value: Float
 }
 
 # order by stddev() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_stddev_order_by {
+  factorId: order_by
   sensorId: order_by
   value: order_by
 }
 
 # aggregate stddev_pop on columns
 type az_measurements_MeasurementValues_stddev_pop_fields {
+  factorId: Float
   sensorId: Float
   value: Float
 }
 
 # order by stddev_pop() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_stddev_pop_order_by {
+  factorId: order_by
   sensorId: order_by
   value: order_by
 }
 
 # aggregate stddev_samp on columns
 type az_measurements_MeasurementValues_stddev_samp_fields {
+  factorId: Float
   sensorId: Float
   value: Float
 }
 
 # order by stddev_samp() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_stddev_samp_order_by {
+  factorId: order_by
   sensorId: order_by
   value: order_by
 }
 
 # aggregate sum on columns
 type az_measurements_MeasurementValues_sum_fields {
+  factorId: Int
   sensorId: Int
   value: float8
 }
 
 # order by sum() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_sum_order_by {
+  factorId: order_by
   sensorId: order_by
   value: order_by
 }
@@ -1444,7 +1457,7 @@ input az_measurements_MeasurementValues_sum_order_by {
 # update columns of table "az_measurements.MeasurementValues"
 enum az_measurements_MeasurementValues_update_column {
   # column name
-  name
+  factorId
 
   # column name
   sensorId
@@ -1458,36 +1471,42 @@ enum az_measurements_MeasurementValues_update_column {
 
 # aggregate var_pop on columns
 type az_measurements_MeasurementValues_var_pop_fields {
+  factorId: Float
   sensorId: Float
   value: Float
 }
 
 # order by var_pop() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_var_pop_order_by {
+  factorId: order_by
   sensorId: order_by
   value: order_by
 }
 
 # aggregate var_samp on columns
 type az_measurements_MeasurementValues_var_samp_fields {
+  factorId: Float
   sensorId: Float
   value: Float
 }
 
 # order by var_samp() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_var_samp_order_by {
+  factorId: order_by
   sensorId: order_by
   value: order_by
 }
 
 # aggregate variance on columns
 type az_measurements_MeasurementValues_variance_fields {
+  factorId: Float
   sensorId: Float
   value: Float
 }
 
 # order by variance() on columns of table "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_variance_order_by {
+  factorId: order_by
   sensorId: order_by
   value: order_by
 }
@@ -1887,6 +1906,42 @@ type az_sensors_Locations {
   Document: az_docs_Documents!
 
   # An array relationship
+  Measurements(
+    # distinct select on columns
+    distinct_on: [az_measurements_Measurements_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [az_measurements_Measurements_order_by!]
+
+    # filter the rows returned
+    where: az_measurements_Measurements_bool_exp
+  ): [az_measurements_Measurements!]!
+
+  # An aggregated array relationship
+  Measurements_aggregate(
+    # distinct select on columns
+    distinct_on: [az_measurements_Measurements_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [az_measurements_Measurements_order_by!]
+
+    # filter the rows returned
+    where: az_measurements_Measurements_bool_exp
+  ): az_measurements_Measurements_aggregate!
+
+  # An array relationship
   Sensors(
     # distinct select on columns
     distinct_on: [az_sensors_Sensors_select_column!]
@@ -2025,6 +2080,7 @@ input az_sensors_Locations_avg_order_by {
 # Boolean expression to filter rows from the table "az_sensors.Locations". All fields are combined with a logical 'AND'.
 input az_sensors_Locations_bool_exp {
   Document: az_docs_Documents_bool_exp
+  Measurements: az_measurements_Measurements_bool_exp
   Sensors: az_sensors_Sensors_bool_exp
   ServiceLogs: az_sensors_ServiceLog_bool_exp
   _and: [az_sensors_Locations_bool_exp]
@@ -2055,6 +2111,7 @@ input az_sensors_Locations_inc_input {
 # input type for inserting data into table "az_sensors.Locations"
 input az_sensors_Locations_insert_input {
   Document: az_docs_Documents_obj_rel_insert_input
+  Measurements: az_measurements_Measurements_arr_rel_insert_input
   Sensors: az_sensors_Sensors_arr_rel_insert_input
   ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
   address: String
@@ -2131,6 +2188,7 @@ input az_sensors_Locations_on_conflict {
 # ordering options when selecting data from "az_sensors.Locations"
 input az_sensors_Locations_order_by {
   Document: az_docs_Documents_order_by
+  Measurements_aggregate: az_measurements_Measurements_aggregate_order_by
   Sensors_aggregate: az_sensors_Sensors_aggregate_order_by
   ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
   address: order_by
@@ -2307,6 +2365,42 @@ input az_sensors_Locations_variance_order_by {
 # columns and relationships of "az_sensors.PollutionFactors"
 type az_sensors_PollutionFactors {
   # An array relationship
+  MeasurementValues(
+    # distinct select on columns
+    distinct_on: [az_measurements_MeasurementValues_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [az_measurements_MeasurementValues_order_by!]
+
+    # filter the rows returned
+    where: az_measurements_MeasurementValues_bool_exp
+  ): [az_measurements_MeasurementValues!]!
+
+  # An aggregated array relationship
+  MeasurementValues_aggregate(
+    # distinct select on columns
+    distinct_on: [az_measurements_MeasurementValues_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [az_measurements_MeasurementValues_order_by!]
+
+    # filter the rows returned
+    where: az_measurements_MeasurementValues_bool_exp
+  ): az_measurements_MeasurementValues_aggregate!
+
+  # An array relationship
   SensorFactors(
     # distinct select on columns
     distinct_on: [az_sensors_SensorFactors_select_column!]
@@ -2346,6 +2440,7 @@ type az_sensors_PollutionFactors {
   e_measurement_unit: az_sensors_e_measurement_unit!
   factorId: Int!
   label: String!
+  maxValue: float8!
   name: String!
   unit: az_sensors_e_measurement_unit_enum!
 }
@@ -2395,16 +2490,19 @@ input az_sensors_PollutionFactors_arr_rel_insert_input {
 # aggregate avg on columns
 type az_sensors_PollutionFactors_avg_fields {
   factorId: Float
+  maxValue: Float
 }
 
 # order by avg() on columns of table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_avg_order_by {
   factorId: order_by
+  maxValue: order_by
 }
 
 # Boolean expression to filter rows from the table "az_sensors.PollutionFactors".
 # All fields are combined with a logical 'AND'.
 input az_sensors_PollutionFactors_bool_exp {
+  MeasurementValues: az_measurements_MeasurementValues_bool_exp
   SensorFactors: az_sensors_SensorFactors_bool_exp
   _and: [az_sensors_PollutionFactors_bool_exp]
   _not: az_sensors_PollutionFactors_bool_exp
@@ -2412,6 +2510,7 @@ input az_sensors_PollutionFactors_bool_exp {
   e_measurement_unit: az_sensors_e_measurement_unit_bool_exp
   factorId: Int_comparison_exp
   label: String_comparison_exp
+  maxValue: float8_comparison_exp
   name: String_comparison_exp
   unit: az_sensors_e_measurement_unit_enum_comparison_exp
 }
@@ -2425,14 +2524,17 @@ enum az_sensors_PollutionFactors_constraint {
 # input type for incrementing integer column in table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_inc_input {
   factorId: Int
+  maxValue: float8
 }
 
 # input type for inserting data into table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_insert_input {
+  MeasurementValues: az_measurements_MeasurementValues_arr_rel_insert_input
   SensorFactors: az_sensors_SensorFactors_arr_rel_insert_input
   e_measurement_unit: az_sensors_e_measurement_unit_obj_rel_insert_input
   factorId: Int
   label: String
+  maxValue: float8
   name: String
   unit: az_sensors_e_measurement_unit_enum
 }
@@ -2441,6 +2543,7 @@ input az_sensors_PollutionFactors_insert_input {
 type az_sensors_PollutionFactors_max_fields {
   factorId: Int
   label: String
+  maxValue: float8
   name: String
 }
 
@@ -2448,6 +2551,7 @@ type az_sensors_PollutionFactors_max_fields {
 input az_sensors_PollutionFactors_max_order_by {
   factorId: order_by
   label: order_by
+  maxValue: order_by
   name: order_by
 }
 
@@ -2455,6 +2559,7 @@ input az_sensors_PollutionFactors_max_order_by {
 type az_sensors_PollutionFactors_min_fields {
   factorId: Int
   label: String
+  maxValue: float8
   name: String
 }
 
@@ -2462,6 +2567,7 @@ type az_sensors_PollutionFactors_min_fields {
 input az_sensors_PollutionFactors_min_order_by {
   factorId: order_by
   label: order_by
+  maxValue: order_by
   name: order_by
 }
 
@@ -2489,10 +2595,12 @@ input az_sensors_PollutionFactors_on_conflict {
 
 # ordering options when selecting data from "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_order_by {
+  MeasurementValues_aggregate: az_measurements_MeasurementValues_aggregate_order_by
   SensorFactors_aggregate: az_sensors_SensorFactors_aggregate_order_by
   e_measurement_unit: az_sensors_e_measurement_unit_order_by
   factorId: order_by
   label: order_by
+  maxValue: order_by
   name: order_by
   unit: order_by
 }
@@ -2511,6 +2619,9 @@ enum az_sensors_PollutionFactors_select_column {
   label
 
   # column name
+  maxValue
+
+  # column name
   name
 
   # column name
@@ -2521,6 +2632,7 @@ enum az_sensors_PollutionFactors_select_column {
 input az_sensors_PollutionFactors_set_input {
   factorId: Int
   label: String
+  maxValue: float8
   name: String
   unit: az_sensors_e_measurement_unit_enum
 }
@@ -2528,41 +2640,49 @@ input az_sensors_PollutionFactors_set_input {
 # aggregate stddev on columns
 type az_sensors_PollutionFactors_stddev_fields {
   factorId: Float
+  maxValue: Float
 }
 
 # order by stddev() on columns of table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_stddev_order_by {
   factorId: order_by
+  maxValue: order_by
 }
 
 # aggregate stddev_pop on columns
 type az_sensors_PollutionFactors_stddev_pop_fields {
   factorId: Float
+  maxValue: Float
 }
 
 # order by stddev_pop() on columns of table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_stddev_pop_order_by {
   factorId: order_by
+  maxValue: order_by
 }
 
 # aggregate stddev_samp on columns
 type az_sensors_PollutionFactors_stddev_samp_fields {
   factorId: Float
+  maxValue: Float
 }
 
 # order by stddev_samp() on columns of table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_stddev_samp_order_by {
   factorId: order_by
+  maxValue: order_by
 }
 
 # aggregate sum on columns
 type az_sensors_PollutionFactors_sum_fields {
   factorId: Int
+  maxValue: float8
 }
 
 # order by sum() on columns of table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_sum_order_by {
   factorId: order_by
+  maxValue: order_by
 }
 
 # update columns of table "az_sensors.PollutionFactors"
@@ -2574,6 +2694,9 @@ enum az_sensors_PollutionFactors_update_column {
   label
 
   # column name
+  maxValue
+
+  # column name
   name
 
   # column name
@@ -2583,31 +2706,37 @@ enum az_sensors_PollutionFactors_update_column {
 # aggregate var_pop on columns
 type az_sensors_PollutionFactors_var_pop_fields {
   factorId: Float
+  maxValue: Float
 }
 
 # order by var_pop() on columns of table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_var_pop_order_by {
   factorId: order_by
+  maxValue: order_by
 }
 
 # aggregate var_samp on columns
 type az_sensors_PollutionFactors_var_samp_fields {
   factorId: Float
+  maxValue: Float
 }
 
 # order by var_samp() on columns of table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_var_samp_order_by {
   factorId: order_by
+  maxValue: order_by
 }
 
 # aggregate variance on columns
 type az_sensors_PollutionFactors_variance_fields {
   factorId: Float
+  maxValue: Float
 }
 
 # order by variance() on columns of table "az_sensors.PollutionFactors"
 input az_sensors_PollutionFactors_variance_order_by {
   factorId: order_by
+  maxValue: order_by
 }
 
 # columns and relationships of "az_sensors.SensorFactors"
@@ -2874,6 +3003,42 @@ type az_sensors_Sensors {
   Location: az_sensors_Locations!
 
   # An array relationship
+  Measurements(
+    # distinct select on columns
+    distinct_on: [az_measurements_Measurements_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [az_measurements_Measurements_order_by!]
+
+    # filter the rows returned
+    where: az_measurements_Measurements_bool_exp
+  ): [az_measurements_Measurements!]!
+
+  # An aggregated array relationship
+  Measurements_aggregate(
+    # distinct select on columns
+    distinct_on: [az_measurements_Measurements_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [az_measurements_Measurements_order_by!]
+
+    # filter the rows returned
+    where: az_measurements_Measurements_bool_exp
+  ): az_measurements_Measurements_aggregate!
+
+  # An array relationship
   SensorFactors(
     # distinct select on columns
     distinct_on: [az_sensors_SensorFactors_select_column!]
@@ -3007,6 +3172,7 @@ input az_sensors_Sensors_avg_order_by {
 # Boolean expression to filter rows from the table "az_sensors.Sensors". All fields are combined with a logical 'AND'.
 input az_sensors_Sensors_bool_exp {
   Location: az_sensors_Locations_bool_exp
+  Measurements: az_measurements_Measurements_bool_exp
   SensorFactors: az_sensors_SensorFactors_bool_exp
   ServiceLogs: az_sensors_ServiceLog_bool_exp
   _and: [az_sensors_Sensors_bool_exp]
@@ -3036,6 +3202,7 @@ input az_sensors_Sensors_inc_input {
 # input type for inserting data into table "az_sensors.Sensors"
 input az_sensors_Sensors_insert_input {
   Location: az_sensors_Locations_obj_rel_insert_input
+  Measurements: az_measurements_Measurements_arr_rel_insert_input
   SensorFactors: az_sensors_SensorFactors_arr_rel_insert_input
   ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
   locationId: Int
@@ -3101,6 +3268,7 @@ input az_sensors_Sensors_on_conflict {
 # ordering options when selecting data from "az_sensors.Sensors"
 input az_sensors_Sensors_order_by {
   Location: az_sensors_Locations_order_by
+  Measurements_aggregate: az_measurements_Measurements_aggregate_order_by
   SensorFactors_aggregate: az_sensors_SensorFactors_aggregate_order_by
   ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
   locationId: order_by
