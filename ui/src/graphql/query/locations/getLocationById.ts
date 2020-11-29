@@ -6,7 +6,7 @@ const GET_LOCATION_BY_ID = gql`
   query GetLocation($locationId: Int) {
     az_sensors_Locations(where: {locationId: {_eq: $locationId}}) {
       Document {
-        documentBody
+        fileIds
       }
       address
       airlyLink

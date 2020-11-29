@@ -19,7 +19,6 @@ import { useAddSensor } from 'src/graphql/query/sensors/addSensor'
 import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
 import { DocumentLoader } from '../forms/File'
-import { az_docs_enum_document_type_enum } from 'src/types/graphql-global-types'
 import { getErrorMsg } from '../utils'
 
 export const NewSensor = () => {

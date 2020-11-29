@@ -33,5 +33,6 @@ export interface addSensorVariables {
   model?: string | null;
   manufacturer?: string | null;
   timestamp: any;
-  photoSeries: any;
+  documentIds?: any | null;
+  photoIds?: any | null;
 }

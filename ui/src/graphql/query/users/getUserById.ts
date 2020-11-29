@@ -11,7 +11,7 @@ const GET_USER_BY_ID = gql`
       userRole
       userId
       Document {
-        documentBody
+        fileIds
       }
       Organisation {
         shortName

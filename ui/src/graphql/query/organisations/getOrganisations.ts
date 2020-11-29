@@ -12,7 +12,7 @@ const GET_ORGANISATIONS = gql`
       fullName
       country
       Document {
-        documentBody
+        fileIds
       }
     }
   }

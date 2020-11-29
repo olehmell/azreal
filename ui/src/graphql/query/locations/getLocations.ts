@@ -13,7 +13,7 @@ const GET_LOCATIONS = gql`
         address
         airlyLink
         Document {
-          documentBody
+          fileIds
         }
       }
     }

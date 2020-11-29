@@ -22,5 +22,5 @@ export interface AddOrganisationVariables {
   organisationRole?: string | null;
   rntrc?: string | null;
   shortName?: string | null;
-  fileIds?: string | null;
+  fileIds?: any | null;
 }

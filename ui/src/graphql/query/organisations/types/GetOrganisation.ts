@@ -9,7 +9,7 @@
 
 export interface GetOrganisation_az_users_Organisation_Document {
   __typename: "az_docs_Documents";
-  documentBody: string | null;
+  fileIds: any;
 }
 
 export interface GetOrganisation_az_users_Organisation {

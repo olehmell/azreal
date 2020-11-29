@@ -30,7 +30,7 @@ type NewLogProps = {
   locationId?: number
 }
 
-const typeServiseOptions: SelectorOptionType[] = [
+export const typeServiseOptions: SelectorOptionType[] = [
   {
     text: 'Плановий сервіс',
     value: 'planned'

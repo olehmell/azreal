@@ -9,7 +9,7 @@
 
 export interface GetUserById_az_users_Users_Document {
   __typename: "az_docs_Documents";
-  documentBody: string | null;
+  fileIds: any;
 }
 
 export interface GetUserById_az_users_Users_Organisation {

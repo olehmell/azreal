@@ -9,7 +9,7 @@
 
 export interface GetLocation_az_sensors_Locations_Document {
   __typename: "az_docs_Documents";
-  documentBody: string | null;
+  fileIds: any;
 }
 
 export interface GetLocation_az_sensors_Locations {
