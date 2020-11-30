@@ -23,7 +23,7 @@ export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nod
 export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes {
   __typename: "az_sensors_PollutionFactors";
   label: string;
-  unit: az_sensors_e_measurement_unit_enum;
+  unit: az_sensors_e_measurement_unit_enum | null;
   maxValue: any | null;
   SensorFactors: GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes_SensorFactors[];
 }

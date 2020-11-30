@@ -42,7 +42,7 @@ export const Files = ({ fileIds }: ImagesProps) => {
       iconType="currency"
       onClick={() => open(link)}
     >
-      {`Файл - ${i}`}
+      {`Файл - ${i + 1}`}
     </EuiButton>)}
   </>, [ links?.length ])
 

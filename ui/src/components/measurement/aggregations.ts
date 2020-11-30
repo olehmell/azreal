@@ -44,7 +44,7 @@ const parseMeasurementData = (measurements: InnerMeasurement[]): MeasurementType
         name,
         maxValue,
         unit,
-        MeasurementValues_aggregate:
+        Measurements_aggregate:
         { aggregate:
           { avg:
             { value }

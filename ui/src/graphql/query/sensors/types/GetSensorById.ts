@@ -30,7 +30,7 @@ export interface GetSensorById_az_sensors_Sensors_ServiceLogs {
 
 export interface GetSensorById_az_sensors_Sensors_SensorFactors_PollutionFactor {
   __typename: "az_sensors_PollutionFactors";
-  unit: az_sensors_e_measurement_unit_enum;
+  unit: az_sensors_e_measurement_unit_enum | null;
   label: string;
 }
 

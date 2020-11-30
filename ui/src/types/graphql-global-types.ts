@@ -12,7 +12,7 @@ export enum az_sensors_e_measurement_unit_enum {
   degree = "degree",
   hPa = "hPa",
   kmph = "kmph",
-  mcgpcm = "mcgpcm",
+  mgpcm = "mgpcm",
   percent = "percent",
 }
 
