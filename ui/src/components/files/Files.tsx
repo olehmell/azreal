@@ -2,59 +2,53 @@ import { EuiButton, EuiFlexGroup, EuiImage, EuiLoadingSpinner, EuiModal, EuiModa
 import React, { useCallback, useState } from 'react'
 import { Images } from './Images'
 import { PdfViewer } from './PdfViewer'
-import { getFileUri, useGetFiles } from './utils'
+import { getFileLinks, getFileUri, useGetFiles } from './utils'
 
 type ImagesProps = {
   fileIds: string[]
 }
-export const Files = (props: ImagesProps) => <Images {...props} />
-// export const Files = ({ fileIds }: ImagesProps) => {
-//   const { data, loading } = useGetFiles(fileIds)
-//   const [ selectFile, setSelectFile ] = useState<File>()
-//   const [ show, setShow ] = useState(false)
+// export const Files = (props: ImagesProps) => <Images {...props} />
+export const Files = ({ fileIds }: ImagesProps) => {
+  const [ selectLink, setSelectFile ] = useState<string>()
+  const [ show, setShow ] = useState(false)
+  const links = getFileLinks(fileIds)
 
-//   const open = (file: File) => {
-//     setSelectFile(file)
-//     setShow(true)
-//   }
-//   const close = () => {
-//     setShow(false)
-//     setSelectFile(undefined)
-//   }
+  const open = (file: string) => {
+    setSelectFile(file)
+    setShow(true)
+  }
+  const close = () => {
+    setShow(false)
+    setSelectFile(undefined)
+  }
 
-//   const ViewFileModal = useCallback(() => selectFile && show ? <EuiOverlayMask onClick={close}>
-//     <EuiModal onClose={close}>
-//       <EuiModalHeader>
-//         <EuiModalHeaderTitle>{selectFile.name}</EuiModalHeaderTitle>
-//       </EuiModalHeader>
+  const ViewFileModal = useCallback(() => selectLink && show ? <EuiOverlayMask onClick={close}>
+    <EuiModal onClose={close}>
+      <EuiModalBody>
+        <PdfViewer url={selectLink} />
+      </EuiModalBody>
 
-//       <EuiModalBody>
-//         <PdfViewer url={getFileUri(selectFile)} />
-//       </EuiModalBody>
+    </EuiModal>
+  </EuiOverlayMask> : null, [ selectLink ]) 
 
-//     </EuiModal>
-//   </EuiOverlayMask> : null, [ selectFile ]) 
+  console.log('FILes', links, fileIds)
 
-//   console.log('FILes', data, fileIds)
+  const FileList = useCallback(() => <>
+    {links?.map((link, i) => <EuiButton
+      key={link}
+      fill
+      color="ghost"
+      size='s'
+      iconType="currency"
+      onClick={() => open(link)}
+    >
+      {`Файл - ${i}`}
+    </EuiButton>)}
+  </>, [ links?.length ])
 
-//   const FileList = useCallback(() => <>
-//     {loading
-//       ? <EuiLoadingSpinner size='l' />
-//       : data?.map(file => <EuiButton
-//         key={file.name}
-//         fill
-//         color="ghost"
-//         size='s'
-//         iconType="currency"
-//         onClick={() => open(file)}
-//       >
-//         {file.name}
-//       </EuiButton>)}
-//   </>, [ data?.length ])
-
-//   return <EuiFlexGroup justifyContent='center' alignItems='center'>
-//     <FileList />
-//     <ViewFileModal />
-//   </EuiFlexGroup>
+  return <EuiFlexGroup justifyContent='center' alignItems='center'>
+    <FileList />
+    <ViewFileModal />
+  </EuiFlexGroup>
   
-// }
+}

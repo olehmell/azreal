@@ -10,7 +10,7 @@ type PdfViewerProps = {
 
 export const PdfViewer = ({ url }: PdfViewerProps) => {
   return <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.4.456/build/pdf.worker.min.js">
-    <div style={{ height: '750px' }}>
+    <div style={{ height: '100%' }}>
       <Viewer fileUrl={url} />
     </div>
   </Worker>

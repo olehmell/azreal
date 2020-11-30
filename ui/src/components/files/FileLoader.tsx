@@ -68,7 +68,7 @@ const deleteFile = async (fileId: string) => {
 export const deleteFiles = (ids?: string[]) => ids && ids.forEach(id => deleteFile(id))
 
 export const DocumentLoader = ({ name, ...props }: FilePicker) => <InnerFileLoader
-  accept='image/*'
+  accept='.pdf'
   initialPromptText="Виберіть або перетягніть файл"
   {...props}
 />

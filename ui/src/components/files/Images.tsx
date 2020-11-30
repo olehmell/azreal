@@ -1,4 +1,4 @@
-import { EuiFlexGroup, EuiImage, EuiLoadingSpinner } from '@elastic/eui'
+import { EuiFlexGroup, EuiFlexItem, EuiImage, EuiLoadingSpinner } from '@elastic/eui'
 import React from 'react'
 import { getFileLinks, getFileUri, useGetFiles } from './utils'
 
@@ -10,15 +10,17 @@ export const Images = ({ fileIds }: ImagesProps) => {
   const links = getFileLinks(fileIds)
   const count = fileIds.length
 
-  const ImageList = () => <>{links.map(link => <EuiImage
-    style={{ padding: '.5rem' }}
-    key={link}
-    size={count > 3 ? 's' : 'm'}
-    hasShadow
-    allowFullScreen
-    alt={link}
-    url={link}
-  />)}</>
+  const ImageList = () => <>{links.map(link => 
+    <EuiFlexItem key={link} style={{ margin: '.5rem' }}>
+      <EuiImage
+        size={count > 3 ? 's' : 'm'}
+        hasShadow
+        allowFullScreen
+        alt={link}
+        url={link}
+      />
+    </EuiFlexItem>
+  )}</>
 
   return <EuiFlexGroup justifyContent='center' alignItems='center'>
     <ImageList />
