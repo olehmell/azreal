@@ -9,20 +9,23 @@ import { createDescItem } from '../utils'
 import { Loading } from '../utils/loading'
 import { Page } from '../utils/Page'
 import { ServiceLogSelector } from './ServiceLogSelector'
+import { messageByServiceKind } from './utils'
 
 const ServiceLogDesc = ({
   sensorId,
-  serviceType,
+  serviceKind,
   timestamp,
-  Location: {
-    address,
-    mapsLink
+  Sensor: {
+    Location: {
+      address,
+      airlyLink
+    }
   }
 }: GetServiceLogs_az_sensors_ServiceLog) => {
   const items = [
     createDescItem('Сенсор', sensorId),
-    createDescItem('Тип', serviceType),
-    createDescItem('Адреса', <a href={mapsLink}>{address}</a>),
+    createDescItem('Тип', messageByServiceKind[serviceKind]),
+    createDescItem('Адреса', <a href={airlyLink}>{address}</a>),
     createDescItem('Час робіт', moment(timestamp).format('lll')),
   ].filter(x => x !== undefined)
 
@@ -34,12 +37,12 @@ const ServiceLog = (serviceLog: GetServiceLogs_az_sensors_ServiceLog) => {
     <EuiFlexGroup>
       <EuiFlexItem>
         <Images fileIds={serviceLog.Document.fileIds} />
+        <Files fileIds={serviceLog.Photo.fileIds} />
       </EuiFlexItem>
       <EuiFlexItem>
         <ServiceLogDesc {...serviceLog} />
       </EuiFlexItem>
     </EuiFlexGroup>
-    <Files fileIds={serviceLog.Photo.fileIds} />
   </EuiPanel>
 }
 

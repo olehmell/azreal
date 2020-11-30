@@ -1,6 +1,6 @@
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-import { GetRoleByUserId, GetRoleByUserIdVariables } from './types/GetRoleByUserId';
+import { useQuery } from '@apollo/react-hooks'
+import { gql } from 'apollo-boost'
+import { GetRoleByUserId, GetRoleByUserIdVariables } from './types/GetRoleByUserId'
 
 export const GET_ROLE_BY_USER_ID = gql`
   query GetRoleByUserId($userId: Int = 0) {

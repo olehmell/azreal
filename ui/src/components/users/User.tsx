@@ -17,15 +17,13 @@ const UserDesc = ({
     fullName,
     email,
     phoneNumber,
-    Organisation,
-    documentId
+    Organisation
   } = user
 
   const items = [
     createDescItem('ПІБ', fullName),
     createDescItem('Email', email),
     createDescItem('Номер телефону', phoneNumber),
-    createDescItem('Файли', documentId),
     createDescItem('Організація', <OrganisationLink organisation={Organisation as any} />)
   ].filter(x => x !== undefined)
 

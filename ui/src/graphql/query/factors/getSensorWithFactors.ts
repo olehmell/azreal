@@ -10,6 +10,7 @@ export const GET_SENSORS_WITH_FACTORS = gql`
         PollutionFactor {
           label
           unit
+          maxValue
         }
       }
       sensorId

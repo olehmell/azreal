@@ -11,28 +11,22 @@ import {
   EuiFormErrorText,
   EuiDatePicker,
   EuiSelect,
-  EuiFieldNumber,
-  EuiFlexGroup,
-  EuiFlexItem,
-  EuiFormLabel,
 } from '@elastic/eui'
 
 import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
 import { DocumentLoader, PhotoLoader } from '../files/FileLoader'
-import { createHasuraArray, fillInitValues, getErrorMsg } from '../utils'
+import { fillInitValues } from '../utils'
 import { serviceLogSchema, typeServiseOptions } from './utils'
 import moment from 'moment'
-import { SelectorOptionType } from 'src/types'
-import { az_sensors_e_service_type_enum } from 'src/types/graphql-global-types'
+import { az_sensors_e_service_kind_enum } from 'src/types/graphql-global-types'
 import { useAddServiceLog } from 'src/graphql/query/service-log/addServiceLogs'
-import { useGetLocationIdBySensorId } from 'src/graphql/query/sensors/locationIdBySensorId'
 import { SensorsSelect } from '../measurement/SensorsSelect'
 import { useNotification } from '../utils/Notifications'
 
 type NewLogProps = {
   sensorId?: number,
-  serviceType?: az_sensors_e_service_type_enum,
+  serviceType?: az_sensors_e_service_kind_enum,
   onChange?: (sensorId: number) => void
 }
 
@@ -47,24 +41,21 @@ export const NewLog = ({ sensorId: initialSensorId, serviceType, onChange }: New
   })
 
   const sensorId = initialSensorId || watch('sensodId')
+  const timestamp = watch('timestamp')
 
   useEffect(() => {
-    fillInitValues({ serviceType, sensorId }, setValue)
+    fillInitValues({ serviceType, sensorId, timestamp }, setValue)
   }, [])
 
-  const { data, loading: loadingLocationId } = useGetLocationIdBySensorId(sensorId)
-  const locationId = data?.az_sensors_Sensors.pop()?.locationId
   const { addToast } = useNotification()
-  const timestamp = watch('timestamp')
   // const uninstallTime = watch('uninstallTime')
 
   const onSubmit = useCallback(async (servicesData) => {
     setLoading(true)
     console.log(servicesData)
     try {
-      const documentIds = createHasuraArray(servicesData.documentIds)
-      const photoIds = createHasuraArray(servicesData.photoIds)
-      const { errors } = await addNewLog({ variables: { sensorId, locationId, ...servicesData, documentIds, photoIds } })
+      const timestamp = servicesData.timestamp.toString()
+      const { errors } = await addNewLog({ variables: { sensorId, ...servicesData, timestamp } })
 
       if (errors) throw errors
 
@@ -85,7 +76,7 @@ export const NewLog = ({ sensorId: initialSensorId, serviceType, onChange }: New
     }
   }, [ /* addNewLog */ ])
 
-  const SubmitButton = useCallback(() => loading || loadingLocationId
+  const SubmitButton = useCallback(() => loading
     ? <EuiLoadingSpinner size='m' />
     : <EuiButton type="submit" fill>
         Додати запис

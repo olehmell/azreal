@@ -28,7 +28,7 @@ export interface GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors_Poll
   __typename: "az_sensors_PollutionFactors";
   name: string;
   unit: az_sensors_e_measurement_unit_enum;
-  maxValue: any;
+  maxValue: any | null;
   MeasurementValues_aggregate: GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors_PollutionFactor_MeasurementValues_aggregate;
 }
 

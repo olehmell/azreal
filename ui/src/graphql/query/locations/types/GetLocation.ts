@@ -14,7 +14,7 @@ export interface GetLocation_az_sensors_Locations_Document {
 
 export interface GetLocation_az_sensors_Locations {
   __typename: "az_sensors_Locations";
-  Document: GetLocation_az_sensors_Locations_Document;
+  Document: GetLocation_az_sensors_Locations_Document | null;
   address: string | null;
   airlyLink: string | null;
   elevation: any;

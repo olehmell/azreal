@@ -20,7 +20,7 @@ export interface GetLocations_az_sensors_Locations_aggregate_nodes {
   elevation: any;
   address: string | null;
   airlyLink: string | null;
-  Document: GetLocations_az_sensors_Locations_aggregate_nodes_Document;
+  Document: GetLocations_az_sensors_Locations_aggregate_nodes_Document | null;
 }
 
 export interface GetLocations_az_sensors_Locations_aggregate {

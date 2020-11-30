@@ -16,7 +16,7 @@ export enum az_sensors_e_measurement_unit_enum {
   percent = "percent",
 }
 
-export enum az_sensors_e_service_type_enum {
+export enum az_sensors_e_service_kind_enum {
   Planned = "Planned",
   Replacement = "Replacement",
   Unscheduled = "Unscheduled",

@@ -20,7 +20,7 @@ export interface GetOrganisation_az_users_Organisation {
   organisationId: number;
   fullName: string;
   country: string | null;
-  Document: GetOrganisation_az_users_Organisation_Document;
+  Document: GetOrganisation_az_users_Organisation_Document | null;
 }
 
 export interface GetOrganisation {

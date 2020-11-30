@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { az_sensors_e_service_type_enum } from "./../../../../types/graphql-global-types";
+import { az_sensors_e_service_kind_enum } from "./../../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetServiceLogBySensorId
@@ -28,7 +28,7 @@ export interface GetServiceLogBySensorId_az_sensors_ServiceLog_Photo {
 export interface GetServiceLogBySensorId_az_sensors_ServiceLog {
   __typename: "az_sensors_ServiceLog";
   timestamp: any;
-  serviceType: az_sensors_e_service_type_enum;
+  serviceType: az_sensors_e_service_kind_enum;
   sensorId: number;
   Location: GetServiceLogBySensorId_az_sensors_ServiceLog_Location | null;
   Document: GetServiceLogBySensorId_az_sensors_ServiceLog_Document;

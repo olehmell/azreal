@@ -883,7 +883,7 @@ input az_docs_Photo_variance_order_by {
 # columns and relationships of "az_measurements.Measurements"
 type az_measurements_Measurements {
   # An object relationship
-  Location: az_sensors_Locations!
+  Location: az_sensors_Locations
 
   # An array relationship
   MeasurementValues(
@@ -923,7 +923,7 @@ type az_measurements_Measurements {
 
   # An object relationship
   Sensor: az_sensors_Sensors!
-  locationId: Int!
+  locationId: Int
   sensorId: Int!
   timestamp: timestamp!
 }
@@ -1206,6 +1206,9 @@ type az_measurements_MeasurementValues {
 
   # An object relationship
   PollutionFactor: az_sensors_PollutionFactors!
+
+  # An object relationship
+  Sensor: az_sensors_Sensors!
   factorId: Int!
   sensorId: Int!
   timestamp: timestamp!
@@ -1273,6 +1276,7 @@ input az_measurements_MeasurementValues_avg_order_by {
 input az_measurements_MeasurementValues_bool_exp {
   Measurement: az_measurements_Measurements_bool_exp
   PollutionFactor: az_sensors_PollutionFactors_bool_exp
+  Sensor: az_sensors_Sensors_bool_exp
   _and: [az_measurements_MeasurementValues_bool_exp]
   _not: az_measurements_MeasurementValues_bool_exp
   _or: [az_measurements_MeasurementValues_bool_exp]
@@ -1299,6 +1303,7 @@ input az_measurements_MeasurementValues_inc_input {
 input az_measurements_MeasurementValues_insert_input {
   Measurement: az_measurements_Measurements_obj_rel_insert_input
   PollutionFactor: az_sensors_PollutionFactors_obj_rel_insert_input
+  Sensor: az_sensors_Sensors_obj_rel_insert_input
   factorId: Int
   sensorId: Int
   timestamp: timestamp
@@ -1363,6 +1368,7 @@ input az_measurements_MeasurementValues_on_conflict {
 input az_measurements_MeasurementValues_order_by {
   Measurement: az_measurements_Measurements_order_by
   PollutionFactor: az_sensors_PollutionFactors_order_by
+  Sensor: az_sensors_Sensors_order_by
   factorId: order_by
   sensorId: order_by
   timestamp: order_by
@@ -1371,6 +1377,7 @@ input az_measurements_MeasurementValues_order_by {
 
 # primary key columns input for table: "az_measurements.MeasurementValues"
 input az_measurements_MeasurementValues_pk_columns_input {
+  factorId: Int!
   sensorId: Int!
   timestamp: timestamp!
 }
@@ -1713,8 +1720,8 @@ enum az_sensors_e_measurement_unit_update_column {
   value
 }
 
-# columns and relationships of "az_sensors.e_service_type"
-type az_sensors_e_service_type {
+# columns and relationships of "az_sensors.e_service_kind"
+type az_sensors_e_service_kind {
   # An array relationship
   ServiceLogs(
     # distinct select on columns
@@ -1754,130 +1761,130 @@ type az_sensors_e_service_type {
   value: String!
 }
 
-# aggregated selection of "az_sensors.e_service_type"
-type az_sensors_e_service_type_aggregate {
-  aggregate: az_sensors_e_service_type_aggregate_fields
-  nodes: [az_sensors_e_service_type!]!
+# aggregated selection of "az_sensors.e_service_kind"
+type az_sensors_e_service_kind_aggregate {
+  aggregate: az_sensors_e_service_kind_aggregate_fields
+  nodes: [az_sensors_e_service_kind!]!
 }
 
-# aggregate fields of "az_sensors.e_service_type"
-type az_sensors_e_service_type_aggregate_fields {
-  count(columns: [az_sensors_e_service_type_select_column!], distinct: Boolean): Int
-  max: az_sensors_e_service_type_max_fields
-  min: az_sensors_e_service_type_min_fields
+# aggregate fields of "az_sensors.e_service_kind"
+type az_sensors_e_service_kind_aggregate_fields {
+  count(columns: [az_sensors_e_service_kind_select_column!], distinct: Boolean): Int
+  max: az_sensors_e_service_kind_max_fields
+  min: az_sensors_e_service_kind_min_fields
 }
 
-# order by aggregate values of table "az_sensors.e_service_type"
-input az_sensors_e_service_type_aggregate_order_by {
+# order by aggregate values of table "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_aggregate_order_by {
   count: order_by
-  max: az_sensors_e_service_type_max_order_by
-  min: az_sensors_e_service_type_min_order_by
+  max: az_sensors_e_service_kind_max_order_by
+  min: az_sensors_e_service_kind_min_order_by
 }
 
-# input type for inserting array relation for remote table "az_sensors.e_service_type"
-input az_sensors_e_service_type_arr_rel_insert_input {
-  data: [az_sensors_e_service_type_insert_input!]!
-  on_conflict: az_sensors_e_service_type_on_conflict
+# input type for inserting array relation for remote table "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_arr_rel_insert_input {
+  data: [az_sensors_e_service_kind_insert_input!]!
+  on_conflict: az_sensors_e_service_kind_on_conflict
 }
 
-# Boolean expression to filter rows from the table "az_sensors.e_service_type". All fields are combined with a logical 'AND'.
-input az_sensors_e_service_type_bool_exp {
+# Boolean expression to filter rows from the table "az_sensors.e_service_kind". All fields are combined with a logical 'AND'.
+input az_sensors_e_service_kind_bool_exp {
   ServiceLogs: az_sensors_ServiceLog_bool_exp
-  _and: [az_sensors_e_service_type_bool_exp]
-  _not: az_sensors_e_service_type_bool_exp
-  _or: [az_sensors_e_service_type_bool_exp]
+  _and: [az_sensors_e_service_kind_bool_exp]
+  _not: az_sensors_e_service_kind_bool_exp
+  _or: [az_sensors_e_service_kind_bool_exp]
   description: String_comparison_exp
   value: String_comparison_exp
 }
 
-# unique or primary key constraints on table "az_sensors.e_service_type"
-enum az_sensors_e_service_type_constraint {
+# unique or primary key constraints on table "az_sensors.e_service_kind"
+enum az_sensors_e_service_kind_constraint {
   # unique or primary key constraint
-  e_service_type_pkey
+  e_service_kind_pkey
 }
 
-enum az_sensors_e_service_type_enum {
+enum az_sensors_e_service_kind_enum {
   Planned
   Replacement
   Unscheduled
 }
 
-# expression to compare columns of type az_sensors_e_service_type_enum. All fields are combined with logical 'AND'.
-input az_sensors_e_service_type_enum_comparison_exp {
-  _eq: az_sensors_e_service_type_enum
-  _in: [az_sensors_e_service_type_enum!]
+# expression to compare columns of type az_sensors_e_service_kind_enum. All fields are combined with logical 'AND'.
+input az_sensors_e_service_kind_enum_comparison_exp {
+  _eq: az_sensors_e_service_kind_enum
+  _in: [az_sensors_e_service_kind_enum!]
   _is_null: Boolean
-  _neq: az_sensors_e_service_type_enum
-  _nin: [az_sensors_e_service_type_enum!]
+  _neq: az_sensors_e_service_kind_enum
+  _nin: [az_sensors_e_service_kind_enum!]
 }
 
-# input type for inserting data into table "az_sensors.e_service_type"
-input az_sensors_e_service_type_insert_input {
+# input type for inserting data into table "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_insert_input {
   ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
   description: String
   value: String
 }
 
 # aggregate max on columns
-type az_sensors_e_service_type_max_fields {
+type az_sensors_e_service_kind_max_fields {
   description: String
   value: String
 }
 
-# order by max() on columns of table "az_sensors.e_service_type"
-input az_sensors_e_service_type_max_order_by {
+# order by max() on columns of table "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_max_order_by {
   description: order_by
   value: order_by
 }
 
 # aggregate min on columns
-type az_sensors_e_service_type_min_fields {
+type az_sensors_e_service_kind_min_fields {
   description: String
   value: String
 }
 
-# order by min() on columns of table "az_sensors.e_service_type"
-input az_sensors_e_service_type_min_order_by {
+# order by min() on columns of table "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_min_order_by {
   description: order_by
   value: order_by
 }
 
-# response of any mutation on the table "az_sensors.e_service_type"
-type az_sensors_e_service_type_mutation_response {
+# response of any mutation on the table "az_sensors.e_service_kind"
+type az_sensors_e_service_kind_mutation_response {
   # number of affected rows by the mutation
   affected_rows: Int!
 
   # data of the affected rows by the mutation
-  returning: [az_sensors_e_service_type!]!
+  returning: [az_sensors_e_service_kind!]!
 }
 
-# input type for inserting object relation for remote table "az_sensors.e_service_type"
-input az_sensors_e_service_type_obj_rel_insert_input {
-  data: az_sensors_e_service_type_insert_input!
-  on_conflict: az_sensors_e_service_type_on_conflict
+# input type for inserting object relation for remote table "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_obj_rel_insert_input {
+  data: az_sensors_e_service_kind_insert_input!
+  on_conflict: az_sensors_e_service_kind_on_conflict
 }
 
-# on conflict condition type for table "az_sensors.e_service_type"
-input az_sensors_e_service_type_on_conflict {
-  constraint: az_sensors_e_service_type_constraint!
-  update_columns: [az_sensors_e_service_type_update_column!]!
-  where: az_sensors_e_service_type_bool_exp
+# on conflict condition type for table "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_on_conflict {
+  constraint: az_sensors_e_service_kind_constraint!
+  update_columns: [az_sensors_e_service_kind_update_column!]!
+  where: az_sensors_e_service_kind_bool_exp
 }
 
-# ordering options when selecting data from "az_sensors.e_service_type"
-input az_sensors_e_service_type_order_by {
+# ordering options when selecting data from "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_order_by {
   ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
   description: order_by
   value: order_by
 }
 
-# primary key columns input for table: "az_sensors.e_service_type"
-input az_sensors_e_service_type_pk_columns_input {
+# primary key columns input for table: "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_pk_columns_input {
   value: String!
 }
 
-# select columns of table "az_sensors.e_service_type"
-enum az_sensors_e_service_type_select_column {
+# select columns of table "az_sensors.e_service_kind"
+enum az_sensors_e_service_kind_select_column {
   # column name
   description
 
@@ -1885,14 +1892,14 @@ enum az_sensors_e_service_type_select_column {
   value
 }
 
-# input type for updating data in table "az_sensors.e_service_type"
-input az_sensors_e_service_type_set_input {
+# input type for updating data in table "az_sensors.e_service_kind"
+input az_sensors_e_service_kind_set_input {
   description: String
   value: String
 }
 
-# update columns of table "az_sensors.e_service_type"
-enum az_sensors_e_service_type_update_column {
+# update columns of table "az_sensors.e_service_kind"
+enum az_sensors_e_service_kind_update_column {
   # column name
   description
 
@@ -1903,7 +1910,7 @@ enum az_sensors_e_service_type_update_column {
 # columns and relationships of "az_sensors.Locations"
 type az_sensors_Locations {
   # An object relationship
-  Document: az_docs_Documents!
+  Document: az_docs_Documents
 
   # An array relationship
   Measurements(
@@ -1976,45 +1983,9 @@ type az_sensors_Locations {
     # filter the rows returned
     where: az_sensors_Sensors_bool_exp
   ): az_sensors_Sensors_aggregate!
-
-  # An array relationship
-  ServiceLogs(
-    # distinct select on columns
-    distinct_on: [az_sensors_ServiceLog_select_column!]
-
-    # limit the number of rows returned
-    limit: Int
-
-    # skip the first n rows. Use only with order_by
-    offset: Int
-
-    # sort the rows by one or more columns
-    order_by: [az_sensors_ServiceLog_order_by!]
-
-    # filter the rows returned
-    where: az_sensors_ServiceLog_bool_exp
-  ): [az_sensors_ServiceLog!]!
-
-  # An aggregated array relationship
-  ServiceLogs_aggregate(
-    # distinct select on columns
-    distinct_on: [az_sensors_ServiceLog_select_column!]
-
-    # limit the number of rows returned
-    limit: Int
-
-    # skip the first n rows. Use only with order_by
-    offset: Int
-
-    # sort the rows by one or more columns
-    order_by: [az_sensors_ServiceLog_order_by!]
-
-    # filter the rows returned
-    where: az_sensors_ServiceLog_bool_exp
-  ): az_sensors_ServiceLog_aggregate!
   address: String
   airlyLink: String
-  documentId: Int!
+  documentId: Int
   elevation: float8!
   locationId: Int!
   locationPoint: point!
@@ -2082,7 +2053,6 @@ input az_sensors_Locations_bool_exp {
   Document: az_docs_Documents_bool_exp
   Measurements: az_measurements_Measurements_bool_exp
   Sensors: az_sensors_Sensors_bool_exp
-  ServiceLogs: az_sensors_ServiceLog_bool_exp
   _and: [az_sensors_Locations_bool_exp]
   _not: az_sensors_Locations_bool_exp
   _or: [az_sensors_Locations_bool_exp]
@@ -2113,7 +2083,6 @@ input az_sensors_Locations_insert_input {
   Document: az_docs_Documents_obj_rel_insert_input
   Measurements: az_measurements_Measurements_arr_rel_insert_input
   Sensors: az_sensors_Sensors_arr_rel_insert_input
-  ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
   address: String
   airlyLink: String
   documentId: Int
@@ -2190,7 +2159,6 @@ input az_sensors_Locations_order_by {
   Document: az_docs_Documents_order_by
   Measurements_aggregate: az_measurements_Measurements_aggregate_order_by
   Sensors_aggregate: az_sensors_Sensors_aggregate_order_by
-  ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
   address: order_by
   airlyLink: order_by
   documentId: order_by
@@ -2440,7 +2408,7 @@ type az_sensors_PollutionFactors {
   e_measurement_unit: az_sensors_e_measurement_unit!
   factorId: Int!
   label: String!
-  maxValue: float8!
+  maxValue: float8
   name: String!
   unit: az_sensors_e_measurement_unit_enum!
 }
@@ -2818,7 +2786,7 @@ input az_sensors_SensorFactors_bool_exp {
 # unique or primary key constraints on table "az_sensors.SensorFactors"
 enum az_sensors_SensorFactors_constraint {
   # unique or primary key constraint
-  SensorFactors_sensorId_factorId_key
+  SensorFactors_pkey
 }
 
 # input type for incrementing integer column in table "az_sensors.SensorFactors"
@@ -2887,6 +2855,12 @@ input az_sensors_SensorFactors_order_by {
   Sensor: az_sensors_Sensors_order_by
   factorId: order_by
   sensorId: order_by
+}
+
+# primary key columns input for table: "az_sensors.SensorFactors"
+input az_sensors_SensorFactors_pk_columns_input {
+  factorId: Int!
+  sensorId: Int!
 }
 
 # select columns of table "az_sensors.SensorFactors"
@@ -3001,6 +2975,42 @@ input az_sensors_SensorFactors_variance_order_by {
 type az_sensors_Sensors {
   # An object relationship
   Location: az_sensors_Locations!
+
+  # An array relationship
+  MeasurementValues(
+    # distinct select on columns
+    distinct_on: [az_measurements_MeasurementValues_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [az_measurements_MeasurementValues_order_by!]
+
+    # filter the rows returned
+    where: az_measurements_MeasurementValues_bool_exp
+  ): [az_measurements_MeasurementValues!]!
+
+  # An aggregated array relationship
+  MeasurementValues_aggregate(
+    # distinct select on columns
+    distinct_on: [az_measurements_MeasurementValues_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [az_measurements_MeasurementValues_order_by!]
+
+    # filter the rows returned
+    where: az_measurements_MeasurementValues_bool_exp
+  ): az_measurements_MeasurementValues_aggregate!
 
   # An array relationship
   Measurements(
@@ -3172,6 +3182,7 @@ input az_sensors_Sensors_avg_order_by {
 # Boolean expression to filter rows from the table "az_sensors.Sensors". All fields are combined with a logical 'AND'.
 input az_sensors_Sensors_bool_exp {
   Location: az_sensors_Locations_bool_exp
+  MeasurementValues: az_measurements_MeasurementValues_bool_exp
   Measurements: az_measurements_Measurements_bool_exp
   SensorFactors: az_sensors_SensorFactors_bool_exp
   ServiceLogs: az_sensors_ServiceLog_bool_exp
@@ -3202,6 +3213,7 @@ input az_sensors_Sensors_inc_input {
 # input type for inserting data into table "az_sensors.Sensors"
 input az_sensors_Sensors_insert_input {
   Location: az_sensors_Locations_obj_rel_insert_input
+  MeasurementValues: az_measurements_MeasurementValues_arr_rel_insert_input
   Measurements: az_measurements_Measurements_arr_rel_insert_input
   SensorFactors: az_sensors_SensorFactors_arr_rel_insert_input
   ServiceLogs: az_sensors_ServiceLog_arr_rel_insert_input
@@ -3268,6 +3280,7 @@ input az_sensors_Sensors_on_conflict {
 # ordering options when selecting data from "az_sensors.Sensors"
 input az_sensors_Sensors_order_by {
   Location: az_sensors_Locations_order_by
+  MeasurementValues_aggregate: az_measurements_MeasurementValues_aggregate_order_by
   Measurements_aggregate: az_measurements_Measurements_aggregate_order_by
   SensorFactors_aggregate: az_sensors_SensorFactors_aggregate_order_by
   ServiceLogs_aggregate: az_sensors_ServiceLog_aggregate_order_by
@@ -3407,24 +3420,20 @@ input az_sensors_Sensors_variance_order_by {
 # columns and relationships of "az_sensors.ServiceLog"
 type az_sensors_ServiceLog {
   # An object relationship
-  Document: az_docs_Documents!
-
-  # An object relationship
-  Location: az_sensors_Locations
+  Document: az_docs_Documents
 
   # An object relationship
   Photo: az_docs_Photo
 
   # An object relationship
   Sensor: az_sensors_Sensors!
-  documentId: Int!
+  documentId: Int
 
   # An object relationship
-  e_service_type: az_sensors_e_service_type!
-  locationId: Int
+  e_service_kind: az_sensors_e_service_kind!
   photoId: Int
   sensorId: Int!
-  serviceType: az_sensors_e_service_type_enum!
+  serviceKind: az_sensors_e_service_kind_enum!
   timestamp: timestamp!
 }
 
@@ -3472,7 +3481,6 @@ input az_sensors_ServiceLog_arr_rel_insert_input {
 # aggregate avg on columns
 type az_sensors_ServiceLog_avg_fields {
   documentId: Float
-  locationId: Float
   photoId: Float
   sensorId: Float
 }
@@ -3480,7 +3488,6 @@ type az_sensors_ServiceLog_avg_fields {
 # order by avg() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_avg_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
 }
@@ -3488,25 +3495,22 @@ input az_sensors_ServiceLog_avg_order_by {
 # Boolean expression to filter rows from the table "az_sensors.ServiceLog". All fields are combined with a logical 'AND'.
 input az_sensors_ServiceLog_bool_exp {
   Document: az_docs_Documents_bool_exp
-  Location: az_sensors_Locations_bool_exp
   Photo: az_docs_Photo_bool_exp
   Sensor: az_sensors_Sensors_bool_exp
   _and: [az_sensors_ServiceLog_bool_exp]
   _not: az_sensors_ServiceLog_bool_exp
   _or: [az_sensors_ServiceLog_bool_exp]
   documentId: Int_comparison_exp
-  e_service_type: az_sensors_e_service_type_bool_exp
-  locationId: Int_comparison_exp
+  e_service_kind: az_sensors_e_service_kind_bool_exp
   photoId: Int_comparison_exp
   sensorId: Int_comparison_exp
-  serviceType: az_sensors_e_service_type_enum_comparison_exp
+  serviceKind: az_sensors_e_service_kind_enum_comparison_exp
   timestamp: timestamp_comparison_exp
 }
 
 # input type for incrementing integer column in table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_inc_input {
   documentId: Int
-  locationId: Int
   photoId: Int
   sensorId: Int
 }
@@ -3514,22 +3518,19 @@ input az_sensors_ServiceLog_inc_input {
 # input type for inserting data into table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_insert_input {
   Document: az_docs_Documents_obj_rel_insert_input
-  Location: az_sensors_Locations_obj_rel_insert_input
   Photo: az_docs_Photo_obj_rel_insert_input
   Sensor: az_sensors_Sensors_obj_rel_insert_input
   documentId: Int
-  e_service_type: az_sensors_e_service_type_obj_rel_insert_input
-  locationId: Int
+  e_service_kind: az_sensors_e_service_kind_obj_rel_insert_input
   photoId: Int
   sensorId: Int
-  serviceType: az_sensors_e_service_type_enum
+  serviceKind: az_sensors_e_service_kind_enum
   timestamp: timestamp
 }
 
 # aggregate max on columns
 type az_sensors_ServiceLog_max_fields {
   documentId: Int
-  locationId: Int
   photoId: Int
   sensorId: Int
   timestamp: timestamp
@@ -3538,7 +3539,6 @@ type az_sensors_ServiceLog_max_fields {
 # order by max() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_max_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
   timestamp: order_by
@@ -3547,7 +3547,6 @@ input az_sensors_ServiceLog_max_order_by {
 # aggregate min on columns
 type az_sensors_ServiceLog_min_fields {
   documentId: Int
-  locationId: Int
   photoId: Int
   sensorId: Int
   timestamp: timestamp
@@ -3556,7 +3555,6 @@ type az_sensors_ServiceLog_min_fields {
 # order by min() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_min_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
   timestamp: order_by
@@ -3579,15 +3577,13 @@ input az_sensors_ServiceLog_obj_rel_insert_input {
 # ordering options when selecting data from "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_order_by {
   Document: az_docs_Documents_order_by
-  Location: az_sensors_Locations_order_by
   Photo: az_docs_Photo_order_by
   Sensor: az_sensors_Sensors_order_by
   documentId: order_by
-  e_service_type: az_sensors_e_service_type_order_by
-  locationId: order_by
+  e_service_kind: az_sensors_e_service_kind_order_by
   photoId: order_by
   sensorId: order_by
-  serviceType: order_by
+  serviceKind: order_by
   timestamp: order_by
 }
 
@@ -3597,16 +3593,13 @@ enum az_sensors_ServiceLog_select_column {
   documentId
 
   # column name
-  locationId
-
-  # column name
   photoId
 
   # column name
   sensorId
 
   # column name
-  serviceType
+  serviceKind
 
   # column name
   timestamp
@@ -3615,17 +3608,15 @@ enum az_sensors_ServiceLog_select_column {
 # input type for updating data in table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_set_input {
   documentId: Int
-  locationId: Int
   photoId: Int
   sensorId: Int
-  serviceType: az_sensors_e_service_type_enum
+  serviceKind: az_sensors_e_service_kind_enum
   timestamp: timestamp
 }
 
 # aggregate stddev on columns
 type az_sensors_ServiceLog_stddev_fields {
   documentId: Float
-  locationId: Float
   photoId: Float
   sensorId: Float
 }
@@ -3633,7 +3624,6 @@ type az_sensors_ServiceLog_stddev_fields {
 # order by stddev() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_stddev_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
 }
@@ -3641,7 +3631,6 @@ input az_sensors_ServiceLog_stddev_order_by {
 # aggregate stddev_pop on columns
 type az_sensors_ServiceLog_stddev_pop_fields {
   documentId: Float
-  locationId: Float
   photoId: Float
   sensorId: Float
 }
@@ -3649,7 +3638,6 @@ type az_sensors_ServiceLog_stddev_pop_fields {
 # order by stddev_pop() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_stddev_pop_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
 }
@@ -3657,7 +3645,6 @@ input az_sensors_ServiceLog_stddev_pop_order_by {
 # aggregate stddev_samp on columns
 type az_sensors_ServiceLog_stddev_samp_fields {
   documentId: Float
-  locationId: Float
   photoId: Float
   sensorId: Float
 }
@@ -3665,7 +3652,6 @@ type az_sensors_ServiceLog_stddev_samp_fields {
 # order by stddev_samp() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_stddev_samp_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
 }
@@ -3673,7 +3659,6 @@ input az_sensors_ServiceLog_stddev_samp_order_by {
 # aggregate sum on columns
 type az_sensors_ServiceLog_sum_fields {
   documentId: Int
-  locationId: Int
   photoId: Int
   sensorId: Int
 }
@@ -3681,7 +3666,6 @@ type az_sensors_ServiceLog_sum_fields {
 # order by sum() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_sum_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
 }
@@ -3689,7 +3673,6 @@ input az_sensors_ServiceLog_sum_order_by {
 # aggregate var_pop on columns
 type az_sensors_ServiceLog_var_pop_fields {
   documentId: Float
-  locationId: Float
   photoId: Float
   sensorId: Float
 }
@@ -3697,7 +3680,6 @@ type az_sensors_ServiceLog_var_pop_fields {
 # order by var_pop() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_var_pop_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
 }
@@ -3705,7 +3687,6 @@ input az_sensors_ServiceLog_var_pop_order_by {
 # aggregate var_samp on columns
 type az_sensors_ServiceLog_var_samp_fields {
   documentId: Float
-  locationId: Float
   photoId: Float
   sensorId: Float
 }
@@ -3713,7 +3694,6 @@ type az_sensors_ServiceLog_var_samp_fields {
 # order by var_samp() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_var_samp_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
 }
@@ -3721,7 +3701,6 @@ input az_sensors_ServiceLog_var_samp_order_by {
 # aggregate variance on columns
 type az_sensors_ServiceLog_variance_fields {
   documentId: Float
-  locationId: Float
   photoId: Float
   sensorId: Float
 }
@@ -3729,7 +3708,6 @@ type az_sensors_ServiceLog_variance_fields {
 # order by variance() on columns of table "az_sensors.ServiceLog"
 input az_sensors_ServiceLog_variance_order_by {
   documentId: order_by
-  locationId: order_by
   photoId: order_by
   sensorId: order_by
 }
@@ -3977,7 +3955,7 @@ input az_users_AuthData_variance_order_by {
 # columns and relationships of "az_users.Organisation"
 type az_users_Organisation {
   # An object relationship
-  Document: az_docs_Documents!
+  Document: az_docs_Documents
 
   # An array relationship
   Users(
@@ -4015,7 +3993,7 @@ type az_users_Organisation {
     where: az_users_Users_bool_exp
   ): az_users_Users_aggregate!
   country: String
-  documentId: Int!
+  documentId: Int
   fullName: String!
   organisationId: Int!
   organisationRole: String
@@ -4618,7 +4596,7 @@ type az_users_Users {
   ): az_users_AuthData_aggregate!
 
   # An object relationship
-  Document: az_docs_Documents!
+  Document: az_docs_Documents
 
   # An object relationship
   Organisation: az_users_Organisation
@@ -4658,7 +4636,7 @@ type az_users_Users {
     # filter the rows returned
     where: az_users_UsageLog_bool_exp
   ): az_users_UsageLog_aggregate!
-  documentId: Int!
+  documentId: Int
   email: String!
   fullName: String
   organisationId: Int
@@ -5097,7 +5075,7 @@ type mutation_root {
   ): az_measurements_MeasurementValues_mutation_response
 
   # delete single row from the table: "az_measurements.MeasurementValues"
-  delete_az_measurements_MeasurementValues_by_pk(sensorId: Int!, timestamp: timestamp!): az_measurements_MeasurementValues
+  delete_az_measurements_MeasurementValues_by_pk(factorId: Int!, sensorId: Int!, timestamp: timestamp!): az_measurements_MeasurementValues
 
   # delete data from the table: "az_measurements.Measurements"
   delete_az_measurements_Measurements(
@@ -5132,6 +5110,9 @@ type mutation_root {
     where: az_sensors_SensorFactors_bool_exp!
   ): az_sensors_SensorFactors_mutation_response
 
+  # delete single row from the table: "az_sensors.SensorFactors"
+  delete_az_sensors_SensorFactors_by_pk(factorId: Int!, sensorId: Int!): az_sensors_SensorFactors
+
   # delete data from the table: "az_sensors.Sensors"
   delete_az_sensors_Sensors(
     # filter the rows which have to be deleted
@@ -5156,14 +5137,14 @@ type mutation_root {
   # delete single row from the table: "az_sensors.e_measurement_unit"
   delete_az_sensors_e_measurement_unit_by_pk(value: String!): az_sensors_e_measurement_unit
 
-  # delete data from the table: "az_sensors.e_service_type"
-  delete_az_sensors_e_service_type(
+  # delete data from the table: "az_sensors.e_service_kind"
+  delete_az_sensors_e_service_kind(
     # filter the rows which have to be deleted
-    where: az_sensors_e_service_type_bool_exp!
-  ): az_sensors_e_service_type_mutation_response
+    where: az_sensors_e_service_kind_bool_exp!
+  ): az_sensors_e_service_kind_mutation_response
 
-  # delete single row from the table: "az_sensors.e_service_type"
-  delete_az_sensors_e_service_type_by_pk(value: String!): az_sensors_e_service_type
+  # delete single row from the table: "az_sensors.e_service_kind"
+  delete_az_sensors_e_service_kind_by_pk(value: String!): az_sensors_e_service_kind
 
   # delete data from the table: "az_users.AuthData"
   delete_az_users_AuthData(
@@ -5390,23 +5371,23 @@ type mutation_root {
     on_conflict: az_sensors_e_measurement_unit_on_conflict
   ): az_sensors_e_measurement_unit
 
-  # insert data into the table: "az_sensors.e_service_type"
-  insert_az_sensors_e_service_type(
+  # insert data into the table: "az_sensors.e_service_kind"
+  insert_az_sensors_e_service_kind(
     # the rows to be inserted
-    objects: [az_sensors_e_service_type_insert_input!]!
+    objects: [az_sensors_e_service_kind_insert_input!]!
 
     # on conflict condition
-    on_conflict: az_sensors_e_service_type_on_conflict
-  ): az_sensors_e_service_type_mutation_response
+    on_conflict: az_sensors_e_service_kind_on_conflict
+  ): az_sensors_e_service_kind_mutation_response
 
-  # insert a single row into the table: "az_sensors.e_service_type"
-  insert_az_sensors_e_service_type_one(
+  # insert a single row into the table: "az_sensors.e_service_kind"
+  insert_az_sensors_e_service_kind_one(
     # the row to be inserted
-    object: az_sensors_e_service_type_insert_input!
+    object: az_sensors_e_service_kind_insert_input!
 
     # on conflict condition
-    on_conflict: az_sensors_e_service_type_on_conflict
-  ): az_sensors_e_service_type
+    on_conflict: az_sensors_e_service_kind_on_conflict
+  ): az_sensors_e_service_kind
 
   # insert data into the table: "az_users.AuthData"
   insert_az_users_AuthData(
@@ -5634,6 +5615,16 @@ type mutation_root {
     where: az_sensors_SensorFactors_bool_exp!
   ): az_sensors_SensorFactors_mutation_response
 
+  # update single row of the table: "az_sensors.SensorFactors"
+  update_az_sensors_SensorFactors_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: az_sensors_SensorFactors_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: az_sensors_SensorFactors_set_input
+    pk_columns: az_sensors_SensorFactors_pk_columns_input!
+  ): az_sensors_SensorFactors
+
   # update data of the table: "az_sensors.Sensors"
   update_az_sensors_Sensors(
     # increments the integer columns with given value of the filtered values
@@ -5684,21 +5675,21 @@ type mutation_root {
     pk_columns: az_sensors_e_measurement_unit_pk_columns_input!
   ): az_sensors_e_measurement_unit
 
-  # update data of the table: "az_sensors.e_service_type"
-  update_az_sensors_e_service_type(
+  # update data of the table: "az_sensors.e_service_kind"
+  update_az_sensors_e_service_kind(
     # sets the columns of the filtered rows to the given values
-    _set: az_sensors_e_service_type_set_input
+    _set: az_sensors_e_service_kind_set_input
 
     # filter the rows which have to be updated
-    where: az_sensors_e_service_type_bool_exp!
-  ): az_sensors_e_service_type_mutation_response
+    where: az_sensors_e_service_kind_bool_exp!
+  ): az_sensors_e_service_kind_mutation_response
 
-  # update single row of the table: "az_sensors.e_service_type"
-  update_az_sensors_e_service_type_by_pk(
+  # update single row of the table: "az_sensors.e_service_kind"
+  update_az_sensors_e_service_kind_by_pk(
     # sets the columns of the filtered rows to the given values
-    _set: az_sensors_e_service_type_set_input
-    pk_columns: az_sensors_e_service_type_pk_columns_input!
-  ): az_sensors_e_service_type
+    _set: az_sensors_e_service_kind_set_input
+    pk_columns: az_sensors_e_service_kind_pk_columns_input!
+  ): az_sensors_e_service_kind
 
   # update data of the table: "az_users.AuthData"
   update_az_users_AuthData(
@@ -5971,7 +5962,7 @@ type query_root {
   ): az_measurements_MeasurementValues_aggregate!
 
   # fetch data from the table: "az_measurements.MeasurementValues" using primary key columns
-  az_measurements_MeasurementValues_by_pk(sensorId: Int!, timestamp: timestamp!): az_measurements_MeasurementValues
+  az_measurements_MeasurementValues_by_pk(factorId: Int!, sensorId: Int!, timestamp: timestamp!): az_measurements_MeasurementValues
 
   # fetch data from the table: "az_measurements.Measurements"
   az_measurements_Measurements(
@@ -6126,6 +6117,9 @@ type query_root {
     where: az_sensors_SensorFactors_bool_exp
   ): az_sensors_SensorFactors_aggregate!
 
+  # fetch data from the table: "az_sensors.SensorFactors" using primary key columns
+  az_sensors_SensorFactors_by_pk(factorId: Int!, sensorId: Int!): az_sensors_SensorFactors
+
   # fetch data from the table: "az_sensors.Sensors"
   az_sensors_Sensors(
     # distinct select on columns
@@ -6240,10 +6234,10 @@ type query_root {
   # fetch data from the table: "az_sensors.e_measurement_unit" using primary key columns
   az_sensors_e_measurement_unit_by_pk(value: String!): az_sensors_e_measurement_unit
 
-  # fetch data from the table: "az_sensors.e_service_type"
-  az_sensors_e_service_type(
+  # fetch data from the table: "az_sensors.e_service_kind"
+  az_sensors_e_service_kind(
     # distinct select on columns
-    distinct_on: [az_sensors_e_service_type_select_column!]
+    distinct_on: [az_sensors_e_service_kind_select_column!]
 
     # limit the number of rows returned
     limit: Int
@@ -6252,16 +6246,16 @@ type query_root {
     offset: Int
 
     # sort the rows by one or more columns
-    order_by: [az_sensors_e_service_type_order_by!]
+    order_by: [az_sensors_e_service_kind_order_by!]
 
     # filter the rows returned
-    where: az_sensors_e_service_type_bool_exp
-  ): [az_sensors_e_service_type!]!
+    where: az_sensors_e_service_kind_bool_exp
+  ): [az_sensors_e_service_kind!]!
 
-  # fetch aggregated fields from the table: "az_sensors.e_service_type"
-  az_sensors_e_service_type_aggregate(
+  # fetch aggregated fields from the table: "az_sensors.e_service_kind"
+  az_sensors_e_service_kind_aggregate(
     # distinct select on columns
-    distinct_on: [az_sensors_e_service_type_select_column!]
+    distinct_on: [az_sensors_e_service_kind_select_column!]
 
     # limit the number of rows returned
     limit: Int
@@ -6270,14 +6264,14 @@ type query_root {
     offset: Int
 
     # sort the rows by one or more columns
-    order_by: [az_sensors_e_service_type_order_by!]
+    order_by: [az_sensors_e_service_kind_order_by!]
 
     # filter the rows returned
-    where: az_sensors_e_service_type_bool_exp
-  ): az_sensors_e_service_type_aggregate!
+    where: az_sensors_e_service_kind_bool_exp
+  ): az_sensors_e_service_kind_aggregate!
 
-  # fetch data from the table: "az_sensors.e_service_type" using primary key columns
-  az_sensors_e_service_type_by_pk(value: String!): az_sensors_e_service_type
+  # fetch data from the table: "az_sensors.e_service_kind" using primary key columns
+  az_sensors_e_service_kind_by_pk(value: String!): az_sensors_e_service_kind
 
   # fetch data from the table: "az_users.AuthData"
   az_users_AuthData(
@@ -6608,7 +6602,7 @@ type subscription_root {
   ): az_measurements_MeasurementValues_aggregate!
 
   # fetch data from the table: "az_measurements.MeasurementValues" using primary key columns
-  az_measurements_MeasurementValues_by_pk(sensorId: Int!, timestamp: timestamp!): az_measurements_MeasurementValues
+  az_measurements_MeasurementValues_by_pk(factorId: Int!, sensorId: Int!, timestamp: timestamp!): az_measurements_MeasurementValues
 
   # fetch data from the table: "az_measurements.Measurements"
   az_measurements_Measurements(
@@ -6763,6 +6757,9 @@ type subscription_root {
     where: az_sensors_SensorFactors_bool_exp
   ): az_sensors_SensorFactors_aggregate!
 
+  # fetch data from the table: "az_sensors.SensorFactors" using primary key columns
+  az_sensors_SensorFactors_by_pk(factorId: Int!, sensorId: Int!): az_sensors_SensorFactors
+
   # fetch data from the table: "az_sensors.Sensors"
   az_sensors_Sensors(
     # distinct select on columns
@@ -6877,10 +6874,10 @@ type subscription_root {
   # fetch data from the table: "az_sensors.e_measurement_unit" using primary key columns
   az_sensors_e_measurement_unit_by_pk(value: String!): az_sensors_e_measurement_unit
 
-  # fetch data from the table: "az_sensors.e_service_type"
-  az_sensors_e_service_type(
+  # fetch data from the table: "az_sensors.e_service_kind"
+  az_sensors_e_service_kind(
     # distinct select on columns
-    distinct_on: [az_sensors_e_service_type_select_column!]
+    distinct_on: [az_sensors_e_service_kind_select_column!]
 
     # limit the number of rows returned
     limit: Int
@@ -6889,16 +6886,16 @@ type subscription_root {
     offset: Int
 
     # sort the rows by one or more columns
-    order_by: [az_sensors_e_service_type_order_by!]
+    order_by: [az_sensors_e_service_kind_order_by!]
 
     # filter the rows returned
-    where: az_sensors_e_service_type_bool_exp
-  ): [az_sensors_e_service_type!]!
+    where: az_sensors_e_service_kind_bool_exp
+  ): [az_sensors_e_service_kind!]!
 
-  # fetch aggregated fields from the table: "az_sensors.e_service_type"
-  az_sensors_e_service_type_aggregate(
+  # fetch aggregated fields from the table: "az_sensors.e_service_kind"
+  az_sensors_e_service_kind_aggregate(
     # distinct select on columns
-    distinct_on: [az_sensors_e_service_type_select_column!]
+    distinct_on: [az_sensors_e_service_kind_select_column!]
 
     # limit the number of rows returned
     limit: Int
@@ -6907,14 +6904,14 @@ type subscription_root {
     offset: Int
 
     # sort the rows by one or more columns
-    order_by: [az_sensors_e_service_type_order_by!]
+    order_by: [az_sensors_e_service_kind_order_by!]
 
     # filter the rows returned
-    where: az_sensors_e_service_type_bool_exp
-  ): az_sensors_e_service_type_aggregate!
+    where: az_sensors_e_service_kind_bool_exp
+  ): az_sensors_e_service_kind_aggregate!
 
-  # fetch data from the table: "az_sensors.e_service_type" using primary key columns
-  az_sensors_e_service_type_by_pk(value: String!): az_sensors_e_service_type
+  # fetch data from the table: "az_sensors.e_service_kind" using primary key columns
+  az_sensors_e_service_kind_by_pk(value: String!): az_sensors_e_service_kind
 
   # fetch data from the table: "az_users.AuthData"
   az_users_AuthData(

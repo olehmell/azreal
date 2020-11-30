@@ -9,16 +9,6 @@ import { az_sensors_e_measurement_unit_enum } from "./../../../../types/graphql-
 // GraphQL query operation: GetSensorById
 // ====================================================
 
-export interface GetSensorById_az_sensors_Sensors_Location_ServiceLogs_Document {
-  __typename: "az_docs_Documents";
-  fileIds: any;
-}
-
-export interface GetSensorById_az_sensors_Sensors_Location_ServiceLogs {
-  __typename: "az_sensors_ServiceLog";
-  Document: GetSensorById_az_sensors_Sensors_Location_ServiceLogs_Document;
-}
-
 export interface GetSensorById_az_sensors_Sensors_Location {
   __typename: "az_sensors_Locations";
   address: string | null;
@@ -26,7 +16,16 @@ export interface GetSensorById_az_sensors_Sensors_Location {
   locationPoint: any;
   locationId: number;
   elevation: any;
-  ServiceLogs: GetSensorById_az_sensors_Sensors_Location_ServiceLogs[];
+}
+
+export interface GetSensorById_az_sensors_Sensors_ServiceLogs_Document {
+  __typename: "az_docs_Documents";
+  fileIds: any;
+}
+
+export interface GetSensorById_az_sensors_Sensors_ServiceLogs {
+  __typename: "az_sensors_ServiceLog";
+  Document: GetSensorById_az_sensors_Sensors_ServiceLogs_Document | null;
 }
 
 export interface GetSensorById_az_sensors_Sensors_SensorFactors_PollutionFactor {
@@ -46,6 +45,7 @@ export interface GetSensorById_az_sensors_Sensors {
   model: string | null;
   manufacturer: string | null;
   Location: GetSensorById_az_sensors_Sensors_Location;
+  ServiceLogs: GetSensorById_az_sensors_Sensors_ServiceLogs[];
   SensorFactors: GetSensorById_az_sensors_Sensors_SensorFactors[];
 }
 

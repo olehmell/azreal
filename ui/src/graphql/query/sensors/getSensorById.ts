@@ -14,12 +14,12 @@ query GetSensorById($id: Int = 0) {
       locationPoint
       locationId
       elevation
-      ServiceLogs {
+    }
+    ServiceLogs {
         Document {
           fileIds
         }
       }
-    }
     SensorFactors {
       PollutionFactor {
         unit

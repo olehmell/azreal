@@ -23,15 +23,20 @@ const Factors = () => {
     display: 'Одиниці',
   },
   {
+    id: 'maxValue',
+    display: 'ГДК',
+  },
+  {
     id: 'amount',
     display: 'Кількість датчиків',
   }
   ]
 
   const sensorsData: Column[] = data?.az_sensors_PollutionFactors_aggregate.nodes
-    .map(({ label, unit, SensorFactors }) => ({
+    .map(({ label, unit, maxValue, SensorFactors }) => ({
       label,
       unit,
+      maxValue,
       amount: SensorFactors.length
     }))
 

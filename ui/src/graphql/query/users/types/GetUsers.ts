@@ -26,7 +26,7 @@ export interface GetUsers_az_users_Users {
   phoneNumber: string | null;
   userRole: string | null;
   userId: number;
-  Document: GetUsers_az_users_Users_Document;
+  Document: GetUsers_az_users_Users_Document | null;
   Organisation: GetUsers_az_users_Users_Organisation | null;
 }
 
