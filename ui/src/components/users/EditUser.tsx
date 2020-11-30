@@ -15,6 +15,7 @@ import {
   EuiFieldPassword,
   EuiButtonEmpty,
   EuiFlexItem,
+  EuiCopy,
 } from '@elastic/eui'
 
 import { useRouter } from 'next/router'
@@ -75,12 +76,17 @@ export const InnerEditUser = ({ user }: UserForm) => {
   
       setLoading(false)
       const userId = data.insert_az_users_AuthData_one.userId || user.userId
-      await addToast({ 
+      isNew && await addToast({ 
         title: 'Незабудьте пароль!',
         color: 'success',
         text: <EuiFlexItem>
           Цей пароль потрібний для входу у систему для створеного користувача, не забудьте передати його!
           <EuiFieldPassword type='dual' value={userData.password} readOnly fullWidth />
+          <EuiCopy textToCopy={userData.password}>
+            {(copy) => (
+              <EuiButton onClick={copy}>Скопіювати</EuiButton>
+            )}
+          </EuiCopy>
         </EuiFlexItem>
       })
       router.push('/users/[userId]', `/users/${userId}`)

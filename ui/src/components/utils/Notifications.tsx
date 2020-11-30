@@ -13,7 +13,7 @@ import { Toast } from '@elastic/eui/src/components/toast/global_toast_list'
 type ToastProps = {
   title: string,
   color?: 'success' | 'danger' | 'warning',
-  text: React.ReactChild
+  text?: React.ReactChild
 }
 
 type NotificationContextProps = {

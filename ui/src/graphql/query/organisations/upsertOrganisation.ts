@@ -3,19 +3,19 @@ import { gql } from 'apollo-boost'
 import { UpsertOrganisation, UpsertOrganisationVariables } from './types/UpsertOrganisation'
 
 const UPSERT_ORGANISATION = gql`
-  mutation UpsertOrganisation($country: String, $fullName: String, $organisationRole: String, $shortName: String, $organisationId: Int, $fileIds: _text = "", $rntrc: String = "") {
-    insert_az_users_Organisation_one(object: {shortName: $shortName, organisationRole: $organisationRole, fullName: $fullName, country: $country, organisationId: $organisationId, Document: {data: {documentType: Organisation, fileIds: $fileIds}}, rntrc: $rntrc}, on_conflict: {constraint: Organisation_pkey, update_columns: [country, fullName, shortName, organisationRole, rntrc]}) {
-      organisationId
-    }
+mutation UpsertOrganisation($shortName: String! = "", $rntrc: String! = "", $organisationRole: String! = "", $fullName: String! = "", $country: String = "", $documentIds: _text = "", $organisationId: Int! = 0) {
+  insert_az_users_Organisation_one(object: {shortName: $shortName, rntrc: $rntrc, organisationRole: $organisationRole, fullName: $fullName, country: $country, Document: {data: {fileIds: $documentIds, documentType: Organisation}}, organisationId: $organisationId}, on_conflict: {constraint: Organisation_pkey, update_columns: [ fullName, shortName, organisationRole, country ]}) {
+    organisationId
   }
+}
 `
 
 const ADD_ORGANISATION = gql`
-  mutation AddOrganisation($country: String, $fullName: String, $organisationRole: String, $rntrc: String, $shortName: String, $fileIds: _text = "") {
-    insert_az_users_Organisation_one(object: {shortName: $shortName, rntrc: $rntrc, organisationRole: $organisationRole, fullName: $fullName, country: $country, Document: {data: {fileIds: $fileIds}}}, on_conflict: {constraint: Organisation_pkey, update_columns: [country, fullName, shortName, organisationRole, rntrc]}) {
+  mutation AddOrganization($shortName: String! = "", $rntrc: String! = "", $organisationRole: String! = "", $fullName: String! = "", $country: String = "", $documentIds: _text = "") {
+    insert_az_users_Organisation_one(object: {shortName: $shortName, rntrc: $rntrc, organisationRole: $organisationRole, fullName: $fullName, country: $country, Document: {data: {fileIds: $documentIds, documentType: Organisation}}}) {
       organisationId
     }
   }
 `
 
-export const useUpsetOrganisation = (id?: number) => useMutation<UpsertOrganisation, UpsertOrganisationVariables>(id ? UPSERT_ORGANISATION : ADD_ORGANISATION, { variables: { organisationId: id }})
+export const useUpsetOrganisation = (id?: number) => useMutation<UpsertOrganisation, UpsertOrganisationVariables>(id ? UPSERT_ORGANISATION : ADD_ORGANISATION, { variables: { organisationId: id } as any})

@@ -32,24 +32,14 @@ const ViewOrganisations = ({ organisations }: ViewOrganisationsProps) => {
   {
     id: 'rntrc',
     display: 'Код платника податків'
-  },
-  {
-    id: 'registryLink',
-    display: 'Посилання на реєстр'
-  },
-  {
-    id: 'documentId',
-    display: 'Документ'
   } ]
 
-  const data = organisations.map(({ organisationId, organisationRole, country, shortName, fullName, registryLink, rntrc, documentId }) => ({
+  const data = organisations.map(({ organisationId, organisationRole, country, shortName, fullName, rntrc }) => ({
     fullName: <Link href='/organisations/[sensorId]' as={`/organisations/${organisationId}`}><a>{fullName}</a></Link>,
     shortName,
     organisationRole,
-    registryLink: registryLink ? <a href={registryLink}>Перейти</a> : null,
     rntrc,
-    country,
-    documentId
+    country
   }))
 
   console.log(data)

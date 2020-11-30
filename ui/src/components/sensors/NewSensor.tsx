@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import {
@@ -12,14 +12,19 @@ import {
   EuiLoadingSpinner,
   EuiFormErrorText,
   EuiCallOut,
+  EuiDatePicker,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiFormLabel,
 } from '@elastic/eui'
 
 import { loadLocationDataBySensorId, sensorSchema } from './utils'
 import { useAddSensor } from 'src/graphql/query/sensors/addSensor'
 import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
-import { DocumentLoader } from '../forms/File'
+import { DocumentLoader, PhotoLoader } from '../files/FileLoader'
 import { getErrorMsg } from '../utils'
+import moment from 'moment'
 
 export const NewSensor = () => {
   const [ addSensors ] = useAddSensor()
@@ -27,9 +32,11 @@ export const NewSensor = () => {
   const [ error, setError ] = useState('')
   const router = useRouter()
 
-  const { register, handleSubmit, errors, setValue } = useForm({
+  const { register, handleSubmit, errors, control, watch} = useForm({
     resolver: yupResolver(sensorSchema)
   })
+
+  const timestamp = watch('timestamp')
 
   const onSubmit = useCallback(async sensorData => {
     setLoading(true)
@@ -88,8 +95,34 @@ export const NewSensor = () => {
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors.model)}</EuiFormErrorText>
 
-        <EuiFormRow label="Файл датчика" fullWidth>
-          <DocumentLoader onChange={(fileId) => setValue('documentId', fileId)} />
+        <EuiFormRow label="Час закінчення робіт" fullWidth>
+          <Controller
+            name="timestamp"
+            control={control}
+            render={props =>
+              <EuiDatePicker showTimeSelect selected={moment(timestamp)} onChange={props.onChange} fullWidth />
+            } // props contains: onChange, onBlur and value
+          />
+        </EuiFormRow>
+
+        <EuiFormRow label="Файли" fullWidth>
+          <Controller
+            name="documentIds"
+            control={control}
+            render={props =>
+              <DocumentLoader onChange={props.onChange} />
+            } // props contains: onChange, onBlur and value
+          />
+        </EuiFormRow>
+
+        <EuiFormRow label="Серія фото" fullWidth>
+          <Controller
+            name="photoIds"
+            control={control}
+            render={props =>
+              <PhotoLoader onChange={props.onChange} />
+            } // props contains: onChange, onBlur and value
+          />
         </EuiFormRow>
 
         <EuiSpacer />

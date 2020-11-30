@@ -49,7 +49,7 @@ export const HomePage = () => {
           icon={<EuiIcon size="xxl" type={'logsApp'} />}
           title='Журнал обслуговування'
           description="Коли? Де? Хто?"
-          onClick={() => router.push('/logs')}
+          onClick={() => router.push('/service/timeline')}
         />
       </EuiFlexItem>
     </EuiFlexGroup>

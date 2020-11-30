@@ -15,13 +15,15 @@ export const getIdFromUrlQuery = (queryId: string | string[]) => {
   } 
 } 
 
-export const fillInitValues = (data: any, setValue: (key, value) => void) => {
+export const fillInitValues = <T>(data: T, setValue: (key, value) => void) => {
   for (const key in data) {
     const value = data[key]
     console.log('INIT VALUE', key, value)
     setValue(key, value)
   }
 }
+
+export const createHasuraArray = (ids: string[]) => `{${ids.map(id => `"${id}"`).join(',')}}`
 
 type Error = {
   message: string

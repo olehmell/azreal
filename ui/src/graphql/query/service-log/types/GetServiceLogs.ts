@@ -38,3 +38,9 @@ export interface GetServiceLogs_az_sensors_ServiceLog {
 export interface GetServiceLogs {
   az_sensors_ServiceLog: GetServiceLogs_az_sensors_ServiceLog[];
 }
+
+export interface GetServiceLogsVariables {
+  sensorId?: number | null;
+  from?: any | null;
+  to?: any | null;
+}
