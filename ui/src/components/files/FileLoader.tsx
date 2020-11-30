@@ -1,11 +1,11 @@
 import { EuiFilePicker, EuiFilePickerProps, EuiFormErrorText } from '@elastic/eui'
 import React, { useState } from 'react'
 import axios from 'axios'
-import { mongoUrl } from '../utils'
+import { createHasuraArray, mongoUrl } from '../utils'
 
 type FilePicker = Omit<EuiFilePickerProps, 'onChange'> & {
-  onChange: (fileIds?: number[]) => void
-  fileIds?: number[]
+  onChange: (fileIds?: string) => void
+  fileIds?: string[]
 }
 
 const InnerFileLoader = ({ onChange, fileIds: initialFileIds, ...props}: FilePicker) => {
@@ -22,6 +22,7 @@ const InnerFileLoader = ({ onChange, fileIds: initialFileIds, ...props}: FilePic
     onChange={
       async (files) => {
         try {
+          setError(undefined)
           setLoading(true)
           deleteFiles(fileIds)
   
@@ -35,7 +36,7 @@ const InnerFileLoader = ({ onChange, fileIds: initialFileIds, ...props}: FilePic
 
           console.log('ids', ids)
           
-          onChange(ids)
+          onChange(createHasuraArray(ids))
           setFileIds(ids)
           setLoading(false)
         } catch (error) {
@@ -56,18 +57,18 @@ const saveFile = async (file: File) => {
   form.append('file', file)
   const { data } = await axios.post(`${mongoUrl}/add`, form)
 
-  return data.id as number
+  return data.id as string
 }
 
-const deleteFile = async (fileId: number) => {
+const deleteFile = async (fileId: string) => {
   const { data } = await axios.delete(`${mongoUrl}/delete/${fileId}`)
   console.log(data.status)
 }
 
-const deleteFiles = (ids?: number[]) => ids && ids.forEach(id => deleteFile(id))
+export const deleteFiles = (ids?: string[]) => ids && ids.forEach(id => deleteFile(id))
 
 export const DocumentLoader = ({ name, ...props }: FilePicker) => <InnerFileLoader
-  accept='.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  accept='image/*'
   initialPromptText="Виберіть або перетягніть файл"
   {...props}
 />
