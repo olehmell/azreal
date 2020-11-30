@@ -2,15 +2,12 @@ import React, { FunctionComponent, useRef } from 'react'
 import { useRouter } from 'next/router'
 
 import {
-  EuiButton,
   EuiButtonEmpty,
-  EuiButtonIcon,
   EuiHeader,
   EuiHeaderLogo,
   EuiHeaderSection,
   EuiHeaderSectionItem,
   EuiHeaderSectionItemButton,
-  EuiHorizontalRule,
   EuiIcon,
   EuiNavDrawer,
   EuiNavDrawerGroup,
@@ -23,7 +20,7 @@ import { Breadcrumbs } from './breadcrumbs'
 import SwitchTheme from './switch_theme'
 
 import styles from './chrome.module.scss'
-import { useAuth } from '../auth/AuthContext'
+import { useAuth, useIsManagerAccess } from '../auth/AuthContext'
 
 const Logo: FunctionComponent<{ onClick: () => void }> = ({ onClick }) => (
   <EuiHeaderLogo
@@ -42,7 +39,7 @@ const MenuTrigger: FunctionComponent<{ onClick: () => void }> = ({
 )
 
 const Chrome: FunctionComponent = ({ children }) => {
-  const { signOut } = useAuth()
+  const { signOut, state: { authObj: { userRole }} } = useAuth()
   /**
  * Renders the UI that surrounds the page content.
  */
@@ -50,6 +47,9 @@ const Chrome: FunctionComponent = ({ children }) => {
   const navDrawerRef = useRef<EuiNavDrawer>(null)
 
   const router = useRouter()
+  const isManagerAccess = useIsManagerAccess()
+
+  console.log('isManagerAccess', isManagerAccess, userRole)
 
   // In this example app, all the side navigation links go to a placeholder
   // page. That's why the `push` call here points at the catch-all route - the
@@ -89,7 +89,7 @@ const Chrome: FunctionComponent = ({ children }) => {
         </EuiHeaderSection>
       </EuiHeader>
       <EuiNavDrawer ref={navDrawerRef}>
-        <EuiNavDrawerGroup listItems={buildExploreLinks(buildOnClick)} />
+        <EuiNavDrawerGroup listItems={buildExploreLinks(buildOnClick, isManagerAccess)} />
       </EuiNavDrawer>
       <div className={styles.chrWrap}>{children}</div>
     </>

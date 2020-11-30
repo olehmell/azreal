@@ -1,8 +1,10 @@
-import { EuiButton } from '@elastic/eui'
+import { EuiButton, EuiModal, EuiModalBody, EuiModalHeader, EuiModalHeaderTitle, EuiOverlayMask } from '@elastic/eui'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDeleteSensorById } from 'src/graphql/query/sensors/deleteSensor'
+import { NewLog } from '../service-log/NewLog'
 import { Loading } from '../utils/loading'
+import { useNotification } from '../utils/Notifications'
 
 
 type DeleteButtonProps = {
@@ -12,6 +14,15 @@ type DeleteButtonProps = {
 export const DeleteButton = ({ sensorId }: DeleteButtonProps) => {
   const [ deleteSensor, { data: res, error, loading } ] = useDeleteSensorById(sensorId)
   const router = useRouter()
+  const { addToast } = useNotification()
+  const [ show, setShow ] = useState(false)
+
+  const open = () => {
+    setShow(true)
+  }
+  const close = () => {
+    setShow(false)
+  }
 
   const resId = res?.delete_az_sensors_Sensors.returning[0].sensorId
 
@@ -21,15 +32,38 @@ export const DeleteButton = ({ sensorId }: DeleteButtonProps) => {
     router.push('/sensors')
   }, [ resId, router ])
 
+  const DeleteModal = useCallback(() => show ? <EuiOverlayMask onClick={close}>
+    <EuiModal onClose={close}>
+      <EuiModalHeader>
+        <EuiModalHeaderTitle>Внесіть запис про видалення</EuiModalHeaderTitle>
+      </EuiModalHeader>
+
+      <EuiModalBody>
+        <NewLog sensorId={sensorId} onChange={() => {
+          deleteSensor()
+          close()
+          addToast({
+            title: 'Успішно видалено',
+            color: 'success'
+          })
+        }} />
+      </EuiModalBody>
+
+    </EuiModal>
+  </EuiOverlayMask> : null, [ ]) 
+
   if (error) return null
 
   if (loading) return <Loading />
 
-  return <EuiButton
-    iconType="minusInCircle"
-    size="s"
-    onClick={() => deleteSensor()}
-  >
+  return <>
+    <EuiButton
+      iconType="minusInCircle"
+      size="s"
+      onClick={open}
+    >
     Видалити
-  </EuiButton>
+    </EuiButton>
+    <DeleteModal />
+  </>
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import {
@@ -15,13 +15,12 @@ import {
 
 import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
-import { OrganisationProps, organisationSchema, withLoadOrganisationFromUrl } from './utils'
-import { DocumentLoader } from '../forms/File'
-import { fillInitValues, getErrorMsg } from '../utils'
+import { OrganisationProps, OrganisationSchema, organisationSchema, withLoadOrganisationFromUrl } from './utils'
+import { DocumentLoader } from '../files/FileLoader'
+import { createHasuraArray, fillInitValues, getErrorMsg } from '../utils'
 import { EditButton } from '../utils/EditButton'
-import { AddOrganisation } from 'src/graphql/query/organisations/types/AddOrganisation'
+import { AddOrganization } from 'src/graphql/query/organisations/types/AddOrganization'
 import { useUpsetOrganisation } from 'src/graphql/query/organisations/upsertOrganisation'
-import { az_docs_enum_document_type_enum } from 'src/types/graphql-global-types'
 
 type OrganisationForm = Partial<OrganisationProps>
 
@@ -36,33 +35,39 @@ const messages = {
 
 export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
   const formType = organisation ? 'edit' : 'new'
-
+  const isNew = formType === 'new'
   const [ upsetOrganisations ] = useUpsetOrganisation(organisation?.organisationId)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
 
-  const { register, handleSubmit, errors, setValue } = useForm({
+  const { register, handleSubmit, errors, control, setValue } = useForm<OrganisationSchema>({
     resolver: yupResolver(organisationSchema)
   })
 
   useEffect(() => {
-    if (formType === 'new') return
+    if (isNew) return
 
-    fillInitValues(organisation, setValue)
-  })
+    fillInitValues<OrganisationSchema>({
+      ...organisation,
+      documentIds: createHasuraArray(organisation?.Document.fileIds)
+    }, setValue)
+  }, [])
 
-  const onSubmit = useCallback(async organisationData => {
+  const onSubmit = useCallback(async (organisationData: OrganisationSchema) => {
     console.log('organisationData', organisationData)
     setLoading(true)
     try {
+      console.log('documentIds', organisationData.documentIds)
       const { errors, data } = await upsetOrganisations({ variables: {
-        ...organisationData
+        ...organisationData,
+        rntrc: organisationData.rntrc?.toString()
+        // documentIds
       }})
 
       if (errors) throw errors
   
       setLoading(false)
-      const organisationId = (data as AddOrganisation)?.insert_az_users_Organisation_one.organisationId || organisation.organisationId
+      const organisationId = (data as AddOrganization)?.insert_az_users_Organisation_one.organisationId || organisation.organisationId
       router.push(`/organisations/${organisationId}`)
     } catch (error) {
       console.error(error)
@@ -111,9 +116,15 @@ export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors.rntrc)}</EuiFormErrorText>
 
-        <EuiFormRow label="Файл організації" fullWidth>
-          <DocumentLoader onChange={(fileId) => fileId && setValue('documentId', fileId)} />
-        </EuiFormRow>
+        {isNew && <EuiFormRow label="Файли організації" fullWidth>
+          <Controller
+            name="documentIds"
+            control={control}
+            render={props =>
+              <DocumentLoader fileIds={props.value} onChange={props.onChange} />
+            } // props contains: onChange, onBlur and value
+          />
+        </EuiFormRow>}
 
         <EuiSpacer />
         <SubmitButton />

@@ -6,8 +6,8 @@ import { useGetOrganisationById } from 'src/graphql/query/organisations/getOrgan
 import { NotFoundPage } from '../utils/NotFoundPage'
 import { Loading } from '../utils/loading'
 
-type OrganisationKeys = keyof OrganisationType
-type OrganisationSchema = Record<OrganisationKeys, any>
+type OrganisationKeys = keyof Omit<OrganisationType, 'Document'> | 'documentIds'
+export type OrganisationSchema = Record<OrganisationKeys, any>
 
 const yupRequiredStr = yup.string().required()
 
@@ -16,8 +16,7 @@ export const organisationSchema = yup.object().shape({
   shortName: yupRequiredStr,
   country: yupRequiredStr,
   organisationRole: yupRequiredStr,
-  registryLink: yup.string().url(),
-  documentId: yup.number(),
+  documentIds: yup.string(),
   rntrc: yup.number().required().min(8)
 } as OrganisationSchema)
 

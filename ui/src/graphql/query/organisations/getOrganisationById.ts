@@ -7,12 +7,13 @@ const GET_ORGANISATION_BY_ID = gql`
     az_users_Organisation(where: {organisationId: {_eq: $id}}) {
       shortName
       rntrc
-      registryLink
       organisationRole
       organisationId
       fullName
       country
-      documentId
+      Document {
+        fileIds
+      }
     }
   }
 `

@@ -10,7 +10,6 @@ export const GET_SENSOR_QUERY = gql`
       model
       sensorId
       Location {
-        documentId
         address
         airlyLink
         elevation

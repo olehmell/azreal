@@ -1,9 +1,7 @@
-import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
+import { EuiDescriptionList, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import React from 'react'
-import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { Files } from '../files/Files'
 import { createDescItem } from '../utils'
-import { ButtonLink } from '../utils/ButtonLink'
-import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
 import { EditOrganisationButton } from './EditOrganisation'
@@ -14,18 +12,14 @@ const OrganisationDesc = ({
 }: OrganisationProps) => {
   const {
     shortName,
-    registryLink,
     rntrc,
     organisationRole,
-    documentId
   } = organisation
 
   const items = [
     createDescItem('Коротка назва', shortName),
     createDescItem('Єдиний номер платника податку', rntrc),
-    createDescItem('Посилання на реєстр', <a href={registryLink}>{registryLink}</a>),
     createDescItem('Опис ролі організації', organisationRole),
-    createDescItem('Файли', documentId)
   ].filter(x => x !== undefined)
 
   return <EuiDescriptionList textStyle="reverse" listItems={items} />
@@ -37,6 +31,7 @@ export const ViewOrganisation = ({ organisation }: OrganisationProps) => {
       <OrganisationDesc organisation={organisation} />
     </EuiFlexItem>
     <EuiFlexItem>
+      <Files fileIds={organisation.Document.fileIds} />
     </EuiFlexItem>
   </EuiFlexGroup>
 }
@@ -50,7 +45,7 @@ export const Organisation = ({ organisation }: OrganisationProps) => {
         <EditOrganisationButton organisation={organisation} />
       </EuiFlexItem>
       <EuiFlexItem>
-        <DeleteButton organisationId={organisation.organisationId} />
+        <DeleteButton organisationId={organisation.organisationId} fileIds={organisation.Document.fileIds} />
       </EuiFlexItem>
     </EuiFlexGroup>
   </EuiFlexGroup>

@@ -7,6 +7,7 @@ import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
 import { EditButton } from './EditSensor'
+import { SensorTabs } from './SensorDetailsTabs'
 import { SensorProps, withLoadSensorFromUrl } from './utils'
 
 const SensorDesc = ({
@@ -58,7 +59,7 @@ export const ViewSensor = ({ sensor }: SensorProps) => {
         <SensorDesc sensor={sensor} />
       </EuiFlexItem>
     </EuiFlexGroup>
-    <MeasurementsForSensor sensorId={sensorId} />
+    <SensorTabs sensorId={sensorId} />
   </>
 }
 

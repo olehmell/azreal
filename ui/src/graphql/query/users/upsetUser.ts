@@ -6,8 +6,8 @@ import { UpsetUser, UpsetUserVariables } from './types/UpsetUser'
 import { MutationFunctionOptions } from '@apollo/react-common'
 
 export const ADD_USER= gql`
-  mutation AddUser($userRole: String = "", $phoneNumber: String = "", $organisationId: Int, $fullName: String = "", $email: String = "", $documentId: Int = 1) {
-    insert_az_users_Users_one(object: {documentId: $documentId, email: $email, fullName: $fullName, organisationId: $organisationId, phoneNumber: $phoneNumber, userRole: $userRole}) {
+  mutation AddUser($userRole: String = "", $phoneNumber: String = "", $organisationId: Int, $fullName: String = "", $email: String = "") {
+    insert_az_users_Users_one(object: {email: $email, fullName: $fullName, organisationId: $organisationId, phoneNumber: $phoneNumber, userRole: $userRole}) {
       userId
     }
   }
@@ -22,8 +22,8 @@ export const ADD_PASSWORD= gql`
 `
 
 const UPSET_USER = gql`
-  mutation UpsetUser($userRole: String = "user", $phoneNumber: String, $fullName: String, $email: String, $documentId: Int, $userId: Int, $organisationId: Int) {
-    insert_az_users_Users(objects: {documentId: $documentId, email: $email, fullName: $fullName, phoneNumber: $phoneNumber, userRole: $userRole, organisationId: $organisationId, userId: $userId}, on_conflict: {constraint: Users_pkey, update_columns: [documentId, email, userRole, phoneNumber, fullName, organisationId], where: {userId: {_is_null: false}}}) {
+  mutation UpsetUser($userRole: String = "user", $phoneNumber: String, $fullName: String, $email: String, $userId: Int, $organisationId: Int) {
+    insert_az_users_Users(objects: {email: $email, fullName: $fullName, phoneNumber: $phoneNumber, userRole: $userRole, organisationId: $organisationId, userId: $userId}, on_conflict: {constraint: Users_pkey, update_columns: [documentId, email, userRole, phoneNumber, fullName, organisationId], where: {userId: {_is_null: false}}}) {
       returning {
         userId
       }

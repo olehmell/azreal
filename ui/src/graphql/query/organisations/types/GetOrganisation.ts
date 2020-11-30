@@ -7,22 +7,23 @@
 // GraphQL query operation: GetOrganisation
 // ====================================================
 
+export interface GetOrganisation_az_users_Organisation_Document {
+  __typename: "az_docs_Documents";
+  fileIds: any;
+}
+
 export interface GetOrganisation_az_users_Organisation {
   __typename: "az_users_Organisation";
   shortName: string | null;
-  rntrc: any;
-  registryLink: string | null;
+  rntrc: string;
   organisationRole: string | null;
   organisationId: number;
   fullName: string;
   country: string | null;
-  documentId: number;
+  Document: GetOrganisation_az_users_Organisation_Document | null;
 }
 
 export interface GetOrganisation {
-  /**
-   * fetch data from the table: "az_users.Organisation"
-   */
   az_users_Organisation: GetOrganisation_az_users_Organisation[];
 }
 

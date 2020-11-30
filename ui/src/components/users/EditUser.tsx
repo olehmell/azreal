@@ -15,6 +15,7 @@ import {
   EuiFieldPassword,
   EuiButtonEmpty,
   EuiFlexItem,
+  EuiCopy,
 } from '@elastic/eui'
 
 import { useRouter } from 'next/router'
@@ -27,6 +28,7 @@ import { UserRoleSelect } from './UserRoleSelect'
 import { OrganisationSelect } from './OrganisationSelect'
 import generatePassword from 'password-generator'
 import { useNotification } from '../utils/Notifications'
+import { useAuthObj, useIsManagerAccess } from '../auth/AuthContext'
 
 type UserForm = Partial<UserProps>
 
@@ -46,12 +48,11 @@ export const InnerEditUser = ({ user }: UserForm) => {
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
   const { addToast } = useNotification()
+  const isManager = useIsManagerAccess()
 
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(userSchema)
   })
-
-  console.log(errors)
 
   useEffect(() => {
     if (isNew) {
@@ -75,12 +76,17 @@ export const InnerEditUser = ({ user }: UserForm) => {
   
       setLoading(false)
       const userId = data.insert_az_users_AuthData_one.userId || user.userId
-      await addToast({ 
+      isNew && await addToast({ 
         title: 'Незабудьте пароль!',
         color: 'success',
         text: <EuiFlexItem>
           Цей пароль потрібний для входу у систему для створеного користувача, не забудьте передати його!
           <EuiFieldPassword type='dual' value={userData.password} readOnly fullWidth />
+          <EuiCopy textToCopy={userData.password}>
+            {(copy) => (
+              <EuiButton onClick={copy}>Скопіювати</EuiButton>
+            )}
+          </EuiCopy>
         </EuiFlexItem>
       })
       router.push('/users/[userId]', `/users/${userId}`)
@@ -113,7 +119,7 @@ export const InnerEditUser = ({ user }: UserForm) => {
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('fullName')])}</EuiFormErrorText>
 
         <EuiFormRow label="Email" fullWidth>
-          <EuiFieldText name={getFiledName('email')} inputRef={register} required fullWidth />
+          <EuiFieldText name={getFiledName('email')} inputRef={register} disabled={!isManager} required fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('email')])}</EuiFormErrorText>
 
@@ -128,12 +134,12 @@ export const InnerEditUser = ({ user }: UserForm) => {
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('phoneNumber')])}</EuiFormErrorText>
 
         <EuiFormRow label="Рівень доступу користувача" fullWidth>
-          <UserRoleSelect disabled={!isNew} name={getFiledName('userRole')} required inputRef={register} fullWidth />
+          <UserRoleSelect disabled={!isManager} name={getFiledName('userRole')} required inputRef={register} fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('userRole')])}</EuiFormErrorText>
 
         <EuiFormRow label="Організація" fullWidth>
-          <OrganisationSelect disabled={!isNew} name={getFiledName('organisationId')} inputRef={register} fullWidth />
+          <OrganisationSelect disabled={!isManager} name={getFiledName('organisationId')} inputRef={register} fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('organisationId')])}</EuiFormErrorText>
 

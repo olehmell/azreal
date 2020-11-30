@@ -8,6 +8,7 @@ const GET_FACTORS_WITH_SENSORS = gql`
       nodes {
         label
         unit
+        maxValue
         SensorFactors {
           Sensor {
             sensorId

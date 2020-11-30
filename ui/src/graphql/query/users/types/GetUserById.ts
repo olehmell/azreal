@@ -7,6 +7,11 @@
 // GraphQL query operation: GetUserById
 // ====================================================
 
+export interface GetUserById_az_users_Users_Document {
+  __typename: "az_docs_Documents";
+  fileIds: any;
+}
+
 export interface GetUserById_az_users_Users_Organisation {
   __typename: "az_users_Organisation";
   shortName: string | null;
@@ -21,17 +26,11 @@ export interface GetUserById_az_users_Users {
   phoneNumber: string | null;
   userRole: string | null;
   userId: number;
-  documentId: number;
-  /**
-   * An object relationship
-   */
+  Document: GetUserById_az_users_Users_Document | null;
   Organisation: GetUserById_az_users_Users_Organisation | null;
 }
 
 export interface GetUserById {
-  /**
-   * fetch data from the table: "az_users.Users"
-   */
   az_users_Users: GetUserById_az_users_Users[];
 }
 
