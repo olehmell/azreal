@@ -20,7 +20,7 @@ hasura_url = os.getenv('HASURA_URL')
 
 def create_login_query(email):
     return {
-        "query": "query Login($email: String = \"\") { az_users_Users(where: {email: {_eq: $email}}) { userId userRole AuthDatum { password } } }",
+        "query": "query Login($email: String = \"\") { az_users_Users(where: {email: {_eq: $email}}) { userId userRole AuthData { password } } }",
         "operationName": "Login",
         "variables": {"email": email}
     }
@@ -44,7 +44,7 @@ def login():
         return {'error': 'user not found'}, 404
     else:
         for info in user_info:
-            hasura_user_password = info['AuthDatum']['password']
+            hasura_user_password = info['AuthData'][0]['password']
             hasura_user_id = info['userId']
             hasura_user_role = info['userRole']
         if hasura_user_password == hash_pass:
