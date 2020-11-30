@@ -45,7 +45,7 @@ export const Organisation = ({ organisation }: OrganisationProps) => {
         <EditOrganisationButton organisation={organisation} />
       </EuiFlexItem>
       <EuiFlexItem>
-        <DeleteButton organisationId={organisation.organisationId} />
+        <DeleteButton organisationId={organisation.organisationId} fileIds={organisation.Document.fileIds} />
       </EuiFlexItem>
     </EuiFlexGroup>
   </EuiFlexGroup>

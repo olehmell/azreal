@@ -35,7 +35,7 @@ const messages = {
 
 export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
   const formType = organisation ? 'edit' : 'new'
-
+  const isNew = formType === 'new'
   const [ upsetOrganisations ] = useUpsetOrganisation(organisation?.organisationId)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter()
@@ -45,7 +45,7 @@ export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
   })
 
   useEffect(() => {
-    if (formType === 'new') return
+    if (isNew) return
 
     fillInitValues<OrganisationSchema>({
       ...organisation,
@@ -116,7 +116,7 @@ export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors.rntrc)}</EuiFormErrorText>
 
-        <EuiFormRow label="Файли організації" fullWidth>
+        {isNew && <EuiFormRow label="Файли організації" fullWidth>
           <Controller
             name="documentIds"
             control={control}
@@ -124,7 +124,7 @@ export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
               <DocumentLoader fileIds={props.value} onChange={props.onChange} />
             } // props contains: onChange, onBlur and value
           />
-        </EuiFormRow>
+        </EuiFormRow>}
 
         <EuiSpacer />
         <SubmitButton />

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useDeleteUser } from 'src/graphql/query/users/deleteUser'
 import { Loading } from '../utils/loading'
+import { useNotification } from '../utils/Notifications'
 
 
 type DeleteButtonProps = {
@@ -10,7 +11,8 @@ type DeleteButtonProps = {
 }
 
 export const DeleteButton = ({ userId }: DeleteButtonProps) => {
-  const [ deleteOrganisation, { data: res, error, loading } ] = useDeleteUser(userId)
+  const [ deleteUser, { data: res, error, loading } ] = useDeleteUser(userId)
+  const { addToast } = useNotification()
   const router = useRouter()
 
   const deletedId = res?.delete_az_users_Users.returning[0].userId || 0
@@ -28,7 +30,13 @@ export const DeleteButton = ({ userId }: DeleteButtonProps) => {
   return <EuiButton
     iconType="minusInCircle"
     size="s"
-    onClick={() => deleteOrganisation()}
+    onClick={() => { 
+      deleteUser()
+      addToast({
+        title: 'Успішно видалено',
+        color: 'success'
+      })
+    }}
   >
     Видалити
   </EuiButton>

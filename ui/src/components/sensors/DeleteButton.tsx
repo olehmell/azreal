@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useDeleteSensorById } from 'src/graphql/query/sensors/deleteSensor'
 import { NewLog } from '../service-log/NewLog'
 import { Loading } from '../utils/loading'
+import { useNotification } from '../utils/Notifications'
 
 
 type DeleteButtonProps = {
@@ -13,7 +14,7 @@ type DeleteButtonProps = {
 export const DeleteButton = ({ sensorId }: DeleteButtonProps) => {
   const [ deleteSensor, { data: res, error, loading } ] = useDeleteSensorById(sensorId)
   const router = useRouter()
-
+  const { addToast } = useNotification()
   const [ show, setShow ] = useState(false)
 
   const open = () => {
@@ -41,6 +42,10 @@ export const DeleteButton = ({ sensorId }: DeleteButtonProps) => {
         <NewLog sensorId={sensorId} onChange={() => {
           deleteSensor()
           close()
+          addToast({
+            title: 'Успішно видалено',
+            color: 'success'
+          })
         }} />
       </EuiModalBody>
 

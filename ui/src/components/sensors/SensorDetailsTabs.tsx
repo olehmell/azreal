@@ -30,12 +30,10 @@ export const SensorTabs = ({ sensorId }: SensorTabsProps) => {
 
   return (
     <EuiTabbedContent
+      style={{ marginTop: '1rem' }}
       tabs={tabs}
       initialSelectedTab={tabs[1]}
       autoFocus="selected"
-      onTabClick={(tab) => {
-        console.log('clicked tab', tab)
-      }}
     />
   )
 }
