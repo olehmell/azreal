@@ -16,7 +16,7 @@ port = os.getenv('PORT')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-my_client = MongoClient(os.getenv('POSTGRES_HOSTNAME'))
+my_client = MongoClient(os.getenv('MONGO_HOSTNAME'))
 my_db = my_client["test"]
 my_col = my_db["collect"]
 
