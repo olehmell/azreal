@@ -51,7 +51,7 @@ def login():
             print(hasura_user_id)
             return {'userId': hasura_user_id, 'userRole': hasura_user_role, 'token': hasura_secret_key}
         else:
-            return {'error': 'your password so faggot'}, 401
+            return {'error': 'incorect password'}, 401
 
 
 if __name__ == '__main__':
