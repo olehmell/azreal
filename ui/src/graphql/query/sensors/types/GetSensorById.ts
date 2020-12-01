@@ -47,6 +47,7 @@ export interface GetSensorById_az_sensors_Sensors {
   Location: GetSensorById_az_sensors_Sensors_Location;
   ServiceLogs: GetSensorById_az_sensors_Sensors_ServiceLogs[];
   SensorFactors: GetSensorById_az_sensors_Sensors_SensorFactors[];
+  isActive: boolean;
 }
 
 export interface GetSensorById {

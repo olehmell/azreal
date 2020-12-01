@@ -71,3 +71,5 @@ export const withLoadSensorFromUrl = (Component: React.ComponentType<SensorProps
     return <Component sensor={sensor} />
   }
 }
+
+export const getSensorStatus = (isActive: boolean) => isActive ? 'Активний' : 'Неактивний'
