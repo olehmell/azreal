@@ -31,13 +31,14 @@ export const DeleteButton = ({ organisationId, fileIds }: DeleteButtonProps) => 
   return <EuiButton
     iconType="minusInCircle"
     size="s"
-    onClick={() => {
-      deleteOrganisation()
-      deleteFiles(fileIds)
-      addToast({
+    onClick={async () => {
+      await deleteOrganisation()
+      await addToast({
         title: 'Успішно видалено',
         color: 'success'
       })
+
+      deleteFiles(fileIds)
     }}
   >
     Видалити

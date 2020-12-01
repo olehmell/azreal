@@ -1,4 +1,4 @@
-import { EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiPanel, EuiSpacer } from '@elastic/eui'
+import { EuiDescriptionList, EuiFlexGrid, EuiFlexGroup, EuiFlexItem, EuiPanel, EuiSpacer } from '@elastic/eui'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useGetServiceLogs } from 'src/graphql/query/service-log/getServiceLogs'
@@ -8,6 +8,7 @@ import { Images } from '../files/Images'
 import { createDescItem } from '../utils'
 import { Loading } from '../utils/loading'
 import { Page } from '../utils/Page'
+import { DeleteButton } from './DeleteButton'
 import { ServiceLogSelector } from './ServiceLogSelector'
 import { messageByServiceKind } from './utils'
 
@@ -34,14 +35,21 @@ const ServiceLogDesc = ({
 
 const ServiceLog = (serviceLog: GetServiceLogs_az_sensors_ServiceLog) => {
   return <EuiPanel paddingSize="l">
-    <EuiFlexGroup>
+    <EuiFlexGroup alignItems='flexStart'>
       <EuiFlexItem>
-        <Images fileIds={serviceLog.Document.fileIds} />
-        <Files fileIds={serviceLog.Photo.fileIds} />
+        <EuiFlexGrid columns={1}>
+          <EuiFlexItem style={{ width: '100%' }}> 
+            <Images fileIds={serviceLog.Photo.fileIds} />
+          </EuiFlexItem>
+          <EuiFlexItem style={{ width: '100%' }}> 
+            <Files fileIds={serviceLog.Document.fileIds} />
+          </EuiFlexItem>
+        </EuiFlexGrid>
       </EuiFlexItem>
       <EuiFlexItem>
         <ServiceLogDesc {...serviceLog} />
       </EuiFlexItem>
+      <DeleteButton serviceLog={serviceLog} />
     </EuiFlexGroup>
   </EuiPanel>
 }

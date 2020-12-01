@@ -1,4 +1,4 @@
-import { EuiButton, EuiFieldPassword, EuiForm, EuiFormErrorText, EuiFormRow, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui'
+import { EuiButton, EuiFieldPassword, EuiFlexGroup, EuiFlexItem, EuiForm, EuiFormErrorText, EuiFormRow, EuiImage, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -92,7 +92,19 @@ export const ChangePassword = () => {
 
 export const ChangePasswordPage = () => {
   return <CenteredPage title='Зміна паролю'>
-    <ChangePassword />
+    <EuiFlexGroup alignItems='center'>
+      <EuiFlexItem grow={false}>
+        <EuiImage
+          size="m"
+          hasShadow
+          alt="airzoom logo"
+          url="/images/airzoom.svg"
+        />
+      </EuiFlexItem>
+      <EuiFlexItem grow={false}>
+        <ChangePassword />
+      </EuiFlexItem>
+    </EuiFlexGroup>
   </CenteredPage>
 }
 

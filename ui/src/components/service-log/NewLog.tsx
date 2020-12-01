@@ -26,25 +26,27 @@ import { useNotification } from '../utils/Notifications'
 
 type NewLogProps = {
   sensorId?: number,
-  serviceType?: az_sensors_e_service_kind_enum,
+  serviceKind?: az_sensors_e_service_kind_enum,
   onChange?: (sensorId: number) => void
 }
 
-export const NewLog = ({ sensorId: initialSensorId, serviceType, onChange }: NewLogProps) => {
+export const NewLog = ({ sensorId: initialSensorId, serviceKind, onChange }: NewLogProps) => {
   const [ addNewLog ] = useAddServiceLog()
   const [ loading, setLoading ] = useState(false)
   const [ error, setError ] = useState('')
   const router = useRouter()
 
-  const { register, handleSubmit, setValue, control, watch } = useForm({
+  const { register, handleSubmit, setValue, errors, control, watch } = useForm({
     resolver: yupResolver(serviceLogSchema)
   })
 
-  const sensorId = initialSensorId || watch('sensodId')
-  const timestamp = watch('timestamp')
+  console.log('errors', errors)
+
+  const sensorId = initialSensorId 
+  const timestamp = watch('timestamp') || moment()
 
   useEffect(() => {
-    fillInitValues({ serviceType, sensorId, timestamp }, setValue)
+    fillInitValues({ serviceKind, sensorId: initialSensorId, timestamp }, setValue)
   }, [])
 
   const { addToast } = useNotification()
@@ -52,10 +54,12 @@ export const NewLog = ({ sensorId: initialSensorId, serviceType, onChange }: New
 
   const onSubmit = useCallback(async (servicesData) => {
     setLoading(true)
-    console.log(servicesData)
     try {
-      const timestamp = servicesData.timestamp.toString()
-      const { errors } = await addNewLog({ variables: { sensorId, ...servicesData, timestamp } })
+      const { errors } = await addNewLog({ variables: {
+        sensorId: initialSensorId,
+        ...servicesData,
+        timestamp: timestamp.toISOString()
+      }})
 
       if (errors) throw errors
 
@@ -89,6 +93,7 @@ export const NewLog = ({ sensorId: initialSensorId, serviceType, onChange }: New
       {!initialSensorId && <EuiFormRow label='ID сенсора' fullWidth>
         <SensorsSelect
           name='sensorId'
+          inputRef={register}
           placeholder='Id сенсора'
           fullWidth
           required
@@ -97,11 +102,11 @@ export const NewLog = ({ sensorId: initialSensorId, serviceType, onChange }: New
       
       <EuiFormRow label="Тип сервісу" fullWidth>
         <EuiSelect
-          name='serviceType'
+          name='serviceKind'
           placeholder="Оберіть тип сервісу"
           inputRef={register}
           options={typeServiseOptions}
-          disabled={!!serviceType}
+          disabled={!!serviceKind}
           fullWidth
         />
       </EuiFormRow>

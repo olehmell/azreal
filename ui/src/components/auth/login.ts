@@ -20,7 +20,7 @@ export const checkLogin = async (email: string, password: string) => {
 
     if (data?.error) throw new Error('Невірний логін або пароль')
   
-    return { data: data as Auth_Obj }
+    return { data: data as Auth_Obj, token: hasuraSecret }
   } catch (error) {
     return { error }
   }

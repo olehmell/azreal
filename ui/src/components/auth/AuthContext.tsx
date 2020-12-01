@@ -1,4 +1,4 @@
-import React, { useReducer, createContext, useContext, useEffect } from 'react'
+import React, { useReducer, createContext, useContext, useEffect, useCallback } from 'react'
 import Chrome from '../chrome'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
@@ -134,30 +134,12 @@ export function AuthProvider (props: React.PropsWithChildren<any>) {
     }
   })
 
-  const Content = () => {
-    const { data, error, loading } = useGetMyRole(state.authObj?.userId)
-    const userRole = data?.az_users_Users?.pop()?.userRole as UserRole
-
-    useEffect(() => {
-      if (loading || error || !data) return
-
-      dispatch({ type: 'setAuthObj', authObj: { ...state.authObj, userRole }})
-    }
-    , [ userRole ])
-
-    if (loading) return <Loading /> 
-
-    if (error) return <NotFound message={error.message}/>
-
-    return <Chrome>
-      {props.children}
-    </Chrome>
-  }
-
   return (
     <AuthContext.Provider value={contextValue}>
       <ApolloProvider client={client}>
-        <Content />
+        <Chrome>
+          {props.children}
+        </Chrome>
       </ApolloProvider>
     </AuthContext.Provider>
   )

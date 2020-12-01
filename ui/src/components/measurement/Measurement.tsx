@@ -138,6 +138,7 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
       <EuiFlexGroup justifyContent='spaceBetween' alignItems='center'>
         <EuiFlexItem>
           <EuiSelect
+            style={{ maxWidth: 200 }}
             placeholder="Оберіть розмір вибірки"
             options={measurementSelectorOptions}
             onChange={onChangeSelector(setAggregation)}

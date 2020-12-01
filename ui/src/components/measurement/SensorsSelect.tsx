@@ -14,7 +14,6 @@ export const SensorsSelect = (props: EuiSelectProps) => {
     .map(({ sensorId, Location: { address } }) => ({ value: sensorId, text: `${sensorId} | ${address}` }))
 
   return <EuiSelect
-    style={{ maxWidth: 200 }}
     id="role-selector"
     options={options}
     {...props}
