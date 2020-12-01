@@ -8,6 +8,7 @@ import { DataGrid } from '../utils/DataGrid'
 import { Loading } from '../utils/loading'
 import { Page } from '../utils/Page'
 import { NotFound } from '../utils/NotFoundPage'
+import { getSensorStatus } from './utils'
 
 type ViewSensorsProps = {
   sensors: SensorsType[]
@@ -30,13 +31,18 @@ const ViewSensors = ({ sensors }: ViewSensorsProps) => {
   {
     id: 'address',
     display: 'Розташування'
+  },
+  {
+    id: 'status',
+    display: 'Статус'
   } ]
 
-  const data = sensors.map(({ Location: { address, airlyLink }, sensorId, manufacturer, model }) => ({
+  const data = sensors.map(({ Location: { address, airlyLink }, sensorId, isActive, manufacturer, model }) => ({
     sensorId: <Link href='/sensors/[sensorId]' as={`/sensors/${sensorId}`}><a>{sensorId}</a></Link>,
     manufacturer,
     model,
     address: <a href={airlyLink}>{address}</a>,
+    status: getSensorStatus(isActive)
   }))
 
   return <DataGrid columns={columns} data={data} />

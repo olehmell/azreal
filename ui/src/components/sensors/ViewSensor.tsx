@@ -8,7 +8,7 @@ import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
 import { EditButton } from './EditSensor'
 import { SensorTabs } from './SensorDetailsTabs'
-import { SensorProps, withLoadSensorFromUrl } from './utils'
+import { getSensorStatus, SensorProps, withLoadSensorFromUrl } from './utils'
 
 const SensorDesc = ({
   sensor
@@ -16,6 +16,7 @@ const SensorDesc = ({
   const {
     manufacturer,
     model,
+    isActive,
     Location: {
       address,
       airlyLink
@@ -23,10 +24,11 @@ const SensorDesc = ({
   } = sensor
 
   const items = [
+    createDescItem('Статус', getSensorStatus(isActive)),
     createDescItem('Виробник', manufacturer),
     createDescItem('Модель', model),
     createDescItem('Адреса', <a href={airlyLink}>{address}</a>),
-    createDescItem('Фактори вимірювання', <FactorsDesc sensor={sensor} />),
+    createDescItem('Фактори вимірювання', sensor.SensorFactors.length && <FactorsDesc sensor={sensor} />),
   ].filter(x => x !== undefined)
 
   return <EuiDescriptionList textStyle="reverse" listItems={items} />
@@ -38,7 +40,9 @@ const FactorsDesc = ({
   const factors = sensor.SensorFactors.map(({ PollutionFactor }) => PollutionFactor)
   const items = factors.map(({ label, unit }, i) => <EuiBadge key={i} color="primary" style={{ marginLeft: 0, marginRight: '4px' }}>{`${label}/${unit}`}</EuiBadge>)
 
-  return <>{items}</>
+  return items.length
+    ? <>{items}</>
+    : null
 }
 
 export const ViewSensor = ({ sensor }: SensorProps) => {
@@ -62,7 +66,6 @@ export const ViewSensor = ({ sensor }: SensorProps) => {
     <SensorTabs sensorId={sensorId} />
   </>
 }
-
 
 export const Sensor = ({ sensor }: SensorProps) => {
   return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>

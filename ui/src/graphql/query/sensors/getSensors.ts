@@ -9,6 +9,7 @@ export const GET_SENSOR_QUERY = gql`
       manufacturer
       model
       sensorId
+      isActive
       Location {
         address
         airlyLink
