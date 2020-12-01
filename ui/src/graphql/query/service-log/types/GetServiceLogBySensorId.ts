@@ -28,7 +28,7 @@ export interface GetServiceLogBySensorId_az_sensors_ServiceLog_Photo {
 export interface GetServiceLogBySensorId_az_sensors_ServiceLog {
   __typename: "az_sensors_ServiceLog";
   timestamp: any;
-  serviceType: az_sensors_e_service_kind_enum;
+  serviceKind: az_sensors_e_service_kind_enum;
   sensorId: number;
   Location: GetServiceLogBySensorId_az_sensors_ServiceLog_Location | null;
   Document: GetServiceLogBySensorId_az_sensors_ServiceLog_Document;

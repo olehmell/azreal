@@ -71,9 +71,9 @@ export const Sensor = ({ sensor }: SensorProps) => {
       <EuiFlexItem>
         <EditButton sensor={sensor} />
       </EuiFlexItem>
-      <EuiFlexItem>
+      {/* <EuiFlexItem>
         <DeleteButton sensorId={sensor.sensorId} />
-      </EuiFlexItem>
+      </EuiFlexItem> */}
     </EuiFlexGroup>
   </EuiFlexGroup>
   }>

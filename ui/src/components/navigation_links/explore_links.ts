@@ -82,7 +82,7 @@ export const buildExploreLinks = (
         title: 'Датчики',
         listItems: [
           {
-            label: 'Календар',
+            label: 'Сервісний журнал',
             onClick: makeAction('/service/timeline'),
             iconType: 'outlierDetectionJob'
           },

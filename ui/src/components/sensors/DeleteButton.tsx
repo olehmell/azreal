@@ -39,18 +39,19 @@ export const DeleteButton = ({ sensorId }: DeleteButtonProps) => {
       </EuiModalHeader>
 
       <EuiModalBody>
-        <NewLog sensorId={sensorId} onChange={() => {
-          deleteSensor()
-          close()
-          addToast({
-            title: 'Успішно видалено',
+        <NewLog sensorId={sensorId} onChange={async () => {
+          await deleteSensor({ variables: { id: sensorId }})
+          await addToast({
+            title: 'Датчик успішно видалено',
             color: 'success'
           })
+
+          close()
         }} />
       </EuiModalBody>
 
     </EuiModal>
-  </EuiOverlayMask> : null, [ ]) 
+  </EuiOverlayMask> : null, [ show ]) 
 
   if (error) return null
 

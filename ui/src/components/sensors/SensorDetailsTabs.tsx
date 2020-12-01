@@ -23,7 +23,7 @@ export const SensorTabs = ({ sensorId }: SensorTabsProps) => {
     },
     {
       id: 'service-logs--id',
-      name: 'Скрвісний журнал',
+      name: 'Сервісний журнал',
       content: <ServiceLogsSectionForSensor sensorId={sensorId} />
     }
   ]
@@ -33,7 +33,6 @@ export const SensorTabs = ({ sensorId }: SensorTabsProps) => {
       style={{ marginTop: '1rem' }}
       tabs={tabs}
       initialSelectedTab={tabs[1]}
-      autoFocus="selected"
     />
   )
 }

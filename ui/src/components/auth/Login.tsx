@@ -1,4 +1,4 @@
-import { EuiButton, EuiFieldPassword, EuiFieldText, EuiForm, EuiFormErrorText, EuiFormRow, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui'
+import { EuiButton, EuiFieldPassword, EuiFieldText, EuiFlexGrid, EuiFlexGroup, EuiFlexItem, EuiForm, EuiFormErrorText, EuiFormRow, EuiImage, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -79,6 +79,18 @@ export const Login = () => {
 
 export const LoginPage = () => {
   return <CenteredPage title='Вхід'>
-    <Login />
+    <EuiFlexGroup alignItems='center'>
+      <EuiFlexItem grow={false}>
+        <EuiImage
+          size="m"
+          hasShadow
+          alt="airzoom logo"
+          url="/images/airzoom.svg"
+        />
+      </EuiFlexItem>
+      <EuiFlexItem grow={false}>
+        <Login />
+      </EuiFlexItem>
+    </EuiFlexGroup>
   </CenteredPage>
 }

@@ -16,6 +16,8 @@ import {
   EuiButtonEmpty,
   EuiFlexItem,
   EuiCopy,
+  EuiButtonIcon,
+  EuiFlexGrid,
 } from '@elastic/eui'
 
 import { useRouter } from 'next/router'
@@ -29,6 +31,7 @@ import { OrganisationSelect } from './OrganisationSelect'
 import generatePassword from 'password-generator'
 import { useNotification } from '../utils/Notifications'
 import { useAuthObj, useIsManagerAccess } from '../auth/AuthContext'
+import { Loading } from '../utils/loading'
 
 type UserForm = Partial<UserProps>
 
@@ -49,7 +52,7 @@ export const InnerEditUser = ({ user }: UserForm) => {
   const router = useRouter()
   const { addToast } = useNotification()
   const isManager = useIsManagerAccess()
-
+  const [ error, setError ] = useState<string>()
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(userSchema)
   })
@@ -63,11 +66,14 @@ export const InnerEditUser = ({ user }: UserForm) => {
   })
 
   const onSubmit = useCallback(async userData => {
+    setError(undefined)
     setLoading(true)
     try {
-      const password = await (await sha256(userData.password)).toString()
-      console.log('password', password)
-      const { errors, data } = await upsetUsers({ variables: {
+      const password = userData.password
+        ? await (await sha256(userData.password)).toString()
+        : undefined
+
+      const { errors } = await upsetUsers({ variables: {
         ...userData,
         password
       }})
@@ -75,23 +81,28 @@ export const InnerEditUser = ({ user }: UserForm) => {
       if (errors) throw errors
   
       setLoading(false)
-      const userId = data.insert_az_users_AuthData_one.userId || user.userId
       isNew && await addToast({ 
         title: 'Незабудьте пароль!',
         color: 'success',
-        text: <EuiFlexItem>
-          Цей пароль потрібний для входу у систему для створеного користувача, не забудьте передати його!
-          <EuiFieldPassword type='dual' value={userData.password} readOnly fullWidth />
-          <EuiCopy textToCopy={userData.password}>
-            {(copy) => (
-              <EuiButton onClick={copy}>Скопіювати</EuiButton>
-            )}
-          </EuiCopy>
-        </EuiFlexItem>
+        text: <EuiFlexGrid columns={1}>
+          <EuiFlexItem>
+            Цей пароль потрібний для входу у систему для створеного користувача, не забудьте передати його!
+          </EuiFlexItem>
+          <EuiFlexItem>
+            <EuiFieldPassword type='dual' value={userData.password} readOnly fullWidth />
+            <EuiCopy textToCopy={userData.password}>
+              {(copy) => (
+                <EuiButtonIcon iconType='copy' onClick={copy} />
+              )}
+            </EuiCopy>
+          </EuiFlexItem>
+        </EuiFlexGrid>
+          
       })
-      router.push('/users/[userId]', `/users/${userId}`)
+      router.push('/users/[userId]', `/users/${user.userId}`)
     } catch (error) {
       console.error(error)
+      setError(error?.toString())
       setLoading(false)
     }
   }, [ upsetUsers ])
@@ -109,6 +120,8 @@ export const InnerEditUser = ({ user }: UserForm) => {
     </EuiFormRow>
     <EuiFormErrorText>{getErrorMsg(errors[getFiledName('password')])}</EuiFormErrorText>
   </> : <EuiButtonEmpty href='/password-change'>Змінити пароль</EuiButtonEmpty>, [ isNew ])
+
+  if (!isNew && loading) return <Loading />
 
   return (
     <Page title={messages[formType].title}>
@@ -145,8 +158,10 @@ export const InnerEditUser = ({ user }: UserForm) => {
 
         <PasswordInput />
 
-        <EuiSpacer />
+        <EuiSpacer size='m' />
         <SubmitButton />
+
+        <EuiFormErrorText>{error}</EuiFormErrorText>
 
       </EuiForm>
     </Page>

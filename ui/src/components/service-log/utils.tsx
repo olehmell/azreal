@@ -3,11 +3,11 @@ import { az_sensors_e_service_kind_enum } from 'src/types/graphql-global-types'
 import * as yup from 'yup'
 
 export const serviceLogSchema = yup.object().shape({
-  sensorId: yup.number().required(),
+  sensorId: yup.number(),
   timestamp: yup.date().required(),
-  serviceType: yup.string().required(),
-  documentIds: yup.array().required(),
-  photoIds: yup.array().required(),
+  serviceKind: yup.string().required(),
+  documentIds: yup.string(),
+  photoIds: yup.string(),
 })
 const { Planned, Unscheduled, Replacement } = az_sensors_e_service_kind_enum
 

@@ -1,10 +1,7 @@
-import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
-import Link from 'next/link'
+import { EuiDescriptionList, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import React from 'react'
-import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { useIsManagerAccess } from '../auth/AuthContext'
 import { createDescItem } from '../utils'
-import { ButtonLink } from '../utils/ButtonLink'
-import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
 import { EditUserButton } from './EditUser'
@@ -42,15 +39,16 @@ export const ViewUser = ({ user }: UserProps) => {
 
 
 export const UserPage = ({ user }: UserProps) => {
+  const isManager = useIsManagerAccess()
   return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>
     <EuiFlexItem>{user.fullName}</EuiFlexItem>
     <EuiFlexGroup alignItems='center'>
       <EuiFlexItem>
         <EditUserButton user={user} />
       </EuiFlexItem>
-      <EuiFlexItem>
+      {isManager && <EuiFlexItem>
         <DeleteButton userId={user.userId} />
-      </EuiFlexItem>
+      </EuiFlexItem>}
     </EuiFlexGroup>
   </EuiFlexGroup>
   }>

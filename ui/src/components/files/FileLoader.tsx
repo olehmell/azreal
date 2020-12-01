@@ -54,8 +54,12 @@ const InnerFileLoader = ({ onChange, fileIds: initialFileIds, ...props}: FilePic
 
 const saveFile = async (file: File) => {
   const form = new FormData()
-  form.append('file', file)
-  const { data } = await axios.post(`${mongoUrl}/add`, form)
+  form.append('file', file, file.name)
+  const { data } = await axios({
+    method: 'post',
+    url: `${mongoUrl}/add`,
+    data: form
+  })
 
   return data.id as string
 }
