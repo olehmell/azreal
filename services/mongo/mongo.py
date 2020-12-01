@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, jsonify
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -19,24 +19,28 @@ mongo_client = MongoClient(os.getenv('MONGO_HOSTNAME'))
 db = mongo_client['files']
 grid_fs = GridFS(db)
 
-@app.route('/add/', methods=['POST'])
+@app.route("/add", methods=["POST"])
 def add_files():
-    with grid_fs.new_file(filename='file') as fp:
-        fp.write(request.data)
-        file_id = fp._id
+    user_file = request.files['file']
+    if user_file is not None:
+        with grid_fs.new_file(filename=user_file.filename, content_type=user_file.mimetype) as fp:
+            fp.write(user_file.read())
+            file_id = fp._id
 
-    if grid_fs.find_one(file_id) is not None:
-        return json.dumps({'status': 'File saved successfully', 'id': str(file_id) }), 200
+        if grid_fs.find_one(file_id) is not None:
+            return json.dumps({'status': 'File saved successfully', 'id': str(file_id) }), 200
+        else:
+            return json.dumps({'status': 'Error occurred while saving file.'}), 500
     else:
-        return json.dumps({'status': 'Error occurred while saving file.'}), 500
+        return json.dumps({'status': 'File in request is not found'}), 400
 
 @app.route("/get/<file_id>", methods=["GET"])
 def get_file(file_id):
     file = grid_fs.get(ObjectId(file_id))
     if file is not None:
         response = make_response(file.read())
-        response.headers['Content-Type'] = 'application/octet-stream'
-        response.headers["Content-Disposition"] = "attachment; filename={}".format('test')
+        response.headers['Content-Type'] = file.content_type
+        response.headers["Content-Disposition"] = "attachment; filename={}".format(file.filename)
         return response
     else: 
         return {'status': 'File is not found'}, 404
