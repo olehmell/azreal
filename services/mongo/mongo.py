@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, make_response
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -15,7 +15,7 @@ app = Flask(__name__)
 CORS(app)
 port = os.getenv('PORT')
 
-mongo_client = MongoClient(os.getenv('MONGO_HOSTNAME'))
+mongo_client = MongoClient(os.getenv('MONGO_HOSTNAME_URI'))
 db = mongo_client['files']
 grid_fs = GridFS(db)
 
