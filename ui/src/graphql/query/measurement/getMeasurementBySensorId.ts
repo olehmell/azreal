@@ -4,30 +4,30 @@ import { Moment } from 'moment'
 import { GetMeasurementsBySensorId, GetMeasurementsBySensorIdVariables } from './types/GetMeasurementsBySensorId'
 
 export const GET_MEASUREMENT_BY_SENSOR_ID = gql`
-  query GetMeasurementsBySensorId($sensorId: Int! = 0, $from: timestamp!, $to: timestamp!) {
-    az_sensors_Sensors(where: {sensorId: {_eq: $sensorId}}) {
-      SensorFactors {
-        PollutionFactor {
-          name
-          unit
-          maxValue
-          Measurements_aggregate(where: {timestamp: {_gte: $from, _lte: $to}, _and: {}}) {
-            aggregate {
-              avg {
-                value
-              }
+  query GetMeasurementsBySensorId($from: timestamp!, $to: timestamp!, $sensorId: Int! = 0) {
+    az_measurements_Measurements(where: {sensorId: {_eq: $sensorId}, _and: {timestamp: {_gte: $from, _lte: $to}}}) {
+      PollutionFactor {
+        maxValue
+        label
+        unit
+        Measurements_aggregate {
+          aggregate {
+            avg {
+              value
             }
           }
         }
       }
+      sensorId
+      timestamp
     }
   }
 `
 
 export type CommonAggregationData = {
   sensorId: number,
-  from: Moment,
-  to: Moment
+  from: string,
+  to: string
 }
 
 export const useGetMeasurementsBySensorId = (variables:CommonAggregationData) => useQuery<GetMeasurementsBySensorId, GetMeasurementsBySensorIdVariables>(GET_MEASUREMENT_BY_SENSOR_ID, { variables })

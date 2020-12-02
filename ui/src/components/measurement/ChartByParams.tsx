@@ -1,8 +1,7 @@
-import { EuiButton, EuiButtonEmpty, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
+import { EuiButton, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import moment from 'moment'
-import React, { useCallback, useMemo, useState } from 'react'
-import { LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { Page } from '../utils/Page'
+import React, { useMemo, useState } from 'react'
+import { LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { MeasurementType } from './aggregations'
 
 type ChartByParamProps = {
@@ -21,9 +20,9 @@ const parseChartData = (data: MeasurementType[]) => {
   const chartData = data.map(({ timestamp, values }) => {
     const params = {}
 
-    values.forEach(({ name, value, maxValue, unit }) => {
+    values.forEach(({ label, value, maxValue, unit }) => {
       linesSet.add(name)
-      params[name] = value
+      params[label] = value
       paramsByName.set(name, { maxValue, unit })
     })
 

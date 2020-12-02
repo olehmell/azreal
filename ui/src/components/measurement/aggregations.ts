@@ -1,7 +1,7 @@
+import { GetMeasurementsBySensorId_az_measurements_Measurements } from './../../graphql/query/measurement/types/GetMeasurementsBySensorId'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { CommonAggregationData, useGetMeasurementsBySensorId } from 'src/graphql/query/measurement/getMeasurementBySensorId'
-import { GetMeasurementsBySensorId_az_sensors_Sensors, GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors_PollutionFactor } from 'src/graphql/query/measurement/types/GetMeasurementsBySensorId'
 import { az_sensors_e_measurement_unit_enum } from 'src/types/graphql-global-types'
 
 export type AggregationType = 'hours' | 'days' | 'weeks' | 'months' | 'years'
@@ -20,7 +20,7 @@ type MeasurementsProps = CommonAggregationData & {
 }
 
 type MeasurementValue = {
-  name: string,
+  label: string,
   unit: az_sensors_e_measurement_unit_enum,
   maxValue: number,
   value: number
@@ -28,7 +28,7 @@ type MeasurementValue = {
 
 type InnerMeasurement = CommonValues & {
   sensorId: number,
-  values: GetMeasurementsBySensorId_az_sensors_Sensors[]
+  values: GetMeasurementsBySensorId_az_measurements_Measurements[]
 }
 
 export type MeasurementType = CommonValues & {
@@ -39,9 +39,9 @@ export type MeasurementType = CommonValues & {
 const parseMeasurementData = (measurements: InnerMeasurement[]): MeasurementType[] =>
   measurements.map(({ values, ...other }) => ({
     ...other,
-    values: values.map(({ SensorFactors }) => {
+    values: values.map(({ PollutionFactor }) => {
       const { 
-        name,
+        label,
         maxValue,
         unit,
         Measurements_aggregate:
@@ -50,32 +50,32 @@ const parseMeasurementData = (measurements: InnerMeasurement[]): MeasurementType
             { value }
           }
         }
-      } = SensorFactors[0].PollutionFactor
-      return { name, maxValue, unit, value }
+      } = PollutionFactor
+      return { label, maxValue, unit, value }
     })
   }))
 
 
-export const useGetMeasurements = ({ sensorId = 0, from: start = moment(), to: end = moment(), type }: MeasurementsProps) => {
+export const useGetMeasurements = ({ sensorId = 0, from: start = moment().toISOString(), to: end = moment().toISOString(), type }: MeasurementsProps) => {
   const measurements: InnerMeasurement[] = []
   const [ from, setFrom ] = useState(start)
-  const to = moment(from).add(1, type)
+  const to = moment(from).add(1, type).toISOString()
   const { data, loading, error } = useGetMeasurementsBySensorId({ sensorId, from, to })
 
-  const isFinish = to.diff(end) >= 0
+  const isFinish = to >= end
 
-  console.log('FROM', from, to, end, to.diff(end) )
+  console.log('FROM', from, to,)
 
   useEffect(() => {
     if (!data) return 
 
-    measurements.push({ timestamp: to.format('lll'), sensorId, values: data?.az_sensors_Sensors })
+    measurements.push({ timestamp: to, sensorId, values: data?.az_measurements_Measurements })
 
     if (!isFinish) {
       setFrom(to)
     }
 
-  }, [ sensorId, measurements.length, data?.az_sensors_Sensors.length ])
+  }, [ sensorId, measurements.length, data?.az_measurements_Measurements.length ])
 
   if (error) return { error, loading }
 

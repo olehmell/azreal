@@ -27,10 +27,10 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
 
     const measurementValue = {}
 
-    values.forEach(({ name, value }) => {
-      measurementValue[name] = value
+    values.forEach(({ label, value }) => {
+      measurementValue[label] = value
 
-      dynamicColumnIds.add(name)
+      dynamicColumnIds.add(label)
     })
 
     return {
@@ -99,6 +99,7 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   const [ aggregation, setAggregation ] = useState<AggregationType>('hours')
   const [ sensorId, setSensorId ] = useState<number>(initialSensorId)
   const [ variables, setVariables ] = useState<GetMeasurementsBySensorIdVariables>()
+  
   const { data, error, loading } = useGetMeasurements({ ...variables, type: aggregation })
 
   console.log('Meas', data, error, loading)
