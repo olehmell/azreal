@@ -28,19 +28,13 @@ export const withLoadOrganisationFromUrl = (Component: React.ComponentType<Organ
   return () => {
     const { query: { organisationId }} = useRouter()
 
-    console.log('organisationId', organisationId)
-
     const { data, loading, error } = useGetOrganisationById(parseInt(organisationId as string))
 
-    console.log('DAuseGetOrganisationByIdTA', data)
-  
     if (error) return null
   
     if (loading) return <Loading />
   
     const organisation = data?.az_users_Organisation.pop()
-
-    console.log(organisation)
 
     if (!organisation) return <NotFoundPage />
 

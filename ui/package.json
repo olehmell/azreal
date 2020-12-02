@@ -11,11 +11,12 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
+    "export-env": "node export-env.js",
     "analyze": "ANALYZE=true yarn build",
-    "build": "yarn lint && rm -f public/themes/*.min.css && next build",
-    "dev": "next",
+    "build": "yarn export-env && yarn lint && rm -f public/themes/*.min.css && next build",
+    "dev": "yarn export-env && next",
     "lint": "tsc && eslint --cache 'src/**/*.{ts,tsx,js}' --fix --max-warnings 1000",
-    "start": "next start",
+    "start": "yarn export-env && next start",
     "generate:types": "bash ./generate.sh"
   },
   "repository": {
@@ -53,6 +54,7 @@
     "password-generator": "^2.3.2",
     "pdfjs-dist": "2.4.456",
     "react": "^16.13.1",
+    "react-color": "^2.19.3",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.11.0",
     "react-leaflet": "^3.0.0",

@@ -8,10 +8,9 @@ import { GetSensorById_az_sensors_Sensors as SensorType } from 'src/graphql/quer
 import { Loading } from '../utils/loading'
 import * as yup from 'yup'
 import { NotFoundPage } from '../utils/NotFoundPage'
+import { apikey } from 'src/components/utils'
 
 const SENSORT_DATA_URL = 'https://airapi.airly.eu/v2/installations'
-
-const apikey = process.env.AIRLY_API_KEY
 
 const getLocationDataBySensorIdUrl = (id: number) => `${SENSORT_DATA_URL}/${id}`
 

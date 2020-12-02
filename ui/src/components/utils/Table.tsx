@@ -12,20 +12,13 @@ import {
   EuiBasicTableColumn,
   EuiButton,
 } from '@elastic/eui'
-import { exportToCsv } from './export'
+import { ExportButton, exportToCsv } from './export'
 
 type TableProps<T> = {
   data: T[]
   columns: EuiBasicTableColumn<T>[],
   fileName?: string
 }
-
-type ExportButtonProps = {
-  fileName?: string,
-  data: any[]
-}
-
-const ExportButton = ({ fileName, data }: ExportButtonProps) => <EuiButton onClick={() => exportToCsv(fileName, data)}>Експортувати</EuiButton>
 
 export const Table = ({ data, columns, fileName }: TableProps<Record<string, any>>) => {
 

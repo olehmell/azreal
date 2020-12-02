@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires,@typescript-eslint/no-use-before-define,@typescript-eslint/no-empty-function,prefer-template */
-const crypto = require('crypto');
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const iniparser = require('iniparser');
+const crypto = require('crypto')
+const fs = require('fs')
+const glob = require('glob')
+const path = require('path')
+const iniparser = require('iniparser')
 
 // We don't use `next-images` because v1.4.0 has a bug with SVGs
-const withImages = require('next-optimized-images');
-const withBundleAnalyzer = require('@next/bundle-analyzer');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { NormalModuleReplacementPlugin } = require('webpack');
+const withImages = require('next-optimized-images')
+const withBundleAnalyzer = require('@next/bundle-analyzer')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { NormalModuleReplacementPlugin } = require('webpack')
 
 const Dotenv = require('dotenv-webpack')
 
@@ -21,11 +21,11 @@ require('dotenv').config()
  * We don't need this during local development, because everything is
  * available under `/`.
  */
-const usePathPrefix = process.env.PATH_PREFIX === 'true';
+const usePathPrefix = process.env.PATH_PREFIX === 'true'
 
-const pathPrefix = usePathPrefix ? derivePathPrefix() : '';
+const pathPrefix = usePathPrefix ? derivePathPrefix() : ''
 
-const themeConfig = buildThemeConfig();
+const themeConfig = buildThemeConfig()
 
 const nextConfig = {
   /** Disable the `X-Powered-By: Next.js` response header. */
@@ -61,7 +61,7 @@ const nextConfig = {
   // },
 
   /** Customises the build */
-  webpack(config, { isServer }) {
+  webpack (config, { isServer }) {
     // EUI uses some libraries and features that don't work outside of a
     // browser by default. We need to configure the build so that these
     // features are either ignored or replaced with stub implementations.
@@ -81,7 +81,7 @@ const nextConfig = {
     if (isServer) {
       config.externals = config.externals.map(eachExternal => {
         if (typeof eachExternal !== 'function') {
-          return eachExternal;
+          return eachExternal
         }
 
         return (context, request, callback) => {
@@ -89,29 +89,29 @@ const nextConfig = {
             request.indexOf('@elastic/eui') > -1 ||
             request.indexOf('react-ace') > -1
           ) {
-            return callback();
+            return callback()
           }
 
-          return eachExternal(context, request, callback);
-        };
-      });
+          return eachExternal(context, request, callback)
+        }
+      })
 
       // Replace `react-ace` with an empty module on the server.
       // https://webpack.js.org/loaders/null-loader/
       config.module.rules.push({
         test: /react-ace/,
         use: 'null-loader',
-      });
+      })
 
       // Mock HTMLElement on the server-side
       const definePluginId = config.plugins.findIndex(
         p => p.constructor.name === 'DefinePlugin'
-      );
+      )
 
       config.plugins[definePluginId].definitions = {
         ...config.plugins[definePluginId].definitions,
         HTMLElement: function () {},
-      };
+      }
     } else {
       config.node = {
         fs: 'empty'
@@ -126,11 +126,11 @@ const nextConfig = {
       // If you need to highlight more than just JSON, edit the file below.
       new NormalModuleReplacementPlugin(
         /^highlight\.js$/,
-        path.join(__dirname, `src/lib/highlight.ts`)
+        path.join(__dirname, 'src/lib/highlight.ts')
       )
-    );
+    )
 
-    return config;
+    return config
   },
 
   /**
@@ -182,7 +182,7 @@ const nextConfig = {
 
   //   return pathMap;
   // },
-};
+}
 
 /**
  * Enhances the Next config with the ability to:
@@ -192,7 +192,7 @@ const nextConfig = {
  */
 module.exports = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-})(withImages(nextConfig));
+})(withImages(nextConfig))
 
 /**
  * Find all EUI themes and construct a theme configuration object.
@@ -207,7 +207,7 @@ module.exports = withBundleAnalyzer({
  *
  * @return {ThemeConfig}
  */
-function buildThemeConfig() {
+function buildThemeConfig () {
   const themeFiles = glob.sync(
     path.join(
       __dirname,
@@ -217,42 +217,42 @@ function buildThemeConfig() {
       'dist',
       'eui_theme_*.min.css'
     )
-  );
+  )
 
   const themeConfig = {
     availableThemes: [],
     copyConfig: [],
-  };
+  }
 
   for (const each of themeFiles) {
-    const basename = path.basename(each, '.min.css');
+    const basename = path.basename(each, '.min.css')
 
-    const themeId = basename.replace(/^eui_theme_/, '');
+    const themeId = basename.replace(/^eui_theme_/, '')
 
     const themeName =
-      themeId[0].toUpperCase() + themeId.slice(1).replace(/_/g, ' ');
+      themeId[0].toUpperCase() + themeId.slice(1).replace(/_/g, ' ')
 
-    const publicPath = `themes/${basename}.${hashFile(each)}.min.css`;
+    const publicPath = `themes/${basename}.${hashFile(each)}.min.css`
     const toPath = path.join(
       __dirname,
-      `public`,
-      `themes`,
+      'public',
+      'themes',
       `${basename}.${hashFile(each)}.min.css`
-    );
+    )
 
     themeConfig.availableThemes.push({
       id: themeId,
       name: themeName,
       publicPath,
-    });
+    })
 
     themeConfig.copyConfig.push({
       from: each,
       to: toPath,
-    });
+    })
   }
 
-  return themeConfig;
+  return themeConfig
 }
 
 /**
@@ -262,14 +262,14 @@ function buildThemeConfig() {
  * @param {string} filePath the absolute path to the file to hash.
  * @return string
  */
-function hashFile(filePath) {
-  const hash = crypto.createHash(`sha256`);
-  const fileData = fs.readFileSync(filePath);
-  hash.update(fileData);
-  const fullHash = hash.digest(`hex`);
+function hashFile (filePath) {
+  const hash = crypto.createHash('sha256')
+  const fileData = fs.readFileSync(filePath)
+  hash.update(fileData)
+  const fullHash = hash.digest('hex')
 
   // Use a hash length that matches what Webpack does
-  return fullHash.substr(0, 20);
+  return fullHash.substr(0, 20)
 }
 
 /**
@@ -286,30 +286,30 @@ function hashFile(filePath) {
  * Really, the first should be sufficient and correct for a GitHub Pages site, because the
  * repository name is what will be used to serve the site.
  */
-function derivePathPrefix() {
-  const gitConfigPath = path.join(__dirname, '.git', 'config');
+function derivePathPrefix () {
+  const gitConfigPath = path.join(__dirname, '.git', 'config')
 
   if (fs.existsSync(gitConfigPath)) {
-    const gitConfig = iniparser.parseSync(gitConfigPath);
+    const gitConfig = iniparser.parseSync(gitConfigPath)
 
     if (gitConfig['remote "origin"'] != null) {
-      const originUrl = gitConfig['remote "origin"'].url;
+      const originUrl = gitConfig['remote "origin"'].url
 
       // eslint-disable-next-line prettier/prettier
-      return '/' + originUrl.split('/').pop().replace(/\.git$/, '');
+      return '/' + originUrl.split('/').pop().replace(/\.git$/, '')
     }
   }
 
-  const packageJsonPath = path.join(__dirname, 'package.json');
+  const packageJsonPath = path.join(__dirname, 'package.json')
 
   if (fs.existsSync(packageJsonPath)) {
-    const { name: packageName } = require(packageJsonPath);
+    const { name: packageName } = require(packageJsonPath)
     // Strip out any username / namespace part. This works even if there is
     // no username in the package name.
-    return '/' + packageName.split('/').pop();
+    return '/' + packageName.split('/').pop()
   }
 
   throw new Error(
-    "Can't derive path prefix, as neither .git/config nor package.json exists"
-  );
+    'Can\'t derive path prefix, as neither .git/config nor package.json exists'
+  )
 }

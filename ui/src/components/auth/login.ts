@@ -6,7 +6,6 @@ export const checkLogin = async (email: string, password: string) => {
 
   try {
 
-    console.log('URL', loginUrl)
     const { data } = await axios.post(
       `${loginUrl}/login`,
       { email, password }, 
@@ -16,8 +15,6 @@ export const checkLogin = async (email: string, password: string) => {
       }}
     )
   
-    console.log('data', data)
-
     if (data?.error) throw new Error('Невірний логін або пароль')
   
     return { data: data as Auth_Obj, token: hasuraSecret }

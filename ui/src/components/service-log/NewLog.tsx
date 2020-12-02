@@ -40,8 +40,6 @@ export const NewLog = ({ sensorId: initialSensorId, serviceKind, onChange }: New
     resolver: yupResolver(serviceLogSchema)
   })
 
-  console.log('errors', errors)
-
   const sensorId = initialSensorId 
   const timestamp = watch('timestamp') || moment()
 
@@ -94,6 +92,7 @@ export const NewLog = ({ sensorId: initialSensorId, serviceKind, onChange }: New
         <SensorsSelect
           name='sensorId'
           inputRef={register}
+          defaultValue={undefined}
           placeholder='Id сенсора'
           fullWidth
           required
@@ -115,8 +114,8 @@ export const NewLog = ({ sensorId: initialSensorId, serviceKind, onChange }: New
         <Controller
           name="timestamp"
           control={control}
-          render={props =>
-            <EuiDatePicker showTimeSelect selected={moment(timestamp)} onChange={props.onChange} fullWidth />
+          render={({ onChange, value}) =>
+            <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
           } // props contains: onChange, onBlur and value
         />
       </EuiFormRow>

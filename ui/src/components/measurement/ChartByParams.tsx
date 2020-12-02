@@ -1,33 +1,28 @@
-import { EuiButton, EuiButtonEmpty, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
+import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiSpacer } from '@elastic/eui'
 import moment from 'moment'
-import React, { useCallback, useMemo, useState } from 'react'
-import { LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { Page } from '../utils/Page'
-import { MeasurementType } from './aggregations'
-
-type ChartByParamProps = {
-  chartData: MeasurementType[]
-}
+import React, { useMemo, useState } from 'react'
+import { LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { MeasurementsData } from './types'
 
 type ChartParams = {
   unit: string,
   maxValue: number
 }
 
-const parseChartData = (data: MeasurementType[]) => {
+const parseChartData = ({ measurements }: MeasurementsData) => {
   const linesSet = new Set<string>()
   const paramsByName = new Map<string, ChartParams>()
 
-  const chartData = data.map(({ timestamp, values }) => {
+  const chartData = measurements.map(({ timestamp, values }) => {
     const params = {}
 
-    values.forEach(({ name, value, maxValue, unit }) => {
-      linesSet.add(name)
-      params[name] = value
-      paramsByName.set(name, { maxValue, unit })
+    values.forEach(({ label, value, maxValue, unit }) => {
+      linesSet.add(label)
+      params[label] = value
+      paramsByName.set(label, { maxValue, unit })
     })
 
-    return { time: moment(timestamp).format('lll'), ...params }
+    return { time: timestamp, ...params }
   })
 
   const lines = [ ...linesSet.values() ] as string[]
@@ -35,16 +30,20 @@ const parseChartData = (data: MeasurementType[]) => {
   return [ lines, chartData, paramsByName ] as [ string[], any[], Map<string, ChartParams> ]
 }
 
-export const ChartByParam = ({ chartData }: ChartByParamProps) => {
-  
-  const [ lines, data, paramsByName ] = useMemo(() => parseChartData(chartData), [ chartData ])
+export const ChartByParam = (props: MeasurementsData) => {
+  if (!props.measurements.length) return null
+
+  const [ lines, data, paramsByName ] = parseChartData(props)
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [ activeLine, setActiveLine ] = useState(lines[0])
   const params = paramsByName.get(activeLine)
-  if (!chartData.length || !params) return null
+
+  if (!params) return null
 
   const { maxValue, unit } = params
 
   return <>
+    <EuiSpacer size='xxl' />
     <ResponsiveContainer height={500} width="100%">
       <LineChart data={data}
         margin={{top: 20, right: 50, left: 20, bottom: 5}}>
@@ -57,7 +56,7 @@ export const ChartByParam = ({ chartData }: ChartByParamProps) => {
           type="natural"
           key={activeLine}
           dataKey={activeLine}
-          stroke={`#${Math.random().toString(16).substr(2, 6)}`}
+          stroke='#0077ff'
         />
       </LineChart>
     </ResponsiveContainer>

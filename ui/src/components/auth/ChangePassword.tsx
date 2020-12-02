@@ -32,7 +32,6 @@ export const ChangePassword = () => {
   const { register, handleSubmit, errors } = useForm()
 
   const onSubmit = async changePasswordData => {
-    console.log('SUBMIT', changePasswordData)
     setLoading(true)
     try {
       const { data, errors } = await changePassword({

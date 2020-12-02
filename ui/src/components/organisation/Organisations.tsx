@@ -42,8 +42,6 @@ const ViewOrganisations = ({ organisations }: ViewOrganisationsProps) => {
     country
   }))
 
-  console.log(data)
-
   return <DataGrid columns={columns} data={data} />
 }
 
@@ -57,8 +55,6 @@ export const Organisations = () => {
   const organisations = data.az_users_Organisation
 
   if (!organisations.length) return <NotFound message='Не вдалось знайти жоної організації'/>
-
-  console.log('ORGANISATIONS', organisations)
 
   return <Page
     title='Організації'
