@@ -15,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useAuthObj } from '../auth/AuthContext'
 import { AggregationType, MeasurementsData, MeasurementType } from './types'
 import { getMeasurements } from './aggregations'
+import { Loading } from '../utils/loading'
 
 export const measurementsSchema = yup.object().shape({
   sensorId: yup.number().required(),
@@ -130,8 +131,8 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     setLoading(false)  
   }
 
-  const Loading = useCallback(() => loading
-    ? <EuiLoadingSpinner size='l' />
+  const SubmitButton = useCallback(() => loading
+    ? <Loading />
     : <EuiButton fill type="submit">
       Отримати
     </EuiButton>
@@ -180,7 +181,7 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
           />
         </EuiFlexItem>}
         <EuiFlexItem>
-          <Loading />
+          <SubmitButton />
         </EuiFlexItem>
       </EuiFlexGroup>
 
