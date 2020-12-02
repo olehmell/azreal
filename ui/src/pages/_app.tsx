@@ -9,6 +9,7 @@ import { NotificationProvider } from 'src/components/utils/Notifications'
 const EuiApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => (
   <>
     <Head>
+      <script src="/env.js" />
       <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
