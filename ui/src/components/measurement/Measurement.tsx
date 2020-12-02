@@ -1,17 +1,27 @@
-import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiLoadingSpinner, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDataGridColumn} from '@elastic/eui'
+import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiLoadingSpinner, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDataGridColumn, EuiForm, EuiFormRow} from '@elastic/eui'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Page } from '../utils/Page'
 import { ChartByParam } from './ChartByParams'
 import moment from 'moment'
 import { Table } from '../utils/Table'
 import { MeasurementMock } from './test_data'
-import { getErrorMsg } from '../utils'
+import { fillInitValues, findErrors, getErrorMsg } from '../utils'
 import { SelectorOptionType } from 'src/types'
-import { AggregationType, MeasurementType, useGetMeasurements } from './aggregations'
-import { GetMeasurementsBySensorIdVariables } from 'src/graphql/query/measurement/types/GetMeasurementsBySensorId'
 import { SensorsSelect } from './SensorsSelect'
 import { DataGrid } from '../utils/DataGrid'
+import * as yup from 'yup'
+import { Controller, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useAuthObj } from '../auth/AuthContext'
+import { AggregationType, MeasurementsData, MeasurementType } from './types'
+import { getMeasurements } from './aggregations'
 
+export const measurementsSchema = yup.object().shape({
+  sensorId: yup.number().required(),
+  from: yup.date().required(),
+  to: yup.date().required(),
+  aggregation: yup.string().required()
+})
 
 type MeasurementTProps = {
   measurements: MeasurementType[]
@@ -27,10 +37,11 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
 
     const measurementValue = {}
 
-    values.forEach(({ label, value }) => {
-      measurementValue[label] = value
+    values.forEach(({ label, unit, value }) => {
+      const name = `${label}(${unit})`
+      measurementValue[name] = value
 
-      dynamicColumnIds.add(label)
+      dynamicColumnIds.add(name)
     })
 
     return {
@@ -51,7 +62,7 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
     ...dynamicColumn
   ]
 
-  return <DataGrid data={measurementData} columns={columns} />
+  return <DataGrid data={measurementData} columns={columns} exportFileName={fileName} />
 }
 
 const measurementSelectorOptions: SelectorOptionType[] = [
@@ -77,98 +88,109 @@ const measurementSelectorOptions: SelectorOptionType[] = [
   }
 ]
 
-type MeasurementSelectionType = {
-  from: string,
-  to: string,
-  aggregation?: AggregationType
-}
-
 type MeasurementSelectorProps = {
-  onChange: (measurements: MeasurementType[]) => void,
+  onChange: (data?: MeasurementsData) => void,
   sensorId?: number
 }
 
-const initSelectionData: MeasurementSelectionType = {
-  from: moment().startOf('day').toISOString(),
-  to: moment().toISOString()
-}
-
 export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: MeasurementSelectorProps) => {
-  const [ fromData, setFromData ] = useState(initSelectionData.from)
-  const [ toData, setToData ] = useState(initSelectionData.to)
-  const [ aggregation, setAggregation ] = useState<AggregationType>('hours')
-  const [ sensorId, setSensorId ] = useState<number>(initialSensorId)
-  const [ variables, setVariables ] = useState<GetMeasurementsBySensorIdVariables>()
-  
-  const { data, error, loading } = useGetMeasurements({ ...variables, type: aggregation })
+  const { register, handleSubmit, setValue, errors, control, watch } = useForm({
+    resolver: yupResolver(measurementsSchema)
+  })
 
-  console.log('Meas', data, error, loading)
+  const { token } = useAuthObj()
+  const [ loading, setLoading ] = useState(false)
+
+  console.log('errors', errors)
+
+  const from = watch('from')
+  const to = watch('to')
 
   useEffect(() => {
-    if (loading || !data) return onChange([])
+    fillInitValues({ sensorId: initialSensorId }, setValue)
+  }, [])
 
-    console.log('DATA', data)
+  const onSubmit = async ({ sensorId, aggregation }) => {
+    setLoading(true)
+    
+    try {
+      console.log('sensorId, aggregation', sensorId, aggregation)
+      const variables = {
+        to: to?.toISOString(),
+        from: from?.toISOString(),
+        sensorId,
+        type: aggregation
+      }
+  
+      const measurements = await getMeasurements(variables, token)
 
-    onChange(data)
-  }, [ loading, data.length ])
+      console.log('measurements', measurements)
+  
+      onChange({ measurements, aggregationType: aggregation })
+    } catch (err) {
+      errors.load.message = err.toString()
+      onChange()
+    }
 
-  const onChangeSelector = (onChange) =>
-    (e) => onChange(e.target.value)
-
-  const onChangeFromData = (from) => {
-    console.log(from)
-    setFromData(from)
-  }
-
-  const onChangeToData= (to) => {
-    console.log(to)
-    setToData(to)
+    setLoading(false)  
   }
 
   const Loading = useCallback(() => loading
     ? <EuiLoadingSpinner size='l' />
-    : <EuiButton fill onClick={() => setVariables({ to: toData, from: fromData, sensorId })}>
+    : <EuiButton fill type="submit">
       Отримати
     </EuiButton>
   , [ loading ])
 
-  console.error(error)
-
   return (
-    <>
-      <EuiFlexGroup justifyContent='spaceBetween' alignItems='center'>
+    <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
+
+      <EuiFlexGroup justifyContent='spaceBetween' alignItems='center' >
         <EuiFlexItem>
           <EuiSelect
             style={{ maxWidth: 200 }}
+            name='aggregation'
             placeholder="Оберіть розмір вибірки"
+            defaultValue={undefined}
             options={measurementSelectorOptions}
-            onChange={onChangeSelector(setAggregation)}
-            value={aggregation}
+            inputRef={register}
           />
         </EuiFlexItem>
-
         <EuiFlexItem>
-          <EuiDatePicker showTimeSelect selected={moment(fromData)} onChange={onChangeFromData} />
+          <Controller
+            name="from"
+            control={control}
+            render={({ onChange, value}) =>
+              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
+            } // props contains: onChange, onBlur and value
+          />
         </EuiFlexItem>
-
         <EuiFlexItem>
-          <EuiDatePicker showTimeSelect selected={moment(toData)} onChange={onChangeToData} />
+          <Controller
+            name="to"
+            control={control}
+            render={({ onChange, value}) =>
+              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
+            } // props contains: onChange, onBlur and value
+          />
         </EuiFlexItem>
-
         {!initialSensorId && <EuiFlexItem>
           <SensorsSelect
-            placeholder="Оберіть Id датчика"
-            value={sensorId}
-            onChange={onChangeSelector(setSensorId)} />
+            name='sensorId'
+            inputRef={register}
+            placeholder='Id сенсора'
+            defaultValue={undefined}
+            fullWidth
+            required
+          />
         </EuiFlexItem>}
-
         <EuiFlexItem>
           <Loading />
         </EuiFlexItem>
-
       </EuiFlexGroup>
-      {error && <EuiFormErrorText>{getErrorMsg(error)}</EuiFormErrorText>}
-    </>
+
+      {findErrors(errors).map((err, i) => <EuiFormErrorText key={`error-${i}`}>{getErrorMsg(err)}</EuiFormErrorText>)}
+    </EuiForm>
 
   )
 }
@@ -179,14 +201,18 @@ type MeasurementsForSensorProps = {
 
 const MeasurementsSection = ({ sensorId }: Partial<MeasurementsForSensorProps>) => {
   const [ measurements, setMeasurements ] = useState<MeasurementType[]>([])
-
+  const [ aggregationType, setAggregationType ] = useState<AggregationType>()
   return <>
     <EuiSpacer size='xl' />
-    <MeasurementSelector onChange={(data) => setMeasurements(data)} sensorId={sensorId} />
+    <MeasurementSelector
+      onChange={({ measurements = [], aggregationType }) => { 
+        setMeasurements(measurements)
+        setAggregationType(aggregationType)
+      }}
+      sensorId={sensorId} />
     <EuiSpacer size='xl' />
-    <MeasurementTable fileName={`Measurements-${sensorId}`} measurements={measurements} />
-    <EuiSpacer size='xxl' />
-    <ChartByParam chartData={measurements} />
+    <MeasurementTable fileName={`${aggregationType}-measurements`} measurements={measurements} />
+    <ChartByParam measurements={measurements} aggregationType={aggregationType} />
   </>
 }
 

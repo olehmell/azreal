@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { az_sensors_e_measurement_unit_enum } from "./../../../../types/graphql-global-types";
-
 // ====================================================
 // GraphQL query operation: GetMeasurementsBySensorId
 // ====================================================
@@ -24,12 +22,17 @@ export interface GetMeasurementsBySensorId_az_measurements_Measurements_Pollutio
   aggregate: GetMeasurementsBySensorId_az_measurements_Measurements_PollutionFactor_Measurements_aggregate_aggregate | null;
 }
 
+export interface GetMeasurementsBySensorId_az_measurements_Measurements_PollutionFactor_e_measurement_unit {
+  __typename: "az_sensors_e_measurement_unit";
+  description: string | null;
+}
+
 export interface GetMeasurementsBySensorId_az_measurements_Measurements_PollutionFactor {
   __typename: "az_sensors_PollutionFactors";
   maxValue: any | null;
   label: string;
-  unit: az_sensors_e_measurement_unit_enum | null;
   Measurements_aggregate: GetMeasurementsBySensorId_az_measurements_Measurements_PollutionFactor_Measurements_aggregate;
+  e_measurement_unit: GetMeasurementsBySensorId_az_measurements_Measurements_PollutionFactor_e_measurement_unit | null;
 }
 
 export interface GetMeasurementsBySensorId_az_measurements_Measurements {
@@ -44,7 +47,7 @@ export interface GetMeasurementsBySensorId {
 }
 
 export interface GetMeasurementsBySensorIdVariables {
-  from: any;
-  to: any;
-  sensorId: number;
+  from?: any | null;
+  to?: any | null;
+  sensorId?: number | null;
 }

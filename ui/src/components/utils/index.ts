@@ -31,9 +31,28 @@ type Error = {
 
 export const getErrorMsg = (error?: Error) => error?.message
 
+export const findErrors = (errorByKey: Record<string, Error>) => {
+  const errors = []
+  for (const key in errorByKey) {
+    const error = errorByKey[key]
+
+    if (error) {
+      errors.push(error)
+    }
+  }
+
+  return errors as Error[]
+}
+
 require('dotenv').config()
 
-export const graphqlUrl = process.env.GRAPHQL_URL
-export const mongoUrl = process.env.MONGO_URL
-export const loginUrl = process.env.LOGIN_URL
-export const hasuraSecret = process.env.SECRET
+function getEnv (varName: string): string | undefined {
+  const { env } = typeof window === 'undefined' ? process : window.process
+  return env[varName]
+}
+
+export const apikey = getEnv('AIRLY_API_KEY')
+export const graphqlUrl = getEnv('GRAPHQL_URL')
+export const mongoUrl = getEnv('MONGO_URL')
+export const loginUrl = getEnv('LOGIN_URL')
+export const hasuraSecret = getEnv('SECRET')

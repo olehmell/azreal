@@ -15,6 +15,7 @@ export const SensorsSelect = (props: EuiSelectProps) => {
 
   return <EuiSelect
     id="role-selector"
+    defaultChecked={false}
     options={options}
     {...props}
   />

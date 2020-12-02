@@ -1,14 +1,17 @@
 import { EuiDataGrid, EuiDataGridColumn } from '@elastic/eui'
+import moment from 'moment'
 import React, { useState, useCallback, useMemo } from 'react'
+import { ExportButton } from './export'
 
 type ViewDataProps = {
   columns: EuiDataGridColumn[],
-  data: Record<string, any>[]
+  data: Record<string, any>[],
+  exportFileName?: string
 }
 
 const DEFAULT_PAGINATION_SIZE = 20
 
-export const DataGrid = ({ columns, data }: ViewDataProps) => {
+export const DataGrid = ({ columns, data, exportFileName = `Exported-${moment().toISOString()}` }: ViewDataProps) => {
   
   // ** Pagination config
   const [ pagination, setPagination ] = useState({ pageIndex: 0, pageSize: data.length < DEFAULT_PAGINATION_SIZE ? data.length : DEFAULT_PAGINATION_SIZE})
@@ -65,6 +68,9 @@ export const DataGrid = ({ columns, data }: ViewDataProps) => {
     }}
     onColumnResize={(eventData) => {
       console.log(eventData)
+    }}
+    toolbarVisibility={{
+      additionalControls: <ExportButton data={data} fileName={exportFileName} />,
     }}
   />
 }
