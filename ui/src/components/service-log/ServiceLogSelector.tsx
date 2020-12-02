@@ -33,8 +33,6 @@ export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: Serv
   useEffect(() => {
     if (loading || !serviceLogs) return onChange([])
 
-    console.log('DATA', data)
-
     onChange(serviceLogs)
   }, [ loading, serviceLogs?.length ])
 
@@ -42,12 +40,10 @@ export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: Serv
     (e) => onChange(e.target.value)
 
   const onChangeFromData = (from) => {
-    console.log(from)
     setFromData(from)
   }
 
   const onChangeToData= (to) => {
-    console.log(to)
     setToData(to)
   }
 

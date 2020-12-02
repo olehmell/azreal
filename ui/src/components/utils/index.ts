@@ -18,7 +18,6 @@ export const getIdFromUrlQuery = (queryId: string | string[]) => {
 export const fillInitValues = <T>(data: T, setValue: (key, value) => void) => {
   for (const key in data) {
     const value = data[key]
-    console.log('INIT VALUE', key, value)
     setValue(key, value)
   }
 }

@@ -54,10 +54,8 @@ export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
   }, [])
 
   const onSubmit = useCallback(async (organisationData: OrganisationSchema) => {
-    console.log('organisationData', organisationData)
     setLoading(true)
     try {
-      console.log('documentIds', organisationData.documentIds)
       const { errors, data } = await upsetOrganisations({ variables: {
         ...organisationData,
         rntrc: organisationData.rntrc?.toString()

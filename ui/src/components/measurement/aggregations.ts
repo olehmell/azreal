@@ -93,8 +93,6 @@ export const useGetMeasurements = (props: MeasurementsProps) => {
 
   const isFinish = to >= end
 
-  console.log('FROM', to >= end, to, end)
-
   useEffect(() => {
     if (!data) return 
 

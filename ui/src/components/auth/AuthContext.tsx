@@ -21,9 +21,7 @@ export type Auth_Obj = {
 export function readAuthObj (): Auth_Obj | undefined {
   const json = localStorage.getItem(MY_AUTH_OBJECT)
 
-  console.log('json', json)
   const authObj: Auth_Obj | undefined = json ? JSON.parse(json) :undefined 
-  console.log('Read my authObj from the local storage', authObj)
   return authObj
 }
 
@@ -43,7 +41,6 @@ type AuthAction = {
 
 function reducer (state: AuthState, action: AuthAction): AuthState {
   function forget () {
-    console.log('Forget my authObj and injected users')
     localStorage.removeItem(MY_AUTH_OBJECT)
     return { ...state, authObj: undefined }
   }
@@ -53,15 +50,12 @@ function reducer (state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case 'reload':
       authObj = readAuthObj()
-      console.log('Reload my authObj', authObj)
       return { ...state, authObj, inited: true }
 
     case 'setAuthObj':
       if (authObj?.userId !== action.authObj.userId) {
         authObj = action.authObj
-        console.log(authObj.userId, action.authObj)
         if (authObj) {
-          console.log('Set my new authObj', authObj)
           localStorageAuthObj(authObj)
           return { ...state, authObj, inited: true }
         } else {
@@ -124,7 +118,6 @@ export function AuthProvider (props: React.PropsWithChildren<any>) {
     <LoginPage />
   </AuthContext.Provider>
 
-  console.log('authObj', authObj)
 
   const client = new ApolloClient({
     uri: graphqlUrl,

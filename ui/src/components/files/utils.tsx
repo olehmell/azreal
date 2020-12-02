@@ -8,7 +8,6 @@ const getFile = async (fileId: string) => {
   
   if (status !== 200 ) throw new Error(`${status}: ${statusText}`)
 
-  console.log(headers, data)
   return new File(data, 'test-file', { type: '.png'})
 }
 
@@ -24,7 +23,6 @@ export const useGetFiles = (fileIds: string[]) => {
 
         const files = await Promise.all(filePromises)
 
-        console.log(files)
 
         setFiles(files)
       } catch (err) {

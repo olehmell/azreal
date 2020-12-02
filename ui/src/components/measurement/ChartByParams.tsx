@@ -27,8 +27,6 @@ const parseChartData = ({ measurements }: MeasurementsData) => {
 
   const lines = [ ...linesSet.values() ] as string[]
 
-  console.log('lines, chartData, paramsByName', lines, chartData, paramsByName)
-
   return [ lines, chartData, paramsByName ] as [ string[], any[], Map<string, ChartParams> ]
 }
 
@@ -36,12 +34,9 @@ export const ChartByParam = (props: MeasurementsData) => {
   if (!props.measurements.length) return null
 
   const [ lines, data, paramsByName ] = parseChartData(props)
-  console.log('lines', lines[0])
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [ activeLine, setActiveLine ] = useState(lines[0])
   const params = paramsByName.get(activeLine)
-
-  console.log(params, activeLine, paramsByName)
 
   if (!params) return null
 

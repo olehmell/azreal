@@ -57,8 +57,6 @@ export const Sensors = () => {
 
   const sensors = data.az_sensors_Sensors
 
-  console.log('SENSORS', sensors, !sensors.length)
-
   if (!sensors.length) return <NotFound message='Не вдалось знайти датчики'/>
 
   return <Page

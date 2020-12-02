@@ -40,8 +40,6 @@ export const NewLog = ({ sensorId: initialSensorId, serviceKind, onChange }: New
     resolver: yupResolver(serviceLogSchema)
   })
 
-  console.log('errors', errors)
-
   const sensorId = initialSensorId 
   const timestamp = watch('timestamp') || moment()
 

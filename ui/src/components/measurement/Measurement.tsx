@@ -101,8 +101,6 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
 
-  console.log('errors', errors)
-
   const from = watch('from')
   const to = watch('to')
 
@@ -114,7 +112,6 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     setLoading(true)
     
     try {
-      console.log('sensorId, aggregation', sensorId, aggregation)
       const variables = {
         to: to?.toISOString(),
         from: from?.toISOString(),
@@ -124,8 +121,6 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   
       const measurements = await getMeasurements(variables, token)
 
-      console.log('measurements', measurements)
-  
       onChange({ measurements, aggregationType: aggregation })
     } catch (err) {
       errors.load.message = err.toString()

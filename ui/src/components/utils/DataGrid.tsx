@@ -66,9 +66,6 @@ export const DataGrid = ({ columns, data, exportFileName = `Exported-${moment().
       onChangeItemsPerPage: onChangeItemsPerPage,
       onChangePage: onChangePage,
     }}
-    onColumnResize={(eventData) => {
-      console.log(eventData)
-    }}
     toolbarVisibility={{
       additionalControls: <ExportButton data={data} fileName={exportFileName} />,
     }}
