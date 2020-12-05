@@ -3,11 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { az_sensors_e_measurement_unit_enum } from "./../../../../types/graphql-global-types";
-
 // ====================================================
 // GraphQL query operation: GetFactorsWithSensors
 // ====================================================
+
+export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes_e_measurement_unit {
+  __typename: "az_sensors_e_measurement_unit";
+  description: string | null;
+}
 
 export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes_SensorFactors_Sensor {
   __typename: "az_sensors_Sensors";
@@ -23,7 +26,7 @@ export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nod
 export interface GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes {
   __typename: "az_sensors_PollutionFactors";
   label: string;
-  unit: az_sensors_e_measurement_unit_enum | null;
+  e_measurement_unit: GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes_e_measurement_unit | null;
   maxValue: any | null;
   SensorFactors: GetFactorsWithSensors_az_sensors_PollutionFactors_aggregate_nodes_SensorFactors[];
 }

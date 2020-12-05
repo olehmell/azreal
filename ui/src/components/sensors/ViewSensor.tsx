@@ -38,7 +38,7 @@ const FactorsDesc = ({
   sensor
 }: SensorProps) => {
   const factors = sensor.SensorFactors.map(({ PollutionFactor }) => PollutionFactor)
-  const items = factors.map(({ label, unit }, i) => <EuiBadge key={i} color="primary" style={{ marginLeft: 0, marginRight: '4px' }}>{`${label}/${unit}`}</EuiBadge>)
+  const items = factors.map(({ label, e_measurement_unit: { description } }, i) => <EuiBadge key={i} color="primary" style={{ marginLeft: 0, marginRight: '4px' }}>{`${label}/${description}`}</EuiBadge>)
 
   return items.length
     ? <>{items}</>
@@ -74,9 +74,9 @@ export const Sensor = ({ sensor }: SensorProps) => {
       <EuiFlexItem>
         <EditButton sensor={sensor} />
       </EuiFlexItem>
-      {/* <EuiFlexItem>
+      <EuiFlexItem>
         <DeleteButton sensorId={sensor.sensorId} />
-      </EuiFlexItem> */}
+      </EuiFlexItem>
     </EuiFlexGroup>
   </EuiFlexGroup>
   }>

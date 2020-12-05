@@ -7,7 +7,9 @@ const GET_FACTORS_WITH_SENSORS = gql`
     az_sensors_PollutionFactors_aggregate {
       nodes {
         label
-        unit
+        e_measurement_unit {
+          description
+        }
         maxValue
         SensorFactors {
           Sensor {

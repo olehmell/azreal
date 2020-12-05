@@ -11,14 +11,10 @@ import {
   EuiFieldNumber,
   EuiLoadingSpinner,
   EuiFormErrorText,
-  EuiCallOut,
   EuiDatePicker,
-  EuiFlexGroup,
-  EuiFlexItem,
-  EuiFormLabel,
 } from '@elastic/eui'
 
-import { loadLocationDataBySensorId, sensorSchema } from './utils'
+import { loadLocationDataBySensorId, loadSensorFactorBySensorId, sensorSchema } from './utils'
 import { useAddSensor } from 'src/graphql/query/sensors/addSensor'
 import { useRouter } from 'next/router'
 import { Page } from '../utils/Page'
@@ -41,21 +37,25 @@ export const NewSensor = () => {
   const onSubmit = useCallback(async sensorData => {
     setLoading(true)
     try {
-      const { location, error } = await loadLocationDataBySensorId(sensorData.sensorId)
-
+      const sensorId = sensorData.sensorId
+      const { location, error: error1 } = await loadLocationDataBySensorId(sensorId)
+      const { sensorFactors, error: error2 } = await loadSensorFactorBySensorId(sensorId)
+      console.log('sensorFactors', sensorFactors)
+      const error = error1 || error2
       if (error) {
         throw error
       } else if (location) {
         console.log(sensorData, location)
         const { data, errors } = await addSensors({ variables: {
           ...location,
+          sensorFactors,
           ...sensorData
         }})
 
         if (errors) throw errors
 
         setLoading(false)
-        router.push('/sensors/[sensorId]', `/sensors/${data.insert_az_sensors_Sensors.returning[0].sensorId}`)
+        router.push('/sensors/[sensorId]', `/sensors/${data.insert_az_sensors_Sensors_one.sensorId}`)
       }
     } catch (error) {
       console.error(error)
@@ -99,8 +99,8 @@ export const NewSensor = () => {
           <Controller
             name="timestamp"
             control={control}
-            render={props =>
-              <EuiDatePicker showTimeSelect selected={moment(timestamp)} onChange={props.onChange} fullWidth />
+            render={({ onChange, value}) =>
+              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
             } // props contains: onChange, onBlur and value
           />
         </EuiFormRow>

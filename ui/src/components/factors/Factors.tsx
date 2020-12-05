@@ -33,9 +33,9 @@ const Factors = () => {
   ]
 
   const sensorsData: Column[] = data?.az_sensors_PollutionFactors_aggregate.nodes
-    .map(({ label, unit, maxValue, SensorFactors }) => ({
+    .map(({ label, e_measurement_unit: { description }, maxValue, SensorFactors }) => ({
       label,
-      unit,
+      unit: description,
       maxValue,
       amount: SensorFactors.length
     }))

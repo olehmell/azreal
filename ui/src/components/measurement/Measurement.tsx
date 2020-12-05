@@ -18,7 +18,7 @@ import { getMeasurements } from './aggregations'
 import { Loading } from '../utils/loading'
 
 export const measurementsSchema = yup.object().shape({
-  sensorId: yup.number().required(),
+  sensorId: yup.number(),
   from: yup.date().required(),
   to: yup.date().required(),
   aggregation: yup.string().required()
@@ -99,6 +99,8 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     resolver: yupResolver(measurementsSchema)
   })
 
+  console.log('initialSensorId', initialSensorId)
+
   const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
 
@@ -106,10 +108,10 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   const to = watch('to')
 
   useEffect(() => {
-    fillInitValues({ sensorId: initialSensorId }, setValue)
-  }, [])
+    setValue('sensorId', initialSensorId)
+  }, [ initialSensorId ])
 
-  const onSubmit = async ({ sensorId, aggregation }) => {
+  const onSubmit = async ({ sensorId = initialSensorId, aggregation }) => {
     setLoading(true)
     
     try {
@@ -124,16 +126,19 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
 
       onChange({ measurements, aggregationType: aggregation })
     } catch (err) {
-      errors.load.message = err.toString()
+      const message = err?.toString()
+
+      errors.load = { message }
+
+      console.error(message)
       onChange()
     }
 
     setLoading(false)  
   }
 
-  const SubmitButton = useCallback(() => loading
-    ? <Loading />
-    : <EuiButton fill type="submit">
+  const SubmitButton = useCallback(() =>
+    <EuiButton disabled={loading} fill type="submit">
       Отримати
     </EuiButton>
   , [ loading ])
@@ -184,7 +189,7 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
           <SubmitButton />
         </EuiFlexItem>
       </EuiFlexGroup>
-
+      {loading && <Loading />}
       {findErrors(errors).map((err, i) => <EuiFormErrorText key={`error-${i}`}>{getErrorMsg(err)}</EuiFormErrorText>)}
     </EuiForm>
 

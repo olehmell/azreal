@@ -22,7 +22,9 @@ query GetSensorById($id: Int = 10001) {
     }
     SensorFactors {
       PollutionFactor {
-        unit
+        e_measurement_unit {
+          description
+        }
         label
       }
     }
