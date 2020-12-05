@@ -55,7 +55,6 @@ export const EditSensorForm = ({
   }, [ resSensorId, router ])
 
   const onSubmit = async sensorData => {
-    console.log('SUBMIT', sensorData)
     setLoading(true)
     try {
       await updateSensors({

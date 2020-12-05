@@ -40,12 +40,10 @@ export const NewSensor = () => {
       const sensorId = sensorData.sensorId
       const { location, error: error1 } = await loadLocationDataBySensorId(sensorId)
       const { sensorFactors, error: error2 } = await loadSensorFactorBySensorId(sensorId)
-      console.log('sensorFactors', sensorFactors)
       const error = error1 || error2
       if (error) {
         throw error
       } else if (location) {
-        console.log(sensorData, location)
         const { data, errors } = await addSensors({ variables: {
           ...location,
           sensorFactors,

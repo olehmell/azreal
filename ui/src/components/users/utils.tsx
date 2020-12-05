@@ -37,8 +37,6 @@ export const withLoadUser = (Component: React.ComponentType<UserProps>) => {
   return (userId: number) => {
     const { data, loading, error } = useGetUsersById(userId)
 
-    console.log('DAuseGetUserByIdTA', data)
-  
     if (error) return null
   
     if (loading) return <Loading />

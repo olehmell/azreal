@@ -886,9 +886,10 @@ type az_measurements_Measurements {
   PollutionFactor: az_sensors_PollutionFactors!
 
   # An object relationship
-  Sensor: az_sensors_Sensors!
+  Sensor: az_sensors_Sensors
   factorName: String!
-  sensorId: Int!
+  locationPoint: point!
+  sensorId: Int
   timestamp: timestamp!
   value: float8!
 }
@@ -956,6 +957,7 @@ input az_measurements_Measurements_bool_exp {
   _not: az_measurements_Measurements_bool_exp
   _or: [az_measurements_Measurements_bool_exp]
   factorName: String_comparison_exp
+  locationPoint: point_comparison_exp
   sensorId: Int_comparison_exp
   timestamp: timestamp_comparison_exp
   value: float8_comparison_exp
@@ -964,7 +966,7 @@ input az_measurements_Measurements_bool_exp {
 # unique or primary key constraints on table "az_measurements.Measurements"
 enum az_measurements_Measurements_constraint {
   # unique or primary key constraint
-  Measurements_pkey
+  Measurements_sensorId_timestamp_factorName_key
 }
 
 # input type for incrementing integer column in table "az_measurements.Measurements"
@@ -978,6 +980,7 @@ input az_measurements_Measurements_insert_input {
   PollutionFactor: az_sensors_PollutionFactors_obj_rel_insert_input
   Sensor: az_sensors_Sensors_obj_rel_insert_input
   factorName: String
+  locationPoint: point
   sensorId: Int
   timestamp: timestamp
   value: float8
@@ -1042,22 +1045,19 @@ input az_measurements_Measurements_order_by {
   PollutionFactor: az_sensors_PollutionFactors_order_by
   Sensor: az_sensors_Sensors_order_by
   factorName: order_by
+  locationPoint: order_by
   sensorId: order_by
   timestamp: order_by
   value: order_by
-}
-
-# primary key columns input for table: "az_measurements.Measurements"
-input az_measurements_Measurements_pk_columns_input {
-  factorName: String!
-  sensorId: Int!
-  timestamp: timestamp!
 }
 
 # select columns of table "az_measurements.Measurements"
 enum az_measurements_Measurements_select_column {
   # column name
   factorName
+
+  # column name
+  locationPoint
 
   # column name
   sensorId
@@ -1072,6 +1072,7 @@ enum az_measurements_Measurements_select_column {
 # input type for updating data in table "az_measurements.Measurements"
 input az_measurements_Measurements_set_input {
   factorName: String
+  locationPoint: point
   sensorId: Int
   timestamp: timestamp
   value: float8
@@ -1129,6 +1130,9 @@ input az_measurements_Measurements_sum_order_by {
 enum az_measurements_Measurements_update_column {
   # column name
   factorName
+
+  # column name
+  locationPoint
 
   # column name
   sensorId
@@ -2962,19 +2966,19 @@ input az_sensors_Sensors_variance_order_by {
 # columns and relationships of "az_sensors.ServiceLog"
 type az_sensors_ServiceLog {
   # An object relationship
-  Document: az_docs_Documents
+  Document: az_docs_Documents!
 
   # An object relationship
   Photo: az_docs_Photo
 
   # An object relationship
-  Sensor: az_sensors_Sensors!
-  documentId: Int
+  Sensor: az_sensors_Sensors
+  documentId: Int!
 
   # An object relationship
   e_service_kind: az_sensors_e_service_kind!
   photoId: Int
-  sensorId: Int!
+  sensorId: Int
   serviceKind: az_sensors_e_service_kind_enum!
   timestamp: timestamp!
 }
@@ -4629,9 +4633,6 @@ type mutation_root {
     where: az_measurements_Measurements_bool_exp!
   ): az_measurements_Measurements_mutation_response
 
-  # delete single row from the table: "az_measurements.Measurements"
-  delete_az_measurements_Measurements_by_pk(factorName: String!, sensorId: Int!, timestamp: timestamp!): az_measurements_Measurements
-
   # delete data from the table: "az_sensors.Locations"
   delete_az_sensors_Locations(
     # filter the rows which have to be deleted
@@ -5055,16 +5056,6 @@ type mutation_root {
     where: az_measurements_Measurements_bool_exp!
   ): az_measurements_Measurements_mutation_response
 
-  # update single row of the table: "az_measurements.Measurements"
-  update_az_measurements_Measurements_by_pk(
-    # increments the integer columns with given value of the filtered values
-    _inc: az_measurements_Measurements_inc_input
-
-    # sets the columns of the filtered rows to the given values
-    _set: az_measurements_Measurements_set_input
-    pk_columns: az_measurements_Measurements_pk_columns_input!
-  ): az_measurements_Measurements
-
   # update data of the table: "az_sensors.Locations"
   update_az_sensors_Locations(
     # increments the integer columns with given value of the filtered values
@@ -5466,9 +5457,6 @@ type query_root {
     # filter the rows returned
     where: az_measurements_Measurements_bool_exp
   ): az_measurements_Measurements_aggregate!
-
-  # fetch data from the table: "az_measurements.Measurements" using primary key columns
-  az_measurements_Measurements_by_pk(factorName: String!, sensorId: Int!, timestamp: timestamp!): az_measurements_Measurements
 
   # fetch data from the table: "az_sensors.Locations"
   az_sensors_Locations(
@@ -6067,9 +6055,6 @@ type subscription_root {
     # filter the rows returned
     where: az_measurements_Measurements_bool_exp
   ): az_measurements_Measurements_aggregate!
-
-  # fetch data from the table: "az_measurements.Measurements" using primary key columns
-  az_measurements_Measurements_by_pk(factorName: String!, sensorId: Int!, timestamp: timestamp!): az_measurements_Measurements
 
   # fetch data from the table: "az_sensors.Locations"
   az_sensors_Locations(

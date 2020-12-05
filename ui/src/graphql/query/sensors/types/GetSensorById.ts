@@ -23,7 +23,7 @@ export interface GetSensorById_az_sensors_Sensors_ServiceLogs_Document {
 
 export interface GetSensorById_az_sensors_Sensors_ServiceLogs {
   __typename: "az_sensors_ServiceLog";
-  Document: GetSensorById_az_sensors_Sensors_ServiceLogs_Document | null;
+  Document: GetSensorById_az_sensors_Sensors_ServiceLogs_Document;
 }
 
 export interface GetSensorById_az_sensors_Sensors_SensorFactors_PollutionFactor_e_measurement_unit {

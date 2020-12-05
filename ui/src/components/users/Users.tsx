@@ -69,8 +69,6 @@ export const Users = () => {
 
   if (!users.length) return <NotFound message='Немає користувачів'/>
 
-  console.log('users', users)
-
   return <Page
     title='Користувачі'
   >

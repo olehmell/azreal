@@ -19,8 +19,9 @@ export type MeasurementsProps = CommonAggregationData & {
 export type MeasurementValue = {
   label: string,
   unit: string,
+  name: string,
   maxValue: number,
-  value: string
+  value: number
 }
 
 export type InnerMeasurement = CommonValues & {

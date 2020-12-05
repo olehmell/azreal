@@ -31,7 +31,6 @@ export const Login = () => {
       if (error) throw error
 
       if (data) {
-        console.log('data', data)
         setAuthObj(data)
         setLoading(false)
       }

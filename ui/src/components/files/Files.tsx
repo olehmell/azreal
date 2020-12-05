@@ -40,8 +40,6 @@ export const Files = ({ fileIds }: ImagesProps) => {
     </EuiModal>
   </EuiOverlayMask> : null, [ selectLink ]) 
 
-  console.log('FILes', links, fileIds)
-
   const FileList = useCallback(() => <>
     {links?.map((link, i) => <EuiButton
       key={link}

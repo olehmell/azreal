@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/react-hooks'
-import { gql, createOperation } from 'apollo-boost'
-import { Moment } from 'moment'
+import { gql } from 'apollo-boost'
 import { GetMeasurementsBySensorId, GetMeasurementsBySensorIdVariables } from './types/GetMeasurementsBySensorId'
 
 export const GET_MEASUREMENT_BY_SENSOR_ID = gql`
@@ -13,6 +12,7 @@ export const GET_MEASUREMENT_BY_SENSOR_ID = gql`
           }
           maxValue
           label
+          name
           Measurements_aggregate(where: {timestamp: {_lte: $to, _gte: $from}}) {
             aggregate {
               avg {

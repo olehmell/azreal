@@ -17,20 +17,15 @@ type ServiceLogSelectorProps = {
   sensorId?: number
 }
 
-const initSelectionData: ServiceLogSelectionType = {
-  from: moment().startOf('day').toISOString(),
-  to: moment().toISOString()
-}
 
 export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: ServiceLogSelectorProps) => {
-  const [ fromData, setFromData ] = useState(initSelectionData.from)
-  const [ toData, setToData ] = useState(initSelectionData.to)
+  const [ fromData, setFromData ] = useState<string>()
+  const [ toData, setToData ] = useState<string>()
   const [ sensorId, setSensorId ] = useState<number>(initialSensorId)
   const [ variables, setVariables ] = useState<GetServiceLogsVariables>()
   const { data, error, loading } = useGetServiceLogs(variables)
-  const serviceLogs = data?.az_sensors_ServiceLog
 
-  console.log('serviceLogs', serviceLogs)
+  const serviceLogs = data?.az_sensors_ServiceLog
 
   useEffect(() => {
     if (loading || !serviceLogs) return onChange([])
@@ -42,11 +37,11 @@ export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: Serv
     (e) => onChange(e.target.value)
 
   const onChangeFromData = (from) => {
-    setFromData(from)
+    setFromData(from?.toString())
   }
 
   const onChangeToData= (to) => {
-    setToData(to)
+    setToData(to?.toString())
   }
 
   const Loading = useCallback(() => loading
@@ -62,11 +57,11 @@ export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: Serv
     <>
       <EuiFlexGroup justifyContent='spaceBetween' alignItems='center'>
         <EuiFlexItem>
-          <EuiDatePicker showTimeSelect selected={moment(fromData)} onChange={onChangeFromData} />
+          <EuiDatePicker showTimeSelect selected={fromData && moment(fromData)} onChange={onChangeFromData} />
         </EuiFlexItem>
 
         <EuiFlexItem>
-          <EuiDatePicker showTimeSelect selected={moment(toData)} onChange={onChangeToData} />
+          <EuiDatePicker showTimeSelect selected={toData && moment(toData)} onChange={onChangeToData} />
         </EuiFlexItem>
 
         {!initialSensorId && <EuiFlexItem>

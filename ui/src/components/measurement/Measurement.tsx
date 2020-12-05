@@ -16,6 +16,8 @@ import { useAuthObj } from '../auth/AuthContext'
 import { AggregationType, MeasurementsData, MeasurementType } from './types'
 import { getMeasurements } from './aggregations'
 import { Loading } from '../utils/loading'
+import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors'
+import { calculateCAQI } from './utils'
 
 export const measurementsSchema = yup.object().shape({
   sensorId: yup.number(),
@@ -29,28 +31,48 @@ type MeasurementTProps = {
   fileName?: string
 }
 
+const useGexMaxValues = () => {
+  const { data, loading, error } = useGetFactors()
+  
+  const maxValues = {}
+
+  data?.az_sensors_PollutionFactors_aggregate.nodes.forEach(({ maxValue, name }) => {
+    maxValues[name] = maxValue
+  })
+
+  return { maxValues, loading, error }
+}
+
 const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
   if (!measurements.length) return null
 
-  const dynamicColumnIds = new Set()
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { maxValues, loading } = useGexMaxValues()
+
+  if (loading) return <Loading />
+
+  const dynamicColumnIds = new Set([ 'CAQI' ])
 
   const measurementData = measurements.map(({ timestamp, sensorId, values }) => {
 
     const measurementValue = {}
+    const measurementsValues = []
+    values.forEach(({ label, unit, name, value }) => {
+      const key = `${label}(${unit})`
+      measurementValue[key] = value?.toFixed(3)
+      measurementsValues.push({ name, value })
 
-    values.forEach(({ label, unit, value }) => {
-      const name = `${label}(${unit})`
-      measurementValue[name] = value
-
-      dynamicColumnIds.add(name)
+      dynamicColumnIds.add(key)
     })
 
     return {
       timestamp,
       sensorId,
-      ...measurementValue
+      ...measurementValue,
+      CAQI: calculateCAQI(measurementsValues, maxValues)
     }
   })
+
 
   const dynamicColumn = []
   dynamicColumnIds.forEach(id => dynamicColumn.push({ id }))
@@ -62,7 +84,6 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
     },
     ...dynamicColumn
   ]
-
   return <DataGrid data={measurementData} columns={columns} exportFileName={fileName} />
 }
 
@@ -98,8 +119,6 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   const { register, handleSubmit, setValue, errors, control, watch } = useForm({
     resolver: yupResolver(measurementsSchema)
   })
-
-  console.log('initialSensorId', initialSensorId)
 
   const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)

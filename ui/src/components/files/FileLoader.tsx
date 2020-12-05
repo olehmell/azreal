@@ -34,8 +34,6 @@ const InnerFileLoader = ({ onChange, fileIds: initialFileIds, ...props}: FilePic
   
           const ids = await Promise.all(promisesFileHash)
 
-          console.log('ids', ids)
-          
           onChange(createHasuraArray(ids))
           setFileIds(ids)
           setLoading(false)
@@ -66,7 +64,6 @@ const saveFile = async (file: File) => {
 
 const deleteFile = async (fileId: string) => {
   const { data } = await axios.delete(`${mongoUrl}/delete/${fileId}`)
-  console.log(data.status)
 }
 
 export const deleteFiles = (ids?: string[]) => ids && ids.forEach(id => deleteFile(id))
