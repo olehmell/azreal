@@ -25,11 +25,7 @@ export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: Serv
   const [ variables, setVariables ] = useState<GetServiceLogsVariables>()
   const { data, error, loading } = useGetServiceLogs(variables)
 
-  console.log(variables, fromData, toData, sensorId)
-
   const serviceLogs = data?.az_sensors_ServiceLog
-
-  console.log('serviceLogs', serviceLogs)
 
   useEffect(() => {
     if (loading || !serviceLogs) return onChange([])

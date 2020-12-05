@@ -46,7 +46,6 @@ export const ChartByParam = (props: MeasurementsData) => {
   const min = Math.floor(sortedArr[0][activeLine]) - 1
   const max = Math.floor(sortedArr.pop()[activeLine]) + 1
 
-  console.log(min, max)
   return <>
     <EuiSpacer size='xxl' />
     <EuiSwitch

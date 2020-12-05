@@ -48,7 +48,6 @@ const FactorsDesc = ({
 export const ViewSensor = ({ sensor }: SensorProps) => {
   const { Location: { locationPoint, address }, sensorId } = sensor
   const sensorCoordinaties = parseLatLngTuple(locationPoint)
-  console.log('parseLatLngTuple(locationPoint)', sensorCoordinaties)
   return <>
     <EuiFlexGroup>
       <EuiFlexItem>

@@ -49,8 +49,6 @@ const Chrome: FunctionComponent = ({ children }) => {
   const router = useRouter()
   const isManagerAccess = useIsManagerAccess()
 
-  console.log('isManagerAccess', isManagerAccess, userRole)
-
   // In this example app, all the side navigation links go to a placeholder
   // page. That's why the `push` call here points at the catch-all route - the
   // Next.js router doesn't infer the catch-all, we have to link to it

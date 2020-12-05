@@ -82,6 +82,5 @@ export const getMeasurements = async (variables: MeasurementsProps, token: strin
   }
 
   const measurements = await Promise.all(promises)
-  console.log('measurements', measurements.filter(x => !!x))
   return measurements.filter(x => !!x)
 }

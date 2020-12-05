@@ -84,8 +84,6 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
     },
     ...dynamicColumn
   ]
-  console.log('measurementData', measurementData, dynamicColumn)
-
   return <DataGrid data={measurementData} columns={columns} exportFileName={fileName} />
 }
 
@@ -121,8 +119,6 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   const { register, handleSubmit, setValue, errors, control, watch } = useForm({
     resolver: yupResolver(measurementsSchema)
   })
-
-  console.log('initialSensorId', initialSensorId)
 
   const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
