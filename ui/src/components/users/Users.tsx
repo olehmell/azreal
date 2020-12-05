@@ -20,11 +20,11 @@ type UserColumn = Omit<EuiDataGridColumn, 'id'> & {
 const ViewUsers = ({ users }: ViewUsersProps) => {
   const columns: UserColumn[] = [ {
     id: 'fullName',
-    display: 'Назва організації',
+    display: 'ПІБ',
   },
   {
     id: 'email',
-    display: 'Коротка назва'
+    display: 'Email'
   },
   {
     id: 'phoneNumber',
@@ -32,7 +32,7 @@ const ViewUsers = ({ users }: ViewUsersProps) => {
   },
   {
     id: 'userRole',
-    display: 'Код платника податків'
+    display: 'Рівеь доступу'
   },
   {
     id: 'Organisation',

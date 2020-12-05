@@ -64,26 +64,26 @@ export const buildExploreLinks = (
       iconType: 'watchesApp'
     },
   {
-    label: 'Візуалізація',
+    label: 'Вимірювання',
     onClick: makeAction('/measurement'),
     iconType: 'visualizeApp',
   },
   {
-    label: 'Вимірювальні фактори',
+    label: 'Фактори вимірювань',
     onClick: makeAction('/factors'),
     iconType: 'metricsApp',
   },
   isManagerAccess
     ? {
       label: 'Журнал',
-      onClick: makeAction('/service/timeline'),
+      onClick: makeAction('/service'),
       iconType: 'logsApp',
       flyoutMenu: {
         title: 'Датчики',
         listItems: [
           {
             label: 'Сервісний журнал',
-            onClick: makeAction('/service/timeline'),
+            onClick: makeAction('/service'),
             iconType: 'outlierDetectionJob'
           },
           isManagerAccess && {
@@ -96,7 +96,7 @@ export const buildExploreLinks = (
     }
     : {
       label: 'Журнал',
-      onClick: makeAction('/service/timeline'),
+      onClick: makeAction('/service'),
       iconType: 'logsApp'
     },
 ].filter(x => !!x)

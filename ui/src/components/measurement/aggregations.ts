@@ -1,42 +1,43 @@
 import axios from 'axios'
 /* eslint-disable react-hooks/rules-of-hooks */
-import { GetMeasurementsBySensorId_az_measurements_Measurements } from './../../graphql/query/measurement/types/GetMeasurementsBySensorId'
+import { GetMeasurementsBySensorId, GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors } from './../../graphql/query/measurement/types/GetMeasurementsBySensorId'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
-import { CommonAggregationData, useGetMeasurementsBySensorId } from 'src/graphql/query/measurement/getMeasurementBySensorId'
-import { az_sensors_e_measurement_unit_enum } from 'src/types/graphql-global-types'
+import { CommonAggregationData } from 'src/graphql/query/measurement/getMeasurementBySensorId'
 import { graphqlUrl } from '../utils'
-import { InnerMeasurement, MeasurementType, MeasurementsProps, AggregationType } from './types'
+import { MeasurementType, MeasurementsProps, MeasurementValue } from './types'
 import { getAggregationTime } from './utils'
 
-const parseMeasurementData = (measurements: InnerMeasurement[]): MeasurementType[] =>
-  measurements.map(({ values, timestamp, ...other }) => ({
-    timestamp: getAggregationTime(timestamp),
-    ...other,
-    values: values.map(({ PollutionFactor }) => {
-      const { 
-        label,
-        maxValue,
-        e_measurement_unit: { description },
-        Measurements_aggregate:
+const parseMeasurementData = (measurements: GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors[]): MeasurementValue[] =>
+  measurements.map(({ PollutionFactor }) => {
+    const { 
+      label,
+      maxValue,
+      e_measurement_unit: { description },
+      Measurements_aggregate:
         { aggregate:
           { avg:
             { value }
           }
         }
-      } = PollutionFactor
-      return { label, maxValue, unit: description, value: value.toFixed(3) }
-    })
-  }))
+    } = PollutionFactor
+    
+    return value
+      ? { label, maxValue, unit: description, value: value?.toFixed(3) || '0' }
+      : undefined
+  })
 
 const createMeasuremntQuery = ({ sensorId, to, from }: CommonAggregationData) => ({
-  'query': 'query GetMeasurementsBySensorId($from: timestamp, $to: timestamp, $sensorId: Int = 0) { az_measurements_Measurements(where: {sensorId: {_eq: $sensorId}, _and: {timestamp: {_gte: $from, _lte: $to}}}, distinct_on: factorName) { PollutionFactor { maxValue label Measurements_aggregate(where: {timestamp: {_gte: $from, _lte: $to}}) { aggregate { avg { value } } } e_measurement_unit { description } } sensorId timestamp } } ',
+  'query': 'query GetMeasurementsBySensorId($sensorId: Int! = 0, $from: timestamp, $to: timestamp) { az_sensors_Sensors(where: {sensorId: {_eq: $sensorId}}) { SensorFactors { PollutionFactor { e_measurement_unit { description } maxValue label Measurements_aggregate(where: {timestamp: {_lte: $to, _gte: $from}}) { aggregate { avg { value } } } } } } }',
   'operationName': 'GetMeasurementsBySensorId',
   'variables': { sensorId, to, from }
 })
 
-const loadMeasuremntQuery = async ({ sensorId, to, from }: CommonAggregationData, token: string): Promise<InnerMeasurement | undefined> => {
-  const { data, status } = await axios.post(
+type LoadMeasuremntQuery = {
+  data?: GetMeasurementsBySensorId
+}
+
+const loadMeasuremntQuery = async ({ sensorId, to, from }: CommonAggregationData, token: string): Promise<MeasurementType | undefined> => {
+  const { data, status } = await axios.post<LoadMeasuremntQuery>(
     graphqlUrl,
     createMeasuremntQuery({ sensorId, to, from }),
     { headers: {
@@ -46,12 +47,12 @@ const loadMeasuremntQuery = async ({ sensorId, to, from }: CommonAggregationData
   )
 
   if (status !== 200) return undefined
-  
-  const measurements = data?.data?.az_measurements_Measurements 
+
+  const measurements = parseMeasurementData(data?.data?.az_sensors_Sensors[0].SensorFactors).filter(x => !!x)
 
   return measurements?.length ? {
     sensorId,
-    timestamp: to,
+    timestamp: getAggregationTime(to),
     values: measurements
   } : undefined
 }
@@ -80,38 +81,6 @@ export const getMeasurements = async (variables: MeasurementsProps, token: strin
   }
 
   const measurements = await Promise.all(promises)
-
-  return parseMeasurementData(measurements.filter(x => !!x))
-}
-
-export const useGetMeasurements = (props: MeasurementsProps) => {
-  const { sensorId = 0, from: start = moment().toISOString(), to: end = moment().toISOString(), type = 'days' } = props
-  const measurements: InnerMeasurement[] = []
-  const [ from, setFrom ] = useState(start)
-  const to = moment(from).add(1, type).toISOString()
-  const { data, loading, error } = useGetMeasurementsBySensorId({ sensorId, from, to })
-
-  const isFinish = to >= end
-
-  useEffect(() => {
-    if (!data) return 
-
-    measurements.push({ timestamp: to, sensorId, values: data?.az_measurements_Measurements })
-
-    if (!isFinish) {
-      setFrom(to)
-    }
-
-  }, [ sensorId, measurements.length, data?.az_measurements_Measurements.length ])
-
-  if (error) return { error, loading }
-
-  if (!isFinish) return { loading: true }
-
-  return {
-    data: parseMeasurementData(measurements),
-    loading,
-    error
-  }
-
+  console.log('measurements', measurements.filter(x => !!x))
+  return measurements.filter(x => !!x)
 }

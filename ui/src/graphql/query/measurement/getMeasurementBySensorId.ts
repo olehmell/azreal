@@ -4,24 +4,24 @@ import { Moment } from 'moment'
 import { GetMeasurementsBySensorId, GetMeasurementsBySensorIdVariables } from './types/GetMeasurementsBySensorId'
 
 export const GET_MEASUREMENT_BY_SENSOR_ID = gql`
-  query GetMeasurementsBySensorId($from: timestamp, $to: timestamp, $sensorId: Int = 0) {
-    az_measurements_Measurements(where: {sensorId: {_eq: $sensorId}, _and: {timestamp: {_gte: $from, _lte: $to}}}, distinct_on: factorName) {
-      PollutionFactor {
-        maxValue
-        label
-        Measurements_aggregate(where: {timestamp: {_gte: $from, _lte: $to}}) {
-          aggregate {
-            avg {
-              value
+  query GetMeasurementsBySensorId($sensorId: Int! = 0, $from: timestamp, $to: timestamp) {
+    az_sensors_Sensors(where: {sensorId: {_eq: $sensorId}}) {
+      SensorFactors {
+        PollutionFactor {
+          e_measurement_unit {
+            description
+          }
+          maxValue
+          label
+          Measurements_aggregate(where: {timestamp: {_lte: $to, _gte: $from}}) {
+            aggregate {
+              avg {
+                value
+              }
             }
           }
         }
-        e_measurement_unit {
-          description
-        }
       }
-      sensorId
-      timestamp
     }
   }
 `

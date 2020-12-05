@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import Error from 'next/error'
 import React from 'react'
 import { GetLocations_az_sensors_Locations_aggregate_nodes as Location } from 'src/graphql/query/locations/types/GetLocations'
 import { useGetSensorById } from 'src/graphql/query/sensors/getSensorById'
@@ -9,10 +8,37 @@ import { Loading } from '../utils/loading'
 import * as yup from 'yup'
 import { NotFoundPage } from '../utils/NotFoundPage'
 import { apikey } from 'src/components/utils'
+import { az_sensors_SensorFactors_insert_input } from 'src/types/graphql-global-types'
+import { Console } from 'console'
 
 const SENSORT_DATA_URL = 'https://airapi.airly.eu/v2/installations'
+const SENSORT_FACTORS_IRL = 'https://airapi.airly.eu/v2/measurements/installation?installationId'
 
 const getLocationDataBySensorIdUrl = (id: number) => `${SENSORT_DATA_URL}/${id}`
+const getMeasurementsBySensorIdUl = (id: number) => `${SENSORT_FACTORS_IRL}=${id}`
+
+export const loadSensorFactorBySensorId = async (id: number) => {
+  try {
+    const loadUrl = getMeasurementsBySensorIdUl(id)
+    const { data, status, statusText } = await axios.get(loadUrl, { headers: { apikey }})
+
+    if (status !== 200) throw new Error(statusText)
+
+    const { 
+      current: {
+        values
+      }
+    } = data
+
+    const sensorFactors: az_sensors_SensorFactors_insert_input[] =
+      values.map(({ name }) => ({ factorName: name }))
+  
+    return { sensorFactors }
+  } catch (error) {
+    console.error(error)
+    return { error }
+  }
+}
 
 export const loadLocationDataBySensorId = async (id: number) => {
   try {
@@ -37,7 +63,7 @@ export const loadLocationDataBySensorId = async (id: number) => {
     return { location }
   } catch (error) {
     console.error(error)
-    return { location, error }
+    return { error }
   }
 
 }
@@ -57,8 +83,6 @@ export const withLoadSensorFromUrl = (Component: React.ComponentType<SensorProps
     const { query: { sensorId }} = useRouter()
     const { data, loading, error } = useGetSensorById(parseInt(sensorId as string))
 
-    console.log('DAuseGetSensorByIdTA', data)
-  
     if (error) return null
   
     if (loading) return <Loading />

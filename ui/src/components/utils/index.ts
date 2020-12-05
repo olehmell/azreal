@@ -28,7 +28,7 @@ type Error = {
   message: string
 }
 
-export const getErrorMsg = (error?: Error) => error?.message
+export const getErrorMsg = (error?: Error) => error?.message || error?.toString
 
 export const findErrors = (errorByKey: Record<string, Error>) => {
   const errors = []

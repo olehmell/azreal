@@ -1,5 +1,5 @@
 import { CommonAggregationData } from 'src/graphql/query/measurement/getMeasurementBySensorId'
-import { GetMeasurementsBySensorId_az_measurements_Measurements } from 'src/graphql/query/measurement/types/GetMeasurementsBySensorId'
+import { GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors } from 'src/graphql/query/measurement/types/GetMeasurementsBySensorId'
 
 export type AggregationType = 'hours' | 'days' | 'weeks' | 'months' | 'years'
 
@@ -25,7 +25,7 @@ export type MeasurementValue = {
 
 export type InnerMeasurement = CommonValues & {
   sensorId: number,
-  values: GetMeasurementsBySensorId_az_measurements_Measurements[]
+  values: GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors[]
 }
 
 export type MeasurementType = CommonValues & {

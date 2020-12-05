@@ -5,6 +5,7 @@ import { useGetServiceLogs } from 'src/graphql/query/service-log/getServiceLogs'
 import { GetServiceLogsVariables, GetServiceLogs_az_sensors_ServiceLog } from 'src/graphql/query/service-log/types/GetServiceLogs'
 import { Files } from '../files/Files'
 import { Images } from '../files/Images'
+import { getAggregationTime } from '../measurement/utils'
 import { createDescItem } from '../utils'
 import { Loading } from '../utils/loading'
 import { Page } from '../utils/Page'
@@ -27,7 +28,7 @@ const ServiceLogDesc = ({
     createDescItem('Сенсор', sensorId),
     createDescItem('Тип', messageByServiceKind[serviceKind]),
     createDescItem('Адреса', <a href={airlyLink}>{address}</a>),
-    createDescItem('Час робіт', moment(timestamp).format('lll')),
+    createDescItem('Час робіт', getAggregationTime(timestamp)),
   ].filter(x => x !== undefined)
 
   return <EuiDescriptionList textStyle="reverse" listItems={items} />
@@ -68,7 +69,6 @@ type ServiceLogsSectionProps = {
 
 export const ServiceLogsSection = ({ sensorId }: Partial<ServiceLogsSectionProps>) => {
   const [ data, setData ] = useState<GetServiceLogs_az_sensors_ServiceLog[]>([])
-  console.log('DATA', data)
   return <>
     <EuiSpacer size='xl' />
     <ServiceLogSelector onChange={(data) => setData(data)} sensorId={sensorId} />

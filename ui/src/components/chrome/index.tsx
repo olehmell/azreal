@@ -88,7 +88,7 @@ const Chrome: FunctionComponent = ({ children }) => {
           </EuiHeaderSectionItem>
         </EuiHeaderSection>
       </EuiHeader>
-      <EuiNavDrawer ref={navDrawerRef}>
+      <EuiNavDrawer isLocked={false} ref={navDrawerRef}>
         <EuiNavDrawerGroup listItems={buildExploreLinks(buildOnClick, isManagerAccess)} />
       </EuiNavDrawer>
       <div className={styles.chrWrap}>{children}</div>
