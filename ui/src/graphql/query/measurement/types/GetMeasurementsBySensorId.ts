@@ -32,6 +32,7 @@ export interface GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors_Poll
   e_measurement_unit: GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors_PollutionFactor_e_measurement_unit | null;
   maxValue: any | null;
   label: string;
+  name: string;
   Measurements_aggregate: GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors_PollutionFactor_Measurements_aggregate;
 }
 
@@ -50,7 +51,7 @@ export interface GetMeasurementsBySensorId {
 }
 
 export interface GetMeasurementsBySensorIdVariables {
-  sensorId?: number | null;
+  sensorId: number;
   from?: any | null;
   to?: any | null;
 }

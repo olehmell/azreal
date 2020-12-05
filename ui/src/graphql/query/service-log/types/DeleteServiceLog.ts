@@ -11,7 +11,7 @@ import { az_sensors_e_service_kind_enum } from "./../../../../types/graphql-glob
 
 export interface DeleteServiceLog_delete_az_sensors_ServiceLog_returning {
   __typename: "az_sensors_ServiceLog";
-  sensorId: number;
+  sensorId: number | null;
 }
 
 export interface DeleteServiceLog_delete_az_sensors_ServiceLog {

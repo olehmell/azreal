@@ -11,6 +11,7 @@ const GET_FACTORS_WITH_SENSORS = gql`
           description
         }
         maxValue
+        name
         SensorFactors {
           Sensor {
             sensorId

@@ -34,10 +34,10 @@ export interface GetServiceLogs_az_sensors_ServiceLog {
   __typename: "az_sensors_ServiceLog";
   timestamp: any;
   serviceKind: az_sensors_e_service_kind_enum;
-  sensorId: number;
-  Document: GetServiceLogs_az_sensors_ServiceLog_Document | null;
+  sensorId: number | null;
+  Document: GetServiceLogs_az_sensors_ServiceLog_Document;
   Photo: GetServiceLogs_az_sensors_ServiceLog_Photo | null;
-  Sensor: GetServiceLogs_az_sensors_ServiceLog_Sensor;
+  Sensor: GetServiceLogs_az_sensors_ServiceLog_Sensor | null;
 }
 
 export interface GetServiceLogs {

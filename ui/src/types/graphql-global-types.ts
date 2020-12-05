@@ -44,11 +44,12 @@ export enum az_docs_e_document_type_update_column {
 }
 
 export enum az_measurements_Measurements_constraint {
-  Measurements_pkey = "Measurements_pkey",
+  Measurements_sensorId_timestamp_factorName_key = "Measurements_sensorId_timestamp_factorName_key",
 }
 
 export enum az_measurements_Measurements_update_column {
   factorName = "factorName",
+  locationPoint = "locationPoint",
   sensorId = "sensorId",
   timestamp = "timestamp",
   value = "value",
@@ -341,6 +342,7 @@ export interface az_measurements_Measurements_bool_exp {
   _not?: az_measurements_Measurements_bool_exp | null;
   _or?: (az_measurements_Measurements_bool_exp | null)[] | null;
   factorName?: String_comparison_exp | null;
+  locationPoint?: point_comparison_exp | null;
   sensorId?: Int_comparison_exp | null;
   timestamp?: timestamp_comparison_exp | null;
   value?: float8_comparison_exp | null;
@@ -350,6 +352,7 @@ export interface az_measurements_Measurements_insert_input {
   PollutionFactor?: az_sensors_PollutionFactors_obj_rel_insert_input | null;
   Sensor?: az_sensors_Sensors_obj_rel_insert_input | null;
   factorName?: string | null;
+  locationPoint?: any | null;
   sensorId?: number | null;
   timestamp?: any | null;
   value?: any | null;

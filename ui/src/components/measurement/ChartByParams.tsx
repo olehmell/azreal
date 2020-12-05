@@ -1,12 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/jsx-no-undef */
 import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiSwitch } from '@elastic/eui'
-import moment from 'moment'
-import React, { useMemo, useState } from 'react'
-import { LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, ResponsiveContainer, CartesianAxis } from 'recharts'
+import React, { useState } from 'react'
+import { LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { MeasurementsData } from './types'
-// import { scaleLog } from 'd3-scale';
-// const scale = scaleLog().base(Math.E);
 
 type ChartParams = {
   unit: string,
@@ -46,8 +43,8 @@ export const ChartByParam = (props: MeasurementsData) => {
   if (!params) return null
 
   const { maxValue, unit } = params
-  const min = Math.floor(sortedArr[0][activeLine])
-  const max = Math.floor(sortedArr.pop()[activeLine])
+  const min = Math.floor(sortedArr[0][activeLine]) - 1
+  const max = Math.floor(sortedArr.pop()[activeLine]) + 1
 
   console.log(min, max)
   return <>
