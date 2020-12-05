@@ -1,26 +1,13 @@
 import psycopg2
-import os
-from dotenv import load_dotenv
 
-
-dotenv_path = os.path.join(os.path.dirname(__file__), '../../../../PycharmProjects/airzoom_parser/.env')
-print(dotenv_path)
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
-
-db_name = os.getenv('PG_DATABASE')
-db_user = os.getenv('PG_USER')
-db_password = os.getenv('PG_PASSWORD')
-db_host = os.getenv('PG_HOST')
-db_port = os.getenv('PG_PORT')
-
+from config import PG_USER, PG_PORT, PG_HOST, PG_DATABASE, PG_PASSWORD
 
 try:
-    print(db_name, db_host, db_port, db_user, db_password)
-    connection = psycopg2.connect(dbname=db_name, user=db_user, password=db_password, host=db_host, port=db_port)
+    connection = psycopg2.connect(dbname=PG_DATABASE, user=PG_USER, password=PG_PASSWORD, host=PG_HOST, port=PG_PORT)
     connection.autocommit = True
-except:
-    print("Error while connecting to PostgreSQL")
+    print(f"Connected to {PG_DATABASE}@{PG_HOST}:{PG_PORT} with {PG_USER}")
+except (Exception, psycopg2.Error) as conn_err:
+    print("Error while connecting to PostgreSQL:", conn_err)
 
 
 def query_db(query: str):

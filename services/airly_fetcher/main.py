@@ -1,24 +1,36 @@
 from pSQL import query_db
-from pars import parse_measurements
+from pars import parse_airly_measurements
 from utils import parse_str_to_timestamp
 
 
 def main():
-    result = query_db(query='SELECT "sensorId","locationId" FROM az_sensors."Sensors"')
-    sensor_ids = []
-    for x in result:
-        sensor_ids.append(x[0])
-    measurements_data = parse_measurements(sensor_ids)
+    result = query_db(query='SELECT "sensorId", "locationPoint" FROM "az_sensors"."Sensors" '
+                            'INNER JOIN "az_sensors"."Locations" "Locations" '
+                            'ON "Locations"."locationId" = "Sensors"."locationId"')
 
     for sensor_data in result:
-        sensor_id = sensor_data[0]
-        location_id = sensor_data[1]
-        values = str(measurements_data.get(str(sensor_id)))
+        sensor_id = str(sensor_data[0])
+        location_point = str(sensor_data[1])
+        measurements_data = parse_airly_measurements(sensor_id)
+
+        if not measurements_data:
+            query_db(query=f'UPDATE az_sensors."Sensors" SET "isActive" = false WHERE "sensorId" = {sensor_id}')
+            continue
+        else:
+            query_db(query=f'UPDATE az_sensors."Sensors" SET "isActive" = true WHERE "sensorId" = {sensor_id}')
+
+        values = measurements_data[sensor_id]
         timestamp = parse_str_to_timestamp(measurements_data['tillDateTime'])
 
-        query_base = 'INSERT INTO az_measurements."Measurements"("sensorId", "locationId", "timestamp", "values") '
-        query_parameters = f'VALUES ({sensor_id}, {location_id}, \'{timestamp}\', ARRAY{values}::az_sensors.measurement_value[])'
-        query_db(query=query_base + query_parameters)
+        for (factor_name, value) in values:
+            query_base = 'INSERT INTO az_measurements."Measurements" ' \
+                         '("sensorId", "locationPoint", "timestamp", "factorName", "value") '
+
+            query_parameters = f'VALUES ({sensor_id}, \'{location_point}\',\'{timestamp}\', ' \
+                               f'\'{factor_name}\', \'{value}\')'
+
+            print(f"Imported {query_parameters}")
+            query_db(query=query_base + query_parameters)
 
 
 if __name__ == "__main__":
