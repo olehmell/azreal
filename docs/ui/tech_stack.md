@@ -1,5 +1,7 @@
 ## Стек технологій
 
+_Усі стороні технології розповсюджуються за опенсорс ліцензіями такими як [Apache](https://www.apache.org/licenses/LICENSE-2.0.html) та [MIT](https://mit-license.org/)
+
 ### Основа
 
 Airzoom UI Airzoom UI - це PWA (Progresive Web Application)  написаний на мові програмування JavaScript, а саме аз допомогою React фреймворка [Next.js](https://nextjs.org/)
