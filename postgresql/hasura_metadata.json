@@ -170,9 +170,10 @@
           "role": "public",
           "permission": {
             "columns": [
+              "factorName",
+              "locationPoint",
               "sensorId",
               "timestamp",
-              "factorName",
               "value"
             ],
             "filter": {},
@@ -396,6 +397,12 @@
           }
         },
         {
+          "name": "e_service_kind",
+          "using": {
+            "foreign_key_constraint_on": "serviceKind"
+          }
+        },
+        {
           "name": "Photo",
           "using": {
             "foreign_key_constraint_on": "photoId"
@@ -405,12 +412,6 @@
           "name": "Sensor",
           "using": {
             "foreign_key_constraint_on": "sensorId"
-          }
-        },
-        {
-          "name": "e_service_kind",
-          "using": {
-            "foreign_key_constraint_on": "serviceKind"
           }
         }
       ],

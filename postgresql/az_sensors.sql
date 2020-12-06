@@ -116,16 +116,16 @@ CREATE TABLE IF NOT EXISTS "az_sensors"."ServiceLog"
         REFERENCES "az_sensors"."e_service_kind" MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE SET DEFAULT,
-    "sensorId"    serial,
+    "sensorId"    integer,
     FOREIGN KEY ("sensorId")
         REFERENCES "az_sensors"."Sensors" ("sensorId") MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE SET NULL,
     "documentId"  integer,
     FOREIGN KEY ("documentId")
-        REFERENCES "az_docs"."Documents" ("documentId") MATCH SIMPLE
+        REFERENCES "az_docs"."Documents" ("documentId") MATCH FULL
         ON UPDATE CASCADE
-        ON DELETE SET NULL,
+        ON DELETE RESTRICT,
     "photoId"     integer,
     FOREIGN KEY ("photoId")
         REFERENCES "az_docs"."Photo" ("photoId") MATCH SIMPLE
