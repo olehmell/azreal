@@ -3,27 +3,19 @@
 
 Тут ви знайдете стислий огляд файлів та фолдерів верхнього рівня з цього проекту.
 
+```
 ├── .eslintrc.js
-
 ├── .gitignore
-
 ├── .graphqlconfig
-
 ├── .next/
-
 ├── next.config.js
-
 ├── node_modules/
-
 ├── package.json
-
 ├── public/
-
 ├── src/
-
 ├── tsconfig.json
-
 └── yarn.lock
+```
 
 ## .eslintrc.js
 
