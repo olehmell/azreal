@@ -1,4 +1,4 @@
-import { EuiDataGridColumn, EuiSpacer } from '@elastic/eui'
+import { EuiDataGridColumn, EuiFlexGroup, EuiFlexItem, EuiSpacer } from '@elastic/eui'
 import Link from 'next/link'
 import React from 'react'
 import { useGetSensors } from 'src/graphql/query/sensors/getSensors'
@@ -9,6 +9,7 @@ import { Loading } from '../utils/loading'
 import { Page } from '../utils/Page'
 import { NotFound } from '../utils/NotFoundPage'
 import { getSensorStatus } from './utils'
+import { NewButton } from '../utils/EditButton'
 
 type ViewSensorsProps = {
   sensors: SensorsType[]
@@ -60,7 +61,14 @@ export const Sensors = () => {
   if (!sensors.length) return <NotFound message='Не вдалось знайти датчики'/>
 
   return <Page
-    title='Датчики'
+    title={
+      <EuiFlexGroup justifyContent='spaceBetween'>
+        <EuiFlexItem>
+          {'Датчики'}
+        </EuiFlexItem>
+        <NewButton url='/sensors/new' />
+      </EuiFlexGroup>
+    }
   >
     <SensorsMaps sensors={sensors} />
 

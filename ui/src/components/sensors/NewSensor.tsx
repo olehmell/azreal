@@ -32,8 +32,6 @@ export const NewSensor = () => {
     resolver: yupResolver(sensorSchema)
   })
 
-  const timestamp = watch('timestamp')
-
   const onSubmit = useCallback(async sensorData => {
     setLoading(true)
     try {

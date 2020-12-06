@@ -38,7 +38,7 @@ export const HomePage = () => {
             icon={<EuiIcon size="xxl" type={'visualizeApp'} />}
             title='Вимірювання'
             description="Отримайте дані за датчиком у певному проміжку часу"
-            onClick={() => router.push('/measurement')}
+            onClick={() => router.push('/measurements')}
           />
         </EuiFlexItem>
         <EuiFlexItem>

@@ -4,6 +4,8 @@ import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiSwitch } from '@ela
 import React, { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { MeasurementsData } from './types'
+import { scaleLog } from 'd3-scale'
+const scale = scaleLog().base(Math.E)
 
 type ChartParams = {
   unit: string,
@@ -19,7 +21,7 @@ const parseChartData = ({ measurements }: MeasurementsData) => {
 
     values.forEach(({ label, value, maxValue, unit }) => {
       linesSet.add(label)
-      params[label] = value
+      params[label] = value.toFixed(3)
       paramsByName.set(label, { maxValue, unit })
     })
 
@@ -38,13 +40,10 @@ export const ChartByParam = (props: MeasurementsData) => {
   const [ activeLine, setActiveLine ] = useState(lines[0])
   const [ isLog, setIsLog ] = useState(false)
   const params = paramsByName.get(activeLine)
-  const sortedArr = data.sort((a, b) => a[activeLine] - b[activeLine])
 
   if (!params) return null
 
-  const { maxValue, unit } = params
-  const min = Math.floor(sortedArr[0][activeLine]) - 1
-  const max = Math.floor(sortedArr.pop()[activeLine]) + 1
+  const { maxValue: GDK, unit } = params
 
   return <>
     <EuiSpacer size='xxl' />
@@ -57,18 +56,18 @@ export const ChartByParam = (props: MeasurementsData) => {
     <ResponsiveContainer height={500} width="100%">
       <LineChart data={data}
         margin={{top: 20, right: 10, left: 20, bottom: 5}}>
-        <CartesianGrid strokeDasharray="4 4"/>
-        <XAxis dataKey="time"/>
+        <CartesianGrid strokeDasharray="3 3"/>
+        <XAxis dataKey="time" />
         <YAxis
           type='number'
-          domain={[ min, max ]}
-          dataKey={activeLine}
-          scale={isLog ? 'log': 'linear'}
+          domain={[ 'dataMin', GDK ]}
+          dataKey={(v) => v[activeLine]}
+          scale={isLog ? scale : 'linear'}
           padding={{ top: 20, bottom: 20 }}
           label={{ value: unit, position: 'top'}}
         />
         <Tooltip/>
-        <ReferenceLine y={maxValue} strokeDasharray="3 3" label="ГДЗ" stroke="red"/>
+        <ReferenceLine y={GDK} strokeDasharray="25 90" label="ГДК" stroke="red"/>
         <Line
           unit={unit}
           type="natural"

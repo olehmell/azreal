@@ -47,9 +47,8 @@ export const InnerEditOrganisation = ({ organisation }: OrganisationForm) => {
   useEffect(() => {
     if (isNew) return
 
-    fillInitValues<OrganisationSchema>({
+    fillInitValues({
       ...organisation,
-      documentIds: createHasuraArray(organisation?.Document.fileIds)
     }, setValue)
   }, [])
 
