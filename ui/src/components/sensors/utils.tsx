@@ -9,7 +9,6 @@ import * as yup from 'yup'
 import { NotFoundPage } from '../utils/NotFoundPage'
 import { apikey } from 'src/components/utils'
 import { az_sensors_SensorFactors_insert_input } from 'src/types/graphql-global-types'
-import { Console } from 'console'
 
 const SENSORT_DATA_URL = 'https://airapi.airly.eu/v2/installations'
 const SENSORT_FACTORS_IRL = 'https://airapi.airly.eu/v2/measurements/installation?installationId'

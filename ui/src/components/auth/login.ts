@@ -1,4 +1,4 @@
-import { graphqlUrl, hasuraSecret, loginUrl } from '../utils'
+import { hasuraSecret, loginUrl } from '../utils'
 import { Auth_Obj } from './AuthContext'
 import axios from 'axios'
 

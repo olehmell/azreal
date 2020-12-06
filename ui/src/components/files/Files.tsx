@@ -1,8 +1,7 @@
-import { EuiButton, EuiFlexGroup, EuiFormErrorText, EuiImage, EuiLoadingSpinner, EuiModal, EuiModalBody, EuiModalFooter, EuiModalHeader, EuiModalHeaderTitle, EuiOverlayMask, EuiText } from '@elastic/eui'
+import { EuiButton, EuiFlexGroup, EuiFormErrorText, EuiModal, EuiModalBody, EuiOverlayMask } from '@elastic/eui'
 import React, { useCallback, useState } from 'react'
-import { Images } from './Images'
 import { PdfViewer } from './PdfViewer'
-import { getFileLinks, getFileUri, useGetFiles } from './utils'
+import { getFileLinks } from './utils'
 
 type ImagesProps = {
   fileIds: string[]

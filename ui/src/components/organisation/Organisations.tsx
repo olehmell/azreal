@@ -1,4 +1,4 @@
-import { EuiDataGridColumn, EuiSpacer } from '@elastic/eui'
+import { EuiDataGridColumn } from '@elastic/eui'
 import Link from 'next/link'
 import React from 'react'
 import { useGetOrganisations } from 'src/graphql/query/organisations/getOrganisations'

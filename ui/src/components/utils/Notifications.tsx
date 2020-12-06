@@ -1,12 +1,7 @@
-import React, { useState, Fragment, createContext, useContext } from 'react'
+import React, { useState, createContext, useContext } from 'react'
 
 import {
-  EuiCode,
   EuiGlobalToastList,
-  EuiLink,
-  EuiFlexGroup,
-  EuiFlexItem,
-  EuiButton,
 } from '@elastic/eui'
 import { Toast } from '@elastic/eui/src/components/toast/global_toast_list'
 

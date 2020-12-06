@@ -1,11 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import {
-  EuiIcon,
   EuiTabbedContent,
-  EuiTitle,
-  EuiText,
-  EuiSpacer,
 } from '@elastic/eui'
 import { MeasurementsForSensor } from '../measurement/Measurement'
 import { ServiceLogsSectionForSensor } from '../service-log/ServiceLogs'

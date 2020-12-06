@@ -9,7 +9,6 @@ import {
   EuiForm,
   EuiFormRow,
   EuiSpacer,
-  EuiFieldNumber,
   EuiLoadingSpinner,
   EuiFormErrorText,
   EuiFieldPassword,
@@ -30,7 +29,7 @@ import { UserRoleSelect } from './UserRoleSelect'
 import { OrganisationSelect } from './OrganisationSelect'
 import generatePassword from 'password-generator'
 import { useNotification } from '../utils/Notifications'
-import { useAuthObj, useIsManagerAccess } from '../auth/AuthContext'
+import { useIsManagerAccess } from '../auth/AuthContext'
 import { Loading } from '../utils/loading'
 
 type UserForm = Partial<UserProps>

@@ -1,4 +1,4 @@
-import { EuiButton, EuiButtonEmpty } from '@elastic/eui'
+import { EuiButtonEmpty } from '@elastic/eui'
 import { ExportToCsv } from 'export-to-csv'
 import React from 'react'
  

@@ -1,12 +1,11 @@
-import { EuiButton, EuiFieldPassword, EuiFieldText, EuiFlexGrid, EuiFlexGroup, EuiFlexItem, EuiForm, EuiFormErrorText, EuiFormRow, EuiImage, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui'
+import { EuiButton, EuiFieldPassword, EuiFieldText, EuiFlexGroup, EuiFlexItem, EuiForm, EuiFormErrorText, EuiFormRow, EuiImage, EuiLoadingSpinner, EuiSpacer } from '@elastic/eui'
 import { useRouter } from 'next/router'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { getErrorMsg } from '../utils'
 import CenteredPage from '../utils/CenteredPage'
 import { checkLogin } from './login'
-import { sha256 } from 'crypto-hash'
 import { useAuth } from './AuthContext'
 
 export const schema = yup.object().shape({

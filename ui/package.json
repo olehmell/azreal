@@ -15,7 +15,7 @@
     "analyze": "ANALYZE=true yarn build",
     "build": "yarn export-env && yarn lint && rm -f public/themes/*.min.css && next build",
     "dev": "yarn export-env && next",
-    "lint": "tsc && eslint --cache 'src/**/*.{ts,tsx,js}' --fix --max-warnings 1000",
+    "lint": "tsc && eslint --cache 'src/**/*.{ts,tsx,js}' --fix --max-warnings 0",
     "start": "yarn export-env && next start",
     "generate:types": "bash ./generate.sh"
   },

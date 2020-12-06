@@ -75,7 +75,6 @@ module.exports = {
 
     // We're using TypeScript, so prop-types aren't so interesting
     'react/prop-types': 'off',
-    'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [ 'off' ],
     'semi': 'off',
     'comma-spacing': 'warn',

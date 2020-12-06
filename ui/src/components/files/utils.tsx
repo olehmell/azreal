@@ -4,7 +4,7 @@ import axios from 'axios'
 import { mongoUrl } from '../utils'
 
 const getFile = async (fileId: string) => {
-  const { data, status, statusText, headers } = await axios.get(`${mongoUrl}/get/${fileId}`)
+  const { data, status, statusText } = await axios.get(`${mongoUrl}/get/${fileId}`)
   
   if (status !== 200 ) throw new Error(`${status}: ${statusText}`)
 

@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent } from 'react'
+import React, { Fragment } from 'react'
 import { EuiButton, EuiEmptyPrompt } from '@elastic/eui'
 import Link from 'next/link'
 

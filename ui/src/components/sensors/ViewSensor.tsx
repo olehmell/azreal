@@ -1,7 +1,6 @@
-import { EuiBadge, EuiDescriptionList, EuiFlexGrid, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
+import { EuiBadge, EuiDescriptionList, EuiFlexGrid, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import React from 'react'
 import { MapContainer, Marker, Popup } from 'react-leaflet'
-import { MeasurementsForSensor } from '../measurement/Measurement'
 import { createDescItem } from '../utils'
 import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'

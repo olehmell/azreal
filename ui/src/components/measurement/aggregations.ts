@@ -1,9 +1,7 @@
-import axios from 'axios'
 /* eslint-disable react-hooks/rules-of-hooks */
-import { GetMeasurementsBySensorId, GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors } from './../../graphql/query/measurement/types/GetMeasurementsBySensorId'
+import { GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors } from './../../graphql/query/measurement/types/GetMeasurementsBySensorId'
 import moment from 'moment'
 import { CommonAggregationData, GetMeasuremensFn } from 'src/graphql/query/measurement/getMeasurementBySensorId'
-import { graphqlUrl } from '../utils'
 import { MeasurementType, MeasurementsProps, MeasurementValue } from './types'
 import { getAggregationTime } from './utils'
 
@@ -26,16 +24,6 @@ const parseMeasurementData = (measurements: GetMeasurementsBySensorId_az_sensors
       ? { label, maxValue, unit: description, name, value }
       : undefined
   })
-
-const createMeasuremntQuery = ({ sensorId, to, from }: CommonAggregationData) => ({
-  'query': 'query GetMeasurementsBySensorId($sensorId: Int! = 0, $from: timestamp, $to: timestamp) { az_sensors_Sensors(where: {sensorId: {_eq: $sensorId}}) { SensorFactors { PollutionFactor { e_measurement_unit { description } maxValue name label Measurements_aggregate(where: {timestamp: {_lte: $to, _gte: $from}}) { aggregate { avg { value } } } } } } }',
-  'operationName': 'GetMeasurementsBySensorId',
-  'variables': { sensorId, to, from }
-})
-
-type LoadMeasuremntQuery = {
-  data?: GetMeasurementsBySensorId
-}
 
 const loadMeasuremntQuery = async (variables: CommonAggregationData, query: GetMeasuremensFn): Promise<MeasurementType | undefined> => {
   const { data, errors } = await query(variables)
