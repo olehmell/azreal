@@ -1,5 +1,6 @@
 - [AirZOOM real](README.md)
   - [Про проєкт](media/README.md)
+  - [Фактори моніторингу](factors/README.md)
   - [Датчики](sensors/README.md)
   - [База даних](database/README.md)
   - [Код UI](ui/README.md)
