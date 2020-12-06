@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import { ApolloQueryResult, gql } from 'apollo-boost'
 import { GetMeasurementsBySensorId, GetMeasurementsBySensorIdVariables } from './types/GetMeasurementsBySensorId'
 
 export const GET_MEASUREMENT_BY_SENSOR_ID = gql`
@@ -32,4 +32,10 @@ export type CommonAggregationData = {
   to: string
 }
 
-export const useGetMeasurementsBySensorId = (variables:CommonAggregationData) => useQuery<GetMeasurementsBySensorId, GetMeasurementsBySensorIdVariables>(GET_MEASUREMENT_BY_SENSOR_ID, { variables })
+export const useGetMeasurementsBySensorId = () => {
+  const query = useQuery(GET_MEASUREMENT_BY_SENSOR_ID).client.query
+
+  return (variables: CommonAggregationData) => query<GetMeasurementsBySensorId, GetMeasurementsBySensorIdVariables>({ variables, query: GET_MEASUREMENT_BY_SENSOR_ID })
+}
+
+export type GetMeasuremensFn = (variables: CommonAggregationData) => Promise<ApolloQueryResult<GetMeasurementsBySensorId>>
