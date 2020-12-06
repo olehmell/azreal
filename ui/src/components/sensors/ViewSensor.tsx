@@ -1,4 +1,4 @@
-import { EuiBadge, EuiDescriptionList, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
+import { EuiBadge, EuiDescriptionList, EuiFlexGrid, EuiFlexGroup, EuiFlexItem, EuiStat } from '@elastic/eui'
 import React from 'react'
 import { MapContainer, Marker, Popup } from 'react-leaflet'
 import { MeasurementsForSensor } from '../measurement/Measurement'
@@ -67,7 +67,7 @@ export const ViewSensor = ({ sensor }: SensorProps) => {
 }
 
 export const Sensor = ({ sensor }: SensorProps) => {
-  return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>
+  return <Page title={<EuiFlexGrid columns={2} >
     <EuiFlexItem>{`Датчик ${sensor.sensorId}`}</EuiFlexItem>
     <EuiFlexGroup alignItems='center'>
       <EuiFlexItem>
@@ -77,7 +77,7 @@ export const Sensor = ({ sensor }: SensorProps) => {
         <DeleteButton sensorId={sensor.sensorId} />
       </EuiFlexItem>
     </EuiFlexGroup>
-  </EuiFlexGroup>
+  </EuiFlexGrid>
   }>
     <ViewSensor sensor={sensor} />
   </Page>

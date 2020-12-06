@@ -24,4 +24,9 @@ query GetServiceLogs($sensorId: Int = 0, $from: timestamp, $to: timestamp) {
 }
 `
 
-export const useGetServiceLogs = (variables: GetServiceLogsVariables) => useQuery<GetServiceLogs, GetServiceLogsVariables>(GET_SERVICE_LOGS, { variables })
+export const useGetServiceLogs = () => {
+  const query = useQuery(GET_SERVICE_LOGS).client.query
+
+  return (variables: GetServiceLogsVariables) =>
+    query<GetServiceLogs>({ variables, query: GET_SERVICE_LOGS })
+}

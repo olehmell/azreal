@@ -2,7 +2,7 @@ import axios from 'axios'
 /* eslint-disable react-hooks/rules-of-hooks */
 import { GetMeasurementsBySensorId, GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors } from './../../graphql/query/measurement/types/GetMeasurementsBySensorId'
 import moment from 'moment'
-import { CommonAggregationData } from 'src/graphql/query/measurement/getMeasurementBySensorId'
+import { CommonAggregationData, GetMeasuremensFn } from 'src/graphql/query/measurement/getMeasurementBySensorId'
 import { graphqlUrl } from '../utils'
 import { MeasurementType, MeasurementsProps, MeasurementValue } from './types'
 import { getAggregationTime } from './utils'
@@ -37,19 +37,13 @@ type LoadMeasuremntQuery = {
   data?: GetMeasurementsBySensorId
 }
 
-const loadMeasuremntQuery = async ({ sensorId, to, from }: CommonAggregationData, token: string): Promise<MeasurementType | undefined> => {
-  const { data, status } = await axios.post<LoadMeasuremntQuery>(
-    graphqlUrl,
-    createMeasuremntQuery({ sensorId, to, from }),
-    { headers: {
-      'x-hasura-admin-secret': token,
-      'content-type': 'application/json'
-    }}
-  )
+const loadMeasuremntQuery = async (variables: CommonAggregationData, query: GetMeasuremensFn): Promise<MeasurementType | undefined> => {
+  const { data, errors } = await query(variables)
 
-  if (status !== 200) return undefined
+  if (errors) throw errors
 
-  const measurements = parseMeasurementData(data?.data?.az_sensors_Sensors[0].SensorFactors).filter(x => !!x)
+  const { to, sensorId } = variables
+  const measurements = parseMeasurementData(data?.az_sensors_Sensors[0].SensorFactors).filter(x => !!x)
 
   return measurements?.length ? {
     sensorId,
@@ -58,7 +52,7 @@ const loadMeasuremntQuery = async ({ sensorId, to, from }: CommonAggregationData
   } : undefined
 }
 
-export const getMeasurements = async (variables: MeasurementsProps, token: string) => {
+export const getMeasurements = async (variables: MeasurementsProps, query: GetMeasuremensFn) => {
   if (!variables) return undefined
 
   const { sensorId, to: end, type, from: start } = variables
@@ -76,7 +70,7 @@ export const getMeasurements = async (variables: MeasurementsProps, token: strin
       break
     }
 
-    promises.push(loadMeasuremntQuery({ sensorId, to, from }, token))
+    promises.push(loadMeasuremntQuery({ sensorId, to, from }, query))
 
     from = to
   }

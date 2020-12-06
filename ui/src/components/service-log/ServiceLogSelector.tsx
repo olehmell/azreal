@@ -1,11 +1,14 @@
-import { EuiLoadingSpinner, EuiButton, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDatePicker, EuiFormErrorText } from '@elastic/eui'
+import { EuiLoadingSpinner, EuiButton, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDatePicker, EuiFormErrorText, EuiForm } from '@elastic/eui'
+import { yupResolver } from '@hookform/resolvers/yup'
 import moment from 'moment'
 import React, { useState, useEffect, useCallback } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { useGetServiceLogs } from 'src/graphql/query/service-log/getServiceLogs'
 import { GetServiceLogBySensorIdVariables } from 'src/graphql/query/service-log/types/GetServiceLogBySensorId'
 import { GetServiceLogsVariables, GetServiceLogs_az_sensors_ServiceLog } from 'src/graphql/query/service-log/types/GetServiceLogs'
 import { SensorsSelect } from '../measurement/SensorsSelect'
-import { getErrorMsg } from '../utils'
+import { findErrors, getErrorMsg } from '../utils'
+import { Loading } from '../utils/loading'
 
 type ServiceLogSelectionType = {
   from: string,
@@ -17,67 +20,94 @@ type ServiceLogSelectorProps = {
   sensorId?: number
 }
 
-
 export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: ServiceLogSelectorProps) => {
-  const [ fromData, setFromData ] = useState<string>()
-  const [ toData, setToData ] = useState<string>()
-  const [ sensorId, setSensorId ] = useState<number>(initialSensorId)
-  const [ variables, setVariables ] = useState<GetServiceLogsVariables>()
-  const { data, error, loading } = useGetServiceLogs(variables)
-
-  const serviceLogs = data?.az_sensors_ServiceLog
-
+  const { register, handleSubmit, setValue, errors, control, watch } = useForm({
+    // resolver: yupResolver()
+  })
+  const getServiceLog = useGetServiceLogs()
+  
+  // const { token } = useAuthObj()
+  const [ loading, setLoading ] = useState(false)
+  
+  const from = watch('from')
+  const to = watch('to')
+  
   useEffect(() => {
-    if (loading || !serviceLogs) return onChange([])
+    setValue('sensorId', initialSensorId)
+  }, [ initialSensorId ])
+  
+  const onSubmit = async ({ sensorId = initialSensorId }) => {
+    setLoading(true)
+      
+    try {
+      const variables = {
+        to: to?.toISOString(),
+        from: from?.toISOString(),
+        sensorId,
+      }
+    
+      const { data, errors } = await getServiceLog(variables)
 
-    onChange(serviceLogs || [])
-  }, [ loading, serviceLogs?.length ])
+      if (errors) throw errors
 
-  const onChangeSelector = (onChange) =>
-    (e) => onChange(e.target.value)
-
-  const onChangeFromData = (from) => {
-    setFromData(from?.toString())
+      onChange(data.az_sensors_ServiceLog)
+    } catch (err) {
+      const message = err?.toString()
+  
+      errors.load = { message }
+  
+      console.error(message)
+      onChange([])
+    }
+  
+    setLoading(false)  
   }
-
-  const onChangeToData= (to) => {
-    setToData(to?.toString())
-  }
-
-  const Loading = useCallback(() => loading
-    ? <EuiLoadingSpinner size='l' />
-    : <EuiButton fill onClick={() => setVariables({ to: toData, from: fromData, sensorId })}>
-      Показати
+  
+  const SubmitButton = useCallback(() =>
+    <EuiButton disabled={loading} fill type="submit">
+        Отримати
     </EuiButton>
   , [ loading ])
-
-  console.error(error)
-
+  
   return (
-    <>
-      <EuiFlexGroup justifyContent='spaceBetween' alignItems='center'>
+    <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
+  
+      <EuiFlexGroup justifyContent='spaceBetween' alignItems='center' >
         <EuiFlexItem>
-          <EuiDatePicker showTimeSelect selected={fromData && moment(fromData)} onChange={onChangeFromData} />
+          <Controller
+            name="from"
+            control={control}
+            render={({ onChange, value}) =>
+              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
+            } // props contains: onChange, onBlur and value
+          />
         </EuiFlexItem>
-
         <EuiFlexItem>
-          <EuiDatePicker showTimeSelect selected={toData && moment(toData)} onChange={onChangeToData} />
+          <Controller
+            name="to"
+            control={control}
+            render={({ onChange, value}) =>
+              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
+            } // props contains: onChange, onBlur and value
+          />
         </EuiFlexItem>
-
         {!initialSensorId && <EuiFlexItem>
           <SensorsSelect
-            placeholder="Оберіть Id датчика"
-            value={sensorId}
-            onChange={onChangeSelector(setSensorId)} />
+            name='sensorId'
+            inputRef={register}
+            placeholder='Id сенсора'
+            defaultValue={undefined}
+            fullWidth
+            required
+          />
         </EuiFlexItem>}
-
         <EuiFlexItem>
-          <Loading />
+          <SubmitButton />
         </EuiFlexItem>
-
       </EuiFlexGroup>
-      {error && <EuiFormErrorText>{getErrorMsg(error)}</EuiFormErrorText>}
-    </>
-
+      {loading && <Loading />}
+      {findErrors(errors).map((err, i) => <EuiFormErrorText key={`error-${i}`}>{getErrorMsg(err)}</EuiFormErrorText>)}
+    </EuiForm>
+  
   )
 }

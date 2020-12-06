@@ -35,7 +35,7 @@ const ServiceLogDesc = ({
 }
 
 const ServiceLog = (serviceLog: GetServiceLogs_az_sensors_ServiceLog) => {
-  return <EuiPanel paddingSize="l">
+  return <EuiPanel paddingSize="l" style={{ marginTop: '1rem' }}>
     <EuiFlexGroup alignItems='flexStart'>
       <EuiFlexItem>
         <EuiFlexGrid columns={1}>

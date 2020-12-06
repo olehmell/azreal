@@ -65,7 +65,7 @@ export const ChartByParam = (props: MeasurementsData) => {
           dataKey={activeLine}
           scale={isLog ? 'log': 'linear'}
           padding={{ top: 20, bottom: 20 }}
-          label={{ value: `${activeLine}/${unit}`, position: 'top'}}
+          label={{ value: unit, position: 'top'}}
         />
         <Tooltip/>
         <ReferenceLine y={maxValue} strokeDasharray="3 3" label="ГДЗ" stroke="red"/>
@@ -78,13 +78,12 @@ export const ChartByParam = (props: MeasurementsData) => {
         />
       </LineChart>
     </ResponsiveContainer>
-    <EuiFlexGroup justifyContent='flexStart'>
+    <EuiFlexGroup justifyContent='center'>
       {lines.map(line => <EuiFlexItem key={line} grow={false}>
         <EuiButton
           fill
           color="ghost"
           size='s'
-          iconType="currency"
           onClick={() => setActiveLine(line)}
         >
           {line}
