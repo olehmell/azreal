@@ -1,4 +1,4 @@
-import { EuiDescriptionList, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
+import { EuiDescriptionList, EuiFlexGrid, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import React from 'react'
 import { useIsManagerAccess } from '../auth/AuthContext'
 import { createDescItem } from '../utils'
@@ -40,7 +40,7 @@ export const ViewUser = ({ user }: UserProps) => {
 
 export const UserPage = ({ user }: UserProps) => {
   const isManager = useIsManagerAccess()
-  return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>
+  return <Page title={<EuiFlexGrid columns={2}>
     <EuiFlexItem>{user.fullName}</EuiFlexItem>
     <EuiFlexGroup alignItems='center'>
       <EuiFlexItem>
@@ -50,7 +50,7 @@ export const UserPage = ({ user }: UserProps) => {
         <DeleteButton userId={user.userId} />
       </EuiFlexItem>}
     </EuiFlexGroup>
-  </EuiFlexGroup>
+  </EuiFlexGrid>
   }>
     <ViewUser user={user} />
   </Page>

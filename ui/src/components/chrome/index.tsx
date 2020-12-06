@@ -82,7 +82,7 @@ const Chrome: FunctionComponent = ({ children }) => {
             <SwitchTheme />
           </EuiHeaderSectionItem>
           <EuiHeaderSectionItem className={styles.chrHeaderSectionItem}>
-            <EuiButtonEmpty size='l' iconType='kqlFunction' onClick={signOut}>Вихід</EuiButtonEmpty>
+            <EuiButtonEmpty size='l' onClick={signOut}>Вихід</EuiButtonEmpty>
           </EuiHeaderSectionItem>
         </EuiHeaderSection>
       </EuiHeader>

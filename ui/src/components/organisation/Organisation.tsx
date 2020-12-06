@@ -1,4 +1,4 @@
-import { EuiDescriptionList, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
+import { EuiDescriptionList, EuiFlexGrid, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import React from 'react'
 import { Files } from '../files/Files'
 import { createDescItem } from '../utils'
@@ -38,7 +38,7 @@ export const ViewOrganisation = ({ organisation }: OrganisationProps) => {
 
 
 export const Organisation = ({ organisation }: OrganisationProps) => {
-  return <Page title={<EuiFlexGroup justifyContent='spaceBetween'>
+  return <Page title={<EuiFlexGrid columns={2}>
     <EuiFlexItem>{organisation.fullName}</EuiFlexItem>
     <EuiFlexGroup alignItems='center'>
       <EuiFlexItem>
@@ -48,7 +48,7 @@ export const Organisation = ({ organisation }: OrganisationProps) => {
         <DeleteButton organisationId={organisation.organisationId} fileIds={organisation.Document.fileIds} />
       </EuiFlexItem>
     </EuiFlexGroup>
-  </EuiFlexGroup>
+  </EuiFlexGrid>
   }>
     <ViewOrganisation organisation={organisation} />
   </Page>
