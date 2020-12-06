@@ -1,21 +1,21 @@
-import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDataGridColumn, EuiForm} from '@elastic/eui'
+import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiLoadingSpinner, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDataGridColumn, EuiForm, EuiFormRow} from '@elastic/eui'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Page } from '../utils/Page'
 import { ChartByParam } from './ChartByParams'
 import moment from 'moment'
-import { findErrors, getErrorMsg } from '../utils'
+import { fillInitValues, findErrors, getErrorMsg } from '../utils'
 import { SelectorOptionType } from 'src/types'
 import { SensorsSelect } from './SensorsSelect'
 import { DataGrid } from '../utils/DataGrid'
 import * as yup from 'yup'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useAuthObj } from '../auth/AuthContext'
 import { AggregationType, MeasurementsData, MeasurementType } from './types'
 import { getMeasurements } from './aggregations'
 import { Loading } from '../utils/loading'
 import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors'
 import { calculateCAQI } from './utils'
-import { useGetMeasurementsBySensorId } from 'src/graphql/query/measurement/getMeasurementBySensorId'
 
 export const measurementsSchema = yup.object().shape({
   sensorId: yup.number(),
@@ -29,25 +29,8 @@ type MeasurementTProps = {
   fileName?: string
 }
 
-const useGexMaxValues = () => {
-  const { data, loading, error } = useGetFactors()
-  
-  const maxValues = {}
-
-  data?.az_sensors_PollutionFactors_aggregate.nodes.forEach(({ maxValue, name }) => {
-    maxValues[name] = maxValue
-  })
-
-  return { maxValues, loading, error }
-}
-
 const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
   if (!measurements.length) return null
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { maxValues, loading } = useGexMaxValues()
-
-  if (loading) return <Loading />
 
   const dynamicColumnIds = new Set([ 'CAQI' ])
 
@@ -67,7 +50,7 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
       timestamp,
       sensorId,
       ...measurementValue,
-      CAQI: calculateCAQI(measurementsValues, maxValues)
+      CAQI: calculateCAQI(measurementsValues)
     }
   })
 
@@ -82,6 +65,7 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
     },
     ...dynamicColumn
   ]
+
   return <DataGrid data={measurementData} columns={columns} exportFileName={fileName} />
 }
 
@@ -118,7 +102,7 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     resolver: yupResolver(measurementsSchema)
   })
 
-  const query = useGetMeasurementsBySensorId()
+  const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
 
   const from = watch('from')
@@ -139,7 +123,7 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
         type: aggregation
       }
   
-      const measurements = await getMeasurements(variables, query)
+      const measurements = await getMeasurements(variables, token)
 
       onChange({ measurements, aggregationType: aggregation })
     } catch (err) {

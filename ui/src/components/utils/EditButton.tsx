@@ -1,3 +1,6 @@
+import { EuiFlexItem } from '@elastic/eui'
+import React from 'react'
+import { OnlyManagerAccess } from '../auth/AuthContext'
 import { ButtonLink } from './ButtonLink'
 
 type EditButtonProps = {
@@ -12,3 +15,19 @@ export const EditButton = ({ id, typeEdit }: EditButtonProps) => <ButtonLink
   size='s'>
     Редагувати
 </ButtonLink>
+
+type NewButtonProps = {
+  url: string
+}
+
+export const NewButton = ({ url }: NewButtonProps) => <OnlyManagerAccess>
+  <EuiFlexItem>
+    <ButtonLink
+      href={url}
+      style={{ float: 'right' }}
+      iconType='createSingleMetricJob'
+      size='s'>
+        Додати
+    </ButtonLink>
+  </EuiFlexItem>
+</OnlyManagerAccess>
