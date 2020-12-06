@@ -1,5 +1,5 @@
-import { EuiDataGrid, EuiDataGridColumn, EuiLink, EuiLoadingChart, EuiPage, EuiPageBody, EuiPageContent, EuiPageContentBody, EuiPageHeader, EuiPageHeaderSection, EuiTitle } from '@elastic/eui'
-import React, { Fragment, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { EuiDataGridColumn } from '@elastic/eui'
+import React from 'react'
 import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors'
 import { DataGrid } from '../utils/DataGrid'
 import { Loading } from '../utils/loading'

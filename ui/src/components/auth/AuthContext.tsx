@@ -1,12 +1,10 @@
-import React, { useReducer, createContext, useContext, useEffect, useCallback } from 'react'
+import React, { useReducer, createContext, useContext, useEffect } from 'react'
 import Chrome from '../chrome'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { graphqlUrl } from '../utils'
 import { LoginPage } from './Login'
-import { NotFound, NotFoundPage } from '../utils/NotFoundPage'
-import { useGetMyRole } from 'src/graphql/query/users/getRoleByUserId'
-import { Loading } from '../utils/loading'
+import { NotFoundPage } from '../utils/NotFoundPage'
 
 const MY_AUTH_OBJECT = 'auth-object'
 

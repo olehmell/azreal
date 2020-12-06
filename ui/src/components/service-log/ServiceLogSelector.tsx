@@ -1,19 +1,13 @@
-import { EuiLoadingSpinner, EuiButton, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDatePicker, EuiFormErrorText, EuiForm } from '@elastic/eui'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiDatePicker, EuiFormErrorText, EuiForm } from '@elastic/eui'
 import moment from 'moment'
 import React, { useState, useEffect, useCallback } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useGetServiceLogs } from 'src/graphql/query/service-log/getServiceLogs'
-import { GetServiceLogBySensorIdVariables } from 'src/graphql/query/service-log/types/GetServiceLogBySensorId'
-import { GetServiceLogsVariables, GetServiceLogs_az_sensors_ServiceLog } from 'src/graphql/query/service-log/types/GetServiceLogs'
+import { GetServiceLogs_az_sensors_ServiceLog } from 'src/graphql/query/service-log/types/GetServiceLogs'
 import { SensorsSelect } from '../measurement/SensorsSelect'
 import { findErrors, getErrorMsg } from '../utils'
 import { Loading } from '../utils/loading'
 
-type ServiceLogSelectionType = {
-  from: string,
-  to: string
-}
 
 type ServiceLogSelectorProps = {
   onChange: (serviceLogs: GetServiceLogs_az_sensors_ServiceLog[]) => void,

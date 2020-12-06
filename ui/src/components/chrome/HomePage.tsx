@@ -7,7 +7,6 @@ import {
   EuiFlexItem,
   EuiPage,
   EuiImage,
-  EuiSpacer,
 } from '@elastic/eui'
 import { useRouter } from 'next/router'
 

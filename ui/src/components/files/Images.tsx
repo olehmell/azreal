@@ -1,6 +1,6 @@
-import { EuiFlexGroup, EuiFlexItem, EuiImage, EuiLoadingSpinner } from '@elastic/eui'
+import { EuiFlexGroup, EuiFlexItem, EuiImage } from '@elastic/eui'
 import React from 'react'
-import { getFileLinks, getFileUri, useGetFiles } from './utils'
+import { getFileLinks } from './utils'
 
 type ImagesProps = {
   fileIds: string[]

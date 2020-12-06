@@ -1,14 +1,9 @@
 import React, { FunctionComponent, useState } from 'react'
 import {
-  EuiButton,
-  EuiContextMenuItem,
-  EuiContextMenuPanel,
-  EuiIcon,
-  EuiPopover,
   EuiSwitch,
 } from '@elastic/eui'
 
-import { setInitialTheme, setTheme, Theme, themeConfig } from '../../lib/theme'
+import { setInitialTheme, setTheme } from '../../lib/theme'
 
 const initialTheme = setInitialTheme()
 
