@@ -148,6 +148,8 @@ export function useIsSignedIn () {
   return !!useAuthObj()
 }
 
+export const useIsIAm = (userId: number) => useAuthObj().userId === userId
+
 export const useIsManagerAccess = () => useAuthObj()?.userRole === 'manager'
 
 export const OnlyManagerAccess = ({ children }) => useIsManagerAccess() ? children : null

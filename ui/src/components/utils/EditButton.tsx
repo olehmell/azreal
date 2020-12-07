@@ -4,12 +4,12 @@ import { OnlyManagerAccess } from '../auth/AuthContext'
 import { ButtonLink } from './ButtonLink'
 
 type EditButtonProps = {
-  typeEdit: 'organisations' | 'sensors' | 'users',
-  id: number
+  typeEdit: 'organisations' | 'sensors' | 'users' | 'profile',
+  id?: number
 }
 // eslint-disable-next-line react/react-in-jsx-scope
 export const EditButton = ({ id, typeEdit }: EditButtonProps) => <ButtonLink
-  href={`/${typeEdit}/${id}/edit`}
+  href={`/${typeEdit}${id ? `/${id}` : ''}/edit`}
   iconType='documentEdit'
   fullWidth
   size='s'>

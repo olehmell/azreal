@@ -29,7 +29,7 @@ import { UserRoleSelect } from './UserRoleSelect'
 import { OrganisationSelect } from './OrganisationSelect'
 import generatePassword from 'password-generator'
 import { useNotification } from '../utils/Notifications'
-import { useIsManagerAccess } from '../auth/AuthContext'
+import { useAuthObj, useIsIAm, useIsManagerAccess } from '../auth/AuthContext'
 import { Loading } from '../utils/loading'
 
 type UserForm = Partial<UserProps>
@@ -131,7 +131,7 @@ export const InnerEditUser = ({ user }: UserForm) => {
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('fullName')])}</EuiFormErrorText>
 
         <EuiFormRow label="Email" fullWidth>
-          <EuiFieldText name={getFiledName('email')} inputRef={register} disabled={!isManager} required fullWidth />
+          <EuiFieldText name={getFiledName('email')} inputRef={register} required fullWidth />
         </EuiFormRow>
         <EuiFormErrorText>{getErrorMsg(errors[getFiledName('email')])}</EuiFormErrorText>
 
@@ -171,4 +171,11 @@ export const InnerEditUser = ({ user }: UserForm) => {
 export const NewUser = InnerEditUser
 export const EditUser = withLoadUserFromUrl(InnerEditUser)
 export const EditMyUser = withLoadMyUser(InnerEditUser)
-export const EditUserButton = ({ user: { userId } }: UserProps) => <EditButton id={userId} typeEdit='users' />
+export const EditUserButton = ({ user: { userId } }: UserProps) => {
+  const isMyUser = useIsIAm(userId)
+
+  return <EditButton
+    id={isMyUser ? undefined : userId}
+    typeEdit={isMyUser ? 'profile' : 'users'}
+  />
+}
