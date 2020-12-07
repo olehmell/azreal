@@ -53,7 +53,7 @@ const loadMeasuremntQuery = async ({ sensorId, to, from }: CommonAggregationData
 
   return measurements?.length ? {
     sensorId,
-    timestamp: getAggregationTime(to),
+    timestamp: getAggregationTime(from),
     values: measurements
   } : undefined
 }
@@ -81,6 +81,7 @@ export const getMeasurements = async (variables: MeasurementsProps, token: strin
 
     if (to >= end || largeLimit(count)) {
       isFinish = true
+      promises.push(loadMeasuremntQuery({ sensorId, to: end, from }, token))
       break
     }
 
