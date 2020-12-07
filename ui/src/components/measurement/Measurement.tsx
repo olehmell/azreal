@@ -17,11 +17,12 @@ import { Loading } from '../utils/loading'
 import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors'
 import { calculateCAQI } from './utils'
 import { useNotification } from '../utils/Notifications'
+import { DataPicker, getDateRangeString } from '../utils/DataPicker'
+import { DayRange } from 'react-modern-calendar-datepicker'
 
 export const measurementsSchema = yup.object().shape({
   sensorId: yup.number(),
-  from: yup.date().required(),
-  to: yup.date().required(),
+  dayRange: yup.object().required(),
   aggregation: yup.string().required()
 })
 
@@ -108,20 +109,16 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
 
-  const from = watch('from')
-  const to = watch('to')
-
   useEffect(() => {
     setValue('sensorId', initialSensorId)
   }, [ initialSensorId ])
 
-  const onSubmit = async ({ sensorId = initialSensorId, aggregation }) => {
+  const onSubmit = async ({ sensorId = initialSensorId, aggregation, dayRange }) => {
     setLoading(true)
-    
+    console.log(getDateRangeString(dayRange))
     try {
       const variables = {
-        to: to?.toISOString(),
-        from: from?.toISOString(),
+        ...getDateRangeString(dayRange),
         sensorId,
         type: aggregation
       }
@@ -171,22 +168,14 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
         </EuiFlexItem>
         <EuiFlexItem>
           <Controller
-            name="from"
+            name="dayRange"
             control={control}
             render={({ onChange, value}) =>
-              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
+              <DataPicker value={value} onChange={onChange} />
             } // props contains: onChange, onBlur and value
           />
         </EuiFlexItem>
-        <EuiFlexItem>
-          <Controller
-            name="to"
-            control={control}
-            render={({ onChange, value}) =>
-              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
-            } // props contains: onChange, onBlur and value
-          />
-        </EuiFlexItem>
+
         {!initialSensorId && <EuiFlexItem>
           <SensorsSelect
             name='sensorId'
