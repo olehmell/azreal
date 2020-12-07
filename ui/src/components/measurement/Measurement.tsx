@@ -115,7 +115,6 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
 
   const onSubmit = async ({ sensorId = initialSensorId, aggregation, dayRange }) => {
     setLoading(true)
-    console.log(getDateRangeString(dayRange))
     try {
       const variables = {
         ...getDateRangeString(dayRange),
