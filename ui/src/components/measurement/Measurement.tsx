@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Page } from '../utils/Page'
 import { ChartByParam } from './ChartByParams'
 import moment from 'moment'
-import { fillInitValues, findErrors, getErrorMsg } from '../utils'
+import { aggregationLimit, fillInitValues, findErrors, getErrorMsg } from '../utils'
 import { SelectorOptionType } from 'src/types'
 import { SensorsSelect } from './SensorsSelect'
 import { DataGrid } from '../utils/DataGrid'
@@ -16,6 +16,7 @@ import { getMeasurements } from './aggregations'
 import { Loading } from '../utils/loading'
 import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors'
 import { calculateCAQI } from './utils'
+import { useNotification } from '../utils/Notifications'
 
 export const measurementsSchema = yup.object().shape({
   sensorId: yup.number(),
@@ -102,6 +103,8 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     resolver: yupResolver(measurementsSchema)
   })
 
+  const { addToast } = useNotification()
+
   const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
 
@@ -123,7 +126,15 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
         type: aggregation
       }
   
-      const measurements = await getMeasurements(variables, token)
+      const { measurements, lagreLimit } = await getMeasurements(variables, token)
+
+      if (lagreLimit) {
+        addToast({
+          title: 'Ліміт агрегацій перевищено!',
+          color: 'warning',
+          text: `Ви отримали лише ${aggregationLimit} перших вимірів. Щоб отримати більше даних підвищіть рівень агрегації.`
+        })
+      }
 
       onChange({ measurements, aggregationType: aggregation })
     } catch (err) {

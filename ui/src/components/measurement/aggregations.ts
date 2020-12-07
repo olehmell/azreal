@@ -3,7 +3,7 @@ import axios from 'axios'
 import { GetMeasurementsBySensorId, GetMeasurementsBySensorId_az_sensors_Sensors_SensorFactors } from './../../graphql/query/measurement/types/GetMeasurementsBySensorId'
 import moment from 'moment'
 import { CommonAggregationData } from 'src/graphql/query/measurement/getMeasurementBySensorId'
-import { graphqlUrl } from '../utils'
+import { aggregationLimit, graphqlUrl } from '../utils'
 import { MeasurementType, MeasurementsProps, MeasurementValue } from './types'
 import { getAggregationTime } from './utils'
 
@@ -58,6 +58,10 @@ const loadMeasuremntQuery = async ({ sensorId, to, from }: CommonAggregationData
   } : undefined
 }
 
+const largeLimit = (count: number) => {
+  return count >= aggregationLimit
+}
+
 export const getMeasurements = async (variables: MeasurementsProps, token: string) => {
   if (!variables) return undefined
 
@@ -68,19 +72,22 @@ export const getMeasurements = async (variables: MeasurementsProps, token: strin
 
   let isFinish = false
 
+  let count = 0
+
   while (!isFinish) {
     const to = moment(from).add(1, type).toISOString()
 
     promises.push(loadMeasuremntQuery({ sensorId, to, from }, token))
 
-    if (to >= end) {
+    if (to >= end || largeLimit(count)) {
       isFinish = true
       break
     }
 
     from = to
+    count++
   }
 
   const measurements = await Promise.all(promises)
-  return measurements.filter(x => !!x)
+  return { measurements: measurements.filter(x => !!x), lagreLimit: largeLimit(count) }
 }
