@@ -5,6 +5,7 @@ import { Files } from '../files/Files'
 import { Images } from '../files/Images'
 import { getAggregationTime } from '../measurement/utils'
 import { createDescItem } from '../utils'
+import { NewButton } from '../utils/EditButton'
 import { Page } from '../utils/Page'
 import { DeleteButton } from './DeleteButton'
 import { ServiceLogSelector } from './ServiceLogSelector'
@@ -78,7 +79,14 @@ export const ServiceLogsSectionForSensor = (props: ServiceLogsSectionProps) =>
   <ServiceLogsSection {...props} />
 
 export default () => {
-  return <Page title='Сервісний журнал' >
+  return <Page title={
+    <EuiFlexGroup justifyContent='spaceBetween'>
+      <EuiFlexItem>
+        {'Сервісний журнал'}
+      </EuiFlexItem>
+      <NewButton url='/service/new' />
+    </EuiFlexGroup>
+  } >
     <ServiceLogsSection />
   </Page>
 }

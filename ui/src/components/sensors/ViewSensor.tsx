@@ -1,6 +1,7 @@
 import { EuiBadge, EuiDescriptionList, EuiFlexGrid, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import React from 'react'
 import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { OnlyManagerAccess } from '../auth/AuthContext'
 import { createDescItem } from '../utils'
 import { parseLatLngTuple, titleLayer } from '../utils/Map'
 import { Page } from '../utils/Page'
@@ -68,14 +69,16 @@ export const ViewSensor = ({ sensor }: SensorProps) => {
 export const Sensor = ({ sensor }: SensorProps) => {
   return <Page title={<EuiFlexGrid columns={2} >
     <EuiFlexItem>{`Датчик ${sensor.sensorId}`}</EuiFlexItem>
-    <EuiFlexGroup alignItems='center'>
-      <EuiFlexItem>
-        <EditButton sensor={sensor} />
-      </EuiFlexItem>
-      <EuiFlexItem>
-        <DeleteButton sensorId={sensor.sensorId} />
-      </EuiFlexItem>
-    </EuiFlexGroup>
+    <OnlyManagerAccess>
+      <EuiFlexGroup alignItems='center'>
+        <EuiFlexItem>
+          <EditButton sensor={sensor} />
+        </EuiFlexItem>
+        <EuiFlexItem>
+          <DeleteButton sensorId={sensor.sensorId} />
+        </EuiFlexItem>
+      </EuiFlexGroup>
+    </OnlyManagerAccess>
   </EuiFlexGrid>
   }>
     <ViewSensor sensor={sensor} />

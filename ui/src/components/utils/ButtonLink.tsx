@@ -5,6 +5,7 @@ import React from 'react'
 type ButtonLinkProps = EuiButtonProps & {
   href: string
   as?: string
+  style?: any
   children: React.ReactNode
 }
 

@@ -1,4 +1,4 @@
-import { EuiDataGridColumn } from '@elastic/eui'
+import { EuiDataGridColumn, EuiFlexGrid, EuiFlexGroup, EuiFlexItem } from '@elastic/eui'
 import Link from 'next/link'
 import React from 'react'
 import { useGetOrganisations } from 'src/graphql/query/organisations/getOrganisations'
@@ -7,6 +7,7 @@ import { DataGrid } from '../utils/DataGrid'
 import { Loading } from '../utils/loading'
 import { Page } from '../utils/Page'
 import { NotFound } from '../utils/NotFoundPage'
+import { NewButton } from '../utils/EditButton'
 
 type ViewOrganisationsProps = {
   organisations: OrganisationsType[]
@@ -57,7 +58,14 @@ export const Organisations = () => {
   if (!organisations.length) return <NotFound message='Не вдалось знайти жоної організації'/>
 
   return <Page
-    title='Організації'
+    title={
+      <EuiFlexGroup justifyContent='spaceBetween'>
+        <EuiFlexItem>
+          {'Організації'}
+        </EuiFlexItem>
+        <NewButton url='/sensors/new' />
+      </EuiFlexGroup>
+    }
   >
     <ViewOrganisations organisations={organisations} />
   </Page>

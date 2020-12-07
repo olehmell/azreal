@@ -65,7 +65,7 @@ export const buildExploreLinks = (
     },
   {
     label: 'Вимірювання',
-    onClick: makeAction('/measurement'),
+    onClick: makeAction('/measurements'),
     iconType: 'visualizeApp',
   },
   {

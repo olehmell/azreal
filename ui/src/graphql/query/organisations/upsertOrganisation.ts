@@ -3,11 +3,11 @@ import { gql } from 'apollo-boost'
 import { UpsertOrganisation, UpsertOrganisationVariables } from './types/UpsertOrganisation'
 
 const UPSERT_ORGANISATION = gql`
-mutation UpsertOrganisation($shortName: String! = "", $rntrc: String! = "", $organisationRole: String! = "", $fullName: String! = "", $country: String = "", $documentIds: _text = "", $organisationId: Int! = 0) {
-  insert_az_users_Organisation_one(object: {shortName: $shortName, rntrc: $rntrc, organisationRole: $organisationRole, fullName: $fullName, country: $country, Document: {data: {fileIds: $documentIds, documentType: Organisation}}, organisationId: $organisationId}, on_conflict: {constraint: Organisation_pkey, update_columns: [ fullName, shortName, organisationRole, country ]}) {
-    organisationId
+  mutation UpsertOrganisation($shortName: String, $rntrc: String, $organisationRole: String, $fullName: String, $country: String, $organisationId: Int!) {
+    insert_az_users_Organisation_one(object: {shortName: $shortName, rntrc: $rntrc, organisationRole: $organisationRole, fullName: $fullName, country: $country, organisationId: $organisationId}, on_conflict: {constraint: Organisation_pkey, update_columns: [ fullName, shortName, organisationRole, country ]}) {
+      organisationId
+    }
   }
-}
 `
 
 const ADD_ORGANISATION = gql`

@@ -47,7 +47,7 @@ export const DataGrid = ({ columns, data, exportFileName = `Exported-${moment().
   const renderCellValue = useMemo(() => {
     return ({ rowIndex, columnId }) => {
       return data.hasOwnProperty(rowIndex)
-        ? data[rowIndex][columnId]
+        ? data[rowIndex][columnId] || null
         : null
     }
   }, [ data ])

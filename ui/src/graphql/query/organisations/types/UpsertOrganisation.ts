@@ -17,10 +17,10 @@ export interface UpsertOrganisation {
 }
 
 export interface UpsertOrganisationVariables {
-  shortName: string;
-  rntrc: string;
-  organisationRole: string;
-  fullName: string;
+  shortName?: string | null;
+  rntrc?: string | null;
+  organisationRole?: string | null;
+  fullName?: string | null;
   country?: string | null;
   documentIds?: any | null;
   organisationId: number;
