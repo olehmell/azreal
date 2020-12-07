@@ -44,7 +44,9 @@ export const ChartByParam = (props: MeasurementsData) => {
   if (!params) return null
 
   const { maxValue: GDK, unit } = params
-
+  const currentArr = data.map(x => x[activeLine])
+  const min = Math.min(...currentArr)
+  const max = Math.max(...currentArr)
   return <>
     <EuiSpacer size='xxl' />
     <EuiSwitch
@@ -54,15 +56,15 @@ export const ChartByParam = (props: MeasurementsData) => {
     />
     <EuiSpacer size='l' />
     <ResponsiveContainer height={500} width="100%">
-      <LineChart data={data}
+      <LineChart data={isLog ? data.map(x => ({ ...x, [activeLine]: Math.log(x[activeLine]) })) : data}
         margin={{top: 20, right: 10, left: 20, bottom: 5}}>
         <CartesianGrid strokeDasharray="3 3"/>
         <XAxis dataKey="time" />
         <YAxis
           type='number'
-          domain={[ 'dataMin', GDK ]}
-          dataKey={(v) => v[activeLine]}
-          scale={isLog ? scale : 'linear'}
+          domain={[ min, GDK || max ]}
+          dataKey={activeLine}
+          scale={isLog ? 'log' : 'linear'}
           padding={{ top: 20, bottom: 20 }}
           label={{ value: unit, position: 'top'}}
         />
