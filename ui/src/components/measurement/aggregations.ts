@@ -65,7 +65,14 @@ const largeLimit = (count: number) => {
 export const getMeasurements = async (variables: MeasurementsProps, token: string) => {
   if (!variables) return undefined
 
-  const { sensorId, to: end, type, from: start } = variables
+  const { sensorId, type, from: start } = variables
+
+  let { to: end } = variables
+
+  if (start === end) {
+    end = moment(end).set('hours', 24).toISOString()
+    console.log(end)
+  }
 
   let from = start
   const promises = []
@@ -77,11 +84,15 @@ export const getMeasurements = async (variables: MeasurementsProps, token: strin
   while (!isFinish) {
     const to = moment(from).add(1, type).toISOString()
 
+    if (from >= end || largeLimit(count)) {
+      isFinish = true
+      break
+    }
+
     promises.push(loadMeasuremntQuery({ sensorId, to, from }, token))
 
-    if (to >= end || largeLimit(count)) {
+    if (to >= end) {
       isFinish = true
-      promises.push(loadMeasuremntQuery({ sensorId, to: end, from }, token))
       break
     }
 
