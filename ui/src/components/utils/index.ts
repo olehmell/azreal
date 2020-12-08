@@ -55,3 +55,4 @@ export const graphqlUrl = getEnv('GRAPHQL_URL')
 export const mongoUrl = getEnv('MONGO_URL')
 export const loginUrl = getEnv('LOGIN_URL')
 export const hasuraSecret = getEnv('SECRET')
+export const aggregationLimit = getEnv('AGGREGATION_LIMIT') || 100

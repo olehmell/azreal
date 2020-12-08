@@ -2,10 +2,8 @@
 /* eslint-disable react/jsx-no-undef */
 import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiSwitch } from '@elastic/eui'
 import React, { useState } from 'react'
-import { LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { MeasurementsData } from './types'
-import { scaleLog } from 'd3-scale'
-const scale = scaleLog().base(Math.E)
 
 type ChartParams = {
   unit: string,
@@ -43,7 +41,7 @@ export const ChartByParam = (props: MeasurementsData) => {
 
   if (!params) return null
 
-  const { maxValue: GDK, unit } = params
+  const { unit } = params
   const currentArr = data.map(x => x[activeLine])
   const min = Math.min(...currentArr)
   const max = Math.max(...currentArr)
@@ -62,14 +60,14 @@ export const ChartByParam = (props: MeasurementsData) => {
         <XAxis dataKey="time" />
         <YAxis
           type='number'
-          domain={[ min, GDK || max ]}
+          domain={[ min, max ]}
           dataKey={activeLine}
           scale={isLog ? 'log' : 'linear'}
           padding={{ top: 20, bottom: 20 }}
           label={{ value: unit, position: 'top'}}
         />
         <Tooltip/>
-        <ReferenceLine y={GDK} strokeDasharray="25 90" label="ГДК" stroke="red"/>
+        {/* <ReferenceLine y={GDK} strokeDasharray="25 90" label="ГДК" stroke="red"/> */}
         <Line
           unit={unit}
           type="natural"

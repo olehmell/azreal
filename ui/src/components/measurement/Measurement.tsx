@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Page } from '../utils/Page'
 import { ChartByParam } from './ChartByParams'
 import moment from 'moment'
-import { fillInitValues, findErrors, getErrorMsg } from '../utils'
+import { aggregationLimit, fillInitValues, findErrors, getErrorMsg } from '../utils'
 import { SelectorOptionType } from 'src/types'
 import { SensorsSelect } from './SensorsSelect'
 import { DataGrid } from '../utils/DataGrid'
@@ -16,11 +16,13 @@ import { getMeasurements } from './aggregations'
 import { Loading } from '../utils/loading'
 import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors'
 import { calculateCAQI } from './utils'
+import { useNotification } from '../utils/Notifications'
+import { DataPicker, getDateRangeString } from '../utils/DataPicker'
+import { DayRange } from 'react-modern-calendar-datepicker'
 
 export const measurementsSchema = yup.object().shape({
   sensorId: yup.number(),
-  from: yup.date().required(),
-  to: yup.date().required(),
+  dayRange: yup.object().required(),
   aggregation: yup.string().required()
 })
 
@@ -102,28 +104,33 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     resolver: yupResolver(measurementsSchema)
   })
 
+  const { addToast } = useNotification()
+
   const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
-
-  const from = watch('from')
-  const to = watch('to')
 
   useEffect(() => {
     setValue('sensorId', initialSensorId)
   }, [ initialSensorId ])
 
-  const onSubmit = async ({ sensorId = initialSensorId, aggregation }) => {
+  const onSubmit = async ({ sensorId = initialSensorId, aggregation, dayRange }) => {
     setLoading(true)
-    
     try {
       const variables = {
-        to: to?.toISOString(),
-        from: from?.toISOString(),
+        ...getDateRangeString(dayRange),
         sensorId,
         type: aggregation
       }
   
-      const measurements = await getMeasurements(variables, token)
+      const { measurements, lagreLimit } = await getMeasurements(variables, token)
+
+      if (lagreLimit) {
+        addToast({
+          title: 'Ліміт агрегацій перевищено!',
+          color: 'warning',
+          text: `Ви отримали лише ${aggregationLimit} перших вимірів. Щоб отримати більше даних підвищіть рівень агрегації.`
+        })
+      }
 
       onChange({ measurements, aggregationType: aggregation })
     } catch (err) {
@@ -160,22 +167,14 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
         </EuiFlexItem>
         <EuiFlexItem>
           <Controller
-            name="from"
+            name="dayRange"
             control={control}
             render={({ onChange, value}) =>
-              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
+              <DataPicker value={value} onChange={onChange} />
             } // props contains: onChange, onBlur and value
           />
         </EuiFlexItem>
-        <EuiFlexItem>
-          <Controller
-            name="to"
-            control={control}
-            render={({ onChange, value}) =>
-              <EuiDatePicker showTimeSelect selected={value ? moment(value) : undefined} onChange={onChange} fullWidth />
-            } // props contains: onChange, onBlur and value
-          />
-        </EuiFlexItem>
+
         {!initialSensorId && <EuiFlexItem>
           <SensorsSelect
             name='sensorId'
