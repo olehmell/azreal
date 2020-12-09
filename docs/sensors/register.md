@@ -13,10 +13,10 @@ The table below shows the sensors in the registration process, so its content ma
 |  3   |   6285   | Школа № 1, пров. Делегатський, 1/28                | [★](https://goo.gl/maps/aFvd9MoKLp7dhnR66) |     ☖      | registered, **no data** |
 |  4   |   5315   | Гімназія № 107 "Введенська", вул. Введенська, 35   | [★](https://goo.gl/maps/xmfWaGnoiNDWR7kE6) |     ☖      | registered, **no data** |
 |  5   |   6133   | Школа № 137, вул. Ентузіастів, 7/4                 | [★](https://goo.gl/maps/43kwuJXxwB9mQuZK9) |     ☖      | registered, **no data** |
-|  6   |   6274   | Школа № 259, просп. В.Маяковського, 21-Г           | [★](https://goo.gl/maps/xMvBZCVhNa9V4QdCA) |     ☖      | registered              |
+|  6   |   6274   | Школа № 259, просп. В.Маяковського, 21-Г          | [★](https://goo.gl/maps/xMvBZCVhNa9V4QdCA) |     ☖      | registered              |
 |  7   |   6145   | Школа № 159, вул. Генерала Тупікова, 22            | [★](https://goo.gl/maps/BWYrnx87uverikW1A) |     ☖      | registered              |
 |  8   |   6277   | Гімназія "Академія", вул. Феодори Пушиної, 4       | [★](https://goo.gl/maps/Gp5iGqNjgd29ceJQ6) |     ☖      | registered, **no data** |
-|  9   |          | Слов'янська гімназія, вул. Драгоманова, 10в        |                     ★                      |     ☖      |                         |
+|  9   | 6253 | Слов'янська гімназія, вул. Драгоманова, 10в        | [★](https://goo.gl/maps/MSbajGWptagMqDXy7) |     ☖      |                         |
 |  10  |   6189   | Гімназія № 75, пров. Бутишів, 11                   | [★](https://goo.gl/maps/LZF5jjdkZbHMPRAr6) |     ☖      | registered |
 |  |  | **ALREADY REGISTERED IN 2019** |  |  |  |
 | 11 | 4275 | НАУ, проспект Любомира Гузара, 1 | [★](https://goo.gl/maps/kBhC2axEdf2NkEBj8) | [☖](https://airly.eu/map/en/#50.44020,30.43013,i9969) | temporarily deinstalled |
