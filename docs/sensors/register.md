@@ -4,7 +4,7 @@
 
 The table below shows the sensors in the registration process, so its content may change.
 
-**Last update: 8 Dec 2020**
+**Last update: 9 Dec 2020**
 
 |  #   | sensor # | School, address (in Kyiv city)                     |                Google<br/>Maps             | Airly<br/>Maps | Remark                  |
 | :--: | :------: | :------------------------------------------------- | :----------------------------------------: | :--------: | ----------------------- |
