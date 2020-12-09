@@ -21,18 +21,22 @@ const ViewOrganisations = ({ organisations }: ViewOrganisationsProps) => {
   const columns: OrganisationColumn[] = [ {
     id: 'fullName',
     display: 'Назва організації',
+    displayAsText: 'Назва організації'
   },
   {
     id: 'shortName',
-    display: 'Коротка назва'
+    display: 'Коротка назва',
+    displayAsText: 'Коротка назва'
   },
   {
     id: 'country',
-    display: 'Країна'
+    display: 'Країна',
+    displayAsText: 'Країна'
   },
   {
     id: 'rntrc',
-    display: 'Код платника податків'
+    display: 'Код платника податків',
+    displayAsText: 'Код платника податків'
   } ]
 
   const data = organisations.map(({ organisationId, organisationRole, country, shortName, fullName, rntrc }) => ({
