@@ -1,4 +1,4 @@
-import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiDatePicker, EuiFormErrorText, EuiForm } from '@elastic/eui'
+import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiDatePicker, EuiFormErrorText, EuiForm, EuiDatePickerRange } from '@elastic/eui'
 import moment from 'moment'
 import React, { useState, useEffect, useCallback } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -6,7 +6,6 @@ import { useGetServiceLogs } from 'src/graphql/query/service-log/getServiceLogs'
 import { GetServiceLogs_az_sensors_ServiceLog } from 'src/graphql/query/service-log/types/GetServiceLogs'
 import { SensorsSelect } from '../measurement/SensorsSelect'
 import { findErrors, getErrorMsg } from '../utils'
-import DataPicker, { getDateRangeString } from '../utils/DataPicker'
 import { Loading } from '../utils/loading'
 
 
@@ -24,16 +23,20 @@ export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: Serv
   // const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
   
+  const from = watch('from')
+  const to = watch('to')
+  
   useEffect(() => {
     setValue('sensorId', initialSensorId)
   }, [ initialSensorId ])
   
-  const onSubmit = async ({ sensorId = initialSensorId, dayRange }) => {
+  const onSubmit = async ({ sensorId = initialSensorId }) => {
     setLoading(true)
       
     try {
       const variables = {
-        ...getDateRangeString(dayRange),
+        to: to?.toISOString(),
+        from: from?.toISOString(),
         sensorId,
       }
     
@@ -65,16 +68,34 @@ export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: Serv
   
       <EuiFlexGroup justifyContent='spaceBetween' alignItems='center' >
         <EuiFlexItem>
-          <Controller
-            name="dayRange"
-            control={control}
-            render={({ onChange, value}) =>
-              <DataPicker value={value} onChange={onChange} />
-            } // props contains: onChange, onBlur and value
-          />
+          <EuiDatePickerRange
+            startDateControl={<Controller
+              name="from"
+              control={control}
+              render={({ onChange, value}) =>
+                <EuiDatePicker
+                  showTimeSelect
+                  selected={value ? moment(value) : undefined}
+                  onChange={onChange}
+                  fullWidth
+                />
+              } // props contains: onChange, onBlur and value
+            />}
+            endDateControl={<Controller
+              name="to"
+              control={control}
+              render={({ onChange, value}) =>
+                <EuiDatePicker
+                  showTimeSelect
+                  selected={value ? moment(value) : undefined}
+                  onChange={onChange}
+                  fullWidth
+                />
+              } // props contains: onChange, onBlur and value
+            />}
+          />  
         </EuiFlexItem>
-
-        {!initialSensorId && <EuiFlexItem>
+        {!initialSensorId && <EuiFlexItem >
           <SensorsSelect
             name='sensorId'
             inputRef={register}
@@ -84,7 +105,7 @@ export const ServiceLogSelector = ({ onChange, sensorId: initialSensorId }: Serv
             required
           />
         </EuiFlexItem>}
-        <EuiFlexItem>
+        <EuiFlexItem style={{ maxWidth: 100 }} >
           <SubmitButton />
         </EuiFlexItem>
       </EuiFlexGroup>
