@@ -16,7 +16,7 @@ The table below shows the sensors in the registration process, so its content ma
 |  6   |   6274   | Школа № 259, просп. В.Маяковського, 21-Г          | [★](https://goo.gl/maps/xMvBZCVhNa9V4QdCA) |     ☖      | registered              |
 |  7   |   6145   | Школа № 159, вул. Генерала Тупікова, 22            | [★](https://goo.gl/maps/BWYrnx87uverikW1A) |     ☖      | registered              |
 |  8   |   6277   | Гімназія "Академія", вул. Феодори Пушиної, 4       | [★](https://goo.gl/maps/Gp5iGqNjgd29ceJQ6) |     ☖      | registered, **no data** |
-|  9   | 6253 | Слов'янська гімназія, вул. Драгоманова, 10в        | [★](https://goo.gl/maps/MSbajGWptagMqDXy7) |     ☖      |                         |
+|  9   | 6253 | Слов'янська гімназія, вул. Драгоманова, 10в        | [★](https://goo.gl/maps/MSbajGWptagMqDXy7) |     ☖      | registered, **no data** |
 |  10  |   6189   | Гімназія № 75, пров. Бутишів, 11                   | [★](https://goo.gl/maps/LZF5jjdkZbHMPRAr6) |     ☖      | registered |
 |  |  | **ALREADY REGISTERED IN 2019** |  |  |  |
 | 11 | 4275 | НАУ, проспект Любомира Гузара, 1 | [★](https://goo.gl/maps/kBhC2axEdf2NkEBj8) | [☖](https://airly.eu/map/en/#50.44020,30.43013,i9969) | temporarily deinstalled |
