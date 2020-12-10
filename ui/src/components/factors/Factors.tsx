@@ -17,18 +17,22 @@ const Factors = () => {
   const columns: EuiDataGridColumn[] = [ {
     id: 'label',
     display: 'Назва фактору',
+    displayAsText: 'Назва фактору'
   },
   {
     id: 'unit',
     display: 'Одиниці',
+    displayAsText: 'Одиниці'
   },
   {
     id: 'maxValue',
     display: 'ГДК',
+    displayAsText: 'ГДК'
   },
   {
     id: 'amount',
     display: 'Кількість датчиків',
+    displayAsText: 'Кількість датчиків'
   }
   ]
 

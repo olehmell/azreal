@@ -21,22 +21,27 @@ const ViewUsers = ({ users }: ViewUsersProps) => {
   const columns: UserColumn[] = [ {
     id: 'fullName',
     display: 'ПІБ',
+    displayAsText: 'ПІБ'
   },
   {
     id: 'email',
-    display: 'Email'
+    display: 'Email',
+    displayAsText: 'Email'
   },
   {
     id: 'phoneNumber',
-    display: 'Номер телефону'
+    display: 'Номер телефону',
+    displayAsText: 'Номер телефону'
   },
   {
     id: 'userRole',
-    display: 'Рівеь доступу'
+    display: 'Рівень доступу',
+    displayAsText: 'Рівень доступу'
   },
   {
     id: 'Organisation',
-    display: 'Організація'
+    display: 'Організація',
+    displayAsText: 'Організація'
   }
   ]
 

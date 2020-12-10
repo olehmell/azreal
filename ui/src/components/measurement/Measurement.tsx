@@ -1,4 +1,4 @@
-import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiLoadingSpinner, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDataGridColumn, EuiForm, EuiFormRow} from '@elastic/eui'
+import { EuiSpacer, EuiDatePicker, EuiButton, EuiFormErrorText, EuiLoadingSpinner, EuiFlexGroup, EuiFlexItem, EuiSelect, EuiDataGridColumn, EuiForm, EuiFormRow, EuiDatePickerRange} from '@elastic/eui'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Page } from '../utils/Page'
 import { ChartByParam } from './ChartByParams'
@@ -17,12 +17,11 @@ import { Loading } from '../utils/loading'
 import { useGetFactors } from 'src/graphql/query/factors/getFactorsWithSensors'
 import { calculateCAQI } from './utils'
 import { useNotification } from '../utils/Notifications'
-import { DataPicker, getDateRangeString } from '../utils/DataPicker'
-import { DayRange } from 'react-modern-calendar-datepicker'
 
 export const measurementsSchema = yup.object().shape({
   sensorId: yup.number(),
-  dayRange: yup.object().required(),
+  from: yup.date().required(),
+  to: yup.date().required(),
   aggregation: yup.string().required()
 })
 
@@ -63,7 +62,8 @@ const MeasurementTable = ({ measurements, fileName }: MeasurementTProps) => {
   const columns: EuiDataGridColumn[] = [
     {
       id: 'timestamp',
-      display: 'Дата'
+      display: 'Дата',
+      displayAsText: 'Дата'
     },
     ...dynamicColumn
   ]
@@ -109,15 +109,20 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
   const { token } = useAuthObj()
   const [ loading, setLoading ] = useState(false)
 
+  const from = watch('from')
+  const to = watch('to')
+
   useEffect(() => {
     setValue('sensorId', initialSensorId)
   }, [ initialSensorId ])
 
-  const onSubmit = async ({ sensorId = initialSensorId, aggregation, dayRange }) => {
+  const onSubmit = async ({ sensorId = initialSensorId, aggregation }) => {
     setLoading(true)
+    
     try {
       const variables = {
-        ...getDateRangeString(dayRange),
+        to: to?.toISOString(),
+        from: from?.toISOString(),
         sensorId,
         type: aggregation
       }
@@ -145,6 +150,8 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     setLoading(false)  
   }
 
+  const now = moment()
+
   const SubmitButton = useCallback(() =>
     <EuiButton disabled={loading} fill type="submit">
       Отримати
@@ -155,9 +162,8 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
     <EuiForm component="form" onSubmit={handleSubmit(onSubmit)}>
 
       <EuiFlexGroup justifyContent='spaceBetween' alignItems='center' >
-        <EuiFlexItem>
+        <EuiFlexItem style={{ maxWidth: 175 }} >
           <EuiSelect
-            style={{ maxWidth: 200 }}
             name='aggregation'
             placeholder="Оберіть розмір вибірки"
             defaultValue={undefined}
@@ -165,17 +171,39 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
             inputRef={register}
           />
         </EuiFlexItem>
-        <EuiFlexItem>
-          <Controller
-            name="dayRange"
-            control={control}
-            render={({ onChange, value}) =>
-              <DataPicker value={value} onChange={onChange} />
-            } // props contains: onChange, onBlur and value
-          />
-        </EuiFlexItem>
 
-        {!initialSensorId && <EuiFlexItem>
+        <EuiFlexItem>
+          <EuiDatePickerRange
+            startDateControl={<Controller
+              name="from"
+              control={control}
+              render={({ onChange, value}) =>
+                <EuiDatePicker
+                  showTimeSelect
+                  selected={value ? moment(value) : undefined}
+                  onChange={onChange}
+                  fullWidth
+                  maxDate={now}
+                />
+              } // props contains: onChange, onBlur and value
+            />}
+            endDateControl={<Controller
+              name="to"
+              control={control}
+              render={({ onChange, value}) =>
+                <EuiDatePicker
+                  showTimeSelect
+                  selected={value ? moment(value) : undefined}
+                  onChange={onChange}
+                  fullWidth
+                  maxDate={now}
+                />
+              } // props contains: onChange, onBlur and value
+            />}
+          />  
+        </EuiFlexItem>
+          
+        {!initialSensorId && <EuiFlexItem style={{ maxWidth: 175 }}>
           <SensorsSelect
             name='sensorId'
             inputRef={register}
@@ -185,7 +213,7 @@ export const MeasurementSelector = ({ onChange, sensorId: initialSensorId }: Mea
             required
           />
         </EuiFlexItem>}
-        <EuiFlexItem>
+        <EuiFlexItem style={{ maxWidth: 100 }}>
           <SubmitButton />
         </EuiFlexItem>
       </EuiFlexGroup>
