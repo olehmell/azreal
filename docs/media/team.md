@@ -12,8 +12,8 @@
 | ![1st picture](img/ZKV.jpg ':size=300') | ![1st picture](img/HIV.jpg ':size=300') | ![1st picture](img/HOM.jpg ':size=300') |
 | Інформаційна підтримка                  | Контент-менеджер                        | Підтримка сайту                         |
 
-| [Мельничук Олег Валерійович](https://www.facebook.com/olehmell) | [Прощаваєв Владислав Романович](https://www.facebook.com/ns.f3joule) | [Дмитро Мотрій](https://example.com/) |
+| [Мельничук Олег Валерійович](https://www.facebook.com/olehmell) | [Прощаваєв Владислав Романович](https://www.facebook.com/ns.f3joule) | [Мотрій Дмитро Юрійович](https://github.com/DimaVegetable) |
 | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![1st picture](img/MOV.jpg ':size=300') | ![1st picture](img/PVR.jpg ':size=300') | ![1st picture](img/unknown.png) |
+| ![1st picture](img/MOV.jpg ':size=300') | ![1st picture](img/PVR.jpg ':size=300') | ![1st picture](img/MDY.jpg ':size=300') |
 | Технічна підтримка                      | Технічна підтримка                      | Технічна підтримка                      |
 
