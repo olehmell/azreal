@@ -1,8 +1,8 @@
 # AirZOOM real
 
-- [Про проєкт](media/README.md)
-- [Датчики](sensors/README.md)
-- [База даних](database/README.md)
-- [Код UI](ui/README.md)
-- [Документатор](docsify/README.md)
-- [Пісочниця](sandbox/README.md)
+  - [Про проєкт](media/README.md)
+  - [Фактори моніторингу](factors/README.md)
+  - [Датчики](sensors/README.md)
+  - [Документація користувача](userdoc/README.md)
+  - [Технічна документація](techdoc/README.md)
+  - [Документатор](docsify/README.md)

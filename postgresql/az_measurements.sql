@@ -1,15 +1,22 @@
 CREATE SCHEMA IF NOT EXISTS "az_measurements";
 
-CREATE TABLE "az_measurements"."Measurements"
+---
+
+CREATE TABLE IF NOT EXISTS "az_measurements"."Measurements"
 (
-    "locationId" integer                            NOT NULL,
-    "sensorId"   integer                            NOT NULL,
-    "timestamp"  "timestamp"                        NOT NULL,
-    "values"     "az_sensors"."measurement_value"[] NOT NULL,
-    FOREIGN KEY ("locationId")
-        REFERENCES "az_sensors"."Locations" ("locationId") MATCH FULL
-        ON UPDATE CASCADE,
+    "sensorId"      integer,
     FOREIGN KEY ("sensorId")
-        REFERENCES "az_sensors"."Sensors" ("sensorId") MATCH FULL
+        REFERENCES "az_sensors"."Sensors" ("sensorId") MATCH SIMPLE
         ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    "locationPoint" point            NOT NULL,
+    "timestamp"     timestamp        NOT NULL,
+    "factorName"    text             NOT NULL,
+    FOREIGN KEY ("factorName")
+        REFERENCES "az_sensors"."PollutionFactors" ("name") MATCH FULL
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    "value"         double precision NOT NULL,
+
+    UNIQUE ("sensorId", "timestamp", "factorName")
 );
