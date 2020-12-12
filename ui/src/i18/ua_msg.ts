@@ -1,4 +1,4 @@
-import { aggregationLimit } from "src/components/utils"
+import { aggregationLimit } from 'src/components/utils'
 
 export const uiMsg = {
   form: {
