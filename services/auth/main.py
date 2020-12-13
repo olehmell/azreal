@@ -46,7 +46,7 @@ def login():
     user_info = data['az_users_Users']
 
     if not user_info:
-        return { 'statusText': 'User not found' }, 404
+        return json.dumps({'status': 'User not found' }), 404
     else:
         for info in user_info:
             hasura_user_password = info['AuthData'][0]['password']
@@ -55,7 +55,7 @@ def login():
         if hasura_user_password == hash_pass:
             return {'userId': hasura_user_id, 'userRole': hasura_user_role, 'token': hasura_secret_key}
         else:
-            return 'Incorect password', 401
+            return json.dumps({'status': 'Incorect password' }), 401
 
 
 if __name__ == '__main__':
