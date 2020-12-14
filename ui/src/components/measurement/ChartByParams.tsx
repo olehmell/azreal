@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/jsx-no-undef */
-import { EuiButton, EuiFlexGrid, EuiFlexItem, EuiSpacer, EuiSwitch } from '@elastic/eui'
+import { EuiButton, EuiButtonEmpty, EuiFlexGrid, EuiFlexItem, EuiSpacer, EuiSwitch } from '@elastic/eui'
 import React, { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import uiMsg from 'src/i18/ua_msg'
@@ -65,7 +65,7 @@ export const ChartByParam = (props: MeasurementsData) => {
           dataKey={activeLine}
           scale={isLog ? 'log' : 'linear'}
           padding={{ top: 20, bottom: 20 }}
-          label={{ value: unit, position: 'top'}}
+          label={{ value: unit, position: 'top', fill: '#0077ff' }}
         />
         <Tooltip/>
         {/* <ReferenceLine y={GDK} strokeDasharray="25 90" label="ГДК" stroke="red"/> */}
@@ -78,11 +78,9 @@ export const ChartByParam = (props: MeasurementsData) => {
         />
       </LineChart>
     </ResponsiveContainer>
-    <EuiFlexGrid columns={4} style={{ width: '100%' }}>
+    <EuiFlexGrid columns={4} style={{ width: '100%', margin: 0 }}>
       {lines.map(line => <EuiFlexItem key={line}>
         <EuiButton
-          fill
-          color="ghost"
           size='s'
           onClick={() => setActiveLine(line)}
         >
