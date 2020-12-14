@@ -32,6 +32,20 @@ const parseChartData = ({ measurements }: MeasurementsData) => {
   return [ lines, chartData, paramsByName ] as [ string[], any[], Map<string, ChartParams> ]
 }
 
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active) {
+    const { name, value } = payload[0]
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`Час: ${label}`}</p>
+        <p className="label">{`${name}: ${value}`}</p>
+      </div>
+    )
+  }
+
+  return null
+}
+
 export const ChartByParam = (props: MeasurementsData) => {
   if (!props.measurements.length) return null
 
@@ -58,6 +72,7 @@ export const ChartByParam = (props: MeasurementsData) => {
       <LineChart data={isLog ? data.map(x => ({ ...x, [activeLine]: Math.log(x[activeLine]) })) : data}
         margin={{top: 20, right: 10, left: 20, bottom: 5}}>
         <CartesianGrid strokeDasharray="3 3"/>
+        <Tooltip content={CustomTooltip} />
         <XAxis dataKey="time" />
         <YAxis
           type='number'
